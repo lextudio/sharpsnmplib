@@ -45,6 +45,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">The receiver.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
+        #if NET6_0
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver, CancellationToken token)
         {
             if (receiver == null)

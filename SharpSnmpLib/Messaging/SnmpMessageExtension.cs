@@ -203,6 +203,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
+        #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry)
         {
             // TODO: make more usage of UserRegistry.
@@ -235,6 +238,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
+        #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver)
         {
             if (request == null)
@@ -267,6 +273,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
+        #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Socket udpSocket)
         {
             if (request == null)
@@ -302,6 +311,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
+        #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
         {
             if (request == null)
@@ -345,7 +357,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 // IMPORTANT: Mono behavior.
-                if (IsRunningOnMono && ex.SocketErrorCode == SocketError.WouldBlock)
+                if (IsRunningOnMono() && ex.SocketErrorCode == SocketError.WouldBlock)
                 {
                     throw TimeoutException.Create(receiver.Address, timeout);
                 }
@@ -456,6 +468,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry)
         {
             // TODO: make more usage of UserRegistry.
@@ -487,6 +502,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver)
         {
             if (request == null)
@@ -518,6 +536,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket)
         {
             if (request == null)
@@ -552,6 +573,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
         {
             if (request == null)
@@ -597,7 +621,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 // IMPORTANT: Mono behavior (https://bugzilla.novell.com/show_bug.cgi?id=599488)
-                if (IsRunningOnMono && ex.SocketErrorCode == SocketError.WouldBlock)
+                if (IsRunningOnMono() && ex.SocketErrorCode == SocketError.WouldBlock)
                 {
                     throw TimeoutException.Create(receiver.Address, 0);
                 }
@@ -634,9 +658,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Tests if running on Mono.
         /// </summary>
         /// <returns></returns>
-        public static bool IsRunningOnMono
+        #if NET6_0 || NET5_0
+
+        [RequiresUnreferencedCode("IsRunningOnMono is incompatible with trimming.")]
+        #endif
+        public static bool IsRunningOnMono()
         {
-            get { return Type.GetType("Mono.Runtime") != null; }
+            return Type.GetType("Mono.Runtime") != null;
         }
 
         /// <summary>
@@ -649,7 +677,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             get
             {
 #if NET471
-                return !IsRunningOnMono;
+                return !IsRunningOnMono();
 #elif NETSTANDARD2_0
                 return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 #else
@@ -667,7 +695,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             get
             {
 #if NET471
-                return IsRunningOnMono;
+                return IsRunningOnMono();
 #elif NETSTANDARD2_0
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #else

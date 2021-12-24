@@ -58,6 +58,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable binds.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
+        [RequiresUnreferencedCode("GetAsync is incompatible with trimming.")]
         public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, CancellationToken token)
         {
             if (endpoint == null)
@@ -103,6 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">Variable binds.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
+        [RequiresUnreferencedCode("SetAsync is incompatible with trimming.")]
         public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, CancellationToken token)
         {
             if (endpoint == null)
@@ -153,6 +155,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
+        [RequiresUnreferencedCode("WalkAsync is incompatible with trimming.")]
         public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode, CancellationToken token)
         {
             if (list == null)
@@ -211,6 +214,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
+        [RequiresUnreferencedCode("HasNextAsync is incompatible with trimming.")]
         private static async Task<Tuple<bool, Variable?>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, CancellationToken token)
         {
             if (seed == null)
@@ -247,6 +251,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="token">The cancellation token.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method only supports SNMP v2c and v3.</remarks>
+        [RequiresUnreferencedCode("BulkWalkAsync is incompatible with trimming.")]
         public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken token)
         {
             if (list == null)
@@ -356,6 +361,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="token">The cancellation token.</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
+        [RequiresUnreferencedCode("SendInformAsync is incompatible with trimming.")]
         public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken token)
         {
             if (receiver == null)
@@ -445,6 +451,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
+        [RequiresUnreferencedCode("BulkHasNextAsync is incompatible with trimming.")]
         private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report, CancellationToken token)
         {
             // TODO: report should be updated with latest message from agent.

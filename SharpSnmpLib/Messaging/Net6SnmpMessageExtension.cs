@@ -116,6 +116,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="registry">User registry.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, CancellationToken token)
         {
             // TODO: make more usage of UserRegistry.
@@ -146,6 +149,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, CancellationToken token)
         {
             if (request == null)
@@ -176,6 +182,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket, CancellationToken token)
         {
             if (request == null)
@@ -211,6 +220,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="registry">The user registry.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, CancellationToken token)
         {
             if (request == null)
@@ -256,7 +268,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             catch (SocketException ex)
             {
                 // IMPORTANT: Mono behavior (https://bugzilla.novell.com/show_bug.cgi?id=599488)
-                if (IsRunningOnMono && ex.SocketErrorCode == SocketError.WouldBlock)
+                if (IsRunningOnMono() && ex.SocketErrorCode == SocketError.WouldBlock)
                 {
                     throw TimeoutException.Create(receiver.Address, 0);
                 }
