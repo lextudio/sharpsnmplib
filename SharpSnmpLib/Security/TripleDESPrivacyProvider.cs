@@ -99,15 +99,15 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException($"Encryption key length has to 32 bytes or more. Current: {key.Length}.", nameof(key));
             }
 
-            //privacyParameters = GetSalt(engineBoots);
-            //byte[] privParamHash = authDigest.ComputeHash(privacyParameters, 0, privacyParameters.Length);
-            //privacyParameters = new byte[8];
-            //Buffer.BlockCopy(privParamHash, 0, privacyParameters, 0, 8);
-
             var iv = GetIV(key, privacyParameters);
 
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
             var outKey = GetKey(key);
+#if NET6_0
+            using TripleDES des = TripleDES.Create();
+            des.Key = outKey;
+            return des.EncryptCbc(unencryptedData, iv, PaddingMode.None);
+#else
             byte[]? encryptedData = null;
             using (TripleDES des = TripleDES.Create())
             {
@@ -130,6 +130,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return encryptedData;
+#endif
         }
 
         /// <summary>
@@ -180,14 +181,20 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             var iv = GetIV(key, privacyParameters);
+
+            // normalize key - generated key is 32 bytes long, we need 24 bytes to encrypt
+            var outKey = new byte[24];
+            Buffer.BlockCopy(key, 0, outKey, 0, outKey.Length);
+
+#if NET6_0
+            using TripleDES des = TripleDES.Create();
+            des.Key = outKey;
+            return des.DecryptCbc(encryptedData, iv, PaddingMode.Zeros);
+#else
             using (TripleDES des = TripleDES.Create())
             {
                 des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.Zeros;
-
-                // normalize key - generated key is 32 bytes long, we need 24 bytes to encrypt
-                var outKey = new byte[24];
-                Buffer.BlockCopy(key, 0, outKey, 0, outKey.Length);
 
                 using (var transform = des.CreateDecryptor(outKey, iv))
                 {
@@ -195,6 +202,7 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
+#endif
         }
 
         /// <summary>

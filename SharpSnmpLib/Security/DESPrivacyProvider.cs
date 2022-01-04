@@ -125,6 +125,11 @@ namespace Lextm.SharpSnmpLib.Security
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
             var outKey = GetKey(key);
 
+#if NET6_0
+            using DES des = DES.Create();
+            des.Key = outKey;
+            return des.EncryptCbc(unencryptedData, iv, PaddingMode.Zeros);
+#else
             var div = (int)Math.Floor(unencryptedData.Length / 8.0);
             if ((unencryptedData.Length % 8) != 0)
             {
@@ -166,6 +171,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return result;
+#endif
         }
 
         /// <summary>
@@ -226,14 +232,19 @@ namespace Lextm.SharpSnmpLib.Security
                 iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
             }
 
+            // .NET implementation only takes an 8 byte key
+            var outKey = new byte[8];
+            Buffer.BlockCopy(key, 0, outKey, 0, 8);
+
+#if NET6_0
+            using DES des = DES.Create();
+            des.Key = outKey;
+            return des.DecryptCbc(encryptedData, iv, PaddingMode.Zeros);
+#else
             using (DES des = DES.Create())
             {
                 des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.Zeros;
-
-                // .NET implementation only takes an 8 byte key
-                var outKey = new byte[8];
-                Buffer.BlockCopy(key, 0, outKey, 0, 8);
 
                 des.Key = outKey;
                 des.IV = iv;
@@ -244,6 +255,7 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
+#endif
         }
 
         /// <summary>

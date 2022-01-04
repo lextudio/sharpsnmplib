@@ -154,6 +154,16 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
+            // make sure we have the right key length
+            var pkey = new byte[MinimumKeyLength];
+            Buffer.BlockCopy(key, 0, pkey, 0, MinimumKeyLength);
+
+#if NET6_0
+            using Aes aes = Aes.Create();
+            aes.Key = pkey;
+            return aes.EncryptCfb(unencryptedData, iv, PaddingMode.Zeros, 128);
+#else
+
 #if NET471
             using (var rm = Rijndael.Create())
 #else
@@ -168,9 +178,6 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.Padding = PaddingMode.Zeros;
                 rm.Mode = CipherMode.CFB;
 
-                // make sure we have the right key length
-                var pkey = new byte[MinimumKeyLength];
-                Buffer.BlockCopy(key, 0, pkey, 0, MinimumKeyLength);
                 rm.Key = pkey;
                 rm.IV = iv;
                 using (var cryptor = rm.CreateEncryptor())
@@ -189,6 +196,7 @@ namespace Lextm.SharpSnmpLib.Security
                     return encryptedData;
                 }
             }
+#endif
         }
 
         /// <summary>
@@ -240,6 +248,20 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
 
+            var finalKey = key;
+            if (key.Length > KeyBytes)
+            {
+                var normKey = new byte[KeyBytes];
+                Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
+                finalKey = normKey;
+            }
+
+#if NET6_0
+            using Aes aes = Aes.Create();
+            aes.Key = finalKey;
+            return aes.DecryptCfb(encryptedData, iv, PaddingMode.Zeros, 128);
+#else
+
             // now do CFB decryption of the encrypted data
 #if NET471
             using (var rm = Rijndael.Create())
@@ -252,17 +274,8 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.BlockSize = 128;
                 rm.Padding = PaddingMode.Zeros;
                 rm.Mode = CipherMode.CFB;
-                if (key.Length > KeyBytes)
-                {
-                    var normKey = new byte[KeyBytes];
-                    Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
-                    rm.Key = normKey;
-                }
-                else
-                {
-                    rm.Key = key;
-                }
 
+                rm.Key = finalKey;
                 rm.IV = iv;
                 using (var cryptor = rm.CreateDecryptor())
                 {
@@ -287,6 +300,7 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
+#endif
         }
 
         /// <summary>
