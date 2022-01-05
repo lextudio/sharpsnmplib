@@ -39,10 +39,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
-        /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <param name="token">The cancellation token.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int interval, CancellationToken token)
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, CancellationToken token)
         {
             if (broadcastAddress == null)
             {
@@ -92,8 +91,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 #else
             Task.Factory.StartNew(() => AsyncReceive(udp.Client), token);
 #endif
-
-            Thread.Sleep(interval);
+            token.WaitHandle.WaitOne();
             Interlocked.CompareExchange(ref _active, Inactive, Active);
         }
 
@@ -181,10 +179,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
-        /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <param name="token">The cancellation token.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, CancellationToken token)
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, CancellationToken token)
         {
             if (broadcastAddress == null)
             {
@@ -229,9 +226,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             _bufferSize = udp.ReceiveBufferSize;
-            await Task.WhenAny(
-                ReceiveAsync(udp, token),
-                Task.Delay(interval, token));
+            await ReceiveAsync(udp, token);
 
             Interlocked.CompareExchange(ref _active, Inactive, Active);
             try

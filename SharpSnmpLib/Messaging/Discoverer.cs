@@ -335,10 +335,15 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
 
                 _bufferSize = udp.ReceiveBufferSize;
+#if NET6_0
+                var source = new CancellationTokenSource();
+                source.CancelAfter(interval);
+                await ReceiveAsync(udp, source.Token); // TODO: any exception to handle?
+#else
                 await Task.WhenAny(
                     ReceiveAsync(udp),
                     Task.Delay(interval));
-
+#endif
                 Interlocked.CompareExchange(ref _active, Inactive, Active);
                 try
                 {
