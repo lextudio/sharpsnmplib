@@ -32,8 +32,8 @@ namespace Lextm.SharpSnmpLib.Security
     /// Privacy provider for AES 128.
     /// </summary>
     /// <remarks>
-    /// This is an experimental port from SNMP#NET project. As AES is not part of SNMP RFC, this class is provided as it is.
-    /// If you want other AES providers, you can port them from SNMP#NET in a similar manner.
+    /// <p>This is an experimental port from SNMP#NET project.</p>
+    /// <p>The algorithm is defined in https://datatracker.ietf.org/doc/html/rfc3826</p>
     /// </remarks>
     public sealed class AESPrivacyProvider : AESPrivacyProviderBase
     {

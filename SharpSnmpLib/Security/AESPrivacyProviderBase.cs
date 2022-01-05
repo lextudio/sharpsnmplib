@@ -158,12 +158,30 @@ namespace Lextm.SharpSnmpLib.Security
             var pkey = new byte[MinimumKeyLength];
             Buffer.BlockCopy(key, 0, pkey, 0, MinimumKeyLength);
 
+            if ((unencryptedData.Length % 16) != 0)
+            {
+                byte[] tmpbuffer = new byte[16 * ((unencryptedData.Length / 16) + 1)];
+                Buffer.BlockCopy(unencryptedData, 0, tmpbuffer, 0, unencryptedData.Length);
+                unencryptedData = tmpbuffer;
+            }
 #if NET6_0
-            using Aes aes = Aes.Create();
-            aes.Key = pkey;
-            return aes.EncryptCfb(unencryptedData, iv, PaddingMode.Zeros, 128);
+            return Net6Encrypt(pkey, iv, unencryptedData);
 #else
+            return LegacyEncrypt(pkey, iv, unencryptedData);
+#endif
+        }
 
+#if NET6_0
+        internal byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
+            using Aes aes = Aes.Create();
+            aes.Key = key;
+            return aes.EncryptCfb(unencryptedData, iv, PaddingMode.None, 128);
+        }
+#endif
+
+        internal byte[] LegacyEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
 #if NET471
             using (var rm = Rijndael.Create())
 #else
@@ -178,25 +196,13 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.Padding = PaddingMode.Zeros;
                 rm.Mode = CipherMode.CFB;
 
-                rm.Key = pkey;
+                rm.Key = key;
                 rm.IV = iv;
                 using (var cryptor = rm.CreateEncryptor())
                 {
-                    var encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
-
-                    // check if encrypted data is the same length as source data
-                    if (encryptedData.Length != unencryptedData.Length)
-                    {
-                        // cut out the padding
-                        var tmp = new byte[unencryptedData.Length];
-                        Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
-                        return tmp;
-                    }
-
-                    return encryptedData;
+                    return cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
                 }
             }
-#endif
         }
 
         /// <summary>
@@ -255,13 +261,24 @@ namespace Lextm.SharpSnmpLib.Security
                 Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
                 finalKey = normKey;
             }
+#if NET6_0
+            return Net6Decrypt(finalKey, iv, encryptedData);
+#else
+            return LegacyDecrypt(finalKey, iv, encryptedData);
+#endif
+        }
 
 #if NET6_0
+        internal byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        {
             using Aes aes = Aes.Create();
-            aes.Key = finalKey;
+            aes.Key = key;
             return aes.DecryptCfb(encryptedData, iv, PaddingMode.Zeros, 128);
-#else
+        }
+#endif
 
+        internal byte[] LegacyDecrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        {
             // now do CFB decryption of the encrypted data
 #if NET471
             using (var rm = Rijndael.Create())
@@ -275,7 +292,7 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.Padding = PaddingMode.Zeros;
                 rm.Mode = CipherMode.CFB;
 
-                rm.Key = finalKey;
+                rm.Key = key;
                 rm.IV = iv;
                 using (var cryptor = rm.CreateDecryptor())
                 {
@@ -300,7 +317,6 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
-#endif
         }
 
         /// <summary>
