@@ -42,80 +42,6 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             }
         }
 
-        /*
-        [Fact]
-        public void TestDecrypt2()
-        {
-            // TODO: copied from DES. Need to change the data to match AES.
-            byte[] encrypted =
-                ByteTool.Convert(
-                    "04 38 A4 F9 78 15 2B 14 45 F7 4F C5 B2 1C 82 72 9A 0B D9 EE C1 17 3E E1 26 0D 8B D4 7B 0F D7 35 06 1B E2 14 0D 4A 9B CA BF EF 18 6B 53 B9 FA 70 95 D0 15 38 C5 77 96 85 61 40");
-            var privacy = new TripleDESPrivacyProvider(new OctetString("privacyphrase"),
-                new MD5AuthenticationProvider(new OctetString("authentication")));
-            var parameters = new SecurityParameters(
-                new OctetString(ByteTool.Convert("80001F8880E9630000D61FF449")),
-                Integer32.Zero,
-                Integer32.Zero,
-                new OctetString("lextm"),
-                OctetString.Empty,
-                new OctetString(ByteTool.Convert("0000000069D39B2A")));
-            var data = privacy.Decrypt(DataFactory.CreateSnmpData(encrypted),
-                parameters);
-            Assert.Equal(SnmpType.Sequence, data.TypeCode);
-
-            byte[] net =
-                ByteTool.Convert(
-                    "04 38 A4 F9 78 15 2B 14 45 F7 4F C5 B2 1C 82 72 9A 0B D9 EE C1 17 3E E1 26 0D 8B D4 7B 0F D7 35 06 1B E2 14 0D 4A 9B CA BF EF 18 6B 53 B9 FA 70 95 D0 5D AF 04 5A 68 B5 DA 73");
-            var netData = privacy.Decrypt(DataFactory.CreateSnmpData(net), parameters);
-            Assert.Equal(SnmpType.Sequence, netData.TypeCode);
-
-            Assert.Equal(ByteTool.Convert(netData.ToBytes()), ByteTool.Convert(data.ToBytes()));
-        }
-
-
-        [Fact]
-        public void TestDecrypt()
-        {
-            // TODO: copied from DES. Need to change the data to match AES.
-            byte[] encrypted = ByteTool.Convert("4B  4F 10 3B 73  E1 E4 BD 91  32 1B CB 41" +
-                                                "1B A1 C1 D1  1D 2D B7 84  16 CA 41 BF  B3 62 83 C4" +
-                                                "29 C5 A4 BC  32 DA 2E C7  65 A5 3D 71  06 3C 5B 56" +
-                                                "FB 04 A4");
-            byte[] real = TripleDESPrivacyProvider.Decrypt(encrypted,
-                new byte[]
-                {
-                    0x37, 0xc6, 0x4c, 0xad, 0x49, 0x37, 0xfe, 0xda, 0x57, 0xc8, 0x48, 0x53, 0x47, 0x2a, 0x2e, 0xc0
-                },
-                0, 0, new byte[] {0x00, 0x00, 0x00, 0x01, 0x44, 0x2c, 0xa3, 0xb5});
-            byte[] expected =
-                ByteTool.Convert(
-                    "30  2D  04 0D 80 00 1F 88 80  E9 63 00 00  D6 1F F4 49 04 00 A0 1A 02 02 3A 25  02 01 00 02  01 00 30 0E  30 0C 06 08 2B 06 01 02  01 01 03 00  05 00 01");
-            Assert.Equal(expected, real);
-        }
-
-        [Fact]
-        public void TestEncrypt()
-        {
-            if (!AESPrivacyProviderBase.IsSupported)
-            {
-                return;
-            }
-
-            byte[] decrypted =
-                ByteTool.Convert(
-                    "30  2D  04 0D 80 00 1F 88 80  E9 63 00 00  D6 1F F4 49 04 00 A0 1A 02 02 3A 25  02 01 00 02  01 00 30 0E  30 0C 06 08 2B 06 01 02  01 01 03 00  05 00 01");
-            byte[] fake = new TripleDESPrivacyProvider(OctetString.Empty, new MD5AuthenticationProvider(new OctetString("anything"))).Encrypt(decrypted,
-                new byte[]
-                {
-                    0x37, 0xc6, 0x4c, 0xad, 0x49, 0x37, 0xfe, 0xda, 0x57, 0xc8, 0x48, 0x53, 0x47, 0x2a, 0x2e, 0xc0
-                },
-                0, 0, new byte[] {0x00, 0x00, 0x00, 0x01, 0x44, 0x2c, 0xa3, 0xb5});
-            byte[] expected =
-                ByteTool.Convert(
-                    "36 0A 04 BB A8 9A 37 C1 28 2E 9C B6 30 A1  AB 7E 1E 60 60 EF D2 91 3A 26 B0 1C D5  55 B7 16 78 FB A4 D1 9A 2C E4 30 9A 86  EC E1 83 EE 72 C2 68 BC");
-            Assert.Equal(ByteTool.Convert(expected), ByteTool.Convert(fake));
-        }
-//*/
         [Fact]
         public void TestEncrypt2()
         {
@@ -140,6 +66,49 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             ISnmpData decrypted = priv.Decrypt(data, parameters);
             Assert.Equal(ByteTool.Convert(original.ToBytes()), ByteTool.Convert(decrypted.ToBytes()));
         }
+
+#if NET6_0
+        [Theory]
+        [MemberData(nameof(Data))]
+        public void CompatibilityTest(int length)
+        {
+            var generator = new Random();
+            var data = new byte[length];
+            generator.NextBytes(data);
+            var iv = new byte[8];
+            generator.NextBytes(iv);
+            var key = new byte[24];
+            generator.NextBytes(key);
+            {
+                var encrypted = TripleDESPrivacyProvider.LegacyEncrypt(key, iv, data);
+                var decrypted = TripleDESPrivacyProvider.Net6Decrypt(key, iv, encrypted);
+                Assert.Equal(data, decrypted);
+            }
+
+            {
+                var encrypted = TripleDESPrivacyProvider.Net6Encrypt(key, iv, data);
+                var decrypted = TripleDESPrivacyProvider.LegacyDecrypt(key, iv, encrypted);
+                Assert.Equal(data, decrypted);
+            }
+
+            {
+                var encrypted1 = TripleDESPrivacyProvider.LegacyEncrypt(key, iv, data);
+                var encrypted2 = TripleDESPrivacyProvider.Net6Encrypt(key, iv, data);
+                Assert.Equal(encrypted1, encrypted2);
+            }
+        }
+
+        public static IEnumerable<object[]> Data
+        {
+            get
+            {
+                for (int start = 1; start <= 256; start++)
+                {
+                    yield return new object[] { start * 8 };
+                }
+            }
+        }
+#endif
     }
 }
 #pragma warning restore CS0618 // Type or member is obsolete

@@ -125,53 +125,40 @@ namespace Lextm.SharpSnmpLib.Security
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
             var outKey = GetKey(key);
 
-#if NET6_0
-            using DES des = DES.Create();
-            des.Key = outKey;
-            return des.EncryptCbc(unencryptedData, iv, PaddingMode.Zeros);
-#else
-            var div = (int)Math.Floor(unencryptedData.Length / 8.0);
             if ((unencryptedData.Length % 8) != 0)
             {
-                div += 1;
+                byte[] tmpbuffer = new byte[8 * ((unencryptedData.Length / 8) + 1)];
+                Buffer.BlockCopy(unencryptedData, 0, tmpbuffer, 0, unencryptedData.Length);
+                unencryptedData = tmpbuffer;
             }
+#if NET6_0
+            return Net6Encrypt(outKey, iv, unencryptedData);
+#else
+            return LegacyEncrypt(outKey, iv, unencryptedData);
+#endif
+        }
 
-            var newLength = div * 8;
-            var result = new byte[newLength];
-            var buffer = new byte[newLength];
+#if NET6_0
+        internal static byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
+            using DES des = DES.Create();
+            des.Key = key;
+            return des.EncryptCbc(unencryptedData, iv, PaddingMode.None);
+        }
+#endif
 
-            var inbuffer = new byte[8];
-            var cipherText = iv;
-            var posIn = 0;
-            var posResult = 0;
-            Buffer.BlockCopy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
-
+        internal static byte[] LegacyEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
             using (DES des = DES.Create())
             {
-                des.Mode = CipherMode.ECB;
+                des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.None;
 
-                using (var transform = des.CreateEncryptor(outKey, null))
+                using (var transform = des.CreateEncryptor(key, iv))
                 {
-                    for (var b = 0; b < div; b++)
-                    {
-                        for (var i = 0; i < 8; i++)
-                        {
-                            inbuffer[i] = (byte)(buffer[posIn] ^ cipherText[i]);
-                            posIn++;
-                        }
-
-                        transform.TransformBlock(inbuffer, 0, inbuffer.Length, cipherText, 0);
-                        Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
-                        posResult += cipherText.Length;
-                    }
+                    return transform.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
                 }
-
-                des.Clear();
             }
-
-            return result;
-#endif
         }
 
         /// <summary>
@@ -235,18 +222,30 @@ namespace Lextm.SharpSnmpLib.Security
             // .NET implementation only takes an 8 byte key
             var outKey = new byte[8];
             Buffer.BlockCopy(key, 0, outKey, 0, 8);
+#if NET6_0
+            return Net6Decrypt(outKey, iv, encryptedData);
+#else
+            return LegacyDecrypt(outKey, iv, encryptedData);
+#endif
+        }
 
 #if NET6_0
+        internal static byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        {
             using DES des = DES.Create();
-            des.Key = outKey;
+            des.Key = key;
             return des.DecryptCbc(encryptedData, iv, PaddingMode.Zeros);
-#else
+        }
+#endif
+
+        internal static byte[] LegacyDecrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        {
             using (DES des = DES.Create())
             {
                 des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.Zeros;
 
-                des.Key = outKey;
+                des.Key = key;
                 des.IV = iv;
                 using (var transform = des.CreateDecryptor())
                 {
@@ -255,7 +254,6 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
-#endif
         }
 
         /// <summary>
