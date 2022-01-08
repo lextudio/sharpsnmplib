@@ -19,7 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -49,6 +48,16 @@ namespace Lextm.SharpSnmpLib.Security
 #endif
             }
         }
+
+#if NET6_0
+        /// <summary>
+        /// Flag to force using legacy encryption/decryption code on .NET 6.
+        /// </summary>
+        public static bool UseLegacy { get; set; }
+#endif
+        /// <summary>
+        /// Flag to force using old ECB cipher mode encryption.
+        public static bool UseEcbEncryption { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DESPrivacyProvider"/> class.
@@ -125,6 +134,11 @@ namespace Lextm.SharpSnmpLib.Security
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
             var outKey = GetKey(key);
 
+            if (UseEcbEncryption)
+            {
+                return EcbEncrypt(outKey, iv, unencryptedData);
+            }
+
             if ((unencryptedData.Length % 8) != 0)
             {
                 byte[] tmpbuffer = new byte[8 * ((unencryptedData.Length / 8) + 1)];
@@ -132,7 +146,7 @@ namespace Lextm.SharpSnmpLib.Security
                 unencryptedData = tmpbuffer;
             }
 #if NET6_0
-            return Net6Encrypt(outKey, iv, unencryptedData);
+            return UseLegacy ? LegacyEncrypt(outKey, iv, unencryptedData) : Net6Encrypt(outKey, iv, unencryptedData);
 #else
             return LegacyEncrypt(outKey, iv, unencryptedData);
 #endif
@@ -159,6 +173,51 @@ namespace Lextm.SharpSnmpLib.Security
                     return transform.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
                 }
             }
+        }
+
+        internal static byte[] EcbEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
+            var div = (int)Math.Floor(unencryptedData.Length / 8.0);
+            if ((unencryptedData.Length % 8) != 0)
+            {
+                div += 1;
+            }
+
+            var newLength = div * 8;
+            var result = new byte[newLength];
+            var buffer = new byte[newLength];
+
+            var inbuffer = new byte[8];
+            var cipherText = iv;
+            var posIn = 0;
+            var posResult = 0;
+            Buffer.BlockCopy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
+
+            using (DES des = DES.Create())
+            {
+                des.Mode = CipherMode.ECB;
+                des.Padding = PaddingMode.None;
+
+                using (var transform = des.CreateEncryptor(key, null))
+                {
+                    for (var b = 0; b < div; b++)
+                    {
+                        for (var i = 0; i < 8; i++)
+                        {
+                            inbuffer[i] = (byte)(buffer[posIn] ^ cipherText[i]);
+                            posIn++;
+                        }
+
+                        transform.TransformBlock(inbuffer, 0, inbuffer.Length, cipherText, 0);
+                        Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
+                        posResult += cipherText.Length;
+                    }
+                }
+
+                des.Clear();
+            }
+
+            return result;
         }
 
         /// <summary>

@@ -91,20 +91,16 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             var provider = new AES192PrivacyProvider(OctetString.Empty, new MD5AuthenticationProvider(new OctetString("authentication")));
             {
                 var encrypted = provider.LegacyEncrypt(key, iv, data);
+                Assert.Equal(length, encrypted.Length);
                 var decrypted = provider.Net6Decrypt(key, iv, encrypted);
                 Assert.Equal(data, decrypted);
             }
 
             {
                 var encrypted = provider.Net6Encrypt(key, iv, data);
+                Assert.Equal(length, encrypted.Length);
                 var decrypted = provider.LegacyDecrypt(key, iv, encrypted);
                 Assert.Equal(data, decrypted);
-            }
-
-            {
-                var encrypted1 = provider.LegacyEncrypt(key, iv, data);
-                var encrypted2 = provider.Net6Encrypt(key, iv, data);
-                Assert.Equal(encrypted1, encrypted2);
             }
         }
 
@@ -114,7 +110,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             {
                 for (int start = 1; start <= 256; start++)
                 {
-                    yield return new object[] { start * 16 };
+                    yield return new object[] { start * 8 };
                 }
             }
         }

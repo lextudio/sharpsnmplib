@@ -34,6 +34,12 @@ namespace Lextm.SharpSnmpLib.Security
     [Obsolete("3DES is no longer secure. Please use a more secure provider.")]
     public sealed class TripleDESPrivacyProvider : IPrivacyProvider
     {
+#if NET6_0
+        /// <summary>
+        /// Flag to force using legacy encryption/decryption code on .NET 6.
+        /// </summary>
+        public static bool UseLegacy { get; set; }
+#endif
         private readonly SaltGenerator _salt = new();
         private readonly OctetString _phrase;
 
@@ -116,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Security
                 unencryptedData = tmpbuffer;
             }
 #if NET6_0
-            return Net6Encrypt(outKey, iv, unencryptedData);
+            return UseLegacy ? LegacyEncrypt(outKey, iv, unencryptedData) : Net6Encrypt(outKey, iv, unencryptedData);
 #else
             return LegacyEncrypt(outKey, iv, unencryptedData);
 #endif
@@ -196,7 +202,7 @@ namespace Lextm.SharpSnmpLib.Security
             var outKey = GetKey(key);
 
 #if NET6_0
-            return Net6Decrypt(outKey, iv, encryptedData);
+            return UseLegacy ? LegacyDecrypt(outKey, iv, encryptedData) : Net6Decrypt(outKey, iv, encryptedData);
 #else
             return LegacyDecrypt(outKey, iv, encryptedData);
 #endif

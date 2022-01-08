@@ -29,7 +29,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
 namespace Lextm.SharpSnmpLib.Security
@@ -60,6 +59,13 @@ namespace Lextm.SharpSnmpLib.Security
 #endif
             }
         }
+
+#if NET6_0
+        /// <summary>
+        /// Flag to force using legacy encryption/decryption code on .NET 6.
+        /// </summary>
+        public static bool UseLegacy { get; set; }
+#endif
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AESPrivacyProviderBase"/> class.
@@ -137,35 +143,10 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException(nameof(unencryptedData));
             }
 
-            var iv = new byte[16];
-
-            // Set privacy parameters to the local 64 bit salt value
-            var bootsBytes = BitConverter.GetBytes(engineBoots);
-            iv[0] = bootsBytes[3];
-            iv[1] = bootsBytes[2];
-            iv[2] = bootsBytes[1];
-            iv[3] = bootsBytes[0];
-            var timeBytes = BitConverter.GetBytes(engineTime);
-            iv[4] = timeBytes[3];
-            iv[5] = timeBytes[2];
-            iv[6] = timeBytes[1];
-            iv[7] = timeBytes[0];
-
-            // Copy salt value to the iv array
-            Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
-
-            // make sure we have the right key length
-            var pkey = new byte[MinimumKeyLength];
-            Buffer.BlockCopy(key, 0, pkey, 0, MinimumKeyLength);
-
-            if ((unencryptedData.Length % 16) != 0)
-            {
-                byte[] tmpbuffer = new byte[16 * ((unencryptedData.Length / 16) + 1)];
-                Buffer.BlockCopy(unencryptedData, 0, tmpbuffer, 0, unencryptedData.Length);
-                unencryptedData = tmpbuffer;
-            }
+            var iv = GetIV(engineBoots, engineTime, privacyParameters);
+            var pkey = GetKey(key);
 #if NET6_0
-            return Net6Encrypt(pkey, iv, unencryptedData);
+            return UseLegacy ? LegacyEncrypt(pkey, iv, unencryptedData) : Net6Encrypt(pkey, iv, unencryptedData);
 #else
             return LegacyEncrypt(pkey, iv, unencryptedData);
 #endif
@@ -176,7 +157,18 @@ namespace Lextm.SharpSnmpLib.Security
         {
             using Aes aes = Aes.Create();
             aes.Key = key;
-            return aes.EncryptCfb(unencryptedData, iv, PaddingMode.None, 128);
+            var encryptedData = aes.EncryptCfb(unencryptedData, iv, PaddingMode.Zeros, 128);
+            
+            // check if encrypted data is the same length as source data
+            if (encryptedData.Length != unencryptedData.Length)
+            {
+                // cut out the padding
+                var tmp = new byte[unencryptedData.Length];
+                Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
+                return tmp;
+            }
+
+            return encryptedData;
         }
 #endif
 
@@ -200,7 +192,18 @@ namespace Lextm.SharpSnmpLib.Security
                 rm.IV = iv;
                 using (var cryptor = rm.CreateEncryptor())
                 {
-                    return cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+                    var encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+
+                    // check if encrypted data is the same length as source data
+                    if (encryptedData.Length != unencryptedData.Length)
+                    {
+                        // cut out the padding
+                        var tmp = new byte[unencryptedData.Length];
+                        Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
+                        return tmp;
+                    }
+
+                    return encryptedData;
                 }
             }
         }
@@ -239,30 +242,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentOutOfRangeException(nameof(key), "Invalid key length.");
             }
 
-            var iv = new byte[16];
-            var bootsBytes = BitConverter.GetBytes(engineBoots);
-            iv[0] = bootsBytes[3];
-            iv[1] = bootsBytes[2];
-            iv[2] = bootsBytes[1];
-            iv[3] = bootsBytes[0];
-            var timeBytes = BitConverter.GetBytes(engineTime);
-            iv[4] = timeBytes[3];
-            iv[5] = timeBytes[2];
-            iv[6] = timeBytes[1];
-            iv[7] = timeBytes[0];
+            var iv = GetIV(engineBoots, engineTime, privacyParameters);
 
-            // Copy salt value to the iv array
-            Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
-
-            var finalKey = key;
-            if (key.Length > KeyBytes)
-            {
-                var normKey = new byte[KeyBytes];
-                Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
-                finalKey = normKey;
-            }
+            var finalKey = GetKey(key);
 #if NET6_0
-            return Net6Decrypt(finalKey, iv, encryptedData);
+            return UseLegacy ? LegacyDecrypt(finalKey, iv, encryptedData) : Net6Decrypt(finalKey, iv, encryptedData);
 #else
             return LegacyDecrypt(finalKey, iv, encryptedData);
 #endif
@@ -273,6 +257,21 @@ namespace Lextm.SharpSnmpLib.Security
         {
             using Aes aes = Aes.Create();
             aes.Key = key;
+            if ((encryptedData.Length % MinimalBlockSize) != 0)
+            {
+                var buffer = new byte[encryptedData.Length];
+                Buffer.BlockCopy(encryptedData, 0, buffer, 0, encryptedData.Length);
+                var div = buffer.Length / MinimalBlockSize;
+                var newLength = (div + 1) * MinimalBlockSize;
+                var decryptBuffer = new byte[newLength];
+                Buffer.BlockCopy(buffer, 0, decryptBuffer, 0, buffer.Length);
+                var decryptedData = aes.DecryptCfb(decryptBuffer, iv, PaddingMode.Zeros, 128);
+
+                // now remove padding
+                Buffer.BlockCopy(decryptedData, 0, buffer, 0, encryptedData.Length);
+                return buffer;
+            }
+
             return aes.DecryptCfb(encryptedData, iv, PaddingMode.Zeros, 128);
         }
 #endif
@@ -298,12 +297,12 @@ namespace Lextm.SharpSnmpLib.Security
                 {
                     // We need to make sure that cryptedData is a collection of 128 byte blocks
                     byte[] decryptedData;
-                    if ((encryptedData.Length % KeyBytes) != 0)
+                    if ((encryptedData.Length % MinimalBlockSize) != 0)
                     {
                         var buffer = new byte[encryptedData.Length];
                         Buffer.BlockCopy(encryptedData, 0, buffer, 0, encryptedData.Length);
-                        var div = (int)Math.Floor(buffer.Length / (double)16);
-                        var newLength = (div + 1) * 16;
+                        var div = buffer.Length / MinimalBlockSize;
+                        var newLength = (div + 1) * MinimalBlockSize;
                         var decryptBuffer = new byte[newLength];
                         Buffer.BlockCopy(buffer, 0, decryptBuffer, 0, buffer.Length);
                         decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
@@ -451,6 +450,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The key bytes.</value>
         public int KeyBytes { get; private set; } = 16;
 
+        private const int MinimalBlockSize = 16;
+
         /// <summary>
         /// Passwords to key.
         /// </summary>
@@ -469,6 +470,37 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
 #endregion
+
+        private byte[] GetKey(byte[] key)
+        {
+            if (key.Length > KeyBytes)
+            {
+                var normKey = new byte[KeyBytes];
+                Buffer.BlockCopy(key, 0, normKey, 0, KeyBytes);
+                return normKey;
+            }
+
+            return key;
+        }
+
+        private byte[] GetIV(int engineBoots, int engineTime, byte[] privacyParameters)
+        {
+            var iv = new byte[16];
+            var bootsBytes = BitConverter.GetBytes(engineBoots);
+            iv[0] = bootsBytes[3];
+            iv[1] = bootsBytes[2];
+            iv[2] = bootsBytes[1];
+            iv[3] = bootsBytes[0];
+            var timeBytes = BitConverter.GetBytes(engineTime);
+            iv[4] = timeBytes[3];
+            iv[5] = timeBytes[2];
+            iv[6] = timeBytes[1];
+            iv[7] = timeBytes[0];
+
+            // Copy salt value to the iv array
+            Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
+            return iv;
+        }
 
         /// <summary>
         /// Some protocols support a method to extend the encryption or decryption key when supplied key
