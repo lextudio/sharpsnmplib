@@ -8,6 +8,7 @@
  */
 
 using System;
+using System.IO;
 using System.Text;
 using Xunit;
 
@@ -26,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestException()
         {
+            Assert.Throws<ArgumentNullException>(() => new OctetString(null, (Stream)null));
             Assert.Throws<ArgumentNullException>(() => new OctetString(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
             Assert.Throws<ArgumentNullException>(() => new OctetString((byte[])null));
             Assert.Throws<ArgumentNullException>(() => OctetString.Empty.ToString(null));
@@ -68,10 +70,10 @@ namespace Lextm.SharpSnmpLib.Unit
             var right = new OctetString("public");
             Assert.Equal(left, right);
             Assert.True(left != OctetString.Empty);
-// ReSharper disable EqualExpressionComparison
             Assert.True(left == left);
-// ReSharper restore EqualExpressionComparison
 
+            var content = "public";
+            Assert.False(left.Equals(content));
         }
 
         [Fact]
@@ -84,6 +86,10 @@ namespace Lextm.SharpSnmpLib.Unit
         public void TestEmpty()
         {
             Assert.Equal("", OctetString.Empty.ToString());
+
+            Assert.True(OctetString.IsNullOrEmpty(OctetString.Empty));
+            Assert.True(OctetString.IsNullOrEmpty(null));
+            Assert.False(OctetString.IsNullOrEmpty(new OctetString("something")));
         }
         
         [Fact]

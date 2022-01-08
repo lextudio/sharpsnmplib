@@ -45,7 +45,6 @@ namespace Lextm.SharpSnmpLib.Unit
             byte[] buffer2 = new byte[] {01, 44};
             Gauge32 c2 = new Gauge32(buffer2);
             Assert.Equal(300U, c2.ToUInt32());
-
             
             byte[] buffer1 = new byte[] {13};
             Gauge32 c1 = new Gauge32(buffer1);
@@ -66,6 +65,10 @@ namespace Lextm.SharpSnmpLib.Unit
             byte[] buffer0 = new byte[] {0};
             Gauge32 c0 = new Gauge32(buffer0);
             Assert.Equal(uint.MinValue, c0.ToUInt32());
+
+            var longValue = long.MinValue;
+            Gauge32 longGauge = new Gauge32(longValue);
+            Assert.Equal(uint.MinValue, longGauge.ToUInt32());
         }
         
         [Fact]
