@@ -157,18 +157,22 @@ namespace Lextm.SharpSnmpLib.Security
         {
             using Aes aes = Aes.Create();
             aes.Key = key;
-            var encryptedData = aes.EncryptCfb(unencryptedData, iv, PaddingMode.Zeros, 128);
+
+            var length = (unencryptedData.Length % MinimalBlockSize == 0) 
+                ? unencryptedData.Length
+                : ((unencryptedData.Length / MinimalBlockSize) + 1) * MinimalBlockSize;
+            var result = new byte[length];
+            var buffer = result.AsSpan();
+            var encryptedData = aes.EncryptCfb(unencryptedData.AsSpan(), iv.AsSpan(), buffer, PaddingMode.Zeros, 128);
             
             // check if encrypted data is the same length as source data
-            if (encryptedData.Length != unencryptedData.Length)
+            if (encryptedData != unencryptedData.Length)
             {
                 // cut out the padding
-                var tmp = new byte[unencryptedData.Length];
-                Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
-                return tmp;
+                return buffer.Slice(0, unencryptedData.Length).ToArray();
             }
 
-            return encryptedData;
+            return result;
         }
 #endif
 
@@ -259,17 +263,15 @@ namespace Lextm.SharpSnmpLib.Security
             aes.Key = key;
             if ((encryptedData.Length % MinimalBlockSize) != 0)
             {
-                var buffer = new byte[encryptedData.Length];
-                Buffer.BlockCopy(encryptedData, 0, buffer, 0, encryptedData.Length);
-                var div = buffer.Length / MinimalBlockSize;
+                var div = encryptedData.Length / MinimalBlockSize;
                 var newLength = (div + 1) * MinimalBlockSize;
                 var decryptBuffer = new byte[newLength];
-                Buffer.BlockCopy(buffer, 0, decryptBuffer, 0, buffer.Length);
-                var decryptedData = aes.DecryptCfb(decryptBuffer, iv, PaddingMode.Zeros, 128);
+                Buffer.BlockCopy(encryptedData, 0, decryptBuffer, 0, encryptedData.Length);
+                var buffer = new byte[newLength].AsSpan();
+                var decryptedData = aes.DecryptCfb(decryptBuffer.AsSpan(), iv.AsSpan(), buffer, PaddingMode.Zeros, 128);
 
                 // now remove padding
-                Buffer.BlockCopy(decryptedData, 0, buffer, 0, encryptedData.Length);
-                return buffer;
+                return buffer.Slice(0, encryptedData.Length).ToArray();
             }
 
             return aes.DecryptCfb(encryptedData, iv, PaddingMode.Zeros, 128);
@@ -299,15 +301,14 @@ namespace Lextm.SharpSnmpLib.Security
                     byte[] decryptedData;
                     if ((encryptedData.Length % MinimalBlockSize) != 0)
                     {
-                        var buffer = new byte[encryptedData.Length];
-                        Buffer.BlockCopy(encryptedData, 0, buffer, 0, encryptedData.Length);
-                        var div = buffer.Length / MinimalBlockSize;
+                        var div = encryptedData.Length / MinimalBlockSize;
                         var newLength = (div + 1) * MinimalBlockSize;
                         var decryptBuffer = new byte[newLength];
-                        Buffer.BlockCopy(buffer, 0, decryptBuffer, 0, buffer.Length);
+                        Buffer.BlockCopy(encryptedData, 0, decryptBuffer, 0, encryptedData.Length);
                         decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
 
                         // now remove padding
+                        var buffer = new byte[encryptedData.Length];
                         Buffer.BlockCopy(decryptedData, 0, buffer, 0, encryptedData.Length);
                         return buffer;
                     }
