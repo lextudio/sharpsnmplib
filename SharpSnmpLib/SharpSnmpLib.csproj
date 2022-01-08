@@ -28,7 +28,7 @@
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <AssemblyVersion>12.5.0.0</AssemblyVersion>
     <FileVersion>12.5.0.0</FileVersion>
-    <Version>12.5.0-beta3</Version>
+    <Version>12.5.0-beta4</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AndroidUseIntermediateDesignerFile>False</AndroidUseIntermediateDesignerFile>
