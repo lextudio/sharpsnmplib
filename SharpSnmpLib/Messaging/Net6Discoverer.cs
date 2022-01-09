@@ -253,6 +253,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                     return;
                 }
 
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 try
                 {
                     EndPoint remote = new IPEndPoint(IPAddress.Any, 0);

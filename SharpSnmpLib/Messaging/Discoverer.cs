@@ -338,7 +338,13 @@ namespace Lextm.SharpSnmpLib.Messaging
 #if NET6_0
                 var source = new CancellationTokenSource();
                 source.CancelAfter(interval);
-                await ReceiveAsync(udp, source.Token); // TODO: any exception to handle?
+                try
+                {
+                    await ReceiveAsync(udp, source.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                }
 #else
                 await Task.WhenAny(
                     ReceiveAsync(udp),
