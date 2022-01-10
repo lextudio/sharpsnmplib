@@ -10,6 +10,7 @@ _ReSharper*
 *.trx
 *.pidb
 *.nupkg
+*.snupkg
 Thumbs.db
 [Bb]in
 [Dd]ebug
