@@ -35,12 +35,11 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Report PDU.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public sealed class ReportPdu : ISnmpPdu
     {
         private readonly Sequence _varbindSection;
-        private readonly byte[] _length;
-        private byte[] _raw;
+        private readonly byte[]? _length;
+        private byte[]? _raw;
 
         /// <summary>
         /// Creates a <see cref="ReportPdu"/> with all contents.
@@ -51,15 +50,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables</param>
         public ReportPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
-
             RequestId = new Integer32(requestId);
             ErrorStatus = new Integer32((int)errorStatus);
             ErrorIndex = new Integer32(errorIndex);
-            Variables = variables;
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
             _varbindSection = Variable.Transform(variables);
         }
 

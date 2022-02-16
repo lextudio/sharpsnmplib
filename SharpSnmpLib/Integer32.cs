@@ -46,15 +46,14 @@ namespace Lextm.SharpSnmpLib
         : ISnmpData, IEquatable<Integer32>
     {
         private readonly int _int;
-        private readonly byte[] _length;
-        
+        private readonly byte[]? _length;
+
         /// <summary>
         /// Zero.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
-        public static readonly Integer32 Zero = new Integer32(0);
+        public static readonly Integer32 Zero = new(0);
 
-        private byte[] _raw;
+        private byte[]? _raw;
 
         /// <summary>
         /// Creates an <see cref="Integer32"/> instance.
@@ -166,7 +165,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(stream));
             }
             
-            stream.AppendBytes(TypeCode, _length, _raw ?? (_raw = ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0)));
+            stream.AppendBytes(TypeCode, _length, _raw ??= ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
         }
 
         /// <summary>
@@ -184,7 +183,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="Integer32"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="Integer32"/>; otherwise, <value>false</value>.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(this, obj as Integer32);
         }
@@ -195,7 +194,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
         /// </returns>
-        public bool Equals(Integer32 other)
+        public bool Equals(Integer32? other)
         {
             return Equals(this, other);
         }
@@ -207,7 +206,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Integer32"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool operator ==(Integer32 left, Integer32 right)
+        public static bool operator ==(Integer32? left, Integer32? right)
         {
             return Equals(left, right);
         }
@@ -219,7 +218,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Integer32"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool operator !=(Integer32 left, Integer32 right)
+        public static bool operator !=(Integer32? left, Integer32? right)
         {
             return !(left == right);
         }
@@ -231,10 +230,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="Integer32"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        private static bool Equals(Integer32 left, Integer32 right)
+        private static bool Equals(Integer32? left, Integer32? right)
         {
-            object lo = left;
-            object ro = right;
+            object? lo = left;
+            object? ro = right;
             if (lo == ro)
             {
                 return true;
@@ -245,7 +244,7 @@ namespace Lextm.SharpSnmpLib
                 return false;
             }
             
-            return left.ToInt32() == right.ToInt32();
+            return left!.ToInt32() == right!.ToInt32();
         }
     }
     

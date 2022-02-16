@@ -35,12 +35,11 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// GETBULK request PDU.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public sealed class GetBulkRequestPdu : ISnmpPdu
     {
-        private byte[] _raw;
+        private byte[]? _raw;
         private readonly Sequence _varbindSection;
-        private readonly byte[] _length;
+        private readonly byte[]? _length;
 
         /// <summary>
         /// Creates a <see cref="GetBulkRequestPdu"/> with all contents.
@@ -51,15 +50,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables.</param>
         public GetBulkRequestPdu(int requestId, int nonRepeaters, int maxRepetitions, IList<Variable> variables)
         {
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
-
             RequestId = new Integer32(requestId);
             ErrorStatus = new Integer32(nonRepeaters);
             ErrorIndex = new Integer32(maxRepetitions);
-            Variables = variables;
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
             _varbindSection = Variable.Transform(variables);
         }
 

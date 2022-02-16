@@ -19,7 +19,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -29,10 +28,10 @@ namespace Lextm.SharpSnmpLib.Security
     /// Privacy provider for DES.
     /// </summary>
     /// <remarks>Ported from SNMP#NET PrivacyDES class.</remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DES", Justification = "definition")]
+    [Obsolete("DES is no longer secure. Please use a more secure provider.")]
     public sealed class DESPrivacyProvider : IPrivacyProvider
     {
-        private readonly SaltGenerator _salt = new SaltGenerator();
+        private readonly SaltGenerator _salt = new();
         private readonly OctetString _phrase;
 
         /// <summary>
@@ -42,13 +41,23 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-#if NETSTANDARD2_0 || NETSTANDARD2_1
-                return false;
+#if NETSTANDARD2_0
+                return Helper.DESSupported;
 #else
                 return true;
 #endif
             }
         }
+
+#if NET6_0
+        /// <summary>
+        /// Flag to force using legacy encryption/decryption code on .NET 6.
+        /// </summary>
+        public static bool UseLegacy { get; set; }
+#endif
+        /// <summary>
+        /// Flag to force using old ECB cipher mode encryption.
+        public static bool UseEcbEncryption { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DESPrivacyProvider"/> class.
@@ -57,11 +66,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="auth">The authentication provider.</param>
         public DESPrivacyProvider(OctetString phrase, IAuthenticationProvider auth)
         {
-            if (phrase == null)
-            {
-                throw new ArgumentNullException(nameof(phrase));
-            }
-
             if (auth == null)
             {
                 throw new ArgumentNullException(nameof(auth));
@@ -73,7 +77,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("If authentication is off, then privacy cannot be used.", nameof(auth));
             }
 
-            _phrase = phrase;
+            _phrase = phrase ?? throw new ArgumentNullException(nameof(phrase));
             AuthenticationProvider = auth;
         }
 
@@ -82,14 +86,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
 
-        [Obsolete("Use EngineIds instead.")]
-        public OctetString EngineId { get; set; }
-
         /// <summary>
         /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public ICollection<OctetString> EngineIds { get; set; }
+        public ICollection<OctetString>? EngineIds { get; set; }
 
         /// <summary>
         /// Encrypt scoped PDU using DES encryption protocol
@@ -103,9 +104,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// <exception cref="ArgumentOutOfRangeException">Thrown when encryption key is null or length of the encryption key is too short.</exception>
         public static byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
         {
-#if NETSTANDARD2_0 || NETSTANDARD2_1
-            throw new PlatformNotSupportedException();
-#else
+            if (!IsSupported)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
             if (unencryptedData == null)
             {
                 throw new ArgumentNullException(nameof(unencryptedData));
@@ -131,6 +134,49 @@ namespace Lextm.SharpSnmpLib.Security
             // DES uses 8 byte keys but we need 16 to encrypt ScopedPdu. Get first 8 bytes and use them as encryption key
             var outKey = GetKey(key);
 
+            if (UseEcbEncryption)
+            {
+                return EcbEncrypt(outKey, iv, unencryptedData);
+            }
+
+            if ((unencryptedData.Length % 8) != 0)
+            {
+                byte[] tmpbuffer = new byte[8 * ((unencryptedData.Length / 8) + 1)];
+                Buffer.BlockCopy(unencryptedData, 0, tmpbuffer, 0, unencryptedData.Length);
+                unencryptedData = tmpbuffer;
+            }
+#if NET6_0
+            return UseLegacy ? LegacyEncrypt(outKey, iv, unencryptedData) : Net6Encrypt(outKey, iv, unencryptedData);
+#else
+            return LegacyEncrypt(outKey, iv, unencryptedData);
+#endif
+        }
+
+#if NET6_0
+        internal static byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
+            using DES des = DES.Create();
+            des.Key = key;
+            return des.EncryptCbc(unencryptedData, iv, PaddingMode.None);
+        }
+#endif
+
+        internal static byte[] LegacyEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
+            using (DES des = DES.Create())
+            {
+                des.Mode = CipherMode.CBC;
+                des.Padding = PaddingMode.None;
+
+                using (var transform = des.CreateEncryptor(key, iv))
+                {
+                    return transform.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+                }
+            }
+        }
+
+        internal static byte[] EcbEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        {
             var div = (int)Math.Floor(unencryptedData.Length / 8.0);
             if ((unencryptedData.Length % 8) != 0)
             {
@@ -152,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Security
                 des.Mode = CipherMode.ECB;
                 des.Padding = PaddingMode.None;
 
-                using (var transform = des.CreateEncryptor(outKey, null))
+                using (var transform = des.CreateEncryptor(key, null))
                 {
                     for (var b = 0; b < div; b++)
                     {
@@ -172,7 +218,6 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             return result;
-#endif
         }
 
         /// <summary>
@@ -187,9 +232,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// argument is null or length other then 8 bytes</exception>
         public static byte[] Decrypt(byte[] encryptedData, byte[] key, byte[] privacyParameters)
         {
-#if NETSTANDARD2_0 || NETSTANDARD2_1
-            throw new PlatformNotSupportedException();
-#else
+            if (!IsSupported)
+            {
+                throw new PlatformNotSupportedException();
+            }
+
             if (encryptedData == null)
             {
                 throw new ArgumentNullException(nameof(encryptedData));
@@ -231,16 +278,33 @@ namespace Lextm.SharpSnmpLib.Security
                 iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
             }
 
+            // .NET implementation only takes an 8 byte key
+            var outKey = new byte[8];
+            Buffer.BlockCopy(key, 0, outKey, 0, 8);
+#if NET6_0
+            return Net6Decrypt(outKey, iv, encryptedData);
+#else
+            return LegacyDecrypt(outKey, iv, encryptedData);
+#endif
+        }
+
+#if NET6_0
+        internal static byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        {
+            using DES des = DES.Create();
+            des.Key = key;
+            return des.DecryptCbc(encryptedData, iv, PaddingMode.Zeros);
+        }
+#endif
+
+        internal static byte[] LegacyDecrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        {
             using (DES des = DES.Create())
             {
                 des.Mode = CipherMode.CBC;
                 des.Padding = PaddingMode.Zeros;
 
-                // .NET implementation only takes an 8 byte key
-                var outKey = new byte[8];
-                Buffer.BlockCopy(key, 0, outKey, 0, 8);
-
-                des.Key = outKey;
+                des.Key = key;
                 des.IV = iv;
                 using (var transform = des.CreateDecryptor())
                 {
@@ -249,7 +313,6 @@ namespace Lextm.SharpSnmpLib.Security
                     return decryptedData;
                 }
             }
-#endif
         }
 
         /// <summary>
@@ -349,6 +412,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException($"Cannot decrypt the scope data: {code}.", nameof(data));
             }
 
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
+            }
+
             var octets = (OctetString)data;
             var bytes = octets.GetRaw();
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
@@ -356,7 +424,7 @@ namespace Lextm.SharpSnmpLib.Security
             try
             {
                 // decode encrypted packet
-                var decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());            
+                var decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters!.GetRaw());            
                 var result = DataFactory.CreateSnmpData(decrypted);
                 if (result.TypeCode != SnmpType.Sequence)
                 {
@@ -398,6 +466,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }
 
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
+            }
+
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
             var reminder = bytes.Length % 8;
@@ -413,7 +486,7 @@ namespace Lextm.SharpSnmpLib.Security
                 bytes = stream.ToArray();
             }
 
-            var encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters.GetRaw());
+            var encrypted = Encrypt(bytes, pkey, parameters.PrivacyParameters!.GetRaw());
             return new OctetString(encrypted);
         }
 

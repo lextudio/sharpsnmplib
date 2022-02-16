@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
-#pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Unit
 {
     public class ByteToolTestFixture
@@ -22,6 +21,8 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             Assert.Throws<ArgumentNullException>(() => ByteTool.GetRawBytes(null, true));
             Assert.Throws<ArgumentNullException>(() => ByteTool.ConvertDecimal(null));
+            var decimalException = Assert.Throws<ArgumentException>(() => ByteTool.ConvertDecimal("XXX YYY"));
+            Assert.StartsWith("Invalid decimal string.", decimalException.Message);
             Assert.Throws<ArgumentNullException>(() => ByteTool.Convert((byte[])null));
             Assert.Throws<ArgumentNullException>(() => ByteTool.ParseItems(null));
             Assert.Throws<ArgumentException>(() => ByteTool.ParseItems((ISnmpData)null));
@@ -29,6 +30,8 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Throws<ArgumentNullException>(() => ByteTool.Convert((string)null));
             Assert.Throws<ArgumentException>(() => ByteTool.Convert("**"));
             Assert.Throws<ArgumentException>(() => ByteTool.Convert("8AB"));
+            var hexException = Assert.Throws<ArgumentException>(() => ByteTool.Convert("YY"));
+            Assert.StartsWith("Invalid byte string.", hexException.Message);
             Assert.Throws<ArgumentException>(() => (-1).WritePayloadLength());
             Assert.Throws<ArgumentNullException>(() => ByteTool.PackMessage(null, VersionCode.V3, null, null, null));
             Assert.Throws<ArgumentNullException>(
@@ -64,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Unit
             const int length = 102;
             const byte expect = 0x66;
             var array = length.WritePayloadLength();
-            Assert.Equal(1, array.Length);
+            Assert.Single(array);
             Assert.Equal(expect, array[0]);
         }
         
@@ -90,4 +93,3 @@ namespace Lextm.SharpSnmpLib.Unit
         }
     }
 }
-#pragma warning restore 1591, 0618

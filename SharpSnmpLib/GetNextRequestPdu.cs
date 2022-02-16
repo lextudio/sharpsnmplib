@@ -35,12 +35,11 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// GETNEXT request PDU.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public sealed class GetNextRequestPdu : ISnmpPdu
     {
         private readonly Sequence _varbindSection;
-        private readonly byte[] _length;
-        private byte[] _raw;
+        private readonly byte[]? _length;
+        private byte[]? _raw;
 
         /// <summary>
         /// Creates a <see cref="GetNextRequestPdu"/> with all contents.
@@ -49,15 +48,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variables</param>
         public GetNextRequestPdu(int requestId, IList<Variable> variables)
         {
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
-
             RequestId = new Integer32(requestId);
             ErrorStatus = Integer32.Zero;
             ErrorIndex = Integer32.Zero;
-            Variables = variables;
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
             _varbindSection = Variable.Transform(variables);
         }
 

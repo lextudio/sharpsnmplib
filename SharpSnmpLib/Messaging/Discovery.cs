@@ -38,12 +38,12 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Discovery class that participates in SNMP v3 discovery process.
     /// </summary>
-    public sealed class Discovery
+    public sealed partial class Discovery
     {
         private readonly ISnmpMessage _discovery;
-        private static readonly UserRegistry Empty = new UserRegistry();
+        private static readonly UserRegistry Empty = new();
         private static readonly SecurityParameters DefaultSecurityParameters =
-            new SecurityParameters(
+            new(
                 OctetString.Empty,
                 Integer32.Zero,
                 Integer32.Zero,
@@ -186,6 +186,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">The receiver.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
+        #endif
         public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
         {
             if (receiver == null)
@@ -204,6 +207,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="receiver">The receiver.</param>
         /// <returns></returns>
+        #if NET6_0 || NET5_0
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
+        #endif
         public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver)
         {
             if (receiver == null)

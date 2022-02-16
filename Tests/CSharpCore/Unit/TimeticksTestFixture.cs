@@ -18,6 +18,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestException()
         {
+            Assert.Throws<ArgumentNullException>(() => new TimeTicks(null, null));
             Assert.Throws<ArgumentNullException>(() => new TimeTicks(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));   
             Assert.Throws<ArgumentNullException>(() => new TimeTicks(0).AppendBytesTo(null));
         }

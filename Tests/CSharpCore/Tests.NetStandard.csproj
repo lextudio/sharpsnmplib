@@ -7,8 +7,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutputType Condition="'$(TargetFramework)'!='net471'">Exe</OutputType>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netcoreapp3.1;netcoreapp3.0;netcoreapp2.1;net471</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netcoreapp3.1;netcoreapp3.0;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '17.0' ">net6.0;net5.0;netcoreapp3.1;net471</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '16.0' ">net5.0;netcoreapp3.1;net471</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '17.0'">net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '16.0'">net5.0;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.resx" />
@@ -25,13 +27,15 @@
     <None Include="sharpsnmplib.tests.snk" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AltCover" Version="8.2.833" />
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Moq" Version="4.14.5" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='net471'">
     <PackageReference Include="System.Net.Sockets" Version="4.3.0" />

@@ -7,8 +7,20 @@ using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
+    /// <summary>
+    /// Extension methods for <see cref="ISnmpMessage"/>.
+    /// </summary>
     public static class SecureMessageExtensions
     {
+        /// <summary>
+        /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
+        /// <param name="connectionTimeout">The time-out value, in milliseconds for how long to wait for a connection</param>
+        /// <param name="responseTimeout">The time-out value, in milliseconds for how long to wait for a response. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="client">The DTLS client</param>
+        /// <returns></returns>
         public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, TimeSpan connectionTimeout, TimeSpan responseTimeout, IPEndPoint receiver, Client client)
         {
             if (request is null)
@@ -35,6 +47,15 @@ namespace Lextm.SharpSnmpLib.Messaging
             return await request.GetSecureResponseAsync(connectionTimeout, responseTimeout, receiver, client, registry).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Sends an  <see cref="ISnmpMessage"/> and handles the response from agent.
+        /// </summary>
+        /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
+        /// <param name="connectionTimeout">The time-out value, in milliseconds for how long to wait for a connection</param>
+        /// <param name="responseTimeout">The time-out value, in milliseconds for how long to wait for a response. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
+        /// <param name="receiver">Agent.</param>
+        /// <param name="client">The DTLS client</param>
+        /// <returns></returns>
         public static async Task<ISnmpMessage> GetSecureResponseAsync(this ISnmpMessage request, int connectionTimeout, int responseTimeout, IPEndPoint receiver, Client client)
         {
             if (request is null)

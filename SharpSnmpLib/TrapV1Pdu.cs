@@ -36,14 +36,13 @@ namespace Lextm.SharpSnmpLib
     /// Trap v1 PDU.
     /// </summary>
     /// <remarks>represents the PDU of trap v1 message.</remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public sealed class TrapV1Pdu : ISnmpPdu
     {
-        private byte[] _raw;
+        private byte[]? _raw;
         private readonly Integer32 _generic;
         private readonly Integer32 _specific;
         private readonly Sequence _varbindSection;
-        private readonly byte[] _length;
+        private readonly byte[]? _length;
 
         /// <summary>
         /// Creates a <see cref="TrapV1Pdu"/> instance with PDU elements.
@@ -71,41 +70,16 @@ namespace Lextm.SharpSnmpLib
         /// <param name="variables">Variable binds</param>
         public TrapV1Pdu(ObjectIdentifier enterprise, IP agent, Integer32 generic, Integer32 specific, TimeTicks timestamp, IList<Variable> variables)
         {
-            if (enterprise == null)
-            {
-                throw new ArgumentNullException(nameof(enterprise));
-            }
-
-            if (agent == null)
-            {
-                throw new ArgumentNullException(nameof(agent));
-            }
-
-            if (generic == null)
-            {
-                throw new ArgumentNullException(nameof(generic));
-            }
-
-            if (specific == null)
-            {
-                throw new ArgumentNullException(nameof(specific));
-            }
-
-            if (timestamp == null)
-            {
-                throw new ArgumentNullException(nameof(timestamp));
-            }
-
             if (variables == null)
             {
                 throw new ArgumentNullException(nameof(variables));
             }
 
-            Enterprise = enterprise;
-            AgentAddress = agent;
-            _generic = generic;
-            _specific = specific;
-            TimeStamp = timestamp;
+            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
+            AgentAddress = agent ?? throw new ArgumentNullException(nameof(agent));
+            _generic = generic ?? throw new ArgumentNullException(nameof(generic));
+            _specific = specific ?? throw new ArgumentNullException(nameof(specific));
+            TimeStamp = timestamp ?? throw new ArgumentNullException(nameof(timestamp));
             _varbindSection = Variable.Transform(variables);
             Variables = variables;
         }
@@ -223,7 +197,6 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Time stamp.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
         public TimeTicks TimeStamp { get; private set; }
 
         /// <summary>

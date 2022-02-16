@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestMethod()
         {
-            Assert.Equal(false, new Null().Equals(null));
+            Assert.False(new Null().Equals(null));
         }
         
         [Fact]

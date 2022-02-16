@@ -89,33 +89,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="needAuthentication">if set to <c>true</c>, authentication is needed.</param>
         /// <param name="length">The length bytes.</param>
-        public ResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, bool needAuthentication, byte[] length)
+        public ResponseMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, bool needAuthentication, byte[]? length)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            if (header == null)
-            {
-                throw new ArgumentNullException(nameof(header));
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             Version = version;
-            Header = header;
-            Parameters = parameters;
-            Scope = scope;
-            Privacy = privacy;
+            Header = header ?? throw new ArgumentNullException(nameof(header));
+            Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            Scope = scope ?? throw new ArgumentNullException(nameof(scope));
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
 
             if (needAuthentication)
             {

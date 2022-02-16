@@ -57,10 +57,13 @@ namespace Lextm.SharpSnmpLib
             var content = description.Trim().Split(new[] { ' ' });
             foreach (var part in content)
             {
-                byte temp;
-                if (byte.TryParse(part, out temp))
+                if (byte.TryParse(part, out byte temp))
                 {
                     result.Add(temp);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid decimal string.", nameof(description));
                 }
             }
 
@@ -94,10 +97,13 @@ namespace Lextm.SharpSnmpLib
                 {
                     continue;
                 }
-                byte temp;
-                if (byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out temp))
+                if (byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out byte temp))
                 {
                     result.Add(temp);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid byte string.", nameof(description));
                 }
 
                 buffer.Length = 0;
@@ -220,7 +226,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="parameters">Security parameters.</param>
         /// <param name="data">Scope data.</param>
         /// <returns>The <see cref="Sequence" /> object that represents the message body.</returns>
-        public static Sequence PackMessage(byte[] length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
+        public static Sequence PackMessage(byte[]? length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
         {
             if (header == null)
             {
@@ -267,7 +273,7 @@ namespace Lextm.SharpSnmpLib
             while (length > 0)
             {
                 c[j++] = (byte)(length & 0xff);
-                length = length >> 8;
+                length >>= 8;
             }
             
             stream.WriteByte((byte)(0x80 | j));

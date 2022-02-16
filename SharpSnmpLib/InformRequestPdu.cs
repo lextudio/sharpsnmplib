@@ -35,15 +35,14 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// INFORM request PDU.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public sealed class InformRequestPdu : ISnmpPdu
     {
         private readonly uint[] _timeId = new uint[] { 1, 3, 6, 1, 2, 1, 1, 3, 0 };
         private readonly uint[] _enterpriseId = new uint[] { 1, 3, 6, 1, 6, 3, 1, 1, 4, 1, 0 };
         private readonly Sequence _varbindSection;
         private readonly TimeTicks _time;
-        private readonly byte[] _length; 
-        private byte[] _raw;
+        private readonly byte[]? _length; 
+        private byte[]? _raw;
 
         /// <summary>
         /// Creates a <see cref="InformRequestPdu"/> instance with all content.
@@ -55,24 +54,11 @@ namespace Lextm.SharpSnmpLib
         [CLSCompliant(false)]
         public InformRequestPdu(int requestId, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
         {
-            if (enterprise == null)
-            {
-                throw new ArgumentNullException(nameof(enterprise));
-            }
-
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
-
-            Enterprise = enterprise;
+            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
             RequestId = new Integer32(requestId);
             _time = new TimeTicks(time);
-            Variables = variables;
-            IList<Variable> full = new List<Variable>(variables);
-            full.Insert(0, new Variable(_timeId, _time));
-            full.Insert(1, new Variable(_enterpriseId, Enterprise));
-            _varbindSection = Variable.Transform(full);
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
+            _varbindSection = Variable.Transform(Decorate(variables));
         }
 
         /// <summary>
@@ -93,8 +79,6 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length data.</param>
         /// <param name="stream">The stream.</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp1")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "temp2")]
         public InformRequestPdu(Tuple<int, byte[]> length, Stream stream)
         {
             if (length == null)
@@ -108,10 +92,8 @@ namespace Lextm.SharpSnmpLib
             }
 
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream);
-#pragma warning disable 168
             var temp1 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
             var temp2 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
-#pragma warning restore 168
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection);
             if (Variables.Count >= 2)
@@ -176,14 +158,13 @@ namespace Lextm.SharpSnmpLib
         /// Gets the enterprise.
         /// </summary>
         /// <value>The enterprise.</value>
-        public ObjectIdentifier Enterprise { get; private set; }
+        public ObjectIdentifier? Enterprise { get; private set; }
 
         /// <summary>
         /// Gets the time stamp.
         /// </summary>
         /// <value>The time stamp.</value>
         [CLSCompliant(false)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "TimeStamp")]
         public uint TimeStamp
         {
             get { return _time.ToUInt32(); }
@@ -223,6 +204,19 @@ namespace Lextm.SharpSnmpLib
                 Enterprise,
                 _time,
                 Variables.Count.ToString(CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>
+        /// Decorates a list of <see cref="Variable"/> objects with time and enterprise ID.
+        /// </summary>
+        /// <param name="variables">The variables.</param>
+        /// <returns>Decorated list.</returns>
+        public IList<Variable> Decorate(IList<Variable> variables)
+        {
+            var full = new List<Variable>(variables);
+            full.Insert(0, new Variable(_timeId, _time));
+            full.Insert(1, new Variable(_enterpriseId, Enterprise));
+            return full;
         }
     }
 }

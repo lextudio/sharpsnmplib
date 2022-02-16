@@ -24,7 +24,6 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// SNMP PDU.
     /// </summary>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Pdu")]
     public interface ISnmpPdu : ISnmpData
     {
         /// <summary>

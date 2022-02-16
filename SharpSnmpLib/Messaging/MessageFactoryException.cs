@@ -28,9 +28,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.Serialization;
-#if !NETFX_CORE
-//using System.Security.Permissions;
-#endif
+
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
@@ -39,7 +37,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     [DataContract]
     public sealed class MessageFactoryException : SnmpException
     {
-        private byte[] _bytes;
+        private byte[]? _bytes;
         
         /// <summary>
         /// Creates a <see cref="MessageFactoryException"/>.
@@ -69,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the bytes.
         /// </summary>        
-        public byte[] GetBytes()
+        public byte[]? GetBytes()
         {
             return _bytes; 
         }

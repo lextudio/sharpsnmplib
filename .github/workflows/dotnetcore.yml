@@ -1,22 +1,76 @@
 name: .NET Core
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
-  build:
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+    - name: Build
+      shell: bash
+      run: |
+        sudo sysctl -w net.inet.udp.maxdgram=65535
+        export CI=true
+        set -e
+        pwsh -file release.ps1 Release
+    - name: Test
+      shell: pwsh
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
 
-    runs-on: windows-latest
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
+    - name: Build
+      shell: bash
+      run: |
+        dotnet --info
+        set -e
+        sudo pwsh -file patch-winfx.ps1 /home/runner/.dotnet/sdk/3.1.101
+        pwsh -file release.ps1 Release
+    - name: Test
+      shell: pwsh
+      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
+
+  windows:
+
+    runs-on: windows-2022
 
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
     - name: Build
       shell: cmd
-      run: dist.nuget.bat
+      run: build.release.bat
+    - name: Test
+      shell: pwsh
+      run: |
+        dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
+        dotnet tool install --global dotnet-reportgenerator-globaltool
+        reportgenerator -reports:${{ github.workspace }}\Tests\CSharpCore\coverage.net6.0.xml -targetdir:${{ github.workspace }}\TestResults -reporttypes:lcov
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ${{ github.workspace }}\TestResults\lcov.info

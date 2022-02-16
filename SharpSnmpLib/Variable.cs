@@ -65,7 +65,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="data">Data</param>
         /// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
         [CLSCompliant(false)]
-        public Variable(uint[] id, ISnmpData data) : this(new ObjectIdentifier(id), data) 
+        public Variable(uint[] id, ISnmpData? data) : this(new ObjectIdentifier(id), data) 
         { 
         }
         
@@ -75,14 +75,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="id">Object identifier</param>
         /// <param name="data">Data</param>
         /// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
-        public Variable(ObjectIdentifier id, ISnmpData data)
+        public Variable(ObjectIdentifier id, ISnmpData? data)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
+            Id = id ?? throw new ArgumentNullException(nameof(id));
             Data = data ?? new Null();
         }
 

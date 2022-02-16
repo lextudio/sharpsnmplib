@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib
             stream.Read(bytes, 0, length);
         }
 
-        internal static void AppendBytes(this Stream stream, SnmpType typeCode, byte[] length, byte[] raw)
+        internal static void AppendBytes(this Stream stream, SnmpType typeCode, byte[]? length, byte[] raw)
         {
             if (stream == null)
             {

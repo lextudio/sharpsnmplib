@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-#pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Unit
 {
     public class SequenceTestFixture
@@ -21,6 +20,7 @@ namespace Lextm.SharpSnmpLib.Unit
         {
             Assert.Throws<ArgumentNullException>(() => new Sequence((byte[])null, null));
             Assert.Throws<ArgumentNullException>(() => new Sequence((IEnumerable<ISnmpData>) null));
+            Assert.Throws<ArgumentNullException>(() => new Sequence((Tuple<int, byte[]>)null, null));
             Assert.Throws<ArgumentNullException>(() => new Sequence(new Tuple<int, byte[]>(0, new byte[] { 0 }), null));
         }
 
@@ -54,5 +54,3 @@ namespace Lextm.SharpSnmpLib.Unit
         }
     }
 }
-#pragma warning restore 1591
-

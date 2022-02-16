@@ -13,8 +13,7 @@ using Lextm.SharpSnmpLib.Security;
 using Xunit;
 using System.IO;
 
-#pragma warning disable 1591
-
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace Lextm.SharpSnmpLib.Unit.Messaging
 {
     /// <summary>
@@ -366,4 +365,4 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         }
     }
 }
-#pragma warning restore 1591
+#pragma warning restore CS0618 // Type or member is obsolete

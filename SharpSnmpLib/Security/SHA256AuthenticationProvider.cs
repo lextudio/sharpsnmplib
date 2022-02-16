@@ -16,9 +16,8 @@
 // FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
-#if !NETFX_CORE
+
 using System;
-using System.Globalization;
 using System.IO;
 
 using System.Security.Cryptography;
@@ -29,12 +28,11 @@ namespace Lextm.SharpSnmpLib.Security
     /// Authentication provider using SHA-256.
     /// </summary>
     /// <remarks>Defined in https://tools.ietf.org/html/rfc7630#page-3.</remarks>
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "SHA", Justification = "definition")]
     public sealed class SHA256AuthenticationProvider : IAuthenticationProvider
     {
         private const int Sha256KeyCacheCapacity = 100; 
-        private static readonly CryptoKeyCache Sha256KeyCache = new CryptoKeyCache(Sha256KeyCacheCapacity);
-        private static readonly Object Sha256KeyCacheLock = new object();
+        private static readonly CryptoKeyCache Sha256KeyCache = new(Sha256KeyCacheCapacity);
+        private static readonly object Sha256KeyCacheLock = new();
 
         private readonly byte[] _password;
 
@@ -79,10 +77,10 @@ namespace Lextm.SharpSnmpLib.Security
 
             lock (Sha256KeyCacheLock)
             {
-                byte[] cachedKey;
+                byte[]? cachedKey;
                 if (Sha256KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
                 {
-                    return cachedKey;
+                    return cachedKey!;
                 }
                  
                 byte[] keyToCache = _PasswordToKey(password, engineId);
@@ -145,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="length">The length bytes.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[]? length)
         {
             if (header == null)
             {
@@ -167,6 +165,11 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException(nameof(privacy));
             }
 
+            if (parameters.EngineId == null)
+            {
+                throw new ArgumentException("Invalid security parameters", nameof(parameters));
+            }
+
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
             using (var sha256 = new HMACSHA256(key))
             {
@@ -180,6 +183,9 @@ namespace Lextm.SharpSnmpLib.Security
             }
         }
 
+        /// <summary>
+        /// Length of the digest.
+        /// </summary>
         public int DigestLength => 24;
 
         #endregion
@@ -196,4 +202,3 @@ namespace Lextm.SharpSnmpLib.Security
         }
     }
 }
-#endif

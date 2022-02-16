@@ -21,9 +21,7 @@ using System;
 using System.Globalization;
 using System.Net;
 using System.Runtime.Serialization;
-#if !NETFX_CORE
-//using System.Security.Permissions;
-#endif
+
 namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
@@ -61,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// The endpoint already in use.
         /// </summary>
-        public IPEndPoint Endpoint { get; set; }
+        public IPEndPoint? Endpoint { get; set; }
 
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="PortInUseException"/>.

@@ -47,38 +47,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="scope">The scope.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="length">The length bytes.</param>
-        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
+        public ReportMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[]? length)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            if (header == null)
-            {
-                throw new ArgumentNullException(nameof(header));
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
             }
 
             Version = version;
-            Header = header;
-            Parameters = parameters;
-            Scope = scope;
-            Privacy = privacy;
+            Header = header ?? throw new ArgumentNullException(nameof(header));
+            Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            Scope = scope ?? throw new ArgumentNullException(nameof(scope));
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(length).ToBytes();
         }

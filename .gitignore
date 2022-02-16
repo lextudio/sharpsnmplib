@@ -10,6 +10,7 @@ _ReSharper*
 *.trx
 *.pidb
 *.nupkg
+*.snupkg
 Thumbs.db
 [Bb]in
 [Dd]ebug
@@ -34,3 +35,7 @@ T4MVC.cs
 /.vs
 *.vspscc
 *.vssscc
+nuget.exe
+
+coverage.*.xml
+coverage.*.xml.*

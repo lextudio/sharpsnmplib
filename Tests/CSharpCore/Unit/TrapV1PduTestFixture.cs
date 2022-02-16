@@ -14,7 +14,6 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Xunit;
 
-#pragma warning disable 1591
 namespace Lextm.SharpSnmpLib.Unit
 {
     public class TrapV1PduTestFixture
@@ -22,6 +21,7 @@ namespace Lextm.SharpSnmpLib.Unit
         [Fact]
         public void TestException()
         {
+            Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(null, null));
             Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new Tuple<int, byte[]>(0, new byte[] { 0 }),null));
             Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu((ObjectIdentifier)null, null, null, null, null, null));
             Assert.Throws<ArgumentNullException>(() => new TrapV1Pdu(new ObjectIdentifier(new uint[] {1, 3, 6, 1, 4, 1, 2162, 1000, 2}), null, null, null, null, null));
@@ -111,5 +111,3 @@ namespace Lextm.SharpSnmpLib.Unit
         }
     }
 }
-#pragma warning restore 1591
-

@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public sealed class NoSuchObject : ISnmpData, IEquatable<NoSuchObject>
     {
-        private readonly byte[] _length;
+        private readonly byte[]? _length;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NoSuchObject"/> class.
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="obj">The <see cref="Object"/> to compare with the current <see cref="NoSuchObject"/>. </param>
         /// <returns><value>true</value> if the specified <see cref="Object"/> is equal to the current <see cref="NoSuchObject"/>; otherwise, <value>false</value>.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return Equals(this, obj as NoSuchObject);
         }
@@ -92,7 +92,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
         /// </returns>
-        public bool Equals(NoSuchObject other)
+        public bool Equals(NoSuchObject? other)
         {
             return Equals(this, other);
         }
@@ -104,7 +104,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="NoSuchObject"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are equal, <c>false</c> otherwise.</returns>
-        public static bool operator ==(NoSuchObject left, NoSuchObject right)
+        public static bool operator ==(NoSuchObject? left, NoSuchObject? right)
         {
             return Equals(left, right);
         }
@@ -116,7 +116,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="NoSuchObject"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        public static bool operator !=(NoSuchObject left, NoSuchObject right)
+        public static bool operator !=(NoSuchObject? left, NoSuchObject? right)
         {
             return !(left == right); // use operator == and negate result
         }
@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(stream));
             }
             
-            stream.AppendBytes(TypeCode, _length, new byte[0]);
+            stream.AppendBytes(TypeCode, _length, Array.Empty<byte>());
         }
        
         /// <summary>
@@ -162,10 +162,10 @@ namespace Lextm.SharpSnmpLib
         /// <param name="right">Right <see cref="NoSuchObject"/> object</param>
         /// <returns>
         /// Returns <c>true</c> if the values of its operands are not equal, <c>false</c> otherwise.</returns>
-        private static bool Equals(NoSuchObject left, NoSuchObject right)
+        private static bool Equals(NoSuchObject? left, NoSuchObject? right)
         {
-            object lo = left;
-            object ro = right;
+            object? lo = left;
+            object? ro = right;
             if (lo == ro)
             {
                 return true;

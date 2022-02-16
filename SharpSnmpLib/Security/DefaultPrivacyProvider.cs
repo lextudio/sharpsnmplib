@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class DefaultPrivacyProvider : IPrivacyProvider
     {
-        private static IPrivacyProvider _defaultInstance;
+        private static IPrivacyProvider? _defaultInstance;
         
         /// <summary>
         /// Default privacy provider with default authentication provider.
@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-                return _defaultInstance ?? (_defaultInstance = new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance));
+                return _defaultInstance ??= new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance);
             }
         }
         
@@ -56,14 +56,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
 
-        [Obsolete("Use EngineIds instead.")]
-        public OctetString EngineId { get; set; }
-
         /// <summary>
         /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public ICollection<OctetString> EngineIds { get; set; }
+        public ICollection<OctetString>? EngineIds { get; set; }
 
         /// <summary>
         /// Decrypts the specified data.
