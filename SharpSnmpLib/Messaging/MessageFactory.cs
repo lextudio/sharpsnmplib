@@ -150,14 +150,22 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 header = new Header(body[1]);
                 parameters = new SecurityParameters((OctetString)body[2]);
-                var temp = registry.Find(parameters.UserName);
-                if (temp == null)
+                if (header.SecurityModel == SecurityModel.Tsm)
                 {
-                    // handle decryption exception.
-                    return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
+                    privacy = new TsmPrivacyProvider(TsmAuthenticationProvider.Instance);
+                }
+                else
+                {
+                    var temp = registry.Find(parameters.UserName ?? OctetString.Empty);
+                    if (temp == null)
+                    {
+                        // handle decryption exception.
+                        return new MalformedMessage(header.MessageId, parameters.UserName ?? OctetString.Empty, body[3]);
+                    }
+
+                    privacy = temp;
                 }
 
-                privacy = temp;
                 var code = body[3].TypeCode;
                 if (code == SnmpType.Sequence)
                 {
@@ -174,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     catch (DecryptionException)
                     {
                         // handle decryption exception.
-                        return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
+                        return new MalformedMessage(header.MessageId, parameters.UserName ?? OctetString.Empty, body[3]);
                     }
                 }
                 else
@@ -182,7 +190,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
                 }
 
-                if (!privacy.VerifyHash(version, header, parameters, body[3], body.GetLengthBytes()))
+                if (header.SecurityModel != SecurityModel.Tsm && !privacy.VerifyHash(version, header, parameters, body[3], body.GetLengthBytes()))
                 {
                     parameters.IsInvalid = true;
                 }
