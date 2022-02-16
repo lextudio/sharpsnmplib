@@ -109,13 +109,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
             }
 
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             Version = version;
-            Privacy = privacy;
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable, new Integer32((int)SecurityModel.Tsm));
             Parameters = SecurityParameters.Empty;
 

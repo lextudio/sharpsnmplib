@@ -57,6 +57,7 @@ namespace Lextm.SharpSnmpLib.Security
 #endif
         /// <summary>
         /// Flag to force using old ECB cipher mode encryption.
+        /// </summary>
         public static bool UseEcbEncryption { get; set; }
 
         /// <summary>
@@ -461,7 +462,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            if (data.TypeCode != SnmpType.Sequence && !(data is ISnmpPdu))
+            if (data.TypeCode != SnmpType.Sequence && data is not ISnmpPdu)
             {
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }

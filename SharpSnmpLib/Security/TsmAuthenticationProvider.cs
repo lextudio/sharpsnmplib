@@ -2,6 +2,9 @@
 
 namespace Lextm.SharpSnmpLib.Security
 {
+    /// <summary>
+    /// Tsm Authentication Provider
+    /// </summary>
     public sealed class TsmAuthenticationProvider : IAuthenticationProvider
     {
         private TsmAuthenticationProvider()
@@ -9,9 +12,12 @@ namespace Lextm.SharpSnmpLib.Security
 
         }
 
-        private static IAuthenticationProvider _Instance;
-
-        public static IAuthenticationProvider Instance => _Instance ?? (_Instance = new TsmAuthenticationProvider());
+        private static readonly IAuthenticationProvider _Instance = new TsmAuthenticationProvider();
+        
+        /// <summary>
+        /// instance of TsmAuthenticationProvider
+        /// </summary>
+        public static IAuthenticationProvider Instance => _Instance;
 
         /// <summary>
         /// Computes the hash.
@@ -23,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="length">The length bytes.</param>
         /// <returns></returns>
-        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[] length)
+        public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[]? length)
         {
             if (header == null)
             {
@@ -52,7 +58,6 @@ namespace Lextm.SharpSnmpLib.Security
         /// Computes the hash.
         /// </summary>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         public OctetString ComputeHash(byte[] buffer, OctetString engineId)
         {
             if (buffer == null)
@@ -93,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             // IMPORTANT: this function is not used.
-            return new byte[0];
+            return Array.Empty<byte>();
         }
 
         /// <summary>

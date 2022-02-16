@@ -19,9 +19,18 @@
 
 namespace Lextm.SharpSnmpLib
 {
+    /// <summary>
+    /// Security Model enum for SNMPv3
+    /// </summary>
     public enum SecurityModel
     {
+        /// <summary>
+        /// USM - User-based Security Model
+        /// </summary>
         Usm = 3,
+        /// <summary>
+        /// TSM - Transport Security Model
+        /// </summary>
         Tsm = 4
     }
 }

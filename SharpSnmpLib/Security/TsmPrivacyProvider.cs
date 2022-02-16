@@ -3,20 +3,26 @@ using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib.Security
 {
+    /// <summary>
+    /// Default privacy provider with default authentication provider.
+    /// </summary>
     public sealed class TsmPrivacyProvider : IPrivacyProvider
     {
-        private static IPrivacyProvider _DefaultInstance;
+        private static readonly IPrivacyProvider _DefaultInstance = new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance);
 
         /// <summary>
         /// Default privacy provider with default authentication provider.
         /// </summary>
-        public static IPrivacyProvider DefaultPair => _DefaultInstance ?? (_DefaultInstance = new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance));
+        public static IPrivacyProvider DefaultPair => _DefaultInstance;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultPrivacyProvider"/> class.
+        /// Initializes a new instance of the <see cref="TsmPrivacyProvider"/> class.
         /// </summary>
-        /// <param name="authentication">Authentication provider.</param>
-        public TsmPrivacyProvider(IAuthenticationProvider authentication) => this.AuthenticationProvider = authentication;
+        /// <param name="auth">Authentication provider.</param>
+        public TsmPrivacyProvider(IAuthenticationProvider auth)
+        {
+            AuthenticationProvider = auth ?? throw new ArgumentNullException(nameof(auth));
+        }
 
         #region IPrivacyProvider Members
 
@@ -25,14 +31,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; private set; }
 
-        [Obsolete("Use EngineIds instead.")]
-        public OctetString EngineId { get; set; }
-
         /// <summary>
         /// Engine IDs.
         /// </summary>
         /// <remarks>This is an optional field, and only used by TRAP v2 authentication.</remarks>
-        public ICollection<OctetString> EngineIds { get; set; }
+        public ICollection<OctetString>? EngineIds { get; set; }
 
         /// <summary>
         /// Decrypts the specified data.
@@ -99,7 +102,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <param name="secret">The secret.</param>
         /// <param name="engineId">The engine identifier.</param>
         /// <returns></returns>
-        public byte[] PasswordToKey(byte[] secret, byte[] engineId) => this.AuthenticationProvider.PasswordToKey(secret, engineId);
+        public byte[] PasswordToKey(byte[] secret, byte[] engineId) => AuthenticationProvider.PasswordToKey(secret, engineId);
 
         #endregion
 

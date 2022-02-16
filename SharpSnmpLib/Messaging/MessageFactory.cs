@@ -156,11 +156,11 @@ namespace Lextm.SharpSnmpLib.Messaging
                 }
                 else
                 {
-                    var temp = registry.Find(parameters.UserName);
+                    var temp = registry.Find(parameters.UserName ?? OctetString.Empty);
                     if (temp == null)
                     {
                         // handle decryption exception.
-                        return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
+                        return new MalformedMessage(header.MessageId, parameters.UserName ?? OctetString.Empty, body[3]);
                     }
 
                     privacy = temp;
@@ -182,7 +182,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     catch (DecryptionException)
                     {
                         // handle decryption exception.
-                        return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
+                        return new MalformedMessage(header.MessageId, parameters.UserName ?? OctetString.Empty, body[3]);
                     }
                 }
                 else

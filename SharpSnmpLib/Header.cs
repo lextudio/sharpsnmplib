@@ -84,7 +84,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="securityLevel">The security level.</param>
         /// <param name="securityModel">The security model.</param>
         /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
-        public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel, Integer32 securityModel)
+        public Header(Integer32? messageId, Integer32 maxMessageSize, Levels securityLevel, Integer32 securityModel)
         {
             _messageId = messageId; 
             _maxSize = maxMessageSize ?? throw new ArgumentNullException(nameof(maxMessageSize));
@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="securityLevel">The security level.</param>
         /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
-        public Header(Integer32 messageId, Integer32 maxMessageSize, Levels securityLevel) 
+        public Header(Integer32? messageId, Integer32 maxMessageSize, Levels securityLevel) 
             : this(messageId, maxMessageSize, securityLevel, DefaultSecurityModel)
         {
         }
