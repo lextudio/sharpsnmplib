@@ -4,8 +4,8 @@
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <UseWPF>false</UseWPF>
     <UseWindowsForms>false</UseWindowsForms>
-    <TargetFrameworks Condition="'$(MSBuildAssemblyVersion)' == '17.0' ">net6.0;net5.0;netstandard2.0;net471</TargetFrameworks>
-    <TargetFrameworks Condition="'$(MSBuildAssemblyVersion)' == '16.0' ">net5.0;netstandard2.0;net471</TargetFrameworks>
+    <TargetFrameworks Condition="'$(MSBuildAssemblyVersion)' == '17.0' ">net6.0;netstandard2.0;net471</TargetFrameworks>
+    <TargetFrameworks Condition="'$(MSBuildAssemblyVersion)' == '16.0' ">netstandard2.0;net471</TargetFrameworks>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -31,7 +31,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <AndroidUseIntermediateDesignerFile>False</AndroidUseIntermediateDesignerFile>
-    <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <IsTrimmable>true</IsTrimmable>
