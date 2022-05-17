@@ -26,7 +26,6 @@ using System.Net.Sockets;
 #if NETSTANDARD2_0
 using System.Runtime.InteropServices;
 #endif
-using System.Threading;
 using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Security;
 
@@ -125,7 +124,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return message.Parameters.UserName;
         }
 
-#region sync methods
+        #region sync methods
 
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
@@ -153,10 +152,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            using (var socket = manager.GetSocket())
-            {
-                message.Send(manager, socket);
-            }
+            using var socket = manager.GetSocket();
+            message.Send(manager, socket);
         }
 
         /// <summary>
@@ -203,9 +200,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
-        #endif
+#endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry)
         {
             // TODO: make more usage of UserRegistry.
@@ -225,10 +222,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
 
-            using (var socket = receiver.GetSocket())
-            {
-                return request.GetResponse(timeout, receiver, registry, socket);
-            }
+            using var socket = receiver.GetSocket();
+            return request.GetResponse(timeout, receiver, registry, socket);
         }
 
         /// <summary>
@@ -238,9 +233,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
-        #endif
+#endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver)
         {
             if (request == null)
@@ -259,10 +254,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
 
-            using (var socket = receiver.GetSocket())
-            {
-                return request.GetResponse(timeout, receiver, socket);
-            }
+            using var socket = receiver.GetSocket();
+            return request.GetResponse(timeout, receiver, socket);
         }
 
         /// <summary>
@@ -273,9 +266,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
-        #endif
+#endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Socket udpSocket)
         {
             if (request == null)
@@ -311,9 +304,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
-        #endif
+#endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
         {
             if (request == null)
@@ -389,9 +382,9 @@ namespace Lextm.SharpSnmpLib.Messaging
             throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
 
-#endregion
+        #endregion
 
-#region async methods
+        #region async methods
 
         /// <summary>
         /// Sends an <see cref="ISnmpMessage"/>.
@@ -419,10 +412,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                     code));
             }
 
-            using (var socket = manager.GetSocket())
-            {
-                await message.SendAsync(manager, socket).ConfigureAwait(false);
-            }
+            using var socket = manager.GetSocket();
+            await message.SendAsync(manager, socket).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,9 +459,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry)
         {
             // TODO: make more usage of UserRegistry.
@@ -490,10 +481,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
 
-            using (var socket = receiver.GetSocket())
-            {
-                return await request.GetResponseAsync(receiver, registry, socket).ConfigureAwait(false);
-            }
+            using var socket = receiver.GetSocket();
+            return await request.GetResponseAsync(receiver, registry, socket).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -502,9 +491,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver)
         {
             if (request == null)
@@ -523,10 +512,8 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "not a request message: {0}", code));
             }
 
-            using (var socket = receiver.GetSocket())
-            {
-                return await request.GetResponseAsync(receiver, socket).ConfigureAwait(false);
-            }
+            using var socket = receiver.GetSocket();
+            return await request.GetResponseAsync(receiver, socket).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -536,9 +523,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket)
         {
             if (request == null)
@@ -573,9 +560,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
         {
             if (request == null)
@@ -652,16 +639,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
 
-#endregion
+        #endregion
 
         /// <summary>
         /// Tests if running on Mono.
         /// </summary>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
 
         [RequiresUnreferencedCode("IsRunningOnMono is incompatible with trimming.")]
-        #endif
+#endif
         public static bool IsRunningOnMono()
         {
             return Type.GetType("Mono.Runtime") != null;
@@ -744,53 +731,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 message.Header,
                 message.Parameters,
                 message.Privacy.GetScopeData(message.Header, message.Parameters, message.Scope.GetData(message.Version)));
-        }
-
-        private sealed class SnmpMessageAsyncResult : IAsyncResult
-        {
-            private readonly byte[] _buffer;
-
-            public SnmpMessageAsyncResult(IAsyncResult inner, Socket socket, UserRegistry users, IPEndPoint receiver, byte[] buffer)
-            {
-                _buffer = buffer;
-                WorkSocket = socket;
-                Users = users;
-                Receiver = receiver;
-                Inner = inner;
-            }
-
-            public IAsyncResult Inner { get; private set; }
-
-            public Socket WorkSocket { get; private set; }
-
-            public UserRegistry Users { get; private set; }
-
-            public byte[] GetBuffer()
-            {
-                return _buffer;
-            }
-
-            public IPEndPoint Receiver { get; private set; }
-
-            public bool IsCompleted
-            {
-                get { return Inner.IsCompleted; }
-            }
-
-            public WaitHandle AsyncWaitHandle
-            {
-                get { return Inner.AsyncWaitHandle; }
-            }
-
-            public object? AsyncState
-            {
-                get { return Inner.AsyncState; }
-            }
-
-            public bool CompletedSynchronously
-            {
-                get { return Inner.CompletedSynchronously; }
-            }
         }
     }
 }

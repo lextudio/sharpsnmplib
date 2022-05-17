@@ -69,10 +69,10 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
+
             RequestId = (Integer32)DataFactory.CreateSnmpData(stream); // request
-            var temp1 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
-            var temp2 = (Integer32)DataFactory.CreateSnmpData(stream); // 0
+            DataFactory.CreateSnmpData(stream); // 0
+            DataFactory.CreateSnmpData(stream); // 0
             _varbindSection = (Sequence)DataFactory.CreateSnmpData(stream);
             Variables = Variable.Transform(_varbindSection); // v[0] is timestamp. v[1] oid, v[2] value.
             _time = (TimeTicks)Variables[0].Data;
@@ -87,31 +87,25 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Variables.
         /// </summary>
-        public IList<Variable> Variables { get; private set; }
+        public IList<Variable> Variables { get; }
 
         /// <summary>
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId { get; private set; }
+        public Integer32 RequestId { get; }
 
         /// <summary>
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public Integer32 ErrorStatus => throw new NotSupportedException();
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public Integer32 ErrorIndex => throw new NotSupportedException();
 
         #endregion
 
@@ -119,11 +113,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get { return SnmpType.TrapV2Pdu; }
-        }
-        
+        public SnmpType TypeCode => SnmpType.TrapV2Pdu;
+
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
@@ -134,12 +125,8 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
-            if (_raw == null)
-            {
-                _raw = ByteTool.ParseItems(RequestId, Integer32.Zero, Integer32.Zero, _varbindSection);
-            }
 
+            _raw ??= ByteTool.ParseItems(RequestId, Integer32.Zero, Integer32.Zero, _varbindSection);
             stream.AppendBytes(TypeCode, _length, _raw);
         }
 
@@ -148,16 +135,13 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Enterprise.
         /// </summary>
-        public ObjectIdentifier Enterprise { get; private set; }
+        public ObjectIdentifier Enterprise { get; }
 
         /// <summary>
         /// Time stamp.
         /// </summary>
         [CLSCompliant(false)]
-        public uint TimeStamp
-        {
-            get { return _time.ToUInt32(); }
-        }
+        public uint TimeStamp => _time.ToUInt32();
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="TrapV2Pdu"/>.
@@ -168,8 +152,8 @@ namespace Lextm.SharpSnmpLib
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "TRAP v2 PDU: request ID: {3}; enterprise: {0}; time stamp: {1}; variable count: {2}",
-                Enterprise, 
-                _time, 
+                Enterprise,
+                _time,
                 Variables.Count.ToString(CultureInfo.InvariantCulture),
                 RequestId);
         }

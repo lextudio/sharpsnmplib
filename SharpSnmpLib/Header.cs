@@ -33,7 +33,6 @@ namespace Lextm.SharpSnmpLib
         private readonly Integer32 _securityModel;
         private static readonly Integer32 DefaultSecurityModel = new(3);
         private static readonly Integer32 DefaultMaxMessageSize = new(MaxMessageSize);
-        private static readonly Header EmptyHeader = new();
         private Sequence? _container;
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace Lextm.SharpSnmpLib
         public const int MaxMessageSize = 0xFFE3;
 
         private Header() : this(null, DefaultMaxMessageSize, 0)
-        {            
+        {
         }
 
         /// <summary>
@@ -63,12 +62,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="data">The data.</param>
         public Header(ISnmpData data)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-
-            _container = (Sequence)data;
+            _container = (Sequence)data ?? throw new ArgumentNullException(nameof(data));
             _messageId = (Integer32)_container[0];
             _maxSize = (Integer32)_container[1];
             _flags = (OctetString)_container[2];
@@ -91,28 +85,22 @@ namespace Lextm.SharpSnmpLib
             _flags = new OctetString(SecurityLevel);
             _securityModel = DefaultSecurityModel;
         }
-        
+
         /// <summary>
         /// Empty header.
         /// </summary>
-        public static Header Empty
-        {
-            get { return EmptyHeader; }
-        }        
-        
+        public static Header Empty { get; } = new();
+
         /// <summary>
         /// Security flags.
         /// </summary>
-        public Levels SecurityLevel { get; private set; }
+        public Levels SecurityLevel { get; }
 
         /// <summary>
         /// Gets the message ID.
         /// </summary>
         /// <value>The message ID.</value>
-        public int MessageId
-        {
-            get { return _messageId == null ? throw new InvalidOperationException() : _messageId.ToInt32(); }
-        }
+        public int MessageId => _messageId == null ? throw new InvalidOperationException() : _messageId.ToInt32();
 
         #region ISegment Members
 
@@ -152,9 +140,6 @@ namespace Lextm.SharpSnmpLib
         /// Gets or sets the size of the max.
         /// </summary>
         /// <value>The size of the max.</value>
-        public int MaxSize
-        {
-            get { return _maxSize.ToInt32(); }
-        }
+        public int MaxSize => _maxSize.ToInt32();
     }
 }

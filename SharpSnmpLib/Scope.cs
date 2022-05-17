@@ -66,7 +66,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the PDU.
         /// </summary>
         /// <value>The PDU.</value>
-        public ISnmpPdu Pdu { get; private set; }
+        public ISnmpPdu Pdu { get; }
 
         #region ISegment Members
 
@@ -89,13 +89,13 @@ namespace Lextm.SharpSnmpLib
         /// Gets or sets the name of the context.
         /// </summary>
         /// <value>The name of the context.</value>
-        public OctetString? ContextName { get; private set; }
+        public OctetString? ContextName { get; }
 
         /// <summary>
         /// Gets or sets the context engine id.
         /// </summary>
         /// <value>The context engine id.</value>
-        public OctetString? ContextEngineId { get; private set; }
+        public OctetString? ContextEngineId { get; }
 
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.

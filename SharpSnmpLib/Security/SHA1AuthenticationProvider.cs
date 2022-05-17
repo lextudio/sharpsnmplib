@@ -30,7 +30,7 @@ namespace Lextm.SharpSnmpLib.Security
     [Obsolete("SHA-1 is no longer secure. Please use a more secure provider.")]
     public sealed class SHA1AuthenticationProvider : IAuthenticationProvider
     {
-        private const int Sha1KeyCacheCapacity = 100; 
+        private const int Sha1KeyCacheCapacity = 100;
         private static readonly CryptoKeyCache Sha1KeyCache = new(Sha1KeyCacheCapacity);
         private static readonly Object Sha1KeyCacheLock = new();
 
@@ -46,7 +46,7 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException(nameof(phrase));
             }
-            
+
             _password = phrase.GetRaw();
         }
 
@@ -77,12 +77,11 @@ namespace Lextm.SharpSnmpLib.Security
 
             lock (Sha1KeyCacheLock)
             {
-                byte[]? cachedKey;
-                if (Sha1KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
+                if (Sha1KeyCache.TryGetCachedValue(password, engineId, out var cachedKey))
                 {
                     return cachedKey!;
                 }
-                 
+
                 byte[] keyToCache = _PasswordToKey(password, engineId);
                 //Value not in cache compute and cache the value
                 Sha1KeyCache.AddValueToCache(password, engineId, keyToCache);
@@ -91,47 +90,40 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         private byte[] _PasswordToKey(byte[] password, byte[] engineId)
-        {          
-            using (SHA1 sha = SHA1.Create())
+        {
+            using SHA1 sha = SHA1.Create();
+            var passwordIndex = 0;
+            var count = 0;
+            /* Use while loop until we've done 1 Megabyte */
+            var sourceBuffer = new byte[1048576];
+            var buf = new byte[64];
+            while (count < 1048576)
             {
-                var passwordIndex = 0;
-                var count = 0;
-                /* Use while loop until we've done 1 Megabyte */
-                var sourceBuffer = new byte[1048576];
-                var buf = new byte[64];
-                while (count < 1048576)
+                for (var i = 0; i < 64; ++i)
                 {
-                    for (var i = 0; i < 64; ++i)
-                    {
-                        // Take the next octet of the password, wrapping
-                        // to the beginning of the password as necessary.
-                        buf[i] = password[passwordIndex++ % password.Length];
-                    }
-                    
-                    Buffer.BlockCopy(buf, 0, sourceBuffer, count, buf.Length);
-                    count += 64;
+                    // Take the next octet of the password, wrapping
+                    // to the beginning of the password as necessary.
+                    buf[i] = password[passwordIndex++ % password.Length];
                 }
 
-                var digest = sha.ComputeHash(sourceBuffer);
-
-                using (var buffer = new MemoryStream())
-                {
-                    buffer.Write(digest, 0, digest.Length);
-                    buffer.Write(engineId, 0, engineId.Length);
-                    buffer.Write(digest, 0, digest.Length);
-                    return sha.ComputeHash(buffer.ToArray());
-                }
+                Buffer.BlockCopy(buf, 0, sourceBuffer, count, buf.Length);
+                count += 64;
             }
+
+            var digest = sha.ComputeHash(sourceBuffer);
+
+            using var buffer = new MemoryStream();
+            buffer.Write(digest, 0, digest.Length);
+            buffer.Write(engineId, 0, engineId.Length);
+            buffer.Write(digest, 0, digest.Length);
+            return sha.ComputeHash(buffer.ToArray());
         }
 
         /// <summary>
         /// Gets the clean digest.
         /// </summary>
         /// <value>The clean digest.</value>
-        public OctetString CleanDigest
-        {
-            get { return new OctetString(new byte[DigestLength]); }
-        }
+        public OctetString CleanDigest => new(new byte[DigestLength]);
 
         /// <summary>
         /// Computes the hash.
@@ -149,17 +141,17 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException(nameof(header));
             }
-            
+
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
-            
+
             if (data == null)
             {
                 throw new ArgumentNullException(nameof(data));
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException(nameof(privacy));
@@ -171,16 +163,14 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
-            using (var sha1 = new HMACSHA1(key))
-            {
-                var hash = sha1.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
+            using var sha1 = new HMACSHA1(key);
+            var hash = sha1.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
 #if NET471
                 sha1.Clear();
 #endif
-                var result = new byte[DigestLength];
-                Buffer.BlockCopy(hash, 0, result, 0, result.Length);
-                return new OctetString(result);
-            }
+            var result = new byte[DigestLength];
+            Buffer.BlockCopy(hash, 0, result, 0, result.Length);
+            return new OctetString(result);
         }
 
         /// <summary>

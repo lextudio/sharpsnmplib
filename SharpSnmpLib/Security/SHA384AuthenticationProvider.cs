@@ -77,8 +77,7 @@ namespace Lextm.SharpSnmpLib.Security
 
             lock (Sha384KeyCacheLock)
             {
-                byte[]? cachedKey;
-                if (Sha384KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
+                if (Sha384KeyCache.TryGetCachedValue(password, engineId, out var cachedKey))
                 {
                     return cachedKey!;
                 }
@@ -92,46 +91,39 @@ namespace Lextm.SharpSnmpLib.Security
 
         private byte[] _PasswordToKey(byte[] password, byte[] engineId)
         {
-            using (SHA384 sha = SHA384.Create())
+            using SHA384 sha = SHA384.Create();
+            var passwordIndex = 0;
+            var count = 0;
+            /* Use while loop until we've done 1 Megabyte */
+            var sourceBuffer = new byte[1048576];
+            var buf = new byte[64];
+            while (count < 1048576)
             {
-                var passwordIndex = 0;
-                var count = 0;
-                /* Use while loop until we've done 1 Megabyte */
-                var sourceBuffer = new byte[1048576];
-                var buf = new byte[64];
-                while (count < 1048576)
+                for (var i = 0; i < 64; ++i)
                 {
-                    for (var i = 0; i < 64; ++i)
-                    {
-                        // Take the next octet of the password, wrapping
-                        // to the beginning of the password as necessary.
-                        buf[i] = password[passwordIndex++ % password.Length];
-                    }
-
-                    Buffer.BlockCopy(buf, 0, sourceBuffer, count, buf.Length);
-                    count += 64;
+                    // Take the next octet of the password, wrapping
+                    // to the beginning of the password as necessary.
+                    buf[i] = password[passwordIndex++ % password.Length];
                 }
 
-                var digest = sha.ComputeHash(sourceBuffer);
-
-                using (var buffer = new MemoryStream())
-                {
-                    buffer.Write(digest, 0, digest.Length);
-                    buffer.Write(engineId, 0, engineId.Length);
-                    buffer.Write(digest, 0, digest.Length);
-                    return sha.ComputeHash(buffer.ToArray());
-                }
+                Buffer.BlockCopy(buf, 0, sourceBuffer, count, buf.Length);
+                count += 64;
             }
+
+            var digest = sha.ComputeHash(sourceBuffer);
+
+            using var buffer = new MemoryStream();
+            buffer.Write(digest, 0, digest.Length);
+            buffer.Write(engineId, 0, engineId.Length);
+            buffer.Write(digest, 0, digest.Length);
+            return sha.ComputeHash(buffer.ToArray());
         }
 
         /// <summary>
         /// Gets the clean digest.
         /// </summary>
         /// <value>The clean digest.</value>
-        public OctetString CleanDigest
-        {
-            get { return new OctetString(new byte[DigestLength]); }
-        }
+        public OctetString CleanDigest => new(new byte[DigestLength]);
 
         /// <summary>
         /// Computes the hash.
@@ -171,16 +163,14 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
-            using (var sha384 = new HMACSHA384(key))
-            {
-                var hash = sha384.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
+            using var sha384 = new HMACSHA384(key);
+            var hash = sha384.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
 #if NET471
-                sha384.Clear();
+            sha384.Clear();
 #endif
-                var result = new byte[DigestLength];
-                Buffer.BlockCopy(hash, 0, result, 0, result.Length);
-                return new OctetString(result);
-            }
+            var result = new byte[DigestLength];
+            Buffer.BlockCopy(hash, 0, result, 0, result.Length);
+            return new OctetString(result);
         }
 
         /// <summary>

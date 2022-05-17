@@ -27,9 +27,8 @@
  */
 namespace Lextm.SharpSnmpLib.Messaging
 {
-    using System;
     using System.Runtime.Serialization;
-    
+
     /// <summary>
     /// Walk mode.
     /// </summary>
@@ -40,7 +39,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Default mode walk to the end of MIB view.
         /// </summary>
         Default = 0,
-        
+
         /// <summary>
         /// In this mode, walk within sub-tree.
         /// </summary>

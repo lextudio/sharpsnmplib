@@ -124,27 +124,18 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Item count in this <see cref="Sequence"/>.
         /// </summary>
-        public int Length
-        {
-            get { return _list.Count; }
-        }
+        public int Length => _list.Count;
 
         /// <summary>
         /// Gets the <see cref="Lextm.SharpSnmpLib.ISnmpData"/> at the specified index.
         /// </summary>
         /// <value></value>
-        public ISnmpData this[int index]
-        {
-            get { return _list[index]; }
-        }
-        
+        public ISnmpData this[int index] => _list[index];
+
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get { return SnmpType.Sequence; }
-        }
+        public SnmpType TypeCode => SnmpType.Sequence;
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -176,7 +167,7 @@ namespace Lextm.SharpSnmpLib
             {
                 result.Append(item).Append("; ");
             }
-            
+
             return result.ToString();
         }
 

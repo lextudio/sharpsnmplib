@@ -18,16 +18,14 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using Lextm.SharpSnmpLib.Security;
 using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-    #if NET6_0
+#if NET6_0
     /// <summary>
     /// Discoverer class to discover SNMP agents in the same network.
     /// </summary>
@@ -47,7 +45,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(broadcastAddress));
             }
-            
+
             if (version != VersionCode.V3 && community == null)
             {
                 throw new ArgumentNullException(nameof(community));
@@ -76,7 +74,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             using var udp = new UdpClient(addressFamily);
             udp.EnableBroadcast = true;
 
-            AsyncHelper.RunSync(async () => { return await udp.SendAsync(bytes, broadcastAddress, token); });
+            AsyncHelper.RunSync(async () => await udp.SendAsync(bytes, broadcastAddress, token));
             var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
             if (activeBefore == Active)
             {
@@ -87,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _bufferSize = udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
 
 #if ASYNC
-                Task.Factory.StartNew(() => AsyncBeginReceive(udp.Client, token));
+            Task.Factory.StartNew(() => AsyncBeginReceive(udp.Client, token));
 #else
             Task.Factory.StartNew(() => AsyncReceive(udp.Client), token);
 #endif
@@ -96,7 +94,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
 #if ASYNC
-        private void AsyncBeginReceive(Socket socket)
+        private void AsyncBeginReceive(Socket socket, CancellationToken token)
         {
             while (true)
             {
@@ -106,12 +104,17 @@ namespace Lextm.SharpSnmpLib.Messaging
                     return;
                 }
 
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+
                 byte[] buffer = new byte[_bufferSize];
                 EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-                IAsyncResult iar = null;
                 try
                 {
-                    iar = socket.BeginReceiveFrom(buffer, 0, _bufferSize, SocketFlags.None, ref remote, AsyncEndReceive, new Tuple<Socket, byte[]>(socket, buffer));
+                    var iar = socket.BeginReceiveFrom(buffer, 0, _bufferSize, SocketFlags.None, ref remote, AsyncEndReceive, new Tuple<Socket, byte[]>(socket, buffer));
+                    WaitHandle.WaitAny(new []{iar.AsyncWaitHandle, token.WaitHandle});
                 }
                 catch (SocketException ex)
                 {
@@ -125,48 +128,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                         {
                             HandleException(ex);
                         }
-                    }
-                }
-
-                if (iar != null)
-                {
-                    iar.AsyncWaitHandle.WaitOne();
-                }
-            }
-        }
-
-        private void AsyncEndReceive(IAsyncResult iar)
-        {
-            // If no more active, then stop. This discards the received packet, if any (indeed, we may be there either
-            // because we've received a packet, or because the socket has been closed).
-            if (Interlocked.Exchange(ref _active, _active) == Inactive)
-            {
-                return;
-            }
-
-            //// We start another receive operation.
-            //AsyncBeginReceive();
-
-            Tuple<Socket, byte[]> data = (Tuple<Socket, byte[]>)iar.AsyncState;
-            byte[] buffer = data.Item2;
-
-            try
-            {
-                EndPoint remote = data.Item1.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
-                int count = data.Item1.EndReceiveFrom(iar, ref remote);
-                HandleMessage(buffer, count, (IPEndPoint)remote);
-            }
-            catch (SocketException ex)
-            {
-                // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                if (ex.SocketErrorCode != SocketError.ConnectionReset)
-                {
-                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
-                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                    long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
-                    if (activeBefore == Active)
-                    {
-                        HandleException(ex);
                     }
                 }
             }
@@ -264,7 +225,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                     var buffer = new byte[_bufferSize];
                     var result = await socket.ReceiveMessageFromAsync(new ArraySegment<byte>(buffer), SocketFlags.None, remote, token);
-                    await Task.Factory.StartNew(() => HandleMessage(buffer, result.ReceivedBytes, (IPEndPoint) result.RemoteEndPoint), token)
+                    await Task.Factory.StartNew(() => HandleMessage(buffer, result.ReceivedBytes, (IPEndPoint)result.RemoteEndPoint), token)
                         .ConfigureAwait(false);
                 }
                 catch (SocketException ex)
@@ -285,5 +246,5 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
     }
-    #endif
+#endif
 }

@@ -19,34 +19,34 @@ namespace Lextm.SharpSnmpLib.Unit
         public void TestException()
         {
             Assert.Throws<ArgumentNullException>(() => new Variable((ObjectIdentifier)null, null));
-            
+
             Assert.Throws<ArgumentNullException>(() => Variable.Transform((IList<Variable>)null));
             Assert.Throws<ArgumentNullException>(() => Variable.Transform((Sequence)null));
-            
+
             var seq = new Sequence(null, new OctetString("test"));
             Assert.Throws<ArgumentException>(() => Variable.Transform(seq));
-            
+
             var seq2 = new Sequence(null, new Sequence(null, new OctetString("test")));
             Assert.Throws<ArgumentException>(() => Variable.Transform(seq2));
-            
+
             var seq3 = new Sequence(null, new Sequence(null, new OctetString("test"), new Sequence((byte[])null)));
             Assert.Throws<ArgumentException>(() => Variable.Transform(seq3));
         }
-        
+
         [Fact]
         public void TestToString()
         {
-            var v = new Variable(new uint[] {1, 3, 6});
+            var v = new Variable(new uint[] { 1, 3, 6 });
             Assert.Equal("Variable: Id: 1.3.6; Data: Null", v.ToString());
         }
-        
+
         [Fact]
         public void TestToBytes()
         {
             Variable v = new Variable(
-                    new ObjectIdentifier(new uint[] {1,3,6,1,4,1,2162,1001,21,0}),
+                    new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 4, 1, 2162, 1001, 21, 0 }),
                     new OctetString("TrapTest"));
-            List<Variable> vList = new List<Variable> {v};
+            List<Variable> vList = new List<Variable> { v };
 
             Sequence varbindSection = Variable.Transform(vList);
             Assert.Equal(1, varbindSection.Length);

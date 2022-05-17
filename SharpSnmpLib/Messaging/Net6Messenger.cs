@@ -36,7 +36,7 @@ using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-    #if NET6_0
+#if NET6_0
     /// <summary>
     /// Messenger class contains all static helper methods you need to send out SNMP messages.
     /// Static methods in Manager or Agent class will be removed in the future.
@@ -165,14 +165,13 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var result = 0;
             var tableV = new Variable(table);
-            Variable? seed;
             var next = tableV;
             var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
             var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
             Tuple<bool, Variable?> data = new(false, next);
             do
             {
-                seed = data.Item2;
+                var seed = data.Item2;
                 if (seed == tableV)
                 {
                     data = await HasNextAsync(version, endpoint, community, seed, token).ConfigureAwait(false);
@@ -222,7 +221,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(seed));
             }
 
-            var variables = new List<Variable> { new Variable(seed.Id) };
+            var variables = new List<Variable> { new(seed.Id) };
             var message = new GetNextRequestMessage(
                 NextRequestId,
                 version,
@@ -297,7 +296,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 message = data.Item3;
             }
 
-            end:
+        end:
             return result;
         }
 
@@ -460,7 +459,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v1 is not supported");
             }
 
-            var variables = new List<Variable> { new Variable(seed.Id) };
+            var variables = new List<Variable> { new(seed.Id) };
             var request = version == VersionCode.V3
                                                 ? new GetBulkRequestMessage(
                                                       version,
@@ -527,5 +526,5 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         #endregion
     }
-    #endif
+#endif
 }

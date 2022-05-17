@@ -45,12 +45,11 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException(nameof(phrase));
             }
-            
+
             _password = phrase.GetRaw();
         }
-        
+
         #region IAuthenticationProvider Members
-        
 
         /// <summary>
         /// Passwords to key.
@@ -78,12 +77,11 @@ namespace Lextm.SharpSnmpLib.Security
 
             lock (Md5KeyCacheLock)
             {
-                byte[]? cachedKey;
-                if (Md5KeyCache.TryGetCachedValue(password, engineId, out cachedKey))
+                if (Md5KeyCache.TryGetCachedValue(password, engineId, out var cachedKey))
                 {
                     return cachedKey!;
                 }
-             
+
                 byte[] keyToCache = _PasswordToKey(password, engineId);
 
                 //Value not in cache compute and cache the value
@@ -93,47 +91,40 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         private byte[] _PasswordToKey(byte[] password, byte[] engineId)
-        {            
-            using (MD5 md5 = MD5.Create())
+        {
+            using MD5 md5 = MD5.Create();
+            var passwordIndex = 0;
+            var count = 0;
+            /* Use while loop until we've done 1 Megabyte */
+            var sourceBuffer = new byte[1048576];
+            var buf = new byte[64];
+            while (count < 1048576)
             {
-                var passwordIndex = 0;
-                var count = 0;
-                /* Use while loop until we've done 1 Megabyte */
-                var sourceBuffer = new byte[1048576];
-                var buf = new byte[64];
-                while (count < 1048576)
+                for (var i = 0; i < 64; ++i)
                 {
-                    for (var i = 0; i < 64; ++i)
-                    {
-                        // Take the next octet of the password, wrapping
-                        // to the beginning of the password as necessary.
-                        buf[i] = password[passwordIndex++ % password.Length];
-                    }
-                    
-                    Buffer.BlockCopy(buf, 0, sourceBuffer, count, buf.Length);
-                    count += 64;
+                    // Take the next octet of the password, wrapping
+                    // to the beginning of the password as necessary.
+                    buf[i] = password[passwordIndex++ % password.Length];
                 }
 
-                var digest = md5.ComputeHash(sourceBuffer);
-
-                using (var buffer = new MemoryStream())
-                {
-                    buffer.Write(digest, 0, digest.Length);
-                    buffer.Write(engineId, 0, engineId.Length);
-                    buffer.Write(digest, 0, digest.Length);
-                    return md5.ComputeHash(buffer.ToArray());
-                }
+                Buffer.BlockCopy(buf, 0, sourceBuffer, count, buf.Length);
+                count += 64;
             }
+
+            var digest = md5.ComputeHash(sourceBuffer);
+
+            using var buffer = new MemoryStream();
+            buffer.Write(digest, 0, digest.Length);
+            buffer.Write(engineId, 0, engineId.Length);
+            buffer.Write(digest, 0, digest.Length);
+            return md5.ComputeHash(buffer.ToArray());
         }
 
         /// <summary>
         /// Gets the clean digest.
         /// </summary>
         /// <value>The clean digest.</value>
-        public OctetString CleanDigest
-        {
-            get { return new OctetString(new byte[DigestLength]); }
-        }
+        public OctetString CleanDigest => new(new byte[DigestLength]);
 
         /// <summary>
         /// Computes the hash.
@@ -151,17 +142,17 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException(nameof(header));
             }
-            
+
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
-            
+
             if (data == null)
             {
                 throw new ArgumentNullException(nameof(data));
             }
-            
+
             if (privacy == null)
             {
                 throw new ArgumentNullException(nameof(privacy));
@@ -173,16 +164,14 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             var key = PasswordToKey(_password, parameters.EngineId.GetRaw());
-            using (var md5 = new HMACMD5(key))
-            {
-                var hash = md5.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
+            using var md5 = new HMACMD5(key);
+            var hash = md5.ComputeHash(ByteTool.PackMessage(length, version, header, parameters, data).ToBytes());
 #if NET471
                 md5.Clear();
 #endif
-                var result = new byte[DigestLength];
-                Buffer.BlockCopy(hash, 0, result, 0, result.Length);
-                return new OctetString(result);
-            }
+            var result = new byte[DigestLength];
+            Buffer.BlockCopy(hash, 0, result, 0, result.Length);
+            return new OctetString(result);
         }
 
         /// <summary>

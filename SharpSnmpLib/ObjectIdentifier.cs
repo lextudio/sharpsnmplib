@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     [TypeConverter(typeof(ObjectIdentifierConverter))]
     [DataContract]
-    public sealed class ObjectIdentifier : 
+    public sealed class ObjectIdentifier :
         ISnmpData, IEquatable<ObjectIdentifier>, IComparable<ObjectIdentifier>, IComparable
     {
         private readonly uint[] _oid;
@@ -68,7 +68,7 @@ namespace Lextm.SharpSnmpLib
             if (id.Length == 0)
             {
                 // IMPORTANT: convert to zeroDotZero.
-                id = new[] {0U, 0U};
+                id = new[] { 0U, 0U };
             }
 
             if (id.Length < 2)
@@ -129,11 +129,18 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            _raw = new byte[length.Item1];
-            stream.Read(_raw, 0, length.Item1);
             if (length.Item1 == 0)
             {
                 throw new ArgumentException("Byte length cannot be 0.", nameof(length));
+            }
+
+            _raw = new byte[length.Item1];
+
+            var returned = stream.Read(_raw, 0, length.Item1);
+            if (returned < length.Item1)
+            {
+                throw new ArgumentException($"Read only {returned} bytes while expected {length.Item1}",
+                    nameof(length));
             }
 
             var result = new List<uint> { (uint)(_raw[0] / 40), (uint)(_raw[0] % 40) };
@@ -172,7 +179,7 @@ namespace Lextm.SharpSnmpLib
         #endregion Constructor
 
         /// <summary>
-        /// Convers to numerical ID.
+        /// Converts to numerical ID.
         /// </summary>
         /// <returns></returns>
         [CLSCompliant(false)]
@@ -180,7 +187,7 @@ namespace Lextm.SharpSnmpLib
         {
             return _oid;
         }
-        
+
         /// <summary>
         /// Compares the current object with another object of the same type.
         /// </summary>
@@ -230,7 +237,7 @@ namespace Lextm.SharpSnmpLib
                 {
                     return 1;
                 }
-                
+
                 if (_oid[i] < other._oid[i])
                 {
                     return -1;
@@ -288,15 +295,13 @@ namespace Lextm.SharpSnmpLib
             var result = new List<uint>();
             foreach (var s in parts.Where(s => !string.IsNullOrEmpty(s)))
             {
-                uint temp;
-                if (uint.TryParse(s, out temp))
+                if (!uint.TryParse(s, out var temp))
                 {
-                    result.Add(temp);
+                    throw new ArgumentException($"Parameter {s} is out of 32 bit unsigned integer range.",
+                        nameof(dotted));
                 }
-                else
-                {
-                    throw new ArgumentException($"Parameter {s} is out of 32 bit unsigned integer range.", nameof(dotted));
-                }
+
+                result.Add(temp);
             }
 
             return result.ToArray();
@@ -350,13 +355,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get
-            {
-                return SnmpType.ObjectIdentifier;
-            }
-        }
+        public SnmpType TypeCode => SnmpType.ObjectIdentifier;
 
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="ObjectIdentifier"/>.
@@ -429,7 +428,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(left, right);
         }
-        
+
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -463,7 +462,7 @@ namespace Lextm.SharpSnmpLib
         {
             return left.CompareTo(right) < 0;
         }
-        
+
         /// <summary>
         /// The comparison.
         /// </summary>
@@ -501,24 +500,19 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(numerical));
             }
-            
+
             return new ObjectIdentifier(AppendTo(numerical, extra));
-        }        
-          
+        }
+
         /// <summary>
         /// Appends an extra number to the array.
         /// </summary>
         /// <param name="original">The original array.</param>
         /// <param name="extra">The extra.</param>
         /// <returns></returns>       
-        [CLSCompliant(false)]                   
+        [CLSCompliant(false)]
         public static uint[] AppendTo(uint[] original, uint extra)
         {
-            if (original == null)
-            {
-                return new[] { extra };
-            }
-
             // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
             var length = original.Length;
             var tmp = new uint[length + 1];

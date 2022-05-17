@@ -19,7 +19,7 @@
 
 /*
  * Created by SharpDevelop.
- * User: lexli
+ * User: lextm
  * Date: 2008-12-7
  * Time: 12:14
  * 
@@ -46,6 +46,6 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Exception.
         /// </summary>
-        public Exception Exception { get; private set; }
+        public Exception Exception { get; }
     }
 }

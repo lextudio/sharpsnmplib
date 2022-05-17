@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -27,7 +24,7 @@ namespace Lextm.SharpSnmpLib.Security
             /// <summary>
             /// Cache to map engineId to keys
             /// </summary>
-            private Cache<string, byte[]> _engineIdCache;
+            private readonly Cache<string, byte[]> _engineIdCache;
 
             /// <summary>
             /// Default ctor initializes EngineIdCache
@@ -65,14 +62,14 @@ namespace Lextm.SharpSnmpLib.Security
         }
         #endregion
 
-        private Cache<string, EngineIdCache> _cryptoCache;
+        private readonly Cache<string, EngineIdCache> _cryptoCache;
 
         /// <summary>
         /// Ctor
         /// </summary>
         public CryptoKeyCache(int capacity)
         {
-            _cryptoCache = new Cache<string, EngineIdCache>(CacheCapacity);
+            _cryptoCache = new Cache<string, EngineIdCache>(capacity == 0 ? CacheCapacity : capacity);
         }
 
         /// <summary>
@@ -85,10 +82,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>True if value exists in cache for specified password/engine id combination, false otherwise</returns>
         public bool TryGetCachedValue(byte[] password, byte[] engineId, out byte[]? cachedValue)
         {
-            EngineIdCache? engineCache;
             string strPassword = Stringanize(password);
             cachedValue = null;
-            bool success = _cryptoCache.TryGetValue(strPassword, out engineCache);
+            bool success = _cryptoCache.TryGetValue(strPassword, out var engineCache);
             if (success)
             {
                 success = engineCache!.TryGetCachedValue(engineId, out cachedValue);

@@ -31,14 +31,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the agent.
         /// </summary>
         /// <value>The agent.</value>
-        public IPEndPoint Agent { get; private set; }
+        public IPEndPoint Agent { get; }
 
         /// <summary>
         /// Gets the variable.
         /// </summary>
         /// <value>The variable.</value>
         /// <remarks>If the agent is SNMP v3, this is <c>null</c>.</remarks>
-        public Variable? Variable { get; private set; }
+        public Variable? Variable { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AgentFoundEventArgs"/> class.

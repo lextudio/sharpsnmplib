@@ -101,10 +101,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the clean digest.
         /// </summary>
         /// <value>The clean digest.</value>
-        public OctetString CleanDigest
-        {
-            get { return OctetString.Empty; }
-        }
+        public OctetString CleanDigest => OctetString.Empty;
 
         /// <summary>
         /// Converts password to key.
@@ -118,12 +115,12 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 throw new ArgumentNullException(nameof(password));
             }
-            
+
             if (engineId == null)
             {
                 throw new ArgumentNullException(nameof(engineId));
             }
-            
+
             // IMPORTANT: this function is not used.
             return Array.Empty<byte>();
         }

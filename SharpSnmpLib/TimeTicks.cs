@@ -27,11 +27,11 @@ namespace Lextm.SharpSnmpLib
     /// TimeTicks type.
     /// </summary>
     /// <remarks>Represents SNMP TimeTicks type.</remarks>
-    [DebuggerDisplay("{count} ({ToTimeSpan()})")]
+    [DebuggerDisplay("{_count} ({ToTimeSpan()})")]
     public sealed class TimeTicks : ISnmpData, IEquatable<TimeTicks>
     {
         private readonly Counter32 _count;
-        
+
         /// <summary>
         /// Creates a <see cref="TimeTicks"/> instance with a specific count.
         /// </summary>
@@ -41,15 +41,15 @@ namespace Lextm.SharpSnmpLib
         {
             _count = new Counter32(count);
         }
-        
+
         /// <summary>
         /// Creates a <see cref="TimeTicks"/> instance with <see cref="TimeSpan"/>.
         /// </summary>
         /// <param name="span">The time span.</param>        
         public TimeTicks(TimeSpan span) : this((uint)(span.TotalMilliseconds / 10))
-        {            
+        {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="TimeTicks"/> instance with raw bytes.
         /// </summary>
@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
+
             _count = new Counter32(length, stream);
         }
 
@@ -99,18 +99,12 @@ namespace Lextm.SharpSnmpLib
             root *= 100000;
             return new TimeSpan(root);
         }
-            
+
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get
-            {
-                return SnmpType.TimeTicks;
-            }
-        }
-        
+        public SnmpType TypeCode => SnmpType.TimeTicks;
+
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="TimeTicks"/>.
         /// </summary>
@@ -121,7 +115,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, obj as TimeTicks);
         }
-        
+
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
@@ -143,7 +137,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
+
             stream.AppendBytes(TypeCode, _count.GetLengthBytes(), _count.GetRaw());
         }
 
@@ -158,7 +152,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, other);
         }
-        
+
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -170,7 +164,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(left, right);
         }
-        
+
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -182,7 +176,7 @@ namespace Lextm.SharpSnmpLib
         {
             return !(left == right);
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="TimeTicks"/>.
         /// </summary>
@@ -191,7 +185,7 @@ namespace Lextm.SharpSnmpLib
         {
             return ToTimeSpan().ToString();
         }
-        
+
         /// <summary>
         /// The comparison.
         /// </summary> 
@@ -212,7 +206,7 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-            
+
             return left!._count == right!._count;
         }
     }

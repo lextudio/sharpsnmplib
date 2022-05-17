@@ -52,12 +52,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(community));
             }
-            
+
             if (version != VersionCode.V2)
             {
                 throw new ArgumentException("Only v2c are supported.", nameof(version));
             }
-            
+
             Version = version;
             Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
             TimeStamp = time;
@@ -95,12 +95,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(userName));
             }
-            
+
             if (variables == null)
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
+
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
@@ -120,8 +120,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             var authenticationProvider = Privacy.AuthenticationProvider;
             Parameters = new SecurityParameters(
                 engineId,
-                new Integer32(engineBoots), 
-                new Integer32(engineTime), 
+                new Integer32(engineBoots),
+                new Integer32(engineTime),
                 userName,
                 authenticationProvider.CleanDigest,
                 Privacy.Salt);
@@ -130,7 +130,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 enterprise,
                 time,
                 variables);
-            
+
             // TODO: may expose engine ID in the future.
             Scope = new Scope(OctetString.Empty, OctetString.Empty, pdu);
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
@@ -149,31 +149,31 @@ namespace Lextm.SharpSnmpLib.Messaging
             TimeStamp = pdu.TimeStamp;
             _bytes = this.PackMessage(length).ToBytes();
         }
-        
+
         #region ISnmpMessage Members
 
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header { get; private set; }
-        
+        public Header Header { get; }
+
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy { get; private set; }
+        public IPrivacyProvider Privacy { get; }
 
         /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; private set; }
+        public SecurityParameters Parameters { get; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope { get; private set; }
+        public Scope Scope { get; }
 
         #endregion
 
@@ -193,19 +193,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Enterprise.
         /// </summary>
-        public ObjectIdentifier Enterprise { get; private set; }
+        public ObjectIdentifier Enterprise { get; }
 
         /// <summary>
         /// Time stamp.
         /// </summary>
         [CLSCompliant(false)]
-        public uint TimeStamp { get; private set; }
+        public uint TimeStamp { get; }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version { get; private set; }
+        public VersionCode Version { get; }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents the current <see cref="TrapV2Message"/>.

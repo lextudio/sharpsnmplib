@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                 new Scope(
                     OctetString.Empty,
                     OctetString.Empty,
-                    new ResponsePdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable>{ new Variable(new ObjectIdentifier("1.3.6.1.1.2.5.0"), new Integer32(400))})),
+                    new ResponsePdu(0x2C6B, ErrorCode.NoError, 0, new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.1.2.5.0"), new Integer32(400)) })),
                 DefaultPrivacyProvider.DefaultPair,
                 true,
                 null);

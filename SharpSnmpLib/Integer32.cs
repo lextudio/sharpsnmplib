@@ -36,7 +36,7 @@ using System.IO;
 // Universal, and provide the Creator and Creators methods for your class
 // You will see an example of how to do this in the Snmplib
 // CONTEXT AND PRIVATE TYPES
-// Ad hoc coding can be used for these, as an alterative to derive index class as above.
+// Ad hoc coding can be used for these, as an alternative to derive index class as above.
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib
         {
             // IMPORTANT: for test project only.
         }
-        
+
         /// <summary>
         /// Creates an <see cref="Integer32"/> instance with a specific <see cref="Int32"/>.
         /// </summary>
@@ -101,7 +101,13 @@ namespace Lextm.SharpSnmpLib
             }
 
             _raw = new byte[length.Item1];
-            stream.Read(_raw, 0, length.Item1);
+            var returned = stream.Read(_raw, 0, length.Item1);
+            if (returned < length.Item1)
+            {
+                throw new ArgumentException($"Read only {returned} bytes while expected {length.Item1}",
+                    nameof(length));
+            }
+
             _int = ((_raw[0] & 0x80) == 0x80) ? -1 : 0; // sign extended! Guy McIlroy
             for (var j = 0; j < length.Item1; j++)
             {
@@ -142,17 +148,11 @@ namespace Lextm.SharpSnmpLib
         {
             return _int.ToString(CultureInfo.InvariantCulture);
         }
-        
+
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get
-            {
-                return SnmpType.Integer32;
-            }
-        }
+        public SnmpType TypeCode => SnmpType.Integer32;
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -164,7 +164,7 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
+
             stream.AppendBytes(TypeCode, _length, _raw ??= ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
         }
 
@@ -176,7 +176,7 @@ namespace Lextm.SharpSnmpLib
         {
             return ToInt32().GetHashCode();
         }
-        
+
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Integer32"/>.
         /// </summary>
@@ -187,7 +187,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, obj as Integer32);
         }
-        
+
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
@@ -198,7 +198,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, other);
         }
-        
+
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -210,7 +210,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(left, right);
         }
-        
+
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -222,7 +222,7 @@ namespace Lextm.SharpSnmpLib
         {
             return !(left == right);
         }
-        
+
         /// <summary>
         /// The comparison.
         /// </summary>
@@ -243,10 +243,10 @@ namespace Lextm.SharpSnmpLib
             {
                 return false;
             }
-            
+
             return left!.ToInt32() == right!.ToInt32();
         }
     }
-    
+
     // all references here are to ITU-X.690-12/97
 }

@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             list.Add(firstByte);
-            
+
             var result = 0;
             var octets = firstByte & 0x7f;
             for (var j = 0; j < octets; j++)
@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib
                 result = (result << 8) + nextByte;
                 list.Add(nextByte);
             }
-            
+
             return new Tuple<int, byte[]>(result, list.ToArray());
         }
 
@@ -71,7 +71,12 @@ namespace Lextm.SharpSnmpLib
             }
 
             var bytes = new byte[length];
-            stream.Read(bytes, 0, length);
+            var returned = stream.Read(bytes, 0, length);
+            if (returned < length)
+            {
+                throw new ArgumentException($"Read only {returned} bytes while expected {length}",
+                    nameof(length));
+            }
         }
 
         internal static void AppendBytes(this Stream stream, SnmpType typeCode, byte[]? length, byte[] raw)
@@ -87,11 +92,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             stream.WriteByte((byte)typeCode);
-            if (length == null)
-            {
-                length = raw.Length.WritePayloadLength();
-            }
-
+            length ??= raw.Length.WritePayloadLength();
             stream.Write(length, 0, length.Length);
             stream.Write(raw, 0, raw.Length);
         }
