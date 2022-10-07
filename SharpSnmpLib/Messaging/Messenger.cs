@@ -51,7 +51,23 @@ namespace Lextm.SharpSnmpLib.Messaging
         private static readonly Lazy<NumberGenerator> RequestCounterFullRange = new(() => new NumberGenerator(int.MinValue, int.MaxValue));
         private static readonly Lazy<NumberGenerator> RequestCounterPositive = new(() => new NumberGenerator(0, int.MaxValue));
 
-        private static NumberGenerator RequestCounter => UseFullRange ? RequestCounterFullRange.Value : RequestCounterPositive.Value;
+        private static NumberGenerator? requestCounter;
+
+        /// <summary>
+        /// The universal counter for request IDs and other IDs.
+        /// </summary>
+        public static NumberGenerator RequestCounter
+        {
+            get
+            {
+                return requestCounter ?? (requestCounter = UseFullRange ? RequestCounterFullRange.Value : RequestCounterPositive.Value);
+            }
+
+            set
+            {
+                requestCounter = value;
+            }
+        }
 
         /// <summary>
         /// A flag to control request ID range.
