@@ -163,6 +163,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
+        [Obsolete("Please use other overloading ones.")]
         public GetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
            : this(version, messageId, requestId, userName, OctetString.Empty, variables, privacy, maxMessageSize, report)
         {
