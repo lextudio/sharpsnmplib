@@ -511,8 +511,13 @@ namespace Lextm.SharpSnmpLib
         /// <param name="extra">The extra.</param>
         /// <returns></returns>       
         [CLSCompliant(false)]
-        public static uint[] AppendTo(uint[] original, uint extra)
+        public static uint[] AppendTo(uint[]? original, uint extra)
         {
+            if (original == null)
+            {
+                return new[] { extra }; 
+            }
+
             // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).
             var length = original.Length;
             var tmp = new uint[length + 1];
