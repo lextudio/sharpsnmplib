@@ -35,7 +35,6 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// SNMP type code. The values are tag values for SNMP types.
     /// </summary>
-    [DataContract]
     public enum SnmpType // RFC1213 subset of ASN.1
     { 
         /// <summary>
