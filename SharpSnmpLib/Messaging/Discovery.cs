@@ -83,11 +83,23 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="type">Message type.</param>
         public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type)
         {
+            _discovery = CreateDiscoveryMessage(messageId, requestId, maxMessageSize, type);
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="ISnmpMessage"/> class for Discovery.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="maxMessageSize">The max size of message.</param>
+        /// <param name="type">Message type.</param>
+        public static ISnmpMessage CreateDiscoveryMessage(int messageId, int requestId, int maxMessageSize, SnmpType type)
+        {
             switch (type)
             {
                 case SnmpType.GetRequestPdu:
                     {
-                        _discovery = new GetRequestMessage(
+                        return new GetRequestMessage(
                             VersionCode.V3,
                             new Header(
                             new Integer32(messageId),
@@ -105,7 +117,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 case SnmpType.GetNextRequestPdu:
                     {
-                        _discovery = new GetNextRequestMessage(
+                        return new GetNextRequestMessage(
                             VersionCode.V3,
                             new Header(
                             new Integer32(messageId),
@@ -123,7 +135,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 case SnmpType.GetBulkRequestPdu:
                     {
-                        _discovery = new GetBulkRequestMessage(
+                        return new GetBulkRequestMessage(
                             VersionCode.V3,
                             new Header(
                             new Integer32(messageId),
@@ -141,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 case SnmpType.SetRequestPdu:
                     {
-                        _discovery = new SetRequestMessage(
+                        return new SetRequestMessage(
                             VersionCode.V3,
                             new Header(
                             new Integer32(messageId),
@@ -159,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 case SnmpType.InformRequestPdu:
                     {
-                        _discovery = new InformRequestMessage(
+                        return new InformRequestMessage(
                             VersionCode.V3,
                             new Header(
                             new Integer32(messageId),
