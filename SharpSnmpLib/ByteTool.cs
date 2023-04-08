@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib
             }
 
             var result = new List<byte>();
-            var content = description.Trim().Split(new[] { ' ' });
+            var content = description.Trim().Split(' ');
             foreach (var part in content)
             {
                 if (byte.TryParse(part, out byte temp))

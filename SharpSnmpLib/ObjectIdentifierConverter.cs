@@ -90,7 +90,7 @@ namespace Lextm.SharpSnmpLib
             var oid = value as ObjectIdentifier;
             if (destinationType == typeof(string) && oid != null)
             {
-                return oid.ToString(); // GetTextual(null);
+                return oid.ToString();
             }
 
             return base.ConvertTo(context, culture, value, destinationType);

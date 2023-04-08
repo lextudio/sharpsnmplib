@@ -248,6 +248,35 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="obj">An object to compare with this instance.</param>
+        /// <returns>
+        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings:
+        /// Value
+        /// Meaning
+        /// Less than zero
+        /// This instance is less than <paramref name="obj"/>.
+        /// Zero
+        /// This instance is equal to <paramref name="obj"/>.
+        /// Greater than zero
+        /// This instance is greater than <paramref name="obj"/>.
+        /// </returns>
+        /// <exception cref="T:System.ArgumentException">
+        ///     <paramref name="obj"/> is not the same type as this instance.
+        /// </exception>
+        public int CompareTo(object? obj)
+        {
+            var o = obj as ObjectIdentifier;
+            if (o == null)
+            {
+                throw new ArgumentException("obj is not the same type as this instance.", nameof(obj));
+            }
+
+            return CompareTo(o);
+        }
+
+        /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="ObjectIdentifier"/>.
         /// </summary>
         /// <returns></returns>
@@ -291,7 +320,7 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(dotted));
             }
 
-            var parts = dotted.Split(new[] { '.' });
+            var parts = dotted.Split('.');
             var result = new List<uint>();
             foreach (var s in parts.Where(s => !string.IsNullOrEmpty(s)))
             {
@@ -389,35 +418,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
-        /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>
-        /// A 32-bit signed integer that indicates the relative order of the objects being compared. The return value has these meanings:
-        /// Value
-        /// Meaning
-        /// Less than zero
-        /// This instance is less than <paramref name="obj"/>.
-        /// Zero
-        /// This instance is equal to <paramref name="obj"/>.
-        /// Greater than zero
-        /// This instance is greater than <paramref name="obj"/>.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        ///     <paramref name="obj"/> is not the same type as this instance.
-        /// </exception>
-        public int CompareTo(object? obj)
-        {
-            var o = obj as ObjectIdentifier;
-            if (o == null)
-            {
-                throw new ArgumentException("obj is not the same type as this instance.", nameof(obj));
-            }
-
-            return CompareTo(o);
-        }
-
-        /// <summary>
         /// The equality operator.
         /// </summary>
         /// <param name="left">Left <see cref="ObjectIdentifier"/> object</param>
@@ -453,6 +453,17 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Implements the operator &gt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator >=(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
+
+        /// <summary>
         /// Implements the operator &lt;.
         /// </summary>
         /// <param name="left">The left.</param>
@@ -461,6 +472,17 @@ namespace Lextm.SharpSnmpLib
         public static bool operator <(ObjectIdentifier left, ObjectIdentifier right)
         {
             return left.CompareTo(right) < 0;
+        }
+
+        /// <summary>
+        /// Implements the operator &lt;=.
+        /// </summary>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <returns>The result of the operator.</returns>
+        public static bool operator <=(ObjectIdentifier left, ObjectIdentifier right)
+        {
+            return left.CompareTo(right) <= 0;
         }
 
         /// <summary>
@@ -515,7 +537,7 @@ namespace Lextm.SharpSnmpLib
         {
             if (original == null)
             {
-                return new[] { extra }; 
+                return new[] { extra };
             }
 
             // Old method with List<uint> dropped as it incurred two copies of the array (vs 1 for this method).

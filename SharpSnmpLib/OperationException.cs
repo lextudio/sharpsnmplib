@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Operation exception of #SNMP.
     /// </summary>
-    [DataContract]
+    [Serializable]
     public class OperationException : SnmpException
     {
         /// <summary>
@@ -65,6 +65,35 @@ namespace Lextm.SharpSnmpLib
         /// <param name="inner"></param>
         public OperationException(string message, Exception inner) : base(message, inner)
         {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="OperationException"/> instance.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+        protected OperationException(SerializationInfo info, StreamingContext context)
+           : base(info, context)
+        {
+            var content = info.GetString("Agent");
+            if (content == null)
+            {
+                return;
+            }
+
+            Agent = IPAddress.Parse(content);
+        }
+
+        /// <inheritdoc/>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            if (Agent == null)
+            {
+                return;
+            }
+
+            info.AddValue("Agent", Agent.ToString());
         }
 
         /// <summary>

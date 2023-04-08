@@ -117,6 +117,17 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
+        /// </returns>
+        public bool Equals(TimeTicks? other)
+        {
+            return Equals(this, other);
+        }
+
+        /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>A hash code for the current <see cref="TimeTicks"/>.</returns>
@@ -142,16 +153,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         #endregion
-        /// <summary>
-        /// Indicates whether the current object is equal to another object of the same type.
-        /// </summary>
-        /// <param name="other">An object to compare with this object.</param>
-        /// <returns><value>true</value> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <value>false</value>.
-        /// </returns>
-        public bool Equals(TimeTicks? other)
-        {
-            return Equals(this, other);
-        }
 
         /// <summary>
         /// The equality operator.

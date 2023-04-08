@@ -33,7 +33,7 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Base exception type of #SNMP.
     /// </summary>
-    [DataContract]
+    [Serializable]
     public class SnmpException : Exception
     {
         /// <summary>
@@ -69,6 +69,12 @@ namespace Lextm.SharpSnmpLib
         protected SnmpException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
+        }
+
+        /// <inheritdoc/>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
         }
 
         /// <summary>

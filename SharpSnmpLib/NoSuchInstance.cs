@@ -78,15 +78,6 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
-        /// Serves as a hash function for a particular type.
-        /// </summary>
-        /// <returns>A hash code for the current <see cref="NoSuchInstance"/>.</returns>
-        public override int GetHashCode()
-        {
-            return 0;
-        }
-
-        /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
@@ -95,6 +86,15 @@ namespace Lextm.SharpSnmpLib
         public bool Equals(NoSuchInstance? other)
         {
             return Equals(this, other);
+        }
+
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="NoSuchInstance"/>.</returns>
+        public override int GetHashCode()
+        {
+            return 0;
         }
 
         /// <summary>

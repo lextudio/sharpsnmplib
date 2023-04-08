@@ -61,7 +61,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                // throw new NotSupportedException("SNMP v3 is not supported");
                 var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
                 bytes = discovery.ToBytes();
             }
@@ -164,7 +163,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                // throw new NotSupportedException("SNMP v3 is not supported");
                 var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
                 bytes = discovery.ToBytes();
             }
@@ -194,13 +192,10 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 udp.Shutdown(SocketShutdown.Both);
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
                 // This exception is thrown in .NET Core <=2.1.4 on non-Windows systems.
                 // However, the shutdown call is necessary to release the socket binding.
-                if (!SnmpMessageExtension.IsRunningOnWindows && ex.SocketErrorCode == SocketError.NotConnected)
-                {
-                }
             }
         }
 

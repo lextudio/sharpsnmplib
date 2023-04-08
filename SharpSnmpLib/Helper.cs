@@ -49,10 +49,11 @@ namespace Lextm.SharpSnmpLib
                     return _desSupported.Value;
                 }
 
-                return (_desSupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")
+                _desSupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")
                     || RuntimeInformation.FrameworkDescription.StartsWith(".NET 6.")
                     || RuntimeInformation.FrameworkDescription.StartsWith(".NET 5.")
-                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET Core 3.1.")).Value;
+                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET Core 3.1.");
+                return _desSupported.Value;
             }
         }
 
@@ -67,9 +68,10 @@ namespace Lextm.SharpSnmpLib
                     return _aesSupported.Value;
                 }
 
-                return (_aesSupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")
+                _aesSupported = RuntimeInformation.FrameworkDescription.StartsWith(".NET Framework")
                     || RuntimeInformation.FrameworkDescription.StartsWith(".NET 6.")
-                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET 5.")).Value;
+                    || RuntimeInformation.FrameworkDescription.StartsWith(".NET 5.");
+                return _aesSupported.Value;
             }
         }
     }

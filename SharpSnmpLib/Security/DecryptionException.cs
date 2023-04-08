@@ -25,7 +25,7 @@ namespace Lextm.SharpSnmpLib.Security
     /// <summary>
     /// Decryption exception.
     /// </summary>
-    [DataContract]
+    [Serializable]
     public sealed class DecryptionException : SnmpException
     {
         private byte[]? _bytes;
@@ -33,8 +33,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Initializes a new instance of the <see cref="DecryptionException"/> class.
         /// </summary>
-        public DecryptionException() 
-        { 
+        public DecryptionException()
+        {
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Lextm.SharpSnmpLib.Security
         public DecryptionException(string message) : base(message)
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="DecryptionException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/>.
         /// </summary>
@@ -56,13 +56,42 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
         /// <summary>
+        /// Creates a <see cref="DecryptionException"/> instance.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+        public DecryptionException(SerializationInfo info, StreamingContext context)
+           : base(info, context)
+        {
+            var content = info.GetString("Bytes");
+            if (content == null)
+            {
+                return;
+            }
+
+            _bytes = Convert.FromBase64String(content);
+        }
+
+        /// <inheritdoc/>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            if (_bytes == null)
+            {
+                return;
+            }
+
+            info.AddValue("Bytes", Convert.ToBase64String(_bytes));
+        }
+
+        /// <summary>
         /// Gets the bytes.
         /// </summary>        
         public byte[]? GetBytes()
         {
-            return _bytes; 
+            return _bytes;
         }
-        
+
         /// <summary>
         /// Sets the bytes.
         /// </summary>
@@ -71,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Security
         {
             _bytes = value;
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="DecryptionException"/>.
         /// </summary>

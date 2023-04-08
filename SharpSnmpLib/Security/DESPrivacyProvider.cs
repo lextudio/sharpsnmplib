@@ -194,7 +194,6 @@ namespace Lextm.SharpSnmpLib.Security
             des.Mode = CipherMode.ECB;
             des.Padding = PaddingMode.None;
 
-            // TODO: review the null input.
             using (var transform = des.CreateEncryptor(key, null))
             {
                 for (var b = 0; b < div; b++)

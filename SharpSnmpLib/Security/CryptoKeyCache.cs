@@ -19,7 +19,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// combination will produce a different key this class is modeled using
         /// Dictionary of Dictionaries. This class is not thread safe.
         /// </summary>
-        private class EngineIdCache
+        private sealed class EngineIdCache
         {
             /// <summary>
             /// Cache to map engineId to keys

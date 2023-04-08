@@ -27,7 +27,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Exception raised when an IP endpoint is already in use.
     /// </summary>
-    [DataContract]
+    [Serializable]
     public sealed class PortInUseException : SnmpException
     {
         /// <summary>
@@ -57,6 +57,39 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Creates a <see cref="PortInUseException"/> instance.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+        public PortInUseException(SerializationInfo info, StreamingContext context)
+           : base(info, context)
+        {
+            var content = info.GetString("Endpoint");
+            if (content == null)
+            {
+                return;
+            }
+
+#if NET6_0_OR_GREATER
+            Endpoint = IPEndPoint.Parse(content);
+#else
+            Endpoint = Parse(content);
+#endif
+        }
+
+        /// <inheritdoc/>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            if (Endpoint == null)
+            {
+                return;
+            }
+
+            info.AddValue("Endpoint", Endpoint.ToString());
+        }
+
+        /// <summary>
         /// The endpoint already in use.
         /// </summary>
         public IPEndPoint? Endpoint { get; set; }
@@ -68,6 +101,35 @@ namespace Lextm.SharpSnmpLib.Messaging
         public override string ToString()
         {
             return string.Format(CultureInfo.InvariantCulture, "PortInUseException: {0}", Message);
+        }
+
+        private static IPEndPoint Parse(string endPoint)
+        {
+            if (string.IsNullOrEmpty(endPoint))
+            {
+                throw new ArgumentNullException(nameof(endPoint));
+            }
+
+            string[] parts = endPoint.Split(':');
+
+            if (parts.Length != 2)
+            {
+                throw new FormatException("Invalid endpoint format. Expected 'IP:Port'.");
+            }
+
+            IPAddress ip;
+            if (!IPAddress.TryParse(parts[0], out ip))
+            {
+                throw new FormatException("Invalid IP address.");
+            }
+
+            int port;
+            if (!int.TryParse(parts[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out port) || port < IPEndPoint.MinPort || port > IPEndPoint.MaxPort)
+            {
+                throw new FormatException($"Invalid port. The port must be between {IPEndPoint.MinPort} and {IPEndPoint.MaxPort}.");
+            }
+
+            return new IPEndPoint(ip, port);
         }
     }
 }

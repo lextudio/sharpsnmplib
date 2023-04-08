@@ -492,8 +492,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var id = reply.Pdu().Variables[0].Id;
                 if (id != Messenger.NotInTimeWindow)
                 {
-                    // var error = id.GetErrorMessage();
-                    // TODO: whether it is good to return?
                     return new Tuple<bool, IList<Variable>, ISnmpMessage>(false, new List<Variable>(0), report);
                 }
 

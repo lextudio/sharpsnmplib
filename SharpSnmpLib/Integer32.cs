@@ -165,7 +165,8 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            stream.AppendBytes(TypeCode, _length, _raw ??= ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0));
+            _raw ??= ByteTool.GetRawBytes(BitConverter.GetBytes(_int), _int < 0);
+            stream.AppendBytes(TypeCode, _length, _raw);
         }
 
         /// <summary>

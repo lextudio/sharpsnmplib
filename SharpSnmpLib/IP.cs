@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib
             int pos = ip.IndexOf(' ');
             if (pos != -1)
             {
-                string[] nets = ip.Substring(pos + 1).Split(new char[] { '.' });
+                string[] nets = ip.Substring(pos + 1).Split('.');
                 if (nets.Length > 0)
                 {
                     string lastNet = nets[nets.Length - 1];
@@ -74,7 +74,7 @@ namespace Lextm.SharpSnmpLib
             if (ip.Length == 0 || ip[ip.Length - 1] == '.')
                 throw new FormatException("An invalid IP address was specified.");
 
-            string[] ips = ip.Split(new char[] { '.' });
+            string[] ips = ip.Split('.');
             if (ips.Length > IPv4Length)
                 throw new FormatException("An invalid IP address was specified.");
 
@@ -133,29 +133,6 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
-        private static int FromHex(char digit)
-        {
-            if ('0' <= digit && digit <= '9')
-            {
-                return (int)(digit - '0');
-            }
-
-            if ('a' <= digit && digit <= 'f')
-                return (int)(digit - 'a' + 10);
-
-            if ('A' <= digit && digit <= 'F')
-                return (int)(digit - 'A' + 10);
-
-            throw new ArgumentException("Invalid digit.", nameof(digit));
-        }
-
-        private static bool IsHexDigit(char character)
-        {
-            return (('0' <= character && character <= '9') ||
-                    ('a' <= character && character <= 'f') ||
-                    ('A' <= character && character <= 'F'));
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="IP"/> class.
         /// </summary>
@@ -188,6 +165,29 @@ namespace Lextm.SharpSnmpLib
 
             _ip = raw;
             _length = length.Item2;
+        }
+
+        private static int FromHex(char digit)
+        {
+            if ('0' <= digit && digit <= '9')
+            {
+                return digit - '0';
+            }
+
+            if ('a' <= digit && digit <= 'f')
+                return digit - 'a' + 10;
+
+            if ('A' <= digit && digit <= 'F')
+                return digit - 'A' + 10;
+
+            throw new ArgumentException("Invalid digit.", nameof(digit));
+        }
+
+        private static bool IsHexDigit(char character)
+        {
+            return (('0' <= character && character <= '9') ||
+                    ('a' <= character && character <= 'f') ||
+                    ('A' <= character && character <= 'F'));
         }
 
         /// <summary>
