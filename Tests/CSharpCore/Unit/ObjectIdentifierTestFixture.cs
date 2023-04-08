@@ -77,6 +77,22 @@ namespace Lextm.SharpSnmpLib.Unit
         }
 
         [Fact]
+        public void TestGreaterThanOrEqual()
+        {
+            Assert.True(new ObjectIdentifier("1.1") >= new ObjectIdentifier("0.0"));
+            Assert.True(new ObjectIdentifier("1.1") >= new ObjectIdentifier("1.1"));
+            Assert.True(new ObjectIdentifier("0.0.0") >= new ObjectIdentifier("0.0"));
+        }
+
+        [Fact]
+        public void TestLessThanOrEqual()
+        {
+            Assert.True(new ObjectIdentifier("0.0") <= new ObjectIdentifier("1.1"));
+            Assert.True(new ObjectIdentifier("1.1") <= new ObjectIdentifier("1.1"));
+            Assert.True(new ObjectIdentifier("0.0") <= new ObjectIdentifier("0.0.0"));
+        }
+
+        [Fact]
         public void TestConversion()
         {
             var o = new ObjectIdentifier("1.3.6.1.2.1.1.1.0");
