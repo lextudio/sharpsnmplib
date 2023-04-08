@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Agent address.
         /// </summary>
-        protected IPAddress? Agent { get; set; }
+        public IPAddress? Agent { get; set; }
 
         /// <summary>
         /// Creates a <see cref="OperationException"/> instance.
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        protected OperationException(SerializationInfo info, StreamingContext context)
+        public OperationException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
             var content = info.GetString("Agent");
@@ -88,12 +88,7 @@ namespace Lextm.SharpSnmpLib
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            if (Agent == null)
-            {
-                return;
-            }
-
-            info.AddValue("Agent", Agent.ToString());
+            info.AddValue("Agent", Agent?.ToString());
         }
 
         /// <summary>
@@ -113,3 +108,6 @@ namespace Lextm.SharpSnmpLib
         }
     }
 }
+
+// generate OperationExceptionTestFixture class that contains test cases for OperationException
+

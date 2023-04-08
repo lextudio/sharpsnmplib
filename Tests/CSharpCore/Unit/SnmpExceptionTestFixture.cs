@@ -5,8 +5,63 @@ using Xunit;
 
 namespace Lextm.SharpSnmpLib.Tests
 {
-    public class SnmpExceptionTests
+    public class SnmpExceptionTestFixture
     {
+        [Fact]
+        public void SnmpException_DefaultConstructorTest()
+        {
+            // Arrange & Act
+            var exception = new SnmpException();
+
+            // Assert
+            Assert.NotNull(exception);
+        }
+
+        [Fact]
+        public void SnmpException_MessageConstructorTest()
+        {
+            // Arrange
+            var testMessage = "Test message";
+
+            // Act
+            var exception = new SnmpException(testMessage);
+
+            // Assert
+            Assert.Equal(testMessage, exception.Message);
+            Assert.Null(exception.InnerException);
+        }
+
+        [Fact]
+        public void SnmpException_MessageAndInnerExceptionConstructorTest()
+        {
+            // Arrange
+            var testMessage = "Test message";
+            var innerException = new InvalidOperationException();
+
+            // Act
+            var exception = new SnmpException(testMessage, innerException);
+
+            // Assert
+            Assert.Equal(testMessage, exception.Message);
+            Assert.Equal(innerException, exception.InnerException);
+        }
+
+        [Fact]
+        public void SnmpException_ToStringTest()
+        {
+            // Arrange
+            var testMessage = "Test message";
+            var innerException = new InvalidOperationException("Inner exception message");
+            var exception = new SnmpException(testMessage, innerException);
+
+            // Act
+            var result = exception.ToString();
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Contains(testMessage, result);
+            Assert.Contains(innerException.ToString(), result);
+        }
         [Fact]
         public void SnmpException_SerializationTest()
         {

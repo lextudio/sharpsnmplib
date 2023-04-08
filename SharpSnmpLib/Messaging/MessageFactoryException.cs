@@ -85,12 +85,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            if (_bytes == null)
-            {
-                return;
-            }
-
-            info.AddValue("Bytes", Convert.ToBase64String(_bytes));
+            info.AddValue("Bytes", _bytes == null ? null : Convert.ToBase64String(_bytes));
         }
 
         /// <summary>

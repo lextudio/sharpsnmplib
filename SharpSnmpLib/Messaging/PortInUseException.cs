@@ -81,12 +81,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            if (Endpoint == null)
-            {
-                return;
-            }
-
-            info.AddValue("Endpoint", Endpoint.ToString());
+            info.AddValue("Endpoint", Endpoint?.ToString());
         }
 
         /// <summary>
@@ -117,14 +112,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new FormatException("Invalid endpoint format. Expected 'IP:Port'.");
             }
 
-            IPAddress ip;
-            if (!IPAddress.TryParse(parts[0], out ip))
+            if (!IPAddress.TryParse(parts[0], out IPAddress? ip))
             {
                 throw new FormatException("Invalid IP address.");
             }
 
             int port;
-            if (!int.TryParse(parts[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out port) || port < IPEndPoint.MinPort || port > IPEndPoint.MaxPort)
+            if (!int.TryParse(parts[1], out port) || port < IPEndPoint.MinPort || port > IPEndPoint.MaxPort)
             {
                 throw new FormatException($"Invalid port. The port must be between {IPEndPoint.MinPort} and {IPEndPoint.MaxPort}.");
             }
