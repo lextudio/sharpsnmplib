@@ -1,4 +1,4 @@
-$nuget = ".\nuget.exe"
+$nuget = Join-Path $PSScriptRoot "nuget.exe"
 
 if (!(Test-Path $nuget))
 {
