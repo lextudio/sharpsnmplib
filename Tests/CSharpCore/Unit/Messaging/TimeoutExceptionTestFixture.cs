@@ -56,18 +56,20 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             // Act
             // Serialize the original exception to a memory stream
-            using var memoryStream = new MemoryStream();
-            binaryFormatter.Serialize(memoryStream, originalException);
-            memoryStream.Position = 0;
+            using (var memoryStream = new MemoryStream())
+            {
+                binaryFormatter.Serialize(memoryStream, originalException);
+                memoryStream.Position = 0;
 
-            // Deserialize the memory stream back into an object
-            var deserializedException = (TimeoutException)binaryFormatter.Deserialize(memoryStream);
+                // Deserialize the memory stream back into an object
+                var deserializedException = (TimeoutException)binaryFormatter.Deserialize(memoryStream);
 
-            // Assert
-            Assert.NotNull(deserializedException);
-            Assert.Equal(originalException.Message, deserializedException.Message);
-            Assert.IsType<InvalidOperationException>(deserializedException.InnerException);
-            Assert.Equal(originalException.Timeout, deserializedException.Timeout);
+                // Assert
+                Assert.NotNull(deserializedException);
+                Assert.Equal(originalException.Message, deserializedException.Message);
+                Assert.IsType<InvalidOperationException>(deserializedException.InnerException);
+                Assert.Equal(originalException.Timeout, deserializedException.Timeout);
+            }
         }
 
         [Fact]
