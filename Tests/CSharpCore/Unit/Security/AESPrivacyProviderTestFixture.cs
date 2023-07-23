@@ -45,15 +45,15 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestIsSupported()
         {
-            #if NET6_0
+#if NET6_0
+            Assert.True(AESPrivacyProviderBase.IsSupported);
+#elif NET5_0
                 Assert.True(AESPrivacyProviderBase.IsSupported);
-            #elif NET5_0
-                Assert.True(AESPrivacyProviderBase.IsSupported);
-            #elif NETCOREAPP3_1
+#elif NETCOREAPP3_1
                 Assert.False(AESPrivacyProviderBase.IsSupported);
-            #elif NET471
+#elif NET471
                 Assert.True(AESPrivacyProviderBase.IsSupported);
-            #endif
+#endif
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
                 {
                     0x37, 0xc6, 0x4c, 0xad, 0x49, 0x37, 0xfe, 0xda, 0x57, 0xc8, 0x48, 0x53, 0x47, 0x2a, 0x2e, 0xc0
                 },
-                0, 0, new byte[] {0x00, 0x00, 0x00, 0x01, 0x44, 0x2c, 0xa3, 0xb5});
+                0, 0, new byte[] { 0x00, 0x00, 0x00, 0x01, 0x44, 0x2c, 0xa3, 0xb5 });
             byte[] expected =
                 ByteTool.Convert(
                     "36 0A 04 BB A8 9A 37 C1 28 2E 9C B6 30 A1  AB 7E 1E 60 60 EF D2 91 3A 26 B0 1C D5  55 B7 16 78 FB A4 D1 9A 2C E4 30 9A 86  EC E1 83 EE 72 C2 68 BC");
@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
 
             Scope scope = new Scope(engineId, OctetString.Empty,
                 new GetRequestPdu(0x3A25,
-                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"))}));
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));
             SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x14), new Integer32(0x35),
                 new OctetString("lexmark"), new OctetString(new byte[12]),
                 new OctetString(ByteTool.Convert("00 00 00  01 44 2C A3 B5")));
@@ -130,12 +130,12 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             {
                 var encrypted = provider.LegacyEncrypt(key, iv, data);
                 Assert.Equal(length, encrypted.Length);
-                var decrypted = provider.Net6Decrypt(key, iv, encrypted);
+                var decrypted = AESPrivacyProviderBase.Net6Decrypt(key, iv, encrypted);
                 Assert.Equal(data, decrypted);
             }
 
             {
-                var encrypted = provider.Net6Encrypt(key, iv, data);
+                var encrypted = AESPrivacyProviderBase.Net6Encrypt(key, iv, data);
                 Assert.Equal(length, encrypted.Length);
                 var decrypted = provider.LegacyDecrypt(key, iv, encrypted);
                 Assert.Equal(data, decrypted);

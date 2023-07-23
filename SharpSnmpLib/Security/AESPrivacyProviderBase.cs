@@ -153,7 +153,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
 #if NET6_0
-        internal byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        internal static byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
         {
             using Aes aes = Aes.Create();
             aes.Key = key;
@@ -253,7 +253,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
 #if NET6_0
-        internal byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        internal static byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
         {
             using Aes aes = Aes.Create();
             aes.Key = key;
