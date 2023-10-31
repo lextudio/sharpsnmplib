@@ -43,7 +43,6 @@ jobs:
       run: |
         dotnet --info
         set -e
-        sudo pwsh -file patch-winfx.ps1 /home/runner/.dotnet/sdk/3.1.101
         pwsh -file release.ps1 Release
     - name: Test
       shell: pwsh
