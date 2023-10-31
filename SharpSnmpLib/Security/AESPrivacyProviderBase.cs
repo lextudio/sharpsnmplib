@@ -402,19 +402,6 @@ namespace Lextm.SharpSnmpLib.Security
 
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
-            var reminder = bytes.Length % 8;
-            var count = reminder == 0 ? 0 : 8 - reminder;
-            using (var stream = new MemoryStream())
-            {
-                stream.Write(bytes, 0, bytes.Length);
-                for (var i = 0; i < count; i++)
-                {
-                    stream.WriteByte(1);
-                }
-
-                bytes = stream.ToArray();
-            }
-
             var encrypted = Encrypt(bytes, pkey, parameters.EngineBoots!.ToInt32(), parameters.EngineTime!.ToInt32(), parameters.PrivacyParameters!.GetRaw());
             return new OctetString(encrypted);
         }
@@ -509,7 +496,7 @@ namespace Lextm.SharpSnmpLib.Security
                 else
                 {
                     Array.Copy(tmpBuf, 0, extKey, keyLen, MinimumKeyLength - keyLen);
-                    keyLen += (MinimumKeyLength - keyLen);
+                    keyLen += MinimumKeyLength - keyLen;
                 }
 
                 lastKeyBuf = new byte[tmpBuf.Length];
