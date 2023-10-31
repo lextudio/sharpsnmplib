@@ -113,6 +113,43 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             Assert.Equal(ByteTool.Convert(original.ToBytes()), ByteTool.Convert(decrypted.ToBytes()));
         }
 
+        [Fact]
+        public void TestEncrypt3()
+        {
+            byte[] received =
+                ByteTool.Convert(
+                    "04 35 CC AE 0C FA 1E 41  CC DD F8 BA  49 27 7E 47  C9 8D 73 63 3B 1A CE 56  97 2D CB 0A  2D DF A1 AC  0F B0 8E 3B 25 EF F1 B6  3B 76 3F 74  84 7C E6 C0  DC AE DE EC D9 9E 5F");
+            OctetString engineId = new OctetString(ByteTool.Convert("80 00 1F 88 80  38 92 B3 6C  6C 89 40 65  00 00 00 00"));
+
+            IPrivacyProvider priv;
+            if (AESPrivacyProviderBase.IsSupported)
+            {
+                priv = new AESPrivacyProvider(new OctetString("privkey1"),
+                    new SHA1AuthenticationProvider(new OctetString("authkey1")));
+            }
+            else
+            {
+                return;
+            }
+
+            Scope scope = new Scope(engineId, OctetString.Empty,
+                new GetRequestPdu(282716518,
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }));
+            SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x0B), new Integer32(0x176),
+                new OctetString("usr-sha-aes"), new OctetString(new byte[12]),
+                new OctetString(ByteTool.Convert("FA 24 36 97  A4 79 E6 35")));
+            var original = scope.GetData(VersionCode.V3);
+            ISnmpData data = priv.Encrypt(original, parameters);
+            Assert.Equal(SnmpType.OctetString, data.TypeCode);
+            var encrypted = ByteTool.Convert(data.ToBytes());
+            Assert.Equal(ByteTool.Convert(received), encrypted);
+
+            ISnmpData decrypted_received = priv.Decrypt(DataFactory.CreateSnmpData(received), parameters);
+            var recovered_received = ByteTool.Convert(decrypted_received.ToBytes());
+            var recovered_encrypted = ByteTool.Convert(priv.Decrypt(data, parameters).ToBytes());
+            Assert.Equal(recovered_received, recovered_encrypted);
+        }
+
 #if NET6_0
         [Theory]
         [MemberData(nameof(Data))]
