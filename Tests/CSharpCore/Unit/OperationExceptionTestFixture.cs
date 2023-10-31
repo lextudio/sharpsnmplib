@@ -47,9 +47,12 @@ namespace Lextm.SharpSnmpLib.Unit
             info.AddValue("HelpURL", null);
             info.AddValue("StackTraceString", null);
             info.AddValue("RemoteStackTraceString", null);
-            info.AddValue("HResult", 0);
+            info.AddValue("HResult", -2146233088);
             info.AddValue("Source", null);
             info.AddValue("Agent", null);
+            info.AddValue("ClassName", typeof(OperationException).FullName);
+            info.AddValue("RemoteStackIndex", 0);
+            info.AddValue("ExceptionMethod", null);
             var context = new StreamingContext();
             var ex = new OperationException(info, context);
             Assert.Equal("Operation failed.", ex.Message);
