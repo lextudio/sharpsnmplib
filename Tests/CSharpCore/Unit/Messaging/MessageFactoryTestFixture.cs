@@ -221,7 +221,6 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal("usr-sha-aes", get.Community().ToString());
         }
 
-        /*
         [Fact]
         public void TestGetRequestV3AuthPrivAES2()
         {
@@ -280,7 +279,6 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                 "AF 9D D0 75 DB 6B AC 3D A3 1B 10 5C 9F 50 13 A6 " +
                 "01 5D 01 F1 F4 EF 70 53 CC", output);
         }
-        // */
 
         [Fact]
         public void TestGetRequestV3Auth()
@@ -316,6 +314,67 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
 
             //Assert.Equal(digest, get.Parameters.AuthenticationParameters);
         }
+
+        [Fact]
+        public void TestGetRequestV3AuthPriv_LocalizedKeys_Request()
+        {
+            if (!DESPrivacyProvider.IsSupported)
+            {
+                return;
+            }
+
+            var auth_passphrase = new OctetString("authkey1");
+            var auth = new SHA1AuthenticationProvider(auth_passphrase);
+
+            const string bytes = "30 81 82 02  01 03 30 11  02 04 41 DE  D6 81 02 03" +
+                                 "00 FF E3 04  01 07 02 01  03 04 39 30  37 04 0A 80" +
+                                 "00 00 00 04  73 6E 6D 70  31 02 01 00  02 01 00 04" +
+                                 "0B 75 73 72  2D 73 68 61  2D 61 65 73  04 0C 45 03" +
+                                 "6B 5C 42 5D  B4 0F 59 73  25 3E 04 08  68 63 B6 B7" +
+                                 "E5 51 65 E7  04 2F 0A 61  C3 64 0C 4D  A9 19 D9 21" +
+                                 "54 2D 84 3D  1A 25 B5 3D  C8 23 DD 90  51 E3 75 38" +
+                                 "E2 C6 01 1D  5D B6 3C BE  23 40 49 FE  DC 0D CF C2" +
+                                 "6F 28 2B 92  9E";
+
+            var privacy = new AESPrivacyProvider(new OctetString("privkey1"), auth);
+            var registry = new UserRegistry();
+            registry.Add(new OctetString("usr-sha-aes"), privacy);
+            var messages = MessageFactory.ParseMessages(bytes, registry);
+            var message = messages[0];
+            Assert.Equal(1, messages.Count);
+            Assert.Equal(SnmpType.GetRequestPdu, message.TypeCode());
+        }
+
+        [Fact]
+        public void TestGetRequestV3AuthPriv_LocalizedKeys_Response()
+        {
+            if (!DESPrivacyProvider.IsSupported)
+            {
+                return;
+            }
+
+            var auth_passphrase = new OctetString("authkey1");
+            var auth = new SHA1AuthenticationProvider(auth_passphrase);
+
+            const string bytes = "30 81 82 02  01 03 30 11  02 04 41 DE  D6 81 02 03" +
+                                 "00 FF E3 04  01 03 02 01  03 04 39 30  37 04 0A 80" +
+                                 "00 00 00 04  73 6E 6D 70  31 02 01 00  02 01 00 04" +
+                                 "0B 75 73 72  2D 73 68 61  2D 61 65 73  04 0C 17 00" +
+                                 "91 B1 11 A0  B7 38 BF 79  0B B6 04 08  45 FF 6B C8" +
+                                 "C7 A1 9E 93  04 2F DC 9E  35 31 C3 E6  5A 68 A0 F5" +
+                                 "06 B0 9B D6  97 16 46 23  C2 D9 F6 EE  9C 8F F4 00" +
+                                 "31 AC CE 32  43 6A FC C5  56 6D 02 7A  49 A5 33 46" +
+                                 "AB 7A 56 7F  B6";
+
+            var privacy = new AESPrivacyProvider(new OctetString("privkey1"), auth);
+            var registry = new UserRegistry();
+            registry.Add(new OctetString("usr-sha-aes"), privacy);
+            var messages = MessageFactory.ParseMessages(bytes, registry);
+            var message = messages[0];
+            Assert.Equal(1, messages.Count);
+            Assert.Equal(SnmpType.ResponsePdu, message.TypeCode());
+        }
+
 #if !NETSTANDARD
         [Fact]
         public void TestResponseV1()
