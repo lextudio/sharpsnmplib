@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Exception raised when an IP endpoint is already in use.
     /// </summary>
     [Serializable]
-    public sealed class PortInUseException : SnmpException
+    public sealed class PortInUseException : SnmpException, ISerializable
     {
         /// <summary>
         /// Creates a <see cref="PortInUseException"/>.
@@ -61,7 +61,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        public PortInUseException(SerializationInfo info, StreamingContext context)
+        private PortInUseException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
             var content = info.GetString("Endpoint");
@@ -98,6 +98,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             return string.Format(CultureInfo.InvariantCulture, "PortInUseException: {0}", Message);
         }
 
+#if !NET6_0_OR_GREATER
         private static IPEndPoint Parse(string endPoint)
         {
             if (string.IsNullOrEmpty(endPoint))
@@ -117,13 +118,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new FormatException("Invalid IP address.");
             }
 
-            int port;
-            if (!int.TryParse(parts[1], out port) || port < IPEndPoint.MinPort || port > IPEndPoint.MaxPort)
+            if (!int.TryParse(parts[1], out int port) || port < IPEndPoint.MinPort || port > IPEndPoint.MaxPort)
             {
                 throw new FormatException($"Invalid port. The port must be between {IPEndPoint.MinPort} and {IPEndPoint.MaxPort}.");
             }
 
             return new IPEndPoint(ip, port);
         }
+#endif
     }
 }

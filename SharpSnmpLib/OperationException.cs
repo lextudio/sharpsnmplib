@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib
     /// Operation exception of #SNMP.
     /// </summary>
     [Serializable]
-    public class OperationException : SnmpException
+    public class OperationException : SnmpException, ISerializable
     {
         /// <summary>
         /// Agent address.
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        public OperationException(SerializationInfo info, StreamingContext context)
+       internal protected OperationException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
             var content = info.GetString("Agent");

@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Timeout exception type of #SNMP.
     /// </summary>
     [Serializable]
-    public sealed class TimeoutException : OperationException
+    public sealed class TimeoutException : OperationException, ISerializable
     {
         /// <summary>
         /// The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        public TimeoutException(SerializationInfo info, StreamingContext context)
+        private TimeoutException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
             var content = info.GetString("Timeout");

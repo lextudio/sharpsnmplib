@@ -25,6 +25,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+#if NET6_0
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -36,7 +37,7 @@ using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-#if NET6_0
+
     /// <summary>
     /// Messenger class contains all static helper methods you need to send out SNMP messages.
     /// Static methods in Manager or Agent class will be removed in the future.
@@ -524,5 +525,5 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         #endregion
     }
-#endif
 }
+#endif

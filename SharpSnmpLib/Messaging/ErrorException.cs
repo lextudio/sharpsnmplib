@@ -36,7 +36,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Error exception of #SNMP. Raised when an error message is received.
     /// </summary>
     [Serializable]
-    public sealed class ErrorException : OperationException
+    public sealed class ErrorException : OperationException, ISerializable
     {
         /// <summary>
         /// Message body.
@@ -73,7 +73,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        public ErrorException(SerializationInfo info, StreamingContext context)
+        private ErrorException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
             // IMPORTANT: Body is not serialized.

@@ -17,6 +17,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#if NET6_0
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -31,7 +32,6 @@ using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-#if NET6_0
     /// <summary>
     /// Extension methods for <see cref="ISnmpMessage"/>.
     /// </summary>
@@ -301,5 +301,5 @@ namespace Lextm.SharpSnmpLib.Messaging
         #endregion
 
     }
-#endif
 }
+#endif

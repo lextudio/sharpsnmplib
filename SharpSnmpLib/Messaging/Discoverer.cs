@@ -336,6 +336,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
             catch (OperationCanceledException)
             {
+                // IMPORTANT: eat the exception.
             }
 #else
             await Task.WhenAny(

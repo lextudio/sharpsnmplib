@@ -35,7 +35,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// Message factory exception.
     /// </summary>
     [Serializable]
-    public sealed class MessageFactoryException : SnmpException
+    public sealed class MessageFactoryException : SnmpException, ISerializable
     {
         private byte[]? _bytes;
 
@@ -69,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-        public MessageFactoryException(SerializationInfo info, StreamingContext context)
+        private MessageFactoryException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
             var content = info.GetString("Bytes");

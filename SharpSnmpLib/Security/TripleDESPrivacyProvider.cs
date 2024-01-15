@@ -364,7 +364,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            if (data.TypeCode != SnmpType.Sequence && !(data is ISnmpPdu))
+            if (data.TypeCode != SnmpType.Sequence && data is not ISnmpPdu)
             {
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }
@@ -410,13 +410,13 @@ namespace Lextm.SharpSnmpLib.Security
             byte[] encryptionKey = AuthenticationProvider.PasswordToKey(secret, engineId);
             if (encryptionKey.Length < MinimumKeyLength)
             {
-                encryptionKey = ExtendShortKey(encryptionKey, secret, engineId, AuthenticationProvider);
+                encryptionKey = ExtendShortKey(encryptionKey, engineId, AuthenticationProvider);
             }
 
             return encryptionKey;
         }
 
-        private byte[] ExtendShortKey(byte[] shortKey, byte[] password, byte[] engineID, IAuthenticationProvider authProtocol)
+        private byte[] ExtendShortKey(byte[] shortKey, byte[] engineID, IAuthenticationProvider authProtocol)
         {
             int length = shortKey.Length;
             byte[] extendedKey = new byte[MinimumKeyLength];
