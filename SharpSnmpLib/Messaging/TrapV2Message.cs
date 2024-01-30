@@ -48,11 +48,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(variables));
             }
 
-            if (enterprise == null)
-            {
-                throw new ArgumentNullException(nameof(enterprise));
-            }
-
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
@@ -64,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             Version = version;
-            Enterprise = enterprise;
+            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
             TimeStamp = time;
             Header = Header.Empty;
             Parameters = SecurityParameters.Create(community);
@@ -133,24 +128,14 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
             }
 
-            if (enterprise == null)
-            {
-                throw new ArgumentNullException(nameof(enterprise));
-            }
-
             if (engineId == null)
             {
                 throw new ArgumentNullException(nameof(engineId));
             }
 
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             Version = version;
-            Privacy = privacy;
-            Enterprise = enterprise;
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
+            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
             TimeStamp = time;
 
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel());
@@ -175,31 +160,11 @@ namespace Lextm.SharpSnmpLib.Messaging
 
         internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[] length)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            if (header == null)
-            {
-                throw new ArgumentNullException(nameof(header));
-            }
-
-            if (privacy == null)
-            {
-                throw new ArgumentNullException(nameof(privacy));
-            }
-
             Version = version;
-            Header = header;
-            Parameters = parameters;
-            Scope = scope;
-            Privacy = privacy;
+            Header = header ?? throw new ArgumentNullException(nameof(header));
+            Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
+            Scope = scope ?? throw new ArgumentNullException(nameof(scope));
+            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
             var pdu = (TrapV2Pdu)Scope.Pdu;
             Enterprise = pdu.Enterprise;
             TimeStamp = pdu.TimeStamp;
@@ -211,25 +176,25 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header { get; private set; }
+        public Header Header { get; }
 
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy { get; private set; }
+        public IPrivacyProvider Privacy { get; }
 
         /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; private set; }
+        public SecurityParameters Parameters { get; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope { get; private set; }
+        public Scope Scope { get; }
 
         #endregion
 
