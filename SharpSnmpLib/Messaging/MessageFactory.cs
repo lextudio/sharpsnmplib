@@ -163,9 +163,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         scope = new Scope((Sequence)privacy.Decrypt(body[3], parameters));
                     }
-                    catch (DecryptionException)
+                    catch (SnmpException)
                     {
-                        // handle decryption exception.
+                        // If decryption failed or gave back invalid data, handle parsing exceptions.
                         return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
                     }
                 }
