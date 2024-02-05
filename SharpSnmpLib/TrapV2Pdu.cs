@@ -99,13 +99,13 @@ namespace Lextm.SharpSnmpLib
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus => throw new NotSupportedException();
+        public Integer32 ErrorStatus => new Integer32(0);
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex => throw new NotSupportedException();
+        public Integer32 ErrorIndex => new Integer32(0);
 
         #endregion
 
