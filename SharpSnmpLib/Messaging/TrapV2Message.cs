@@ -90,7 +90,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="engineTime">The engine time.</param>
         [CLSCompliant(false)]
         public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, int engineBoots, int engineTime)
-            : this(version, messageId, requestId, userName, enterprise, time, variables, privacy, maxMessageSize, engineId, OctetString.Empty, engineBoots, engineTime)
+            : this(version, messageId, requestId, userName, enterprise, time, variables, privacy, maxMessageSize, engineId, engineBoots, engineTime, OctetString.Empty, OctetString.Empty)
         {
         }
 
@@ -107,11 +107,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="engineId">The engine ID.</param>
-		/// <param name="contextName">The context name.</param>
         /// <param name="engineBoots">The engine boots.</param>
         /// <param name="engineTime">The engine time.</param>
+        /// <param name="contextEngineId">The context engine ID.</param>
+        /// <param name="contextName">The context name.</param>
         [CLSCompliant(false)]
-        public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, OctetString contextName, int engineBoots, int engineTime)
+        public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, int engineBoots, int engineTime, OctetString contextEngineId, OctetString contextName)
         {
             if (userName == null)
             {
@@ -153,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 time,
                 variables);
 
-            Scope = new Scope(engineId, contextName, pdu);
+            Scope = new Scope(contextEngineId, contextName, pdu);
             Privacy.ComputeHash(Version, Header, Parameters, Scope);
             _bytes = this.PackMessage(null).ToBytes();
         }
