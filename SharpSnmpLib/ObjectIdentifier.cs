@@ -531,7 +531,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="original">The original array.</param>
         /// <param name="extra">The extra.</param>
-        /// <returns></returns>       
+        /// <returns></returns>
         [CLSCompliant(false)]
         public static uint[] AppendTo(uint[]? original, uint extra)
         {
@@ -546,6 +546,60 @@ namespace Lextm.SharpSnmpLib
             Array.Copy(original, tmp, length);
             tmp[length] = extra;
             return tmp;
+        }
+
+        /// <summary>
+        /// Converts a byte array to an ObjectIdentifier
+        /// </summary>
+        /// <param name="raw">A byte array containing the OID to convert.</param>
+        /// <param name="result">When the method returns, contains the converted ObjectIdentifier. If the conversion fails, the parameter is null.</param>
+        /// <returns></returns>
+        public static bool TryParse(byte[] raw, out ObjectIdentifier? result)
+        {
+            if (raw is null || raw.Length == 0)
+            {
+                result = null;
+                return false;
+            }
+
+            result = new ObjectIdentifier(raw);
+            return true;
+        }
+
+        /// <summary>
+        /// Converts the string to an ObjectIdentifier
+        /// </summary>
+        /// <param name="dotted">A string containing the OID to convert.</param>
+        /// <param name="result">When the method returns, contains the converted ObjectIdentifier. If the conversion fails, the parameter is null.</param>
+        /// <returns></returns>
+        public static bool TryParse(string? dotted, out ObjectIdentifier? result)
+        {
+            if (String.IsNullOrEmpty(dotted))
+            {
+                result = null;
+                return false;
+            }
+
+            result = new ObjectIdentifier(dotted);
+            return true;
+        }
+
+        /// <summary>
+        /// Converts the numerical to an ObjectIdentifier
+        /// </summary>
+        /// <param name="numerical">An array containing the OID to convert.</param>
+        /// <param name="result">When the method returns, contains the converted ObjectIdentifier. If the conversion fails, the parameter is null.</param>
+        /// <returns></returns>
+        public static bool TryParse(uint[] numerical, out ObjectIdentifier? result)
+        {
+            if (numerical is null)
+            {
+                result = null;
+                return false;
+            }
+
+            result = new ObjectIdentifier(numerical);
+            return true;
         }
     }
 }
