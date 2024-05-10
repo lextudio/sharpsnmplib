@@ -29,9 +29,11 @@ namespace Lextm.SharpSnmpLib.Security
     {
         private readonly object _root = new();
         private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
-        
+        internal static bool LockSalt { get; set; }
+
         internal void SetSalt(long salt)
         {
+            // IMPORTANT: for unit testing only.
             _salt = salt;
         }
 
@@ -45,6 +47,13 @@ namespace Lextm.SharpSnmpLib.Security
             {
                 lock (_root)
                 {
+                    if (LockSalt)
+                    {
+                        // IMPORTANT: for unit testing only.
+                        LockSalt = false;
+                        return 2048;
+                    }
+
                     if (_salt == long.MaxValue)
                     {
                         _salt = 1;

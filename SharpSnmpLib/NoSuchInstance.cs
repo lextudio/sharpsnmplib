@@ -76,16 +76,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, obj as NoSuchInstance);
         }
-        
-        /// <summary>
-        /// Serves as a hash function for a particular type.
-        /// </summary>
-        /// <returns>A hash code for the current <see cref="NoSuchInstance"/>.</returns>
-        public override int GetHashCode()
-        {
-            return 0;
-        }
-        
+
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
@@ -96,7 +87,16 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, other);
         }
-        
+
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="NoSuchInstance"/>.</returns>
+        public override int GetHashCode()
+        {
+            return 0;
+        }
+
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(left, right);
         }
-        
+
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -124,14 +124,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get
-            {
-                return SnmpType.NoSuchInstance;
-            }
-        }
- 
+        public SnmpType TypeCode => SnmpType.NoSuchInstance;
+
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
         /// </summary>
@@ -142,10 +136,10 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
+
             stream.AppendBytes(TypeCode, _length, Array.Empty<byte>());
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="NoSuchInstance"/>.
         /// </summary>
@@ -154,7 +148,7 @@ namespace Lextm.SharpSnmpLib
         {
             return "NoSuchInstance";
         }
-        
+
         /// <summary>
         /// The comparison.
         /// </summary>

@@ -44,17 +44,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
             }
-            
+
             if (version == VersionCode.V3)
             {
                 throw new ArgumentException("Only v1 and v2c are supported.", nameof(version));
             }
-            
+
             Version = version;
             Header = Header.Empty;
             Parameters = SecurityParameters.Create(community);
@@ -63,7 +63,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 variables);
             Scope = new Scope(pdu);
             Privacy = DefaultPrivacyProvider.DefaultPair;
- 
+
             _bytes = this.PackMessage(null).ToBytes();
         }
 
@@ -77,6 +77,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="variables">The variables.</param>
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="report">The report.</param>
+        [Obsolete("Please use other overloading ones.")]
         public SetRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
             : this(version, messageId, requestId, userName, OctetString.Empty, variables, privacy, 0xFFE3, report)
         {
@@ -143,7 +144,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
+
             if (userName == null)
             {
                 throw new ArgumentNullException(nameof(userName));
@@ -153,7 +154,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(contextName));
             }
-            
+
             if (version != VersionCode.V3)
             {
                 throw new ArgumentException("Only v3 is supported.", nameof(version));
@@ -251,14 +252,14 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header { get; private set; }
-        
+        public Header Header { get; }
+
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy { get; private set; }
-        
+        public IPrivacyProvider Privacy { get; }
+
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="SetRequestMessage"/>.
         /// </summary>
@@ -281,18 +282,18 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; private set; }
+        public SecurityParameters Parameters { get; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope { get; private set; }
+        public Scope Scope { get; }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version { get; private set; }
+        public VersionCode Version { get; }
     }
 }

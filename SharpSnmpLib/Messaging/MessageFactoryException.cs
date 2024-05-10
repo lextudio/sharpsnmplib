@@ -34,18 +34,18 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Message factory exception.
     /// </summary>
-    [DataContract]
-    public sealed class MessageFactoryException : SnmpException
+    [Serializable]
+    public sealed class MessageFactoryException : SnmpException, ISerializable
     {
         private byte[]? _bytes;
-        
+
         /// <summary>
         /// Creates a <see cref="MessageFactoryException"/>.
         /// </summary>
         public MessageFactoryException()
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="MessageFactoryException"/> instance with a specific <see cref="String"/>.
         /// </summary>
@@ -53,7 +53,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public MessageFactoryException(string message) : base(message)
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="MessageFactoryException"/> instance with a specific <see cref="String"/> and an <see cref="Exception"/>.
         /// </summary>
@@ -65,13 +65,37 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Creates a <see cref="MessageFactoryException"/> instance.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+        private MessageFactoryException(SerializationInfo info, StreamingContext context)
+           : base(info, context)
+        {
+            var content = info.GetString("Bytes");
+            if (content == null)
+            {
+                return;
+            }
+
+            _bytes = Convert.FromBase64String(content);
+        }
+
+        /// <inheritdoc/>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Bytes", _bytes == null ? null : Convert.ToBase64String(_bytes));
+        }
+
+        /// <summary>
         /// Gets the bytes.
         /// </summary>        
         public byte[]? GetBytes()
         {
-            return _bytes; 
+            return _bytes;
         }
-        
+
         /// <summary>
         /// Sets the bytes.
         /// </summary>
@@ -80,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             _bytes = value;
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="MessageFactoryException"/>.
         /// </summary>

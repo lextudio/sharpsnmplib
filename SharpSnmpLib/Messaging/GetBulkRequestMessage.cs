@@ -54,12 +54,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(variables));
             }
-            
+
             if (community == null)
             {
                 throw new ArgumentNullException(nameof(community));
             }
-            
+
             if (version != VersionCode.V2)
             {
                 throw new ArgumentException("Only v2c are supported.", nameof(version));
@@ -224,8 +224,6 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             Version = version;
             Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
-
-            // TODO: define more constants.
             Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable, new Integer32((int)securityModel));
             var parameters = report.Parameters;
             var authenticationProvider = Privacy.AuthenticationProvider;
@@ -295,7 +293,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
-        public GetBulkRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, int nonRepeaters, int maxRepetitions, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report) 
+        [Obsolete("Please use other overloading ones.")]
+        public GetBulkRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, int nonRepeaters, int maxRepetitions, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
             : this(version, messageId, requestId, userName, OctetString.Empty, nonRepeaters, maxRepetitions, variables, privacy, maxMessageSize, report)
         {
         }
@@ -314,13 +313,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header { get; private set; }
-        
+        public Header Header { get; }
+
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy { get; private set; }
+        public IPrivacyProvider Privacy { get; }
 
         /// <summary>
         /// Converts to byte format.
@@ -335,19 +334,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; private set; }
+        public SecurityParameters Parameters { get; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope { get; private set; }
+        public Scope Scope { get; }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version { get; private set; }
+        public VersionCode Version { get; }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="GetBulkRequestMessage"/>.

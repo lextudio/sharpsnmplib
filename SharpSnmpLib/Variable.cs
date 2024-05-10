@@ -42,22 +42,14 @@ namespace Lextm.SharpSnmpLib
     public sealed class Variable
     {
         /// <summary>
-        /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/>.
-        /// </summary>
-        /// <param name="id">Object identifier</param>
-        public Variable(ObjectIdentifier id) : this(id, null)     
-        { 
-        }
-      
-        /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific object identifier.
         /// </summary>
         /// <param name="id">Object identifier</param>
         [CLSCompliant(false)]
-        public Variable(uint[] id) : this(new ObjectIdentifier(id)) 
+        public Variable(uint[] id) : this(new ObjectIdentifier(id))
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific <see cref="ObjectIdentifier"/> and <see cref="ISnmpData"/>.
         /// </summary>
@@ -65,17 +57,17 @@ namespace Lextm.SharpSnmpLib
         /// <param name="data">Data</param>
         /// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
         [CLSCompliant(false)]
-        public Variable(uint[] id, ISnmpData? data) : this(new ObjectIdentifier(id), data) 
-        { 
+        public Variable(uint[] id, ISnmpData? data) : this(new ObjectIdentifier(id), data)
+        {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="Variable"/> instance with a specific object identifier and data.
         /// </summary>
         /// <param name="id">Object identifier</param>
         /// <param name="data">Data</param>
         /// <remarks>If you set <c>null</c> to <paramref name="data"/>, you get a <see cref="Variable"/> instance whose <see cref="Data"/> is a <see cref="Null"/> instance.</remarks>
-        public Variable(ObjectIdentifier id, ISnmpData? data)
+        public Variable(ObjectIdentifier id, ISnmpData? data = null)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             Data = data ?? new Null();
@@ -84,12 +76,12 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Variable object identifier.
         /// </summary>
-        public ObjectIdentifier Id { get; private set; }
+        public ObjectIdentifier Id { get; }
 
         /// <summary>
         /// Variable data.
         /// </summary>
-        public ISnmpData Data { get; private set; }
+        public ISnmpData Data { get; }
 
         /// <summary>
         /// Converts variable binds section to variable binds list.
@@ -110,24 +102,24 @@ namespace Lextm.SharpSnmpLib
                 {
                     throw new ArgumentException($"Invalid varbind section data type: {item.TypeCode}.", nameof(varbindSection));
                 }
-                
+
                 var varbind = (Sequence)item;
                 if (varbind.Length != 2)
                 {
                     throw new ArgumentException($"Invalid varbind data length: {varbind.Length}.", nameof(varbindSection));
                 }
-                
+
                 if (varbind[0].TypeCode != SnmpType.ObjectIdentifier)
                 {
                     throw new ArgumentException($"Invalid varbind first data type: {varbind[0].TypeCode}.", nameof(varbindSection));
                 }
-                    
+
                 result.Add(new Variable((ObjectIdentifier)varbind[0], varbind[1]));
             }
-            
+
             return result;
         }
-        
+
         /// <summary>
         /// Converts variable binds to variable binds section.
         /// </summary>
@@ -142,12 +134,12 @@ namespace Lextm.SharpSnmpLib
             }
 
             var varbinds = new List<ISnmpData>(variables.Count);
-            varbinds.AddRange(variables.Select(v => new Sequence(null, v.Id, v.Data)).Cast<ISnmpData>());
+            varbinds.AddRange(variables.Select(v => new Sequence(null, v.Id, v.Data)));
 
             var result = new Sequence(varbinds);
             return result;
         }
-        
+
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="Variable"/>.
         /// </summary>

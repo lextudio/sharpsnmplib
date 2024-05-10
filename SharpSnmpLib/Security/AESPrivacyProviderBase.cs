@@ -100,7 +100,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Corresponding <see cref="IAuthenticationProvider"/>.
         /// </summary>
-        public IAuthenticationProvider AuthenticationProvider { get; private set; }
+        public IAuthenticationProvider AuthenticationProvider { get; }
 
         /// <summary>
         /// Engine IDs.
@@ -153,18 +153,18 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
 #if NET6_0
-        internal byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
+        internal static byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
         {
             using Aes aes = Aes.Create();
             aes.Key = key;
 
-            var length = (unencryptedData.Length % MinimalBlockSize == 0) 
+            var length = (unencryptedData.Length % MinimalBlockSize == 0)
                 ? unencryptedData.Length
                 : ((unencryptedData.Length / MinimalBlockSize) + 1) * MinimalBlockSize;
             var result = new byte[length];
             var buffer = result.AsSpan();
             var encryptedData = aes.EncryptCfb(unencryptedData.AsSpan(), iv.AsSpan(), buffer, PaddingMode.Zeros, 128);
-            
+
             // check if encrypted data is the same length as source data
             if (encryptedData != unencryptedData.Length)
             {
@@ -179,37 +179,33 @@ namespace Lextm.SharpSnmpLib.Security
         internal byte[] LegacyEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
         {
 #if NET471
-            using (var rm = Rijndael.Create())
+            using var rm = Rijndael.Create();
 #else
-            using (var rm = Aes.Create())
+            using var rm = Aes.Create();
 #endif
+            rm.KeySize = KeyBytes * 8;
+            rm.FeedbackSize = 128;
+            rm.BlockSize = 128;
+
+            // we have to use Zeros padding otherwise we get encrypt buffer size exception
+            rm.Padding = PaddingMode.Zeros;
+            rm.Mode = CipherMode.CFB;
+
+            rm.Key = key;
+            rm.IV = iv;
+            using var encryptor = rm.CreateEncryptor();
+            var encryptedData = encryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+
+            // check if encrypted data is the same length as source data
+            if (encryptedData.Length != unencryptedData.Length)
             {
-                rm.KeySize = KeyBytes * 8;
-                rm.FeedbackSize = 128;
-                rm.BlockSize = 128;
-
-                // we have to use Zeros padding otherwise we get encrypt buffer size exception
-                rm.Padding = PaddingMode.Zeros;
-                rm.Mode = CipherMode.CFB;
-
-                rm.Key = key;
-                rm.IV = iv;
-                using (var cryptor = rm.CreateEncryptor())
-                {
-                    var encryptedData = cryptor.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
-
-                    // check if encrypted data is the same length as source data
-                    if (encryptedData.Length != unencryptedData.Length)
-                    {
-                        // cut out the padding
-                        var tmp = new byte[unencryptedData.Length];
-                        Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
-                        return tmp;
-                    }
-
-                    return encryptedData;
-                }
+                // cut out the padding
+                var tmp = new byte[unencryptedData.Length];
+                Buffer.BlockCopy(encryptedData, 0, tmp, 0, unencryptedData.Length);
+                return tmp;
             }
+
+            return encryptedData;
         }
 
         /// <summary>
@@ -257,7 +253,7 @@ namespace Lextm.SharpSnmpLib.Security
         }
 
 #if NET6_0
-        internal byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
+        internal static byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
         {
             using Aes aes = Aes.Create();
             aes.Key = key;
@@ -268,7 +264,7 @@ namespace Lextm.SharpSnmpLib.Security
                 var decryptBuffer = new byte[newLength];
                 Buffer.BlockCopy(encryptedData, 0, decryptBuffer, 0, encryptedData.Length);
                 var buffer = new byte[newLength].AsSpan();
-                var decryptedData = aes.DecryptCfb(decryptBuffer.AsSpan(), iv.AsSpan(), buffer, PaddingMode.Zeros, 128);
+                aes.DecryptCfb(decryptBuffer.AsSpan(), iv.AsSpan(), buffer, PaddingMode.Zeros, 128);
 
                 // now remove padding
                 return buffer.Slice(0, encryptedData.Length).ToArray();
@@ -282,50 +278,43 @@ namespace Lextm.SharpSnmpLib.Security
         {
             // now do CFB decryption of the encrypted data
 #if NET471
-            using (var rm = Rijndael.Create())
+            using var rm = Rijndael.Create();
 #else
-            using (var rm = Aes.Create())
+            using var rm = Aes.Create();
 #endif
+            rm.KeySize = KeyBytes * 8;
+            rm.FeedbackSize = 128;
+            rm.BlockSize = 128;
+            rm.Padding = PaddingMode.Zeros;
+            rm.Mode = CipherMode.CFB;
+
+            rm.Key = key;
+            rm.IV = iv;
+            using var decrytor = rm.CreateDecryptor();
+            // We need to make sure that encryptedData is a collection of 128 byte blocks
+            byte[] decryptedData;
+            if ((encryptedData.Length % MinimalBlockSize) != 0)
             {
-                rm.KeySize = KeyBytes * 8;
-                rm.FeedbackSize = 128;
-                rm.BlockSize = 128;
-                rm.Padding = PaddingMode.Zeros;
-                rm.Mode = CipherMode.CFB;
+                var div = encryptedData.Length / MinimalBlockSize;
+                var newLength = (div + 1) * MinimalBlockSize;
+                var decryptBuffer = new byte[newLength];
+                Buffer.BlockCopy(encryptedData, 0, decryptBuffer, 0, encryptedData.Length);
+                decryptedData = decrytor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
 
-                rm.Key = key;
-                rm.IV = iv;
-                using (var cryptor = rm.CreateDecryptor())
-                {
-                    // We need to make sure that cryptedData is a collection of 128 byte blocks
-                    byte[] decryptedData;
-                    if ((encryptedData.Length % MinimalBlockSize) != 0)
-                    {
-                        var div = encryptedData.Length / MinimalBlockSize;
-                        var newLength = (div + 1) * MinimalBlockSize;
-                        var decryptBuffer = new byte[newLength];
-                        Buffer.BlockCopy(encryptedData, 0, decryptBuffer, 0, encryptedData.Length);
-                        decryptedData = cryptor.TransformFinalBlock(decryptBuffer, 0, decryptBuffer.Length);
-
-                        // now remove padding
-                        var buffer = new byte[encryptedData.Length];
-                        Buffer.BlockCopy(decryptedData, 0, buffer, 0, encryptedData.Length);
-                        return buffer;
-                    }
-
-                    decryptedData = cryptor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
-                    return decryptedData;
-                }
+                // now remove padding
+                var buffer = new byte[encryptedData.Length];
+                Buffer.BlockCopy(decryptedData, 0, buffer, 0, encryptedData.Length);
+                return buffer;
             }
+
+            decryptedData = decrytor.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+            return decryptedData;
         }
 
         /// <summary>
         /// Returns the length of privacyParameters USM header field. For AES, field length is 8.
         /// </summary>
-        private static int PrivacyParametersLength
-        {
-            get { return 8; }
-        }
+        private static int PrivacyParametersLength => 8;
 
         /// <summary>
         /// Returns minimum encryption/decryption key length. For DES, returned value is 16.
@@ -333,10 +322,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
         /// </summary>
-        private int MinimumKeyLength
-        {
-            get { return KeyBytes; }
-        }
+        private int MinimumKeyLength => KeyBytes;
 
         /// <summary>
         /// Return maximum encryption/decryption key length. For DES, returned value is 16
@@ -344,12 +330,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
         /// </summary>
-        public int MaximumKeyLength
-        {
-            get { return KeyBytes; }
-        }
+        public int MaximumKeyLength => KeyBytes;
 
-#region IPrivacyProvider Members
+        #region IPrivacyProvider Members
 
         /// <summary>
         /// Decrypts the specified data.
@@ -419,19 +402,6 @@ namespace Lextm.SharpSnmpLib.Security
 
             var pkey = PasswordToKey(_phrase.GetRaw(), parameters.EngineId.GetRaw());
             var bytes = data.ToBytes();
-            var reminder = bytes.Length % 8;
-            var count = reminder == 0 ? 0 : 8 - reminder;
-            using (var stream = new MemoryStream())
-            {
-                stream.Write(bytes, 0, bytes.Length);
-                for (var i = 0; i < count; i++)
-                {
-                    stream.WriteByte(1);
-                }
-
-                bytes = stream.ToArray();
-            }
-
             var encrypted = Encrypt(bytes, pkey, parameters.EngineBoots!.ToInt32(), parameters.EngineTime!.ToInt32(), parameters.PrivacyParameters!.GetRaw());
             return new OctetString(encrypted);
         }
@@ -440,16 +410,13 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the salt.
         /// </summary>
         /// <value>The salt.</value>
-        public OctetString Salt
-        {
-            get { return new OctetString(_salt.GetSaltBytes()); }
-        }
+        public OctetString Salt => new(_salt.GetSaltBytes());
 
         /// <summary>
         /// Gets the key bytes.
         /// </summary>
         /// <value>The key bytes.</value>
-        public int KeyBytes { get; private set; } = 16;
+        public int KeyBytes { get; } = 16;
 
         private const int MinimalBlockSize = 16;
 
@@ -470,7 +437,7 @@ namespace Lextm.SharpSnmpLib.Security
             return pkey;
         }
 
-#endregion
+        #endregion
 
         private byte[] GetKey(byte[] key)
         {
@@ -508,10 +475,10 @@ namespace Lextm.SharpSnmpLib.Security
         /// is too short.
         /// </summary>
         /// <param name="shortKey">Key that needs to be extended</param>
-        /// <param name="engineID">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
+        /// <param name="engineId">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
         /// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationProvider"/></param>
         /// <returns>Extended key value</returns>
-        internal byte[] ExtendShortKey(byte[] shortKey, byte[] engineID, IAuthenticationProvider authProtocol)
+        internal byte[] ExtendShortKey(byte[] shortKey, byte[] engineId, IAuthenticationProvider authProtocol)
         {
             byte[] extKey = new byte[MinimumKeyLength];
             byte[] lastKeyBuf = new byte[shortKey.Length];
@@ -520,7 +487,7 @@ namespace Lextm.SharpSnmpLib.Security
             Array.Copy(shortKey, extKey, keyLen);
             while (keyLen < MinimumKeyLength)
             {
-                byte[] tmpBuf = authProtocol.PasswordToKey(lastKeyBuf, engineID);
+                byte[] tmpBuf = authProtocol.PasswordToKey(lastKeyBuf, engineId);
                 if (tmpBuf.Length <= (MinimumKeyLength - keyLen))
                 {
                     Array.Copy(tmpBuf, 0, extKey, keyLen, tmpBuf.Length);
@@ -529,7 +496,7 @@ namespace Lextm.SharpSnmpLib.Security
                 else
                 {
                     Array.Copy(tmpBuf, 0, extKey, keyLen, MinimumKeyLength - keyLen);
-                    keyLen += (MinimumKeyLength - keyLen);
+                    keyLen += MinimumKeyLength - keyLen;
                 }
 
                 lastKeyBuf = new byte[tmpBuf.Length];

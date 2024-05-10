@@ -24,12 +24,6 @@ using System.Runtime.Serialization;
 // This is version 0 of the library. Email bugs to
 // mailto:malcolm.crowe@paisley.ac.uk
 
-// Getting Started
-// The simplest way to get an SNMP value from index host is
-// ManagerItem mi = new ManagerItem(
-//                                new ManagerSession(hostname,"public"),
-//                                "1.3.6.1.2.1.1.4.0");
-// Then the actual OID is mi.Name and the value is in mi.Value.ToString().
 namespace Lextm.SharpSnmpLib
 {
     /// <summary>
@@ -37,32 +31,32 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     [DataContract]
     public enum SnmpType // RFC1213 subset of ASN.1
-    { 
+    {
         /// <summary>
         /// End marker.
         /// </summary>
         EndMarker = 0x00,
-        
+
         /// <summary>
         /// INTEGER type. (SMIv1, SMIv2)
         /// </summary>
-        Integer32 = 0x02,  
-        
+        Integer32 = 0x02,
+
         /// <summary>
         /// OCTET STRING type.
         /// </summary>
         OctetString = 0x04, // X690.OctetString
-        
+
         /// <summary>
         /// NULL type. (SMIv1)
         /// </summary>
         Null = 0x05,
-        
+
         /// <summary>
         /// OBJECT IDENTIFIER type. (SMIv1)
         /// </summary>
         ObjectIdentifier = 0x06,
-        
+
         /// <summary>
         /// RFC1213 sequence for whole SNMP packet beginning
         /// </summary>
@@ -72,32 +66,32 @@ namespace Lextm.SharpSnmpLib
         /// IpAddress type. (SMIv1)
         /// </summary>
         IPAddress = 0x40,
-        
+
         /// <summary>
         /// Counter32 type. (SMIv1, SMIv2)
         /// </summary>
         Counter32 = 0x41,
-        
+
         /// <summary>
         /// Gauge32 type. (SMIv1, SMIv2)
         /// </summary>
         Gauge32 = 0x42,
-        
+
         /// <summary>
         /// TimeTicks type. (SMIv1)
         /// </summary>
         TimeTicks = 0x43,
-        
+
         /// <summary>
         /// Opaque type. (SMIv1)
         /// </summary>
         Opaque = 0x44,
-        
+
         /// <summary>
         /// Network Address. (SMIv1)
         /// </summary>
         NetAddress = 0x45,
-        
+
         /// <summary>
         /// Counter64 type. (SMIv2)
         /// </summary>
@@ -107,12 +101,12 @@ namespace Lextm.SharpSnmpLib
         /// Unsigned32 type. (Use this code in RFC 1442)
         /// </summary>
         Unsigned32 = 0x47,
-        
+
         /// <summary>
         /// No such object exception.
         /// </summary>
         NoSuchObject = 0x80,
-        
+
         /// <summary>
         /// No such instance exception.
         /// </summary>

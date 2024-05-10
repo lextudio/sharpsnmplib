@@ -35,8 +35,8 @@ namespace Lextm.SharpSnmpLib.Messaging
     /// <summary>
     /// Timeout exception type of #SNMP.
     /// </summary>
-    [DataContract]
-    public sealed class TimeoutException : OperationException
+    [Serializable]
+    public sealed class TimeoutException : OperationException, ISerializable
     {
         /// <summary>
         /// The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.
@@ -46,10 +46,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Creates a <see cref="TimeoutException"/> instance.
         /// </summary>
-        public TimeoutException() 
+        public TimeoutException()
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="TimeoutException"/> instance with a specific <see cref="string"/>.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         public TimeoutException(string message) : base(message)
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="TimeoutException"/> instance with a specific <see cref="string"/> and an <see cref="Exception"/> instance.
         /// </summary>
@@ -68,6 +68,30 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Creates a <see cref="TimeoutException"/> instance.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+        private TimeoutException(SerializationInfo info, StreamingContext context)
+           : base(info, context)
+        {
+            var content = info.GetString("Timeout");
+            if (content == null)
+            {
+                return;
+            }
+
+            Timeout = Convert.ToInt32(content, CultureInfo.InvariantCulture);
+        }
+
+        /// <inheritdoc/>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Timeout", Timeout.ToString(CultureInfo.InvariantCulture));
+        }
+
+        /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="TimeoutException"/>.
         /// </summary>
         /// <returns></returns>
@@ -75,7 +99,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             return string.Format(CultureInfo.InvariantCulture, "TimeoutException: timeout: {0}", Timeout.ToString(CultureInfo.InvariantCulture));
         }
-        
+
         /// <summary>
         /// Creates a <see cref="TimeoutException"/>.
         /// </summary>
@@ -88,7 +112,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(agent));
             }
-            
+
             var ex = new TimeoutException($"Request timed out after {timeout}-ms.") { Agent = agent, Timeout = timeout };
             return ex;
         }

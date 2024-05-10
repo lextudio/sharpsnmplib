@@ -51,9 +51,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         private static readonly Lazy<NumberGenerator> RequestCounterFullRange = new(() => new NumberGenerator(int.MinValue, int.MaxValue));
         private static readonly Lazy<NumberGenerator> RequestCounterPositive = new(() => new NumberGenerator(0, int.MaxValue));
 
-        private static NumberGenerator RequestCounter
+        private static NumberGenerator? requestCounter;
+
+        /// <summary>
+        /// The universal counter for request IDs and other IDs.
+        /// </summary>
+        public static NumberGenerator RequestCounter
         {
-            get { return UseFullRange ? RequestCounterFullRange.Value : RequestCounterPositive.Value; }
+            get
+            {
+                return requestCounter ?? (requestCounter = UseFullRange ? RequestCounterFullRange.Value : RequestCounterPositive.Value);
+            }
+
+            set
+            {
+                requestCounter = value;
+            }
         }
 
         /// <summary>
@@ -71,7 +84,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         private static readonly ObjectIdentifier IdUnsupportedSecurityLevel = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 1, 0 });
         private static readonly ObjectIdentifier IdNotInTimeWindow = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 2, 0 });
         private static readonly ObjectIdentifier IdUnknownSecurityName = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 3, 0 });
-        private static readonly ObjectIdentifier IdUnknownEngineID = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
+        private static readonly ObjectIdentifier IdUnknownEngineId = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 4, 0 });
         private static readonly ObjectIdentifier IdAuthenticationFailure = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 5, 0 });
         private static readonly ObjectIdentifier IdDecryptionError = new(new uint[] { 1, 3, 6, 1, 6, 3, 15, 1, 1, 6, 0 });
 
@@ -85,9 +98,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
         {
             if (endpoint == null)
@@ -132,9 +145,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">Community name.</param>
         /// <param name="variables">Variable binds.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("SetAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
         {
             if (endpoint == null)
@@ -184,9 +197,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("WalkAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode)
         {
             if (list == null)
@@ -244,9 +257,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method only supports SNMP v1 and v2c.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("HasNextAsync is incompatible with trimming.")]
-        #endif
+#endif
         private static async Task<Tuple<bool, Variable?>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
         {
             if (seed == null)
@@ -254,7 +267,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(seed));
             }
 
-            var variables = new List<Variable> { new Variable(seed.Id) };
+            var variables = new List<Variable> { new(seed.Id) };
             var message = new GetNextRequestMessage(
                 RequestCounter.NextId,
                 version,
@@ -282,9 +295,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method only supports SNMP v2c and v3.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("BulkWalkAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (list == null)
@@ -330,7 +343,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 message = data.Item3;
             }
 
-            end:
+        end:
             return result;
         }
 
@@ -391,9 +404,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("SendInformAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (receiver == null)
@@ -482,9 +495,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("BulkHasNextAsync is incompatible with trimming.")]
-        #endif
+#endif
         private static async Task<Tuple<bool, IList<Variable>, ISnmpMessage>> BulkHasNextAsync(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int maxRepetitions, IPrivacyProvider privacy, ISnmpMessage report)
         {
             // TODO: report should be updated with latest message from agent.
@@ -493,7 +506,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v1 is not supported");
             }
 
-            var variables = new List<Variable> { new Variable(seed.Id) };
+            var variables = new List<Variable> { new(seed.Id) };
             var request = version == VersionCode.V3
                                                 ? new GetBulkRequestMessage(
                                                       version,
@@ -526,8 +539,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var id = reply.Pdu().Variables[0].Id;
                 if (id != IdNotInTimeWindow)
                 {
-                    // var error = id.GetErrorMessage();
-                    // TODO: whether it is good to return?
                     return new Tuple<bool, IList<Variable>, ISnmpMessage>(false, new List<Variable>(0), report);
                 }
 
@@ -571,9 +582,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <returns></returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("Get is incompatible with trimming.")]
-        #endif
+#endif
         public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
             if (endpoint == null)
@@ -620,9 +631,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <returns></returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("Set is incompatible with trimming.")]
-        #endif
+#endif
         public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
         {
             if (endpoint == null)
@@ -673,9 +684,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Returns row count if the OID is a table. Otherwise this value is meaningless.
         /// </returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("Walk is incompatible with trimming.")]
-        #endif
+#endif
         public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
         {
             if (list == null)
@@ -731,9 +742,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         ///     <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v1 and v2c.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("HasNext is incompatible with trimming.")]
-        #endif
+#endif
         private static bool HasNext(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed, int timeout, out Variable? next)
         {
             if (seed == null)
@@ -741,7 +752,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new ArgumentNullException(nameof(seed));
             }
 
-            var variables = new List<Variable> { new Variable(seed.Id) };
+            var variables = new List<Variable> { new(seed.Id) };
             var message = new GetNextRequestMessage(
                 RequestCounter.NextId,
                 version,
@@ -771,9 +782,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <returns>Returns row count if the OID is a table. Otherwise this value is meaningless.</returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("BulkWalk is incompatible with trimming.")]
-        #endif
+#endif
         public static int BulkWalk(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int timeout, int maxRepetitions, WalkMode mode, IPrivacyProvider? privacy, ISnmpMessage? report)
         {
             if (list == null)
@@ -788,10 +799,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             var tableV = new Variable(table);
             var seed = tableV;
-            IList<Variable> next;
             var result = 0;
             var message = report;
-            while (BulkHasNext(version, endpoint, community, contextName, seed, timeout, maxRepetitions, out next, privacy, ref message))
+            while (BulkHasNext(version, endpoint, community, contextName, seed, timeout, maxRepetitions, out var next, privacy, ref message))
             {
                 var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
                 var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
@@ -881,9 +891,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="report">The report.</param>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("SendInform is incompatible with trimming.")]
-        #endif
+#endif
         public static void SendInform(int requestId, VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, int timeout, IPrivacyProvider privacy, ISnmpMessage report)
         {
             if (receiver == null)
@@ -974,9 +984,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <c>true</c> if the specified seed has next item; otherwise, <c>false</c>.
         /// </returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("BulkHasNext is incompatible with trimming.")]
-        #endif
+#endif
         private static bool BulkHasNext(VersionCode version, IPEndPoint receiver, OctetString community, OctetString contextName, Variable seed, int timeout, int maxRepetitions, out IList<Variable> next, IPrivacyProvider? privacy, ref ISnmpMessage? report)
         {
             if (version == VersionCode.V1)
@@ -984,7 +994,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 throw new NotSupportedException("SNMP v1 is not supported");
             }
 
-            var variables = new List<Variable> { new Variable(seed.Id) };
+            var variables = new List<Variable> { new(seed.Id) };
             var request = version == VersionCode.V3
                                                 ? new GetBulkRequestMessage(
                                                       version,
@@ -1018,8 +1028,6 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var id = reply.Pdu().Variables[0].Id;
                 if (id != IdNotInTimeWindow)
                 {
-                    // var error = id.GetErrorMessage();
-                    // TODO: whether it is good to return?
                     next = new List<Variable>(0);
                     return false;
                 }
@@ -1064,9 +1072,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <returns></returns>
         /// <remarks>This method supports SNMP v2c and v3.</remarks>
         [CLSCompliant(false)]
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetTable is incompatible with trimming.")]
-        #endif
+#endif
         [Obsolete("This method only works for a few scenarios. Might be replaced by new methods in the future. If it does not work for you, parse WALK result on your own.")]
         public static Variable[,] GetTable(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, int timeout, int maxRepetitions)
         {
@@ -1105,19 +1113,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the request counter.
         /// </summary>
         /// <value>The request counter.</value>
-        public static int NextRequestId
-        {
-            get { return RequestCounter.NextId; }
-        }
+        public static int NextRequestId => RequestCounter.NextId;
 
         /// <summary>
         /// Gets the message counter.
         /// </summary>
         /// <value>The message counter.</value>
-        public static int NextMessageId
-        {
-            get { return MessageCounter.NextId; }
-        }
+        public static int NextMessageId => MessageCounter.NextId;
 
         /// <summary>
         /// Max message size used in #SNMP. 
@@ -1135,10 +1137,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// with the OID and value of the incremented counter is returned
         /// to the calling module.
         /// </summary>
-        public static ObjectIdentifier DecryptionError
-        {
-            get { return IdDecryptionError; }
-        }
+        public static ObjectIdentifier DecryptionError => IdDecryptionError;
 
         /// <summary>
         /// If the authentication module returns failure, then the message
@@ -1147,10 +1146,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// together with the OID and value of the incremented counter is
         /// returned to the calling module.
         /// </summary>
-        public static ObjectIdentifier AuthenticationFailure
-        {
-            get { return IdAuthenticationFailure; }
-        }
+        public static ObjectIdentifier AuthenticationFailure => IdAuthenticationFailure;
 
         /// <summary>
         /// If the value of the msgAuthoritativeEngineID field in the
@@ -1160,10 +1156,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// value of the incremented counter is returned to the calling
         /// module.
         /// </summary>
-        public static ObjectIdentifier UnknownEngineId
-        {
-            get { return IdUnknownEngineID; }
-        }
+        public static ObjectIdentifier UnknownEngineId => IdUnknownEngineId;
 
         /// <summary>
         /// Information about the value of the msgUserName and
@@ -1174,10 +1167,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// (unknownSecurityName) together with the OID and value of the
         /// incremented counter is returned to the calling module.
         /// </summary>
-        public static ObjectIdentifier UnknownSecurityName
-        {
-            get { return IdUnknownSecurityName; }
-        }
+        public static ObjectIdentifier UnknownSecurityName => IdUnknownSecurityName;
 
         /// <summary>
         /// If the message is considered to be outside of the Time Window
@@ -1187,10 +1177,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// the error must be reported with a securityLevel of authNoPriv,
         /// is returned to the calling module
         /// </summary>
-        public static ObjectIdentifier NotInTimeWindow
-        {
-            get { return IdNotInTimeWindow; }
-        }
+        public static ObjectIdentifier NotInTimeWindow => IdNotInTimeWindow;
 
         /// <summary>
         /// If the information about the user indicates that it does not
@@ -1200,10 +1187,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// value of the incremented counter is returned to the calling
         /// module.
         /// </summary>
-        public static ObjectIdentifier UnsupportedSecurityLevel
-        {
-            get { return IdUnsupportedSecurityLevel; }
-        }
+        public static ObjectIdentifier UnsupportedSecurityLevel => IdUnsupportedSecurityLevel;
 
         /// <summary>
         /// Returns a new discovery request.
@@ -1237,7 +1221,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return "unknown security name";
             }
 
-            if (id == IdUnknownEngineID)
+            if (id == IdUnknownEngineId)
             {
                 return "unknown engine ID";
             }

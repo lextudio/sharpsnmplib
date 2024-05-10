@@ -110,6 +110,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
         [CLSCompliant(false)]
+        [Obsolete("Please use other overloading ones.")]
         public InformRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
             : this(version, messageId, requestId, userName, OctetString.Empty, enterprise, time, variables, privacy, maxMessageSize, report)
         { }
@@ -206,30 +207,30 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy { get; private set; }
+        public IPrivacyProvider Privacy { get; }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version { get; private set; }
+        public VersionCode Version { get; }
 
         /// <summary>
         /// Gets the time stamp.
         /// </summary>
         /// <value>The time stamp.</value>
         [CLSCompliant(false)]
-        public uint TimeStamp { get; private set; }
+        public uint TimeStamp { get; }
 
         /// <summary>
         /// Enterprise.
         /// </summary>
-        public ObjectIdentifier? Enterprise { get; private set; }
+        public ObjectIdentifier? Enterprise { get; }
 
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header { get; private set; }
+        public Header Header { get; }
 
         /// <summary>
         /// Converts to byte format.
@@ -244,13 +245,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; private set; }
+        public SecurityParameters Parameters { get; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope { get; private set; }
+        public Scope Scope { get; }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="InformRequestMessage"/>.

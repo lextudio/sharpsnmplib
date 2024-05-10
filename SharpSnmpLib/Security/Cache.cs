@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -27,13 +25,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Gets the number of key/value pairs contained in the Cache.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return _dictionary.Count;
-            }
-        }
+        public int Count => _dictionary.Count;
 
         #endregion //Public_Properties
 
@@ -84,10 +76,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>The value associated with the specified key.
         ///  If the specified key is not found, a get operation throws a System.Collections.Generic.KeyNotFoundException,
         ///  and a set operation creates a new element with the specified key.</returns>
-        public TValue this[TKey key]
-        {
-            get { return _dictionary[key]; }
-        }
+        public TValue this[TKey key] => _dictionary[key];
 
         /// <summary>
         /// Adds the specified key and value to the dictionary. If the cache has reached 
@@ -127,7 +116,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <returns>True if reached capacity false otherwise</returns>
         private bool IsCacheFull()
         {
-            return _keyQueue.Count() >= _capacity;      //using >= instead of == in case someone doesn't syncronize Cache
+            return _keyQueue.Count >= _capacity;      //using >= instead of == in case someone doesn't syncronize Cache
         }
 
         #endregion //Private_Methods

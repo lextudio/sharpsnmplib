@@ -152,7 +152,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
         /// <param name="securityModel">The security model</param>
-        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName,OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report, SecurityModel securityModel)
+        public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report, SecurityModel securityModel)
         {
             if (variables == null)
             {
@@ -245,9 +245,10 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
+        [Obsolete("Please use other overloading ones.")]
         public GetNextRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
             : this(version, messageId, requestId, userName, OctetString.Empty, variables, privacy, maxMessageSize, report)
-        {}
+        { }
 
         internal GetNextRequestMessage(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[]? length)
         {
@@ -263,13 +264,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header { get; private set; }
+        public Header Header { get; }
 
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy { get; private set; }
+        public IPrivacyProvider Privacy { get; }
 
         /// <summary>
         /// Converts to byte format.
@@ -284,19 +285,19 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; private set; }
+        public SecurityParameters Parameters { get; }
 
         /// <summary>
         /// Gets the scope.
         /// </summary>
         /// <value>The scope.</value>
-        public Scope Scope { get; private set; }
+        public Scope Scope { get; }
 
         /// <summary>
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version { get; private set; }
+        public VersionCode Version { get; }
 
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="GetNextRequestMessage"/>.

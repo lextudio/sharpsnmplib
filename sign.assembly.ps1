@@ -1,4 +1,4 @@
-$file = ".\cert.txt"
+$file = Join-Path $PSScriptRoot "cert.txt"
 if (-not (Test-Path $file))
 {
     Write-Host "No certificate specified. Exit."

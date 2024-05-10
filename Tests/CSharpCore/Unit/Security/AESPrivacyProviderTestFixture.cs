@@ -45,15 +45,15 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestIsSupported()
         {
-            #if NET6_0
+#if NET6_0
+            Assert.True(AESPrivacyProviderBase.IsSupported);
+#elif NET5_0
                 Assert.True(AESPrivacyProviderBase.IsSupported);
-            #elif NET5_0
-                Assert.True(AESPrivacyProviderBase.IsSupported);
-            #elif NETCOREAPP3_1
+#elif NETCOREAPP3_1
                 Assert.False(AESPrivacyProviderBase.IsSupported);
-            #elif NET471
+#elif NET471
                 Assert.True(AESPrivacyProviderBase.IsSupported);
-            #endif
+#endif
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
                 {
                     0x37, 0xc6, 0x4c, 0xad, 0x49, 0x37, 0xfe, 0xda, 0x57, 0xc8, 0x48, 0x53, 0x47, 0x2a, 0x2e, 0xc0
                 },
-                0, 0, new byte[] {0x00, 0x00, 0x00, 0x01, 0x44, 0x2c, 0xa3, 0xb5});
+                0, 0, new byte[] { 0x00, 0x00, 0x00, 0x01, 0x44, 0x2c, 0xa3, 0xb5 });
             byte[] expected =
                 ByteTool.Convert(
                     "36 0A 04 BB A8 9A 37 C1 28 2E 9C B6 30 A1  AB 7E 1E 60 60 EF D2 91 3A 26 B0 1C D5  55 B7 16 78 FB A4 D1 9A 2C E4 30 9A 86  EC E1 83 EE 72 C2 68 BC");
@@ -100,17 +100,53 @@ namespace Lextm.SharpSnmpLib.Unit.Security
 
             Scope scope = new Scope(engineId, OctetString.Empty,
                 new GetRequestPdu(0x3A25,
-                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"))}));
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));
             SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x14), new Integer32(0x35),
                 new OctetString("lexmark"), new OctetString(new byte[12]),
                 new OctetString(ByteTool.Convert("00 00 00  01 44 2C A3 B5")));
             var original = scope.GetData(VersionCode.V3);
             ISnmpData data = priv.Encrypt(original, parameters);
             Assert.Equal(SnmpType.OctetString, data.TypeCode);
-            Assert.Equal(ByteTool.Convert(expected), ByteTool.Convert(data.ToBytes()));
 
             ISnmpData decrypted = priv.Decrypt(data, parameters);
             Assert.Equal(ByteTool.Convert(original.ToBytes()), ByteTool.Convert(decrypted.ToBytes()));
+        }
+
+        [Fact]
+        public void TestEncrypt3()
+        {
+            byte[] received =
+                ByteTool.Convert(
+                    "04 35 CC AE 0C FA 1E 41  CC DD F8 BA  49 27 7E 47  C9 8D 73 63 3B 1A CE 56  97 2D CB 0A  2D DF A1 AC  0F B0 8E 3B 25 EF F1 B6  3B 76 3F 74  84 7C E6 C0  DC AE DE EC D9 9E 5F");
+            OctetString engineId = new OctetString(ByteTool.Convert("80 00 1F 88 80  38 92 B3 6C  6C 89 40 65  00 00 00 00"));
+
+            IPrivacyProvider priv;
+            if (AESPrivacyProviderBase.IsSupported)
+            {
+                priv = new AESPrivacyProvider(new OctetString("privkey1"),
+                    new SHA1AuthenticationProvider(new OctetString("authkey1")));
+            }
+            else
+            {
+                return;
+            }
+
+            Scope scope = new Scope(engineId, OctetString.Empty,
+                new GetRequestPdu(282716518,
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) }));
+            SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x0B), new Integer32(0x176),
+                new OctetString("usr-sha-aes"), new OctetString(new byte[12]),
+                new OctetString(ByteTool.Convert("FA 24 36 97  A4 79 E6 35")));
+            var original = scope.GetData(VersionCode.V3);
+            ISnmpData data = priv.Encrypt(original, parameters);
+            Assert.Equal(SnmpType.OctetString, data.TypeCode);
+            var encrypted = ByteTool.Convert(data.ToBytes());
+            Assert.Equal(ByteTool.Convert(received), encrypted);
+
+            ISnmpData decrypted_received = priv.Decrypt(DataFactory.CreateSnmpData(received), parameters);
+            var recovered_received = ByteTool.Convert(decrypted_received.ToBytes());
+            var recovered_encrypted = ByteTool.Convert(priv.Decrypt(data, parameters).ToBytes());
+            Assert.Equal(recovered_received, recovered_encrypted);
         }
 
 #if NET6_0
@@ -130,12 +166,12 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             {
                 var encrypted = provider.LegacyEncrypt(key, iv, data);
                 Assert.Equal(length, encrypted.Length);
-                var decrypted = provider.Net6Decrypt(key, iv, encrypted);
+                var decrypted = AESPrivacyProviderBase.Net6Decrypt(key, iv, encrypted);
                 Assert.Equal(data, decrypted);
             }
 
             {
-                var encrypted = provider.Net6Encrypt(key, iv, data);
+                var encrypted = AESPrivacyProviderBase.Net6Encrypt(key, iv, data);
                 Assert.Equal(length, encrypted.Length);
                 var decrypted = provider.LegacyDecrypt(key, iv, encrypted);
                 Assert.Equal(data, decrypted);

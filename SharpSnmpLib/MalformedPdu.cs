@@ -32,10 +32,7 @@ namespace Lextm.SharpSnmpLib
         /// Type code.
         /// </summary>
         /// <value>Returns <see cref="SnmpType"/> unknown type.</value>
-        public SnmpType TypeCode
-        {
-            get { return SnmpType.Unknown; }
-        }
+        public SnmpType TypeCode => SnmpType.Unknown;
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -50,38 +47,27 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId
-        {
-            get { return Integer32.Zero; } // return zero to fix SecureSnmpContext.HandleAuthenticationFailure.
-        }
+        public Integer32 RequestId => Integer32.Zero; // return zero to fix SecureSnmpContext.HandleAuthenticationFailure.
 
         /// <summary>
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public Integer32 ErrorStatus => throw new NotSupportedException();
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex
-        {
-            get { throw new NotSupportedException(); }
-        }
+        public Integer32 ErrorIndex => throw new NotSupportedException();
 
         /// <summary>
         /// Variable bindings.
         /// </summary>
         /// <value>Returns an empty list.</value>
-        public IList<Variable> Variables
-        {
+        public IList<Variable> Variables =>
             // as we cannot extract PDU data in such cases, only an empty list can be returned here.
-            get { return new List<Variable>(0); }
-        }
+            new List<Variable>(0);
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents this instance.

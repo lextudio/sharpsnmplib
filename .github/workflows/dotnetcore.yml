@@ -7,13 +7,15 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: |
-          3.1.x
-          5.0.x
           6.0.x
+          7.0.x
+          8.0.x
     - name: Build
       shell: bash
       run: |
@@ -29,19 +31,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: |
-          3.1.x
-          5.0.x
           6.0.x
+          7.0.x
+          8.0.x
     - name: Build
       shell: bash
       run: |
         dotnet --info
         set -e
-        sudo pwsh -file patch-winfx.ps1 /home/runner/.dotnet/sdk/3.1.101
         pwsh -file release.ps1 Release
     - name: Test
       shell: pwsh
@@ -53,13 +56,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: |
-          3.1.x
-          5.0.x
           6.0.x
+          7.0.x
+          8.0.x
     - name: Build
       shell: cmd
       run: build.release.bat

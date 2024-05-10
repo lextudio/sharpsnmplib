@@ -17,8 +17,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#if NET6_0
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
@@ -32,7 +32,6 @@ using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-#if NET6_0
     /// <summary>
     /// Extension methods for <see cref="ISnmpMessage"/>.
     /// </summary>
@@ -116,9 +115,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="registry">User registry.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, CancellationToken token)
         {
             // TODO: make more usage of UserRegistry.
@@ -149,9 +148,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, CancellationToken token)
         {
             if (request == null)
@@ -182,9 +181,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket, CancellationToken token)
         {
             if (request == null)
@@ -225,9 +224,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="registry">The user registry.</param>
         /// <param name="token">The cancellation token.</param>
         /// <returns></returns>
-        #if NET6_0 || NET5_0
+#if NET6_0 || NET5_0
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-        #endif
+#endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket, CancellationToken token)
         {
             if (request == null)
@@ -304,8 +303,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
         }
 
-#endregion
+        #endregion
 
     }
-#endif
 }
+#endif

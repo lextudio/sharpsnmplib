@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="17.0">
   <PropertyGroup Label="Configuration">
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
     <SignAssembly>True</SignAssembly>
@@ -7,10 +7,10 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutputType Condition="'$(TargetFramework)'!='net471'">Exe</OutputType>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '17.0' ">net6.0;net5.0;netcoreapp3.1;net471</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '16.0' ">net5.0;netcoreapp3.1;net471</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '17.0'">net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '16.0'">net5.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '18.0' ">net6.0;net8.0;net471</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '17.0' ">net6.0;net471</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '18.0'">net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' AND '$(MSBuildAssemblyVersion)' == '17.0'">net6.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.resx" />
@@ -33,7 +33,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>

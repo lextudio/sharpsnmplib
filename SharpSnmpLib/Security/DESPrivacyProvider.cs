@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Corresponding <see cref="IAuthenticationProvider"/>.
         /// </summary>
-        public IAuthenticationProvider AuthenticationProvider { get; private set; }
+        public IAuthenticationProvider AuthenticationProvider { get; }
 
         /// <summary>
         /// Engine IDs.
@@ -142,9 +142,9 @@ namespace Lextm.SharpSnmpLib.Security
 
             if ((unencryptedData.Length % 8) != 0)
             {
-                byte[] tmpbuffer = new byte[8 * ((unencryptedData.Length / 8) + 1)];
-                Buffer.BlockCopy(unencryptedData, 0, tmpbuffer, 0, unencryptedData.Length);
-                unencryptedData = tmpbuffer;
+                byte[] tmpBuffer = new byte[8 * ((unencryptedData.Length / 8) + 1)];
+                Buffer.BlockCopy(unencryptedData, 0, tmpBuffer, 0, unencryptedData.Length);
+                unencryptedData = tmpBuffer;
             }
 #if NET6_0
             return UseLegacy ? LegacyEncrypt(outKey, iv, unencryptedData) : Net6Encrypt(outKey, iv, unencryptedData);
@@ -164,16 +164,12 @@ namespace Lextm.SharpSnmpLib.Security
 
         internal static byte[] LegacyEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
         {
-            using (DES des = DES.Create())
-            {
-                des.Mode = CipherMode.CBC;
-                des.Padding = PaddingMode.None;
+            using DES des = DES.Create();
+            des.Mode = CipherMode.CBC;
+            des.Padding = PaddingMode.None;
 
-                using (var transform = des.CreateEncryptor(key, iv))
-                {
-                    return transform.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
-                }
-            }
+            using var transform = des.CreateEncryptor(key, iv);
+            return transform.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
         }
 
         internal static byte[] EcbEncrypt(byte[] key, byte[] iv, byte[] unencryptedData)
@@ -188,35 +184,33 @@ namespace Lextm.SharpSnmpLib.Security
             var result = new byte[newLength];
             var buffer = new byte[newLength];
 
-            var inbuffer = new byte[8];
+            var inBuffer = new byte[8];
             var cipherText = iv;
             var posIn = 0;
             var posResult = 0;
             Buffer.BlockCopy(unencryptedData, 0, buffer, 0, unencryptedData.Length);
 
-            using (DES des = DES.Create())
+            using DES des = DES.Create();
+            des.Mode = CipherMode.ECB;
+            des.Padding = PaddingMode.None;
+
+            using (var transform = des.CreateEncryptor(key, null))
             {
-                des.Mode = CipherMode.ECB;
-                des.Padding = PaddingMode.None;
-
-                using (var transform = des.CreateEncryptor(key, null))
+                for (var b = 0; b < div; b++)
                 {
-                    for (var b = 0; b < div; b++)
+                    for (var i = 0; i < 8; i++)
                     {
-                        for (var i = 0; i < 8; i++)
-                        {
-                            inbuffer[i] = (byte)(buffer[posIn] ^ cipherText[i]);
-                            posIn++;
-                        }
-
-                        transform.TransformBlock(inbuffer, 0, inbuffer.Length, cipherText, 0);
-                        Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
-                        posResult += cipherText.Length;
+                        inBuffer[i] = (byte)(buffer[posIn] ^ cipherText[i]);
+                        posIn++;
                     }
-                }
 
-                des.Clear();
+                    transform.TransformBlock(inBuffer, 0, inBuffer.Length, cipherText, 0);
+                    Buffer.BlockCopy(cipherText, 0, result, posResult, cipherText.Length);
+                    posResult += cipherText.Length;
+                }
             }
+
+            des.Clear();
 
             return result;
         }
@@ -300,20 +294,16 @@ namespace Lextm.SharpSnmpLib.Security
 
         internal static byte[] LegacyDecrypt(byte[] key, byte[] iv, byte[] encryptedData)
         {
-            using (DES des = DES.Create())
-            {
-                des.Mode = CipherMode.CBC;
-                des.Padding = PaddingMode.Zeros;
+            using DES des = DES.Create();
+            des.Mode = CipherMode.CBC;
+            des.Padding = PaddingMode.Zeros;
 
-                des.Key = key;
-                des.IV = iv;
-                using (var transform = des.CreateDecryptor())
-                {
-                    var decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
-                    des.Clear();
-                    return decryptedData;
-                }
-            }
+            des.Key = key;
+            des.IV = iv;
+            using var transform = des.CreateDecryptor();
+            var decryptedData = transform.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+            des.Clear();
+            return decryptedData;
         }
 
         /// <summary>
@@ -360,10 +350,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Returns the length of privacyParameters USM header field. For DES, field length is 8.
         /// </summary>
-        public static int PrivacyParametersLength
-        {
-            get { return 8; }
-        }
+        public static int PrivacyParametersLength => 8;
 
         /// <summary>
         /// Returns minimum encryption/decryption key length. For DES, returned value is 16.
@@ -371,10 +358,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
         /// </summary>
-        public static int MinimumKeyLength
-        {
-            get { return MaximumKeyLength; }
-        }
+        public static int MinimumKeyLength => MaximumKeyLength;
 
         /// <summary>
         /// Return maximum encryption/decryption key length. For DES, returned value is 16.
@@ -382,12 +366,9 @@ namespace Lextm.SharpSnmpLib.Security
         /// DES protocol itself requires an 8 byte key. Additional 8 bytes are used for generating the
         /// encryption IV. For encryption itself, first 8 bytes of the key are used.
         /// </summary>
-        public static int MaximumKeyLength
-        {
-            get { return 16; }
-        }
+        public static int MaximumKeyLength => 16;
 
-#region IPrivacyProvider Members
+        #region IPrivacyProvider Members
 
         /// <summary>
         /// Decrypts the specified data.
@@ -425,7 +406,7 @@ namespace Lextm.SharpSnmpLib.Security
             try
             {
                 // decode encrypted packet
-                var decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters!.GetRaw());            
+                var decrypted = Decrypt(bytes, pkey, parameters.PrivacyParameters!.GetRaw());
                 var result = DataFactory.CreateSnmpData(decrypted);
                 if (result.TypeCode != SnmpType.Sequence)
                 {
@@ -495,10 +476,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the salt.
         /// </summary>
         /// <value>The salt.</value>
-        public OctetString Salt
-        {
-            get { return new OctetString(_salt.GetSaltBytes()); }
-        }
+        public OctetString Salt => new(_salt.GetSaltBytes());
 
         /// <summary>
         /// Passwords to key.

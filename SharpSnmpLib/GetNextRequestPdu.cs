@@ -84,33 +84,30 @@ namespace Lextm.SharpSnmpLib
         /// Gets the request ID.
         /// </summary>
         /// <value>The request ID.</value>
-        public Integer32 RequestId { get; private set; }
+        public Integer32 RequestId { get; }
 
         /// <summary>
         /// Gets the error status.
         /// </summary>
         /// <value>The error status.</value>
-        public Integer32 ErrorStatus { get; private set; }
+        public Integer32 ErrorStatus { get; }
 
         /// <summary>
         /// Gets the index of the error.
         /// </summary>
         /// <value>The index of the error.</value>
-        public Integer32 ErrorIndex { get; private set; }
+        public Integer32 ErrorIndex { get; }
 
         /// <summary>
         /// Variables.
         /// </summary>
-        public IList<Variable> Variables { get; private set; }
+        public IList<Variable> Variables { get; }
 
         #region ISnmpData Members
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get { return SnmpType.GetNextRequestPdu; }
-        }
+        public SnmpType TypeCode => SnmpType.GetNextRequestPdu;
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -122,12 +119,8 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
-            if (_raw == null)
-            {
-                _raw = ByteTool.ParseItems(RequestId, ErrorStatus, ErrorIndex, _varbindSection);
-            }
 
+            _raw ??= ByteTool.ParseItems(RequestId, ErrorStatus, ErrorIndex, _varbindSection);
             stream.AppendBytes(TypeCode, _length, _raw);
         }
 

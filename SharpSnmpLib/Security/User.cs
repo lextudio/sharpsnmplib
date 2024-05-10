@@ -42,13 +42,13 @@ namespace Lextm.SharpSnmpLib.Security
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
-        public OctetString Name { get; private set; }
+        public OctetString Name { get; }
 
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The provider.</value>
-        public IPrivacyProvider Privacy { get; private set; }
+        public IPrivacyProvider Privacy { get; }
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents this instance.

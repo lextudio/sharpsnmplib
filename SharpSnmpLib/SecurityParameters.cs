@@ -53,25 +53,25 @@ namespace Lextm.SharpSnmpLib
         /// Gets the engine ID.
         /// </summary>
         /// <value>The engine ID.</value>
-        public OctetString? EngineId { get; private set; }
+        public OctetString? EngineId { get; }
 
         /// <summary>
         /// Gets the boot count.
         /// </summary>
         /// <value>The boot count.</value>
-        public Integer32? EngineBoots { get; private set; }
+        public Integer32? EngineBoots { get; }
 
         /// <summary>
         /// Gets the engine time.
         /// </summary>
         /// <value>The engine time.</value>
-        public Integer32? EngineTime { get; private set; }
+        public Integer32? EngineTime { get; }
 
         /// <summary>
         /// Gets the user name.
         /// </summary>
         /// <value>The user name.</value>
-        public OctetString? UserName { get; private set; }
+        public OctetString? UserName { get; }
 
         private OctetString? _authenticationParameters;
         private readonly byte[]? _length;
@@ -82,11 +82,8 @@ namespace Lextm.SharpSnmpLib
         /// <value>The authentication parameters.</value>
         public OctetString? AuthenticationParameters
         {
-            get
-            {
-                return _authenticationParameters;
-            }
-            
+            get => _authenticationParameters;
+
             set
             {
                 if (_authenticationParameters == null || value == null)
@@ -115,7 +112,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the privacy parameters.
         /// </summary>
         /// <value>The privacy parameters.</value>
-        public OctetString? PrivacyParameters { get; private set; }
+        public OctetString? PrivacyParameters { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
@@ -128,11 +125,11 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            if(parameters == OctetString.Empty)
+            if (parameters == OctetString.Empty)
             {
                 return;
             }
-            
+
             var container = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
             EngineId = (OctetString)container[0];
             EngineBoots = (Integer32)container[1];
@@ -162,7 +159,7 @@ namespace Lextm.SharpSnmpLib
             AuthenticationParameters = authenticationParameters;
             PrivacyParameters = privacyParameters;
         }
-        
+
         /// <summary>
         /// Creates an instance of <see cref="SecurityParameters"/>.
         /// </summary>

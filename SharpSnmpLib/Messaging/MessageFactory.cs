@@ -51,12 +51,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(bytes));
             }
-            
+
             if (registry == null)
             {
                 throw new ArgumentNullException(nameof(registry));
             }
-            
+
             return ParseMessages(ByteTool.Convert(bytes), registry);
         }
 
@@ -95,26 +95,18 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 throw new ArgumentNullException(nameof(buffer));
             }
-            
+
             if (registry == null)
             {
                 throw new ArgumentNullException(nameof(registry));
             }
 
             IList<ISnmpMessage> result = new List<ISnmpMessage>();
-            using (Stream stream = new MemoryStream(buffer, index, length, true))
+            using Stream stream = new MemoryStream(buffer, index, length, true);
+            int first;
+            while ((first = stream.ReadByte()) != -1)
             {
-                int first;
-                while ((first = stream.ReadByte()) != -1)
-                {
-                    var message = ParseMessage(first, stream, registry);
-                    if (message == null)
-                    {
-                        continue;
-                    }
-                    
-                    result.Add(message);
-                }
+                result.Add(ParseMessage(first, stream, registry));
             }
 
             return result;
@@ -179,9 +171,9 @@ namespace Lextm.SharpSnmpLib.Messaging
                     {
                         scope = new Scope((Sequence)privacy.Decrypt(body[3], parameters));
                     }
-                    catch (DecryptionException)
+                    catch (SnmpException)
                     {
-                        // handle decryption exception.
+                        // If decryption failed or gave back invalid data, handle parsing exceptions.
                         return new MalformedMessage(header.MessageId, parameters.UserName ?? OctetString.Empty, body[3]);
                     }
                 }

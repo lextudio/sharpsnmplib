@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Messaging
     public sealed class MalformedMessage : ISnmpMessage
     {
         private static readonly Scope DefaultScope = new(new MalformedPdu());
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MalformedMessage"/> class.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; private set; }
+        public SecurityParameters Parameters { get; }
 
         /// <summary>
         /// Gets the scope.
@@ -67,13 +67,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <value>The fake scope, which is used to avoid exceptions in message handling.</value>
         public Scope Scope
         {
-            get; private set;
+            get;
         }
 
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public Header Header { get; private set; }
+        public Header Header { get; }
 
         /// <summary>
         /// Converts to the bytes.
@@ -88,19 +88,13 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Gets the version.
         /// </summary>
         /// <value>The version.</value>
-        public VersionCode Version
-        {
-            get { return VersionCode.V3; }
-        }
+        public VersionCode Version => VersionCode.V3;
 
         /// <summary>
         /// Gets the privacy provider.
         /// </summary>
         /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy
-        {
-            get { return DefaultPrivacyProvider.DefaultPair; }
-        }
+        public IPrivacyProvider Privacy => DefaultPrivacyProvider.DefaultPair;
 
         /// <summary>
         /// Returns a <see cref="System.String"/> that represents this instance.

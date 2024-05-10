@@ -69,13 +69,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Type code.
         /// </summary>
-        public SnmpType TypeCode
-        {
-            get
-            {
-                return SnmpType.Null;
-            }
-        }
+        public SnmpType TypeCode => SnmpType.Null;
 
         /// <summary>
         /// Appends the bytes to <see cref="Stream"/>.
@@ -87,10 +81,10 @@ namespace Lextm.SharpSnmpLib
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-            
+
             stream.AppendBytes(TypeCode, _length, Array.Empty<byte>());
         }
-        
+
         /// <summary>
         /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Null"/>.
         /// </summary>
@@ -101,16 +95,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, obj as Null);
         }
-        
-        /// <summary>
-        /// Serves as a hash function for a particular type.
-        /// </summary>
-        /// <returns>A hash code for the current <see cref="Null"/>.</returns>
-        public override int GetHashCode()
-        {
-            return 0;
-        }
-        
+
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
@@ -121,7 +106,16 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(this, other);
         }
-        
+
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="Null"/>.</returns>
+        public override int GetHashCode()
+        {
+            return 0;
+        }
+
         /// <summary>
         /// The equality operator.
         /// </summary>
@@ -133,7 +127,7 @@ namespace Lextm.SharpSnmpLib
         {
             return Equals(left, right);
         }
-        
+
         /// <summary>
         /// The inequality operator.
         /// </summary>
@@ -145,7 +139,7 @@ namespace Lextm.SharpSnmpLib
         {
             return !(left == right);
         }
-        
+
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Null"/>.
         /// </summary>
@@ -154,7 +148,7 @@ namespace Lextm.SharpSnmpLib
         {
             return "Null";
         }
-        
+
         /// <summary>
         /// The comparison.
         /// </summary>

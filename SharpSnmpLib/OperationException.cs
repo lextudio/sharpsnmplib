@@ -35,13 +35,13 @@ namespace Lextm.SharpSnmpLib
     /// <summary>
     /// Operation exception of #SNMP.
     /// </summary>
-    [DataContract]
-    public class OperationException : SnmpException
+    [Serializable]
+    public class OperationException : SnmpException, ISerializable
     {
         /// <summary>
         /// Agent address.
         /// </summary>
-        protected IPAddress? Agent { get; set; }
+        public IPAddress? Agent { get; set; }
 
         /// <summary>
         /// Creates a <see cref="OperationException"/> instance.
@@ -49,7 +49,7 @@ namespace Lextm.SharpSnmpLib
         public OperationException()
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="OperationException"/> instance with a specific <see cref="string"/>.
         /// </summary>
@@ -57,27 +57,45 @@ namespace Lextm.SharpSnmpLib
         public OperationException(string message) : base(message)
         {
         }
-        
+
         /// <summary>
         /// Creates a <see cref="OperationException"/> instance with a specific <see cref="string"/> and an <see cref="Exception"/>.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="inner"></param>
-        public OperationException(string message, Exception inner) : base(message, inner) 
-        { 
+        public OperationException(string message, Exception inner) : base(message, inner)
+        {
+        }
+
+        /// <summary>
+        /// Creates a <see cref="OperationException"/> instance.
+        /// </summary>
+        /// <param name="info">Info</param>
+        /// <param name="context">Context</param>
+       internal protected OperationException(SerializationInfo info, StreamingContext context)
+           : base(info, context)
+        {
+            var content = info.GetString("Agent");
+            if (content == null)
+            {
+                return;
+            }
+
+            Agent = IPAddress.Parse(content);
+        }
+
+        /// <inheritdoc/>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("Agent", Agent?.ToString());
         }
 
         /// <summary>
         /// Details on operation.
         /// </summary>
-        protected override string Details
-        {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "{0}. Agent: {1}", Message, Agent);
-            }
-        }
-     
+        protected override string Details => string.Format(CultureInfo.InvariantCulture, "{0}. Agent: {1}", Message, Agent);
+
         /// <summary>
         /// Creates a <see cref="OperationException"/> with a specific <see cref="IPAddress"/>.
         /// </summary>
@@ -90,3 +108,6 @@ namespace Lextm.SharpSnmpLib
         }
     }
 }
+
+// generate OperationExceptionTestFixture class that contains test cases for OperationException
+
