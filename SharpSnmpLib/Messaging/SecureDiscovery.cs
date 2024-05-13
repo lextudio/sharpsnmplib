@@ -27,7 +27,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using Lextm.SharpSnmpLib.Security;
@@ -70,7 +69,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 new Scope(
                     OctetString.Empty,
                     OctetString.Empty,
-                    new GetRequestPdu(requestId, new List<Variable>())),
+                    new GetRequestPdu(requestId, [])),
                 DefaultPrivacyProvider.DefaultPair,
                 null);
         }

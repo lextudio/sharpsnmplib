@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// Computes the hash.
         /// </summary>
         /// <returns></returns>
-        public OctetString ComputeHash(byte[] buffer, OctetString engineId)
+        public static OctetString ComputeHash(byte[] buffer, OctetString engineId)
         {
             if (buffer == null)
             {
@@ -98,7 +98,7 @@ namespace Lextm.SharpSnmpLib.Security
             }
 
             // IMPORTANT: this function is not used.
-            return Array.Empty<byte>();
+            return [];
         }
 
         /// <summary>
