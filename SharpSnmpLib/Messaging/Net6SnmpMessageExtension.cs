@@ -202,8 +202,13 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var registry = new UserRegistry();
-            if (request.Version == VersionCode.V3)
+            if (request.Version == VersionCode.V3 && request.Header.SecurityModel == SecurityModel.Usm)
             {
+                if(request.Parameters.UserName is null)
+                {
+                    throw new Exception($"{nameof(request)}.{nameof(request.Parameters)}.{nameof(request.Parameters.UserName)} cannot be null when using {SecurityModel.Usm}");
+                }
+
                 registry.Add(request.Parameters.UserName, request.Privacy);
             }
 

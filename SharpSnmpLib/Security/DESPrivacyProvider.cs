@@ -443,7 +443,7 @@ namespace Lextm.SharpSnmpLib.Security
                 throw new ArgumentNullException(nameof(parameters));
             }
 
-            if (data.TypeCode != SnmpType.Sequence && !(data is ISnmpPdu))
+            if (data.TypeCode != SnmpType.Sequence && data is not ISnmpPdu)
             {
                 throw new ArgumentException("Invalid data type.", nameof(data));
             }

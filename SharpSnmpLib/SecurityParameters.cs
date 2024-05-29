@@ -37,6 +37,19 @@ namespace Lextm.SharpSnmpLib
     public sealed class SecurityParameters : ISegment
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SecurityParameters"/> class.
+        /// </summary>
+        private SecurityParameters()
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes an empty instance of the <see cref="SecurityParameters"/> class.
+        /// </summary>
+        public static SecurityParameters Empty => new();
+
+        /// <summary>
         /// Gets the engine ID.
         /// </summary>
         /// <value>The engine ID.</value>
@@ -58,7 +71,7 @@ namespace Lextm.SharpSnmpLib
         /// Gets the user name.
         /// </summary>
         /// <value>The user name.</value>
-        public OctetString UserName { get; }
+        public OctetString? UserName { get; }
 
         private OctetString? _authenticationParameters;
         private readonly byte[]? _length;
@@ -112,6 +125,11 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(parameters));
             }
 
+            if (parameters == OctetString.Empty)
+            {
+                return;
+            }
+
             var container = (Sequence)DataFactory.CreateSnmpData(parameters.GetRaw());
             EngineId = (OctetString)container[0];
             EngineBoots = (Integer32)container[1];
@@ -149,6 +167,10 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public static SecurityParameters Create(OctetString userName)
         {
+            if (userName is null)
+            {
+                throw new ArgumentNullException(nameof(userName));
+            }
             return new SecurityParameters(null, null, null, userName, null, null);
         }
 
@@ -170,7 +192,14 @@ namespace Lextm.SharpSnmpLib
         /// <returns></returns>
         public ISnmpData GetData(VersionCode version)
         {
-            return version == VersionCode.V3 ? new OctetString(ToSequence().ToBytes()) : UserName;
+            //if empty SecurityParameters, return an empty OctetString
+            if (_length == null && EngineId == null && EngineBoots == null && EngineTime == null && UserName == null && PrivacyParameters == null
+                && (AuthenticationParameters == OctetString.Empty || AuthenticationParameters == null))
+            {
+                return OctetString.Empty;
+            }
+
+            return version == VersionCode.V3 ? new OctetString(ToSequence().ToBytes()) : (UserName ?? OctetString.Empty);
         }
 
         #endregion
@@ -183,7 +212,7 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "Security parameters: engineId: {0};engineBoots: {1};engineTime: {2};userName: {3}; authen hash: {4}; privacy hash: {5}", EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters == null ? null : AuthenticationParameters.ToHexString(), PrivacyParameters == null ? null : PrivacyParameters.ToHexString());
+            return string.Format(CultureInfo.InvariantCulture, "Security parameters: engineId: {0};engineBoots: {1};engineTime: {2};userName: {3}; authen hash: {4}; privacy hash: {5}", EngineId, EngineBoots, EngineTime, UserName, AuthenticationParameters?.ToHexString(), PrivacyParameters?.ToHexString());
         }
 
         /// <summary>

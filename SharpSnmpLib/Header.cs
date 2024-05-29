@@ -76,14 +76,27 @@ namespace Lextm.SharpSnmpLib
         /// <param name="messageId">The message id.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="securityLevel">The security level.</param>
+        /// <param name="securityModel">The security model.</param>
         /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
-        public Header(Integer32? messageId, Integer32 maxMessageSize, Levels securityLevel)
+        public Header(Integer32? messageId, Integer32 maxMessageSize, Levels securityLevel, Integer32 securityModel)
         {
-            _messageId = messageId;
+            _messageId = messageId; 
             _maxSize = maxMessageSize ?? throw new ArgumentNullException(nameof(maxMessageSize));
             SecurityLevel = securityLevel;
             _flags = new OctetString(SecurityLevel);
-            _securityModel = DefaultSecurityModel;
+            _securityModel = securityModel;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Header"/> class.
+        /// </summary>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="securityLevel">The security level.</param>
+        /// <remarks>If you want an empty header, please use <see cref="Empty"/>.</remarks>
+        public Header(Integer32? messageId, Integer32 maxMessageSize, Levels securityLevel) 
+            : this(messageId, maxMessageSize, securityLevel, DefaultSecurityModel)
+        {
         }
 
         /// <summary>
@@ -101,6 +114,15 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <value>The message ID.</value>
         public int MessageId => _messageId == null ? throw new InvalidOperationException() : _messageId.ToInt32();
+
+        /// <summary>
+        /// Gets the security model.
+        /// </summary>
+        /// <value>The security model.</value>
+        public SecurityModel SecurityModel
+        {
+            get { return (SecurityModel)_securityModel.ToInt32(); }
+        }
 
         #region ISegment Members
 
