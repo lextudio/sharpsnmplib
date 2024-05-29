@@ -40,7 +40,7 @@
     <NoWarn>S5547;S907;S1133;S101;S1135</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DTLS2.Net" Version="1.1.4" />
+    <PackageReference Include="DTLS2.Net" Version="1.1.5" />
     <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
