@@ -13,6 +13,7 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Xunit;
 using System.IO;
+using System.Threading;
 
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Unit.Messaging
@@ -229,7 +230,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                 return;
             }
 
-            SaltGenerator.LockSalt = true;
+            Interlocked.Exchange(ref SaltGenerator.LockSalt, 1);
             var auth = new SHA1AuthenticationProvider(new OctetString("authkey1"));
             var privacy = new AESPrivacyProvider(new OctetString("privkey1"), auth);
             var getRequestMessage = new GetRequestMessage(

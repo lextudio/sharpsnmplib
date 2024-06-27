@@ -18,6 +18,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Threading;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
@@ -46,22 +47,24 @@ namespace Lextm.SharpSnmpLib.Messaging
         {
             get
             {
-                lock (_root)
+                while (true)
                 {
-                    if (_salt == _max)
+                    var next = Interlocked.Increment(ref _salt);
+                    if (next < _min || next >= _max)
                     {
-                        _salt = _min;
+                        if (Interlocked.CompareExchange(ref _salt, _min, next) == next)
+                        {
+                            return _min;
+                        }
                     }
                     else
                     {
-                        _salt++;
+                        return next;
                     }
-                    return _salt;
                 }
             }
         }
 
-        private readonly object _root = new();
         private int _salt;
         private readonly int _min;
         private readonly int _max;
