@@ -5,7 +5,7 @@
 [![Build](https://img.shields.io/github/actions/workflow/status/lextudio/sharpsnmplib/dotnetcore.yml?branch=master&style=flat-square)](https://github.com/lextudio/sharpsnmplib/actions/workflows/dotnetcore.yml)
 [![Coverage](https://img.shields.io/coveralls/github/lextudio/sharpsnmplib?style=flat-square)](https://coveralls.io/github/lextudio/sharpsnmplib)
 
-This is the source code repository of #SNMP Library. Visual Studio 2019 and .NET Core SDK (for .NET Core 2.1 and above) is required to compile it on Windows.
+This is the source code repository of #SNMP Library. Visual Studio 2022 and .NET 8 SDK is required to compile it on Windows.
 
 ## Useful Links
 
