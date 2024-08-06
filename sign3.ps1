@@ -2,7 +2,7 @@ if ($env:CI -eq "true") {
     exit 0
 }
 
-$signtool = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Recurse -Filter "signtool.exe" | Select-Object -First 1 -ExpandProperty FullName
+$signtool = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Windows Kits" -Recurse -Filter "signtool.exe" | Select-Object -First 1 -ExpandProperty FullName
 Write-host "Signtool path: $signtool"
 if (Test-Path $signtool) {
     New-Item -ItemType Directory -Path ".\SharpSnmpLib\bin\Release" -Force | Out-Null
