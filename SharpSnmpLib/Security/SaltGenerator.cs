@@ -19,6 +19,7 @@
 
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace Lextm.SharpSnmpLib.Security
 {
@@ -27,14 +28,14 @@ namespace Lextm.SharpSnmpLib.Security
     /// </summary>
     public sealed class SaltGenerator
     {
-        private readonly object _root = new();
         private long _salt = Convert.ToInt64(new Random().Next(1, int.MaxValue));
-        internal static bool LockSalt { get; set; }
+        
+        internal static int LockSalt;
 
         internal void SetSalt(long salt)
         {
             // IMPORTANT: for unit testing only.
-            _salt = salt;
+            Interlocked.Exchange(ref _salt, salt);
         }
 
         /// <summary>
@@ -45,25 +46,26 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-                lock (_root)
+                while (true)
                 {
-                    if (LockSalt)
+                    if (Interlocked.CompareExchange(ref LockSalt, 0, 1) == 1)
                     {
                         // IMPORTANT: for unit testing only.
-                        LockSalt = false;
                         return 2048;
                     }
 
-                    if (_salt == long.MaxValue)
+                    var next = Interlocked.Increment(ref _salt);
+                    if (next < 1 || next > long.MaxValue)
                     {
-                        _salt = 1;
+                        if (Interlocked.CompareExchange(ref _salt, 1, next) == next)
+                        {
+                            return 1;
+                        }
                     }
                     else
                     {
-                        _salt++;
+                        return next;
                     }
-
-                    return _salt;
                 }
             }
         }
