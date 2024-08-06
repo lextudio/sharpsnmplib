@@ -1,3 +1,7 @@
+if ($env:CI -eq "true") {
+    exit 0
+}
+
 $signtool = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits" -Recurse -Filter "signtool.exe" | Select-Object -First 1 -ExpandProperty FullName
 Write-host "Signtool path: $signtool"
 if (Test-Path $signtool) {

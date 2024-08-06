@@ -1,5 +1,8 @@
-$cert = Get-ChildItem -Path Cert:\CurrentUser\My -CodeSigningCert | Select-Object -First 1
+if ($env:CI -eq "true") {
+    exit 0
+}
 
+$cert = Get-ChildItem -Path Cert:\CurrentUser\My -CodeSigningCert | Select-Object -First 1
 if ($cert -eq $null) {
     Write-Host "No code signing certificate found in MY store. Exit."
     exit 1

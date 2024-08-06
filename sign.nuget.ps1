@@ -1,5 +1,8 @@
-$nuget = Join-Path $PSScriptRoot "nuget.exe"
+if ($env:CI -eq "true") {
+    exit 0
+}
 
+$nuget = Join-Path $PSScriptRoot "nuget.exe"
 if (!(Test-Path $nuget))
 {
     Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile nuget.exe
