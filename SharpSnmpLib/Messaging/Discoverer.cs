@@ -317,7 +317,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             using var udp = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
             udp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
             var buffer = new ArraySegment<byte>(bytes);
-            await udp.SendToAsync(buffer, SocketFlags.None, broadcastAddress);
+            await udp.SendToAsync(buffer, SocketFlags.None, broadcastAddress).ConfigureAwait(false);
 
             var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
             if (activeBefore == Active)
@@ -341,7 +341,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 #else
             await Task.WhenAny(
                 ReceiveAsync(udp),
-                Task.Delay(interval));
+                Task.Delay(interval))
+                .ConfigureAwait(false);
 #endif
             Interlocked.CompareExchange(ref _active, Inactive, Active);
             try
@@ -370,7 +371,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                     EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
 
                     var buffer = new byte[_bufferSize];
-                    var result = await socket.ReceiveMessageFromAsync(new ArraySegment<byte>(buffer), SocketFlags.None, remote);
+                    var result = await socket.ReceiveMessageFromAsync(new ArraySegment<byte>(buffer), SocketFlags.None, remote).ConfigureAwait(false);
                     await Task.Factory.StartNew(() => HandleMessage(buffer, result.ReceivedBytes, (IPEndPoint) result.RemoteEndPoint))
                         .ConfigureAwait(false);
                 }

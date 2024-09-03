@@ -113,6 +113,69 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="version">The version.</param>
         /// <param name="messageId">The message id.</param>
         /// <param name="requestId">The request id.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="nonRepeaters">The non repeaters.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        public GetBulkRequestMessage(VersionCode version, int messageId, int requestId, OctetString contextName, int nonRepeaters, int maxRepetitions, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize)
+        {
+            if (variables == null)
+            {
+                throw new ArgumentNullException(nameof(variables));
+            }
+
+            if (contextName == null)
+            {
+                throw new ArgumentNullException(nameof(contextName));
+            }
+
+            if (version != VersionCode.V3)
+            {
+                throw new ArgumentException("Only v3 is supported.", nameof(version));
+            }
+
+            if (privacy == null)
+            {
+                throw new ArgumentNullException(nameof(privacy));
+            }
+
+            if (nonRepeaters > variables.Count)
+            {
+                throw new ArgumentException("nonRepeaters should not be greater than variable count.", nameof(nonRepeaters));
+            }
+
+            if (maxRepetitions < 1)
+            {
+                throw new ArgumentException("maxRepetitions should be greater than 0.", nameof(maxRepetitions));
+            }
+
+            Version = version;
+            Privacy = privacy;
+
+            // TODO: define more constants.
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable, new Integer32((int)SecurityModel.Tsm));
+            Parameters = SecurityParameters.Empty;
+            
+            var pdu = new GetBulkRequestPdu(
+                requestId,
+                nonRepeaters,
+                maxRepetitions,
+                variables);
+            var contextEngineId = OctetString.Empty;
+            Scope = new Scope(contextEngineId, contextName, pdu);
+
+            Privacy.ComputeHash(Version, Header, Parameters, Scope);
+            _bytes = this.PackMessage(null).ToBytes();
+        }
+
+        /// <summary>
+        /// Creates a <see cref="GetBulkRequestMessage"/> with a specific <see cref="Sequence"/>.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
         /// <param name="userName">Name of the user.</param>
         /// <param name="contextName">Context name.</param>
         /// <param name="nonRepeaters">The non repeaters.</param>
@@ -121,7 +184,8 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="privacy">The privacy provider.</param>
         /// <param name="maxMessageSize">Size of the max message.</param>
         /// <param name="report">The report.</param>
-        public GetBulkRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, int nonRepeaters, int maxRepetitions, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+        /// <param name="securityModel">The security model.</param>
+        public GetBulkRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, int nonRepeaters, int maxRepetitions, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report, SecurityModel securityModel)
         {
             if (variables == null)
             {
@@ -160,16 +224,25 @@ namespace Lextm.SharpSnmpLib.Messaging
 
             Version = version;
             Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
-            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable);
+            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel() | Levels.Reportable, new Integer32((int)securityModel));
             var parameters = report.Parameters;
             var authenticationProvider = Privacy.AuthenticationProvider;
-            Parameters = new SecurityParameters(
-                parameters.EngineId,
-                parameters.EngineBoots,
-                parameters.EngineTime,
-                userName,
-                authenticationProvider.CleanDigest,
-                Privacy.Salt);
+
+            if (securityModel == SecurityModel.Tsm)
+            {
+                Parameters = SecurityParameters.Empty;
+            }
+            else
+            {
+                Parameters = new SecurityParameters(
+                    parameters.EngineId,
+                    parameters.EngineBoots,
+                    parameters.EngineTime,
+                    userName,
+                    authenticationProvider.CleanDigest,
+                    Privacy.Salt);
+            }
+
             var pdu = new GetBulkRequestPdu(
                 requestId,
                 nonRepeaters,
@@ -188,6 +261,24 @@ namespace Lextm.SharpSnmpLib.Messaging
             _bytes = this.PackMessage(null).ToBytes();
         }
 
+        /// <summary>
+        /// Creates a <see cref="GetBulkRequestMessage"/> with a specific <see cref="Sequence"/>.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="contextName">Context name.</param>
+        /// <param name="nonRepeaters">The non repeaters.</param>
+        /// <param name="maxRepetitions">The max repetitions.</param>
+        /// <param name="variables">The variables.</param>
+        /// <param name="privacy">The privacy provider.</param>
+        /// <param name="maxMessageSize">Size of the max message.</param>
+        /// <param name="report">The report.</param>
+        public GetBulkRequestMessage(VersionCode version, int messageId, int requestId, OctetString userName, OctetString contextName, int nonRepeaters, int maxRepetitions, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, ISnmpMessage report)
+            : this(version, messageId, requestId, userName, contextName, nonRepeaters, maxRepetitions, variables, privacy, maxMessageSize, report, SecurityModel.Usm)
+        { 
+        }
 
         /// <summary>
         /// Creates a <see cref="GetBulkRequestMessage"/> with a specific <see cref="Sequence"/>.
