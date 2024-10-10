@@ -5,6 +5,7 @@
     <AssemblyOriginatorKeyFile>sharpsnmplib.tests.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>SharpSnmpLib.Tests.NetStandard</AssemblyName>
     <NoWarn>$(NoWarn);SYSLIB0011</NoWarn>
+    <EnableUnsafeBinaryFormatterSerialization Condition="'$(TargetFramework)'=='net8.0'">true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
   <PropertyGroup>
     <OutputType Condition="'$(TargetFramework)'!='net471'">Exe</OutputType>
@@ -42,6 +43,9 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='net471'">
     <PackageReference Include="System.Net.Sockets" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net8.0'">
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="8.0.0-*" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SharpSnmpLib\SharpSnmpLib.csproj" />
