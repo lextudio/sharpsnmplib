@@ -34,7 +34,7 @@ namespace Lextm.SharpSnmpLib.Security
     [Obsolete("3DES is no longer secure. Please use a more secure provider.")]
     public sealed class TripleDESPrivacyProvider : IPrivacyProvider
     {
-#if NET6_0
+#if NET6_0_OR_GREATER
         /// <summary>
         /// Flag to force using legacy encryption/decryption code on .NET 6.
         /// </summary>
@@ -121,14 +121,14 @@ namespace Lextm.SharpSnmpLib.Security
                 Buffer.BlockCopy(unencryptedData, 0, tmpBuffer, 0, unencryptedData.Length);
                 unencryptedData = tmpBuffer;
             }
-#if NET6_0
+#if NET6_0_OR_GREATER
             return UseLegacy ? LegacyEncrypt(outKey, iv, unencryptedData) : Net6Encrypt(outKey, iv, unencryptedData);
 #else
             return LegacyEncrypt(outKey, iv, unencryptedData);
 #endif
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         internal static byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
         {
             using TripleDES des = TripleDES.Create();
@@ -197,14 +197,14 @@ namespace Lextm.SharpSnmpLib.Security
             var iv = GetIV(key, privacyParameters);
             var outKey = GetKey(key);
 
-#if NET6_0
+#if NET6_0_OR_GREATER
             return UseLegacy ? LegacyDecrypt(outKey, iv, encryptedData) : Net6Decrypt(outKey, iv, encryptedData);
 #else
             return LegacyDecrypt(outKey, iv, encryptedData);
 #endif
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         internal static byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
         {
             using TripleDES des = TripleDES.Create();

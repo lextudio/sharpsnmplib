@@ -23,9 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
-#if NETSTANDARD2_0
 using System.Runtime.InteropServices;
-#endif
 using System.Threading.Tasks;
 using Lextm.SharpSnmpLib.Security;
 
@@ -200,7 +198,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
 #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry)
@@ -233,7 +231,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
 #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver)
@@ -266,7 +264,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
 #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, Socket udpSocket)
@@ -304,7 +302,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
 #endif
         public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
@@ -459,7 +457,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Port number.</param>
         /// <param name="registry">User registry.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
 #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry)
@@ -491,7 +489,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="request">The <see cref="ISnmpMessage"/>.</param>
         /// <param name="receiver">Port number.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
 #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver)
@@ -523,7 +521,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="receiver">Agent.</param>
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
 #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, Socket udpSocket)
@@ -560,7 +558,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="udpSocket">The UDP <see cref="Socket"/> to use to send/receive.</param>
         /// <param name="registry">The user registry.</param>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
 #endif
         public static async Task<ISnmpMessage> GetResponseAsync(this ISnmpMessage request, IPEndPoint receiver, UserRegistry registry, Socket udpSocket)
@@ -645,7 +643,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Tests if running on Mono.
         /// </summary>
         /// <returns></returns>
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
 
         [RequiresUnreferencedCode("IsRunningOnMono is incompatible with trimming.")]
 #endif
@@ -665,7 +663,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET471
                 return !IsRunningOnMono();
-#elif NETSTANDARD2_0
+#elif NET6_0_OR_GREATER
                 return RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 #else
                 return false;
@@ -683,7 +681,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET471
                 return IsRunningOnMono();
-#elif NETSTANDARD2_0
+#elif NET6_0_OR_GREATER
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 #else
                 return false;
@@ -702,10 +700,8 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
 #if NET471
                 return false;
-#elif NETSTANDARD2_0
+#elif NET6_0_OR_GREATER
                 return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
-#elif XAMARINIOS1_0
-                return true;
 #else
                 return false;
 #endif

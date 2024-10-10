@@ -41,15 +41,11 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestIsSupported()
         {
-            #if NET6_0
+#if NET6_0_OR_GREATER
+            Assert.True(DESPrivacyProvider.IsSupported);
+#elif NET471
                 Assert.True(DESPrivacyProvider.IsSupported);
-            #elif NET5_0
-                Assert.True(DESPrivacyProvider.IsSupported);
-            #elif NETCOREAPP3_1
-                Assert.True(DESPrivacyProvider.IsSupported);
-            #elif NET471
-                Assert.True(DESPrivacyProvider.IsSupported);
-            #endif
+#endif
         }
 
         [Fact]
@@ -147,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             Assert.Equal(ByteTool.Convert(expected), ByteTool.Convert(data.ToBytes()));
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         [Theory]
         [MemberData(nameof(Data))]
         public void CompatibilityTest(int length)

@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Unit
 {
     public class Net6MessengerTestFixture
     {
-        #if NET6_0
+#if NET6_0_OR_GREATER
         [Fact]
         public async Task TestGetAsyncCanBeCancelled()
         {
@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Unit
                 }
             }
         }
-        #endif
+#endif
     }
 }
 #pragma warning restore 1591

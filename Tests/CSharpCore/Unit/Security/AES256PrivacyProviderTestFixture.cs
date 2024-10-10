@@ -75,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             Assert.Equal(ByteTool.Convert(original.ToBytes()), ByteTool.Convert(decrypted.ToBytes()));
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         [Theory]
         [MemberData(nameof(Data))]
         public void CompatibilityTest(int length)

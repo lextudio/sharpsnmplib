@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace Lextm.SharpSnmpLib.Messaging
 {
-#if NET6_0
+#if NET6_0_OR_GREATER
     /// <summary>
     /// Discoverer class to discover SNMP agents in the same network.
     /// </summary>

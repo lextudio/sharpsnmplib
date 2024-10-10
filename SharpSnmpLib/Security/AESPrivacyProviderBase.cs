@@ -28,7 +28,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Security.Cryptography;
 
 namespace Lextm.SharpSnmpLib.Security
@@ -52,15 +51,11 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-#if NETSTANDARD2_0
-                return Helper.AESSupported;
-#else
                 return true;
-#endif
             }
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         /// <summary>
         /// Flag to force using legacy encryption/decryption code on .NET 6.
         /// </summary>
@@ -145,14 +140,14 @@ namespace Lextm.SharpSnmpLib.Security
 
             var iv = GetIV(engineBoots, engineTime, privacyParameters);
             var pkey = GetKey(key);
-#if NET6_0
+#if NET6_0_OR_GREATER
             return UseLegacy ? LegacyEncrypt(pkey, iv, unencryptedData) : Net6Encrypt(pkey, iv, unencryptedData);
 #else
             return LegacyEncrypt(pkey, iv, unencryptedData);
 #endif
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         internal static byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
         {
             using Aes aes = Aes.Create();
@@ -245,14 +240,14 @@ namespace Lextm.SharpSnmpLib.Security
             var iv = GetIV(engineBoots, engineTime, privacyParameters);
 
             var finalKey = GetKey(key);
-#if NET6_0
+#if NET6_0_OR_GREATER
             return UseLegacy ? LegacyDecrypt(finalKey, iv, encryptedData) : Net6Decrypt(finalKey, iv, encryptedData);
 #else
             return LegacyDecrypt(finalKey, iv, encryptedData);
 #endif
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         internal static byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
         {
             using Aes aes = Aes.Create();

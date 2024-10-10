@@ -54,7 +54,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
                 new MD5AuthenticationProvider(new OctetString("testpass")));
             Scope scope = new Scope(engineId, OctetString.Empty,
                 new GetRequestPdu(0x3A25,
-                    new List<Variable> {new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0"))}));
+                    new List<Variable> { new Variable(new ObjectIdentifier("1.3.6.1.2.1.1.3.0")) }));
             SecurityParameters parameters = new SecurityParameters(engineId, new Integer32(0x14), new Integer32(0x35),
                 new OctetString("lexmark"), new OctetString(new byte[12]),
                 new OctetString(ByteTool.Convert("00 00 00  01 44 2C A3 B5")));
@@ -67,7 +67,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             Assert.Equal(ByteTool.Convert(original.ToBytes()), ByteTool.Convert(decrypted.ToBytes()));
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         [Theory]
         [MemberData(nameof(Data))]
         public void CompatibilityTest(int length)

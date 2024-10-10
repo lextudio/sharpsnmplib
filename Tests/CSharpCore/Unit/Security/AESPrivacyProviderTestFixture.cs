@@ -45,12 +45,8 @@ namespace Lextm.SharpSnmpLib.Unit.Security
         [Fact]
         public void TestIsSupported()
         {
-#if NET6_0
+#if NET6_0_OR_GREATER
             Assert.True(AESPrivacyProviderBase.IsSupported);
-#elif NET5_0
-                Assert.True(AESPrivacyProviderBase.IsSupported);
-#elif NETCOREAPP3_1
-                Assert.False(AESPrivacyProviderBase.IsSupported);
 #elif NET471
                 Assert.True(AESPrivacyProviderBase.IsSupported);
 #endif
@@ -149,7 +145,7 @@ namespace Lextm.SharpSnmpLib.Unit.Security
             Assert.Equal(recovered_received, recovered_encrypted);
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         [Theory]
         [MemberData(nameof(Data))]
         public void CompatibilityTest(int length)

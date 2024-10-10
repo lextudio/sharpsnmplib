@@ -327,7 +327,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             _bufferSize = udp.ReceiveBufferSize;
-#if NET6_0
+#if NET6_0_OR_GREATER
             var source = new CancellationTokenSource();
             source.CancelAfter(interval);
             try
@@ -354,7 +354,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 // However, the shutdown call is necessary to release the socket binding.
             }
         }
-#if !NET6_0
+#if !NET6_0_OR_GREATER
         private async Task ReceiveAsync(Socket socket)
         {
             while (true)

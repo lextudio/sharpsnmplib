@@ -41,15 +41,11 @@ namespace Lextm.SharpSnmpLib.Security
         {
             get
             {
-#if NETSTANDARD2_0
-                return Helper.DESSupported;
-#else
                 return true;
-#endif
             }
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         /// <summary>
         /// Flag to force using legacy encryption/decryption code on .NET 6.
         /// </summary>
@@ -146,14 +142,14 @@ namespace Lextm.SharpSnmpLib.Security
                 Buffer.BlockCopy(unencryptedData, 0, tmpBuffer, 0, unencryptedData.Length);
                 unencryptedData = tmpBuffer;
             }
-#if NET6_0
+#if NET6_0_OR_GREATER
             return UseLegacy ? LegacyEncrypt(outKey, iv, unencryptedData) : Net6Encrypt(outKey, iv, unencryptedData);
 #else
             return LegacyEncrypt(outKey, iv, unencryptedData);
 #endif
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         internal static byte[] Net6Encrypt(byte[] key, byte[] iv, byte[] unencryptedData)
         {
             using DES des = DES.Create();
@@ -276,14 +272,14 @@ namespace Lextm.SharpSnmpLib.Security
             // .NET implementation only takes an 8 byte key
             var outKey = new byte[8];
             Buffer.BlockCopy(key, 0, outKey, 0, 8);
-#if NET6_0
+#if NET6_0_OR_GREATER
             return Net6Decrypt(outKey, iv, encryptedData);
 #else
             return LegacyDecrypt(outKey, iv, encryptedData);
 #endif
         }
 
-#if NET6_0
+#if NET6_0_OR_GREATER
         internal static byte[] Net6Decrypt(byte[] key, byte[] iv, byte[] encryptedData)
         {
             using DES des = DES.Create();
