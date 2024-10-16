@@ -1,5 +1,5 @@
 rmdir /S /Q bin
-powershell -ExecutionPolicy Bypass -file release.ps1
+pwsh -ExecutionPolicy Bypass -file release.ps1
 IF %ERRORLEVEL% NEQ 0 goto failed
 
 echo succeeded.

@@ -61,7 +61,7 @@
   <ItemGroup Condition="'$(TargetFramework)'=='net471'">
     <Reference Include="System.Configuration" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' ">
-    <Exec Command="powershell -ExecutionPolicy Bypass -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' AND '$(Configuration)' == 'Release' ">
+    <Exec Command="pwsh -ExecutionPolicy Bypass -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" />
   </Target>
 </Project>

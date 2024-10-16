@@ -88,7 +88,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             using var udp = new UdpClient(addressFamily);
             if (addressFamily == AddressFamily.InterNetworkV6)
             {
-                udp.JoinMulticastGroup((IPAddress?)broadcastAddress.Address);
+                udp.JoinMulticastGroup(broadcastAddress.Address);
             }
             else if (addressFamily == AddressFamily.InterNetwork)
             {

@@ -5,7 +5,7 @@ if ($env:CI -eq "true") {
 $cert = Get-ChildItem -Path Cert:\CurrentUser\My -CodeSigningCert | Select-Object -First 1
 if ($null -eq $cert) {
     Write-Host "No code signing certificate found in MY store. Exit."
-    exit 1
+    exit 0
 }
 
 $signtool = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Windows Kits" -Recurse -Filter "signtool.exe" | Select-Object -First 1 -ExpandProperty FullName
