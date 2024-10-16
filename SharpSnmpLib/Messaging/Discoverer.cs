@@ -58,7 +58,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
-        /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
+        /// <remarks><paramref name="broadcastAddress"/> must be configured to a valid multicast address when IPv6 is used. For example, "[ff02::1]:161"</remarks>
         public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
         {
             if (broadcastAddress == null)
@@ -72,11 +72,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var addressFamily = broadcastAddress.AddressFamily;
-            if (addressFamily == AddressFamily.InterNetworkV6)
-            {
-                throw new ArgumentException("IP v6 is not yet supported.", nameof(broadcastAddress));
-            }
-
             byte[] bytes;
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
@@ -91,9 +86,16 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             using var udp = new UdpClient(addressFamily);
+            if (addressFamily == AddressFamily.InterNetworkV6)
+            {
+                udp.JoinMulticastGroup((IPAddress?)broadcastAddress.Address);
+            }
+            else if (addressFamily == AddressFamily.InterNetwork)
+            {
 #if (!CF)
-            udp.EnableBroadcast = true;
+                udp.EnableBroadcast = true;
 #endif
+            }
 #if NET471
             udp.Send(bytes, bytes.Length, broadcastAddress);
 #else
