@@ -426,7 +426,7 @@ namespace Lextm.SharpSnmpLib.Security
             var pkey = AuthenticationProvider.PasswordToKey(secret, engineId);
             if (pkey.Length < MinimumKeyLength)
             {
-                pkey = ExtendShortKey(pkey, engineId, AuthenticationProvider);
+                pkey = TripleDESPrivacyProvider.ExtendShortKey(pkey, engineId, AuthenticationProvider);
             }
 
             return pkey;
@@ -463,42 +463,6 @@ namespace Lextm.SharpSnmpLib.Security
             // Copy salt value to the iv array
             Buffer.BlockCopy(privacyParameters, 0, iv, 8, PrivacyParametersLength);
             return iv;
-        }
-
-        /// <summary>
-        /// Some protocols support a method to extend the encryption or decryption key when supplied key
-        /// is too short.
-        /// </summary>
-        /// <param name="shortKey">Key that needs to be extended</param>
-        /// <param name="engineId">Authoritative engine id. Value is retrieved as part of SNMP v3 discovery procedure</param>
-        /// <param name="authProtocol">Authentication protocol class instance cast as <see cref="IAuthenticationProvider"/></param>
-        /// <returns>Extended key value</returns>
-        internal byte[] ExtendShortKey(byte[] shortKey, byte[] engineId, IAuthenticationProvider authProtocol)
-        {
-            byte[] extKey = new byte[MinimumKeyLength];
-            byte[] lastKeyBuf = new byte[shortKey.Length];
-            Array.Copy(shortKey, lastKeyBuf, shortKey.Length);
-            int keyLen = shortKey.Length > MinimumKeyLength ? MinimumKeyLength : shortKey.Length;
-            Array.Copy(shortKey, extKey, keyLen);
-            while (keyLen < MinimumKeyLength)
-            {
-                byte[] tmpBuf = authProtocol.PasswordToKey(lastKeyBuf, engineId);
-                if (tmpBuf.Length <= (MinimumKeyLength - keyLen))
-                {
-                    Array.Copy(tmpBuf, 0, extKey, keyLen, tmpBuf.Length);
-                    keyLen += tmpBuf.Length;
-                }
-                else
-                {
-                    Array.Copy(tmpBuf, 0, extKey, keyLen, MinimumKeyLength - keyLen);
-                    keyLen += MinimumKeyLength - keyLen;
-                }
-
-                lastKeyBuf = new byte[tmpBuf.Length];
-                Array.Copy(tmpBuf, lastKeyBuf, tmpBuf.Length);
-            }
-
-            return extKey;
-        }
+        }        
     }
 }

@@ -416,7 +416,7 @@ namespace Lextm.SharpSnmpLib.Security
             return encryptionKey;
         }
 
-        private byte[] ExtendShortKey(byte[] shortKey, byte[] engineID, IAuthenticationProvider authProtocol)
+        internal static byte[] ExtendShortKey(byte[] shortKey, byte[] engineID, IAuthenticationProvider authProtocol)
         {
             int length = shortKey.Length;
             byte[] extendedKey = new byte[MinimumKeyLength];
