@@ -5,7 +5,8 @@
     <UseWPF>false</UseWPF>
     <UseWindowsForms>false</UseWindowsForms>
     <!-- Detect SDK version -->
-    <IsNet60Supported Condition="'$(NETCoreSdkVersion)' >= '6.0'">true</IsNet60Supported>
+    <ParsedSdkVersion>$([System.Text.RegularExpressions.Regex]::Replace($(NETCoreSdkVersion), '-.*', ''))</ParsedSdkVersion>
+    <IsNet60Supported Condition="'$(ParsedSdkVersion)' >= '6.0'">true</IsNet60Supported>
     <!-- Only support .NET 6 and .NET Framework 4.7.1 right now. -->
     <TargetFrameworks Condition="'$(IsNet60Supported)' == 'true'">net6.0;net471</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsNet60Supported)' != 'true'">net471</TargetFrameworks>
