@@ -33,7 +33,6 @@ namespace Lextm.SharpSnmpLib.Messaging
     public sealed partial class Discoverer
     {
         private int _active;
-        private int _bufferSize;
         private int _requestId;
         private static readonly UserRegistry Empty = new();
         private readonly IList<Variable> _defaultVariables = new List<Variable> { new(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 })) };
@@ -88,7 +87,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             using var udp = new UdpClient(addressFamily);
             if (addressFamily == AddressFamily.InterNetworkV6)
             {
-                udp.JoinMulticastGroup(broadcastAddress.Address);
+                udp.MulticastLoopback = false;
             }
             else if (addressFamily == AddressFamily.InterNetwork)
             {
@@ -108,12 +107,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            _bufferSize = udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
+            udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
 
 #if ASYNC
-            Task.Factory.StartNew(() => AsyncBeginReceive(udp.Client));
+            Task.Factory.StartNew(() => AsyncBeginReceive(udp));
 #else
-            Task.Factory.StartNew(() => AsyncReceive(udp.Client));
+            Task.Factory.StartNew(() => AsyncReceive(udp));
 #endif
 
             Thread.Sleep(interval);
@@ -198,7 +197,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 #else
 
-        private void AsyncReceive(Socket socket)
+        private void AsyncReceive(UdpClient client)
         {
             while (true)
             {
@@ -210,10 +209,9 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 try
                 {
-                    var buffer = new byte[_bufferSize];
-                    EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-                    var count = socket.ReceiveFrom(buffer, ref remote);
-                    Task.Factory.StartNew(() => HandleMessage(buffer, count, (IPEndPoint)remote));
+                    var remote = new IPEndPoint(IPAddress.Any, 0);
+                    var buffer = client.Receive(ref remote);
+                    Task.Factory.StartNew(() => HandleMessage(buffer, buffer.Length, remote));
                 }
                 catch (SocketException ex)
                 {
@@ -298,11 +296,6 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             var addressFamily = broadcastAddress.AddressFamily;
-            if (addressFamily == AddressFamily.InterNetworkV6)
-            {
-                throw new ArgumentException("IP v6 is not yet supported.", nameof(broadcastAddress));
-            }
-
             byte[] bytes;
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
@@ -316,11 +309,19 @@ namespace Lextm.SharpSnmpLib.Messaging
                 bytes = message.ToBytes();
             }
 
-            using var udp = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
-            udp.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
-            var buffer = new ArraySegment<byte>(bytes);
-            await udp.SendToAsync(buffer, SocketFlags.None, broadcastAddress);
+            using var udp = new UdpClient(addressFamily);
+            if (addressFamily == AddressFamily.InterNetworkV6)
+            {
+                udp.MulticastLoopback = false;
+            }
+            else if (addressFamily == AddressFamily.InterNetwork)
+            {
+#if (!CF)
+                udp.EnableBroadcast = true;
+#endif
+            }
 
+            await udp.SendAsync(bytes, bytes.Length, broadcastAddress);
             var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
             if (activeBefore == Active)
             {
@@ -328,13 +329,12 @@ namespace Lextm.SharpSnmpLib.Messaging
                 return;
             }
 
-            _bufferSize = udp.ReceiveBufferSize;
 #if NET6_0_OR_GREATER
             var source = new CancellationTokenSource();
             source.CancelAfter(interval);
             try
             {
-                await ReceiveAsync(udp, source.Token);
+                await ReceiveAsync(udp.Client, source.Token);
             }
             catch (OperationCanceledException)
             {
@@ -346,18 +346,10 @@ namespace Lextm.SharpSnmpLib.Messaging
                 Task.Delay(interval));
 #endif
             Interlocked.CompareExchange(ref _active, Inactive, Active);
-            try
-            {
-                udp.Shutdown(SocketShutdown.Both);
-            }
-            catch (SocketException)
-            {
-                // This exception is thrown in .NET Core <=2.1.4 on non-Windows systems.
-                // However, the shutdown call is necessary to release the socket binding.
-            }
+            udp.Close();
         }
 #if !NET6_0_OR_GREATER
-        private async Task ReceiveAsync(Socket socket)
+        private async Task ReceiveAsync(UdpClient client)
         {
             while (true)
             {
@@ -369,11 +361,8 @@ namespace Lextm.SharpSnmpLib.Messaging
 
                 try
                 {
-                    EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-
-                    var buffer = new byte[_bufferSize];
-                    var result = await socket.ReceiveMessageFromAsync(new ArraySegment<byte>(buffer), SocketFlags.None, remote);
-                    await Task.Factory.StartNew(() => HandleMessage(buffer, result.ReceivedBytes, (IPEndPoint) result.RemoteEndPoint))
+                    var result = await client.ReceiveAsync();
+                    await Task.Factory.StartNew(() => HandleMessage(result.Buffer, result.Buffer.Length, result.RemoteEndPoint))
                         .ConfigureAwait(false);
                 }
                 catch (SocketException ex)
