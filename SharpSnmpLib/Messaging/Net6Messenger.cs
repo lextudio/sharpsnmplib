@@ -173,6 +173,12 @@ namespace Lextm.SharpSnmpLib.Messaging
             do
             {
                 var seed = data.Item2;
+
+                if (version == VersionCode.V2 && seed?.Data.TypeCode == SnmpType.EndOfMibView)
+                {
+                    break;
+                }
+
                 if (seed == tableV)
                 {
                     data = await HasNextAsync(version, endpoint, community, seed, token).ConfigureAwait(false);
