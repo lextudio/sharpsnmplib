@@ -8,7 +8,7 @@ if ($null -eq $cert) {
     exit 0
 }
 
-$signtool = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Windows Kits" -Recurse -Filter "signtool.exe" | Select-Object -First 1 -ExpandProperty FullName
+$signtool = Get-ChildItem -Path "${env:ProgramFiles(x86)}\Windows Kits", "${env:ProgramFiles(x86)}\Microsoft SDKs" -Recurse -Filter "signtool.exe" | Select-Object -First 1 -ExpandProperty FullName
 Write-host "Signtool path: $signtool"
 if (Test-Path $signtool) {
     Write-Output "sign the assembly"
