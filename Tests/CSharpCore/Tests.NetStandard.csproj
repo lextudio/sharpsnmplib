@@ -16,9 +16,9 @@
     <IsNet90Supported Condition="'$(ParsedSdkVersion)' >= '9.0'">true</IsNet90Supported>
     <!-- Only support .NET 6/8/9 and .NET Framework 4.7.1 right now. -->
     <TargetFrameworks Condition="'$(IsNet60Supported)' == 'true' ">net6.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true' ">($TargetFrameworks);net8.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true' ">($TargetFrameworks);net9.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">($TargetFrameworks);net471</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true' ">$(TargetFrameworks);net8.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true' ">$(TargetFrameworks);net9.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net471</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.resx" />
