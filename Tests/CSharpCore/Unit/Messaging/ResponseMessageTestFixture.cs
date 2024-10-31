@@ -42,7 +42,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             var registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             var messages = MessageFactory.ParseMessages(response.ToBytes(), registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
         }
     }
 }

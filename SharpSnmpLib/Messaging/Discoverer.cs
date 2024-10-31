@@ -330,7 +330,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
 #if NET6_0_OR_GREATER
-            var source = new CancellationTokenSource();
+            using var source = new CancellationTokenSource();
             source.CancelAfter(interval);
             try
             {

@@ -1,4 +1,4 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
@@ -31,6 +31,7 @@
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <AndroidUseIntermediateDesignerFile>False</AndroidUseIntermediateDesignerFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
@@ -58,6 +59,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="../readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='net471'">
     <Reference Include="System.Configuration" />

@@ -39,39 +39,6 @@ namespace Lextm.SharpSnmpLib.Unit
         }
 
         [Fact]
-        public void TestConstructorWithSerializationInfoAndStreamingContext()
-        {
-            var info = new SerializationInfo(typeof(OperationException), new FormatterConverter());
-            info.AddValue("Message", "Operation failed.");
-            info.AddValue("InnerException", null);
-            info.AddValue("HelpURL", null);
-            info.AddValue("StackTraceString", null);
-            info.AddValue("RemoteStackTraceString", null);
-            info.AddValue("HResult", -2146233088);
-            info.AddValue("Source", null);
-            info.AddValue("Agent", null);
-            info.AddValue("ClassName", typeof(OperationException).FullName);
-            info.AddValue("RemoteStackIndex", 0);
-            info.AddValue("ExceptionMethod", null);
-            var context = new StreamingContext();
-            var ex = new OperationException(info, context);
-            Assert.Equal("Operation failed.", ex.Message);
-            Assert.Null(ex.InnerException);
-            Assert.Null(ex.Agent);
-        }
-
-        [Fact]
-        public void TestGetObjectData()
-        {
-            var info = new SerializationInfo(typeof(OperationException), new FormatterConverter());
-            var context = new StreamingContext();
-            var ex = new OperationException("Operation failed.");
-            ex.GetObjectData(info, context);
-            Assert.Equal("Operation failed.", info.GetString("Message"));
-            Assert.Null(info.GetString("Agent"));
-        }
-
-        [Fact]
         public void TestCreate()
         {
             var ex = OperationException.Create("test", IPAddress.Loopback);

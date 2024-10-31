@@ -28,7 +28,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                );
             Assert.Equal(ByteTool.Convert(File.ReadAllBytes(Path.Combine("Resources", "trapv3"))), ByteTool.Convert(trap.ToBytes()));
         }
-        
+
         [Fact]
         public void TestToBytes2()
         {
@@ -85,7 +85,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), privacy);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             ISnmpMessage message = messages[0];
             Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
             Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
@@ -95,7 +95,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal("0000000069D39B2A", message.Parameters.PrivacyParameters.ToHexString());
             Assert.Equal("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.Equal("", message.Scope.ContextName.ToHexString());
-            Assert.Equal(0, message.Scope.Pdu.Variables.Count);
+            Assert.Empty(message.Scope.Pdu.Variables);
             Assert.Equal(1004947569, message.MessageId());
             Assert.Equal(234419641, message.RequestId());
         }

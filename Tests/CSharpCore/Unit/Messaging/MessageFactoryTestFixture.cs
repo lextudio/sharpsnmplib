@@ -52,9 +52,9 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             var users = new UserRegistry();
             users.Add(new User(new OctetString(userName), priv));
             var messages = MessageFactory.ParseMessages(bytes, users);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             var message = messages[0];
-            Assert.Equal(1, message.Variables().Count);
+            Assert.Single(message.Variables());
         }
 
         [Fact]
@@ -68,9 +68,9 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             var users = new UserRegistry();
             users.Add(new User(new OctetString(userName), priv));
             var messages = MessageFactory.ParseMessages(bytes, users);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             var message = messages[0];
-            Assert.Equal(1, message.Variables().Count);
+            Assert.Single(message.Variables());
             Assert.Equal("not in time window", message.Variables()[0].Id.GetErrorMessage());
         }
 
@@ -93,7 +93,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             string bytes = "30 29 02 01 00 04 06 70 75 62 6c 69 63 a0 1c 02 04 4f 89 fb dd" + Environment.NewLine +
                 "02 01 00 02 01 00 30 0e 30 0c 06 08 2b 06 01 02 01 01 05 00 05 00";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             GetRequestMessage m = (GetRequestMessage)messages[0];
             Variable v = m.Variables()[0];
             string i = v.Id.ToString();
@@ -108,7 +108,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             {
                 const string bytes = "30 39 02 01 01 04 06 70 75 62 6C 69 63 A7 2C 02 01 01 02 01 00 02 01 00 30 21 30 0D 06 08 2B 06 01 02 01 01";
                 IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-                Assert.Equal(1, messages.Count);
+                Assert.Single(messages);
             }
             catch (Exception)
             {
@@ -126,7 +126,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                                  "01 00 04 00  04 00 04 00  30 12 04 00  04 00 A0 0C" +
                                  "02 02 2C 6B  02 01 00 02  01 00 30 00";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             Assert.Equal(OctetString.Empty, messages[0].Parameters.UserName);
         }
 
@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             GetRequestMessage get = (GetRequestMessage)messages[0];
             Assert.Equal(27144, get.MessageId());
             //Assert.Equal(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
@@ -171,7 +171,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             var registry = new UserRegistry();
             registry.Add(new OctetString("lexmark"), new DefaultPrivacyProvider(auth));
             var messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             Assert.Equal(SnmpType.Unknown, messages[0].TypeCode());
 
             //registry.Add(new OctetString("lexmark"),
@@ -183,7 +183,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
 
             registry.Add(new OctetString("lexmark"), new DESPrivacyProvider(new OctetString("passtest"), auth));
             messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             GetRequestMessage get = (GetRequestMessage)messages[0];
             Assert.Equal(27801, get.MessageId());
             //Assert.Equal(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
@@ -215,7 +215,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             var registry = new UserRegistry();
             registry.Add(new OctetString("usr-sha-aes"), privacy);
             var messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             GetRequestMessage get = (GetRequestMessage)messages[0];
             Assert.Equal(1828028908, get.MessageId());
             Assert.Equal("usr-sha-aes", get.Community().ToString());
@@ -305,7 +305,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lexli"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("testpass"))));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             GetRequestMessage get = (GetRequestMessage)messages[0];
             Assert.Equal(13633, get.MessageId());
             //Assert.Equal(SecurityLevel.None | SecurityLevel.Reportable, get.Level);
@@ -341,7 +341,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             registry.Add(new OctetString("usr-sha-aes"), privacy);
             var messages = MessageFactory.ParseMessages(bytes, registry);
             var message = messages[0];
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             Assert.Equal(SnmpType.GetRequestPdu, message.TypeCode());
         }
 
@@ -371,7 +371,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             registry.Add(new OctetString("usr-sha-aes"), privacy);
             var messages = MessageFactory.ParseMessages(bytes, registry);
             var message = messages[0];
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             Assert.Equal(SnmpType.ResponsePdu, message.TypeCode());
         }
 
@@ -386,7 +386,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             ResponsePdu response = (ResponsePdu)pdu;
             Assert.Equal(Integer32.Zero, response.ErrorStatus);
             Assert.Equal(0, response.ErrorIndex.ToInt32());
-            Assert.Equal(1, response.Variables.Count);
+            Assert.Single(response.Variables);
             Variable v = response.Variables[0];
             Assert.Equal(new uint[] { 1, 3, 6, 1, 2, 1, 1, 6, 0 }, v.Id.ToNumerical());
             Assert.Equal("Shanghai", v.Data.ToString());
@@ -407,7 +407,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("neither"), DefaultPrivacyProvider.DefaultPair);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             ISnmpMessage message = messages[0];
             Assert.Equal("040D80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
             Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
@@ -444,12 +444,12 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                                  "2B 06 01 02  01 01 03 00  43 03 05 E7  14";
             UserRegistry registry = new UserRegistry();
             var messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             Assert.Equal(SnmpType.Unknown, messages[0].TypeCode());
 
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             ISnmpMessage message = messages[0];
             Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
             Assert.Equal(5, message.Parameters.EngineBoots.ToInt32());
@@ -472,12 +472,12 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                                  "01 00 02 01  00 30 11 30  0F 06 0A 2B  06 01 06 03" +
                                  "0F 01 01 04  00 41 01 03";
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, new UserRegistry());
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             Assert.Equal(5, messages[0].Parameters.EngineBoots.ToInt32());
             Assert.Equal("80001F8880E9630000D61FF449", messages[0].Parameters.EngineId.ToHexString());
             Assert.Equal(3867, messages[0].Parameters.EngineTime.ToInt32());
             Assert.Equal(ErrorCode.NoError, messages[0].Pdu().ErrorStatus.ToErrorCode());
-            Assert.Equal(1, messages[0].Pdu().Variables.Count);
+            Assert.Single(messages[0].Pdu().Variables);
 
             Variable v = messages[0].Pdu().Variables[0];
             Assert.Equal("1.3.6.1.6.3.15.1.1.4.0", v.Id.ToString());
@@ -496,7 +496,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), DefaultPrivacyProvider.DefaultPair);
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             ISnmpMessage message = messages[0];
             Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
             Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
@@ -518,7 +518,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             ISnmpMessage message = messages[0];
             Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
             Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
@@ -540,7 +540,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             SHA1AuthenticationProvider authen = new SHA1AuthenticationProvider(new OctetString("testpass"));
             registry.Add(new OctetString("test"), new DefaultPrivacyProvider(authen));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             ISnmpMessage message = messages[0];
             Assert.Equal("80001299030005B706CF69", message.Parameters.EngineId.ToHexString());
             Assert.Equal(41, message.Parameters.EngineBoots.ToInt32());
@@ -569,7 +569,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             UserRegistry registry = new UserRegistry();
             registry.Add(new OctetString("lextm"), new DESPrivacyProvider(new OctetString("privacyphrase"), new MD5AuthenticationProvider(new OctetString("authentication"))));
             IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
-            Assert.Equal(1, messages.Count);
+            Assert.Single(messages);
             ISnmpMessage message = messages[0];
             Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
             Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
@@ -579,7 +579,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             Assert.Equal("0000000069D39B2A", message.Parameters.PrivacyParameters.ToHexString());
             Assert.Equal("", message.Scope.ContextEngineId.ToHexString()); // SNMP#NET returns string.Empty here.
             Assert.Equal("", message.Scope.ContextName.ToHexString());
-            Assert.Equal(0, message.Scope.Pdu.Variables.Count);
+            Assert.Empty(message.Scope.Pdu.Variables);
             Assert.Equal(1004947569, message.MessageId());
             Assert.Equal(234419641, message.RequestId());
         }

@@ -16,7 +16,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             ng.SetSalt(0);
             var list = Enumerable.Range(1, count).AsParallel().Select(x => ng.NextId);
             var dupes = list.GroupBy(x => x).Where(g => g.Count() > 1).Select(x => x.Key);
-            Assert.Equal(0, dupes.Count());
+            Assert.Empty(dupes);
         }
 
         //[Theory]

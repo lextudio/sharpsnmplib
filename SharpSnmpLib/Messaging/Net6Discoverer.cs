@@ -23,9 +23,9 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 
+#if NET6_0_OR_GREATER
 namespace Lextm.SharpSnmpLib.Messaging
 {
-#if NET6_0_OR_GREATER
     /// <summary>
     /// Discoverer class to discover SNMP agents in the same network.
     /// </summary>
@@ -233,5 +233,5 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
         }
     }
-#endif
 }
+#endif

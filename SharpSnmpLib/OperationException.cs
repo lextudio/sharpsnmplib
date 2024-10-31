@@ -72,7 +72,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="info">Info</param>
         /// <param name="context">Context</param>
-       internal protected OperationException(SerializationInfo info, StreamingContext context)
+        protected OperationException(SerializationInfo info, StreamingContext context)
            : base(info, context)
         {
             var content = info.GetString("Agent");
