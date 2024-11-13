@@ -6,10 +6,9 @@
     <UseWindowsForms>false</UseWindowsForms>
     <!-- Detect SDK version -->
     <ParsedSdkVersion>$([System.Text.RegularExpressions.Regex]::Replace($(NETCoreSdkVersion), '-.*', ''))</ParsedSdkVersion>
-    <IsNet60Supported Condition="'$(ParsedSdkVersion)' >= '6.0'">true</IsNet60Supported>
-    <!-- Only support .NET 6 and .NET Framework 4.7.1 right now. -->
-    <TargetFrameworks Condition="'$(IsNet60Supported)' == 'true'">net6.0;net471</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsNet60Supported)' != 'true'">net471</TargetFrameworks>
+    <IsNet80Supported Condition="'$(ParsedSdkVersion)' >= '8.0'">true</IsNet80Supported>
+    <!-- Only support .NET 8 and .NET Framework 4.7.1 right now. -->
+    <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true'">net8.0;net471</TargetFrameworks>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -40,7 +39,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <DebugType>portable</DebugType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <GitVersionTargetFramework>net6.0</GitVersionTargetFramework>
+    <GitVersionTargetFramework>net8.0</GitVersionTargetFramework>
   </PropertyGroup>
   <PropertyGroup>
     <NoWarn>S5547;S907;S1133;S101;S1135</NoWarn>

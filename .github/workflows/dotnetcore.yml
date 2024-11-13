@@ -13,8 +13,8 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
-          6.0.x
           8.0.x
+          9.0.x
     - name: Build
       shell: bash
       run: |
@@ -36,8 +36,8 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
-          6.0.x
           8.0.x
+          9.0.x
     - name: Build
       shell: bash
       run: |
@@ -60,8 +60,8 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
-          6.0.x
           8.0.x
+          9.0.x
     - name: Build
       shell: cmd
       run: build.release.bat
@@ -70,7 +70,7 @@ jobs:
       run: |
         dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
         dotnet tool install --global dotnet-reportgenerator-globaltool
-        reportgenerator -reports:${{ github.workspace }}\Tests\CSharpCore\coverage.net6.0.xml -targetdir:${{ github.workspace }}\TestResults -reporttypes:lcov
+        reportgenerator -reports:${{ github.workspace }}\Tests\CSharpCore\coverage.net8.0.xml -targetdir:${{ github.workspace }}\TestResults -reporttypes:lcov
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@v2
       with:
