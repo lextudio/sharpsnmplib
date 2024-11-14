@@ -17,6 +17,7 @@
     <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true' ">net8.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true' ">$(TargetFrameworks);net9.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net471</TargetFrameworks>
+    <TestTfmsInParallel>false</TestTfmsInParallel>
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="**\*.resx" />
