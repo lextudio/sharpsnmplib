@@ -197,7 +197,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             using var socket = receiver.GetSocket();
-            return (ReportMessage)_discovery.GetResponse(timeout, receiver, Empty, socket);
+            var response = _discovery.GetResponse(timeout, receiver, Empty, socket);
+
+            try
+            {
+                return (ReportMessage)response;
+            }
+            catch
+            {
+                //The cast was not possible with a system that needed contextname=public
+                return new ReportMessage(response.Version, response.Header, response.Parameters, response.Scope, response.Privacy, response?.ToBytes());
+            }
         }
 
         /// <summary>
