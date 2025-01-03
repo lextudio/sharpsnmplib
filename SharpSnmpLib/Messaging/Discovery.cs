@@ -57,8 +57,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="requestId">The request id.</param>
         /// <param name="messageId">The message id.</param>
         /// <param name="maxMessageSize">The max size of message.</param>
-        public Discovery(int messageId, int requestId, int maxMessageSize)
+        /// <param name="contextName">The optional Context Name.</param>
+        public Discovery(int messageId, int requestId, int maxMessageSize, OctetString? contextName = null)
         {
+            if (contextName == null)
+                contextName = OctetString.Empty;
+
             _discovery = new GetRequestMessage(
                 VersionCode.V3,
                 new Header(
@@ -68,7 +72,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                 DefaultSecurityParameters,
                 new Scope(
                     OctetString.Empty,
-                    OctetString.Empty,
+                    contextName,
                     new GetRequestPdu(requestId, new List<Variable>())),
                 DefaultPrivacyProvider.DefaultPair,
                 null);
@@ -81,8 +85,12 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="messageId">The message id.</param>
         /// <param name="maxMessageSize">The max size of message.</param>
         /// <param name="type">Message type.</param>
-        public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type)
+        /// <param name="contextName">The optional Context Name.</param>
+        public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type, OctetString? contextName = null)
         {
+            if (contextName == null)
+                contextName = OctetString.Empty;
+
             switch (type)
             {
                 case SnmpType.GetRequestPdu:
@@ -96,7 +104,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             DefaultSecurityParameters,
                             new Scope(
                             OctetString.Empty,
-                            OctetString.Empty,
+                            contextName,
                             new GetRequestPdu(requestId, new List<Variable>())),
                             DefaultPrivacyProvider.DefaultPair,
                             null);
@@ -114,7 +122,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             DefaultSecurityParameters,
                             new Scope(
                             OctetString.Empty,
-                            OctetString.Empty,
+                            contextName,
                             new GetNextRequestPdu(requestId, new List<Variable>())),
                             DefaultPrivacyProvider.DefaultPair,
                             null);
@@ -132,7 +140,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             DefaultSecurityParameters,
                             new Scope(
                             OctetString.Empty,
-                            OctetString.Empty,
+                            contextName,
                             new GetBulkRequestPdu(requestId, 0, 0, new List<Variable>())),
                             DefaultPrivacyProvider.DefaultPair,
                             null);
@@ -150,7 +158,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             DefaultSecurityParameters,
                             new Scope(
                             OctetString.Empty,
-                            OctetString.Empty,
+                            contextName,
                             new SetRequestPdu(requestId, new List<Variable>())),
                             DefaultPrivacyProvider.DefaultPair,
                             null);
@@ -168,7 +176,7 @@ namespace Lextm.SharpSnmpLib.Messaging
                             DefaultSecurityParameters,
                             new Scope(
                             OctetString.Empty,
-                            OctetString.Empty,
+                            contextName,
                             new InformRequestPdu(requestId)),
                             DefaultPrivacyProvider.DefaultPair,
                             null);

@@ -1205,10 +1205,11 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// Returns a new discovery request.
         /// </summary>
         /// <param name="type">Message type.</param>
+        /// <param name="contextName">The optional context name.</param>
         /// <returns></returns>
-        public static Discovery GetNextDiscovery(SnmpType type)
+        public static Discovery GetNextDiscovery(SnmpType type, OctetString? contextName = null)
         {
-            return new Discovery(NextMessageId, NextRequestId, MaxMessageSize, type);
+            return new Discovery(NextMessageId, NextRequestId, MaxMessageSize, type, contextName);
         }
 
         /// <summary>

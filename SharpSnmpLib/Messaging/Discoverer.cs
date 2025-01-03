@@ -57,8 +57,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
+        /// <param name="contextName">The optional Context Name.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be configured to a valid multicast address when IPv6 is used. For example, "[ff02::1]:161"</remarks>
-        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, OctetString? contextName = null)
         {
             if (broadcastAddress == null)
             {
@@ -75,7 +76,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize, contextName);
                 bytes = discovery.ToBytes();
             }
             else
@@ -282,8 +283,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
+        /// <param name="contextName">The optional context name.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, OctetString? contextName = null)
         {
             if (broadcastAddress == null)
             {
@@ -300,7 +302,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize, contextName);
                 bytes = discovery.ToBytes();
             }
             else

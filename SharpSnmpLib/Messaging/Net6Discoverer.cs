@@ -38,8 +38,9 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="token">The cancellation token.</param>
+        /// <param name="contextName">The optional context name.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, CancellationToken token)
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, CancellationToken token, OctetString? contextName = null)
         {
             if (broadcastAddress == null)
             {
@@ -61,7 +62,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize, contextName);
                 bytes = discovery.ToBytes();
             }
             else
@@ -141,7 +142,7 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="community">The community.</param>
         /// <param name="token">The cancellation token.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, CancellationToken token)
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, CancellationToken token, OctetString? contextName = null)
         {
             if (broadcastAddress == null)
             {
@@ -158,7 +159,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize, contextName);
                 bytes = discovery.ToBytes();
             }
             else
