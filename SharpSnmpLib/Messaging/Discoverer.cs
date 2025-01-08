@@ -57,9 +57,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
+        /// <remarks><paramref name="broadcastAddress"/> must be configured to a valid multicast address when IPv6 is used. For example, "[ff02::1]:161"</remarks>
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
+        {
+            Discover(version, broadcastAddress, community, interval, OctetString.Empty);
+        }
+
+        /// <summary>
+        /// Discovers agents of the specified version in a specific time interval.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="broadcastAddress">The broadcast address.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <param name="contextName">The optional Context Name.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be configured to a valid multicast address when IPv6 is used. For example, "[ff02::1]:161"</remarks>
-        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, OctetString? contextName = null)
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, OctetString contextName)
         {
             if (broadcastAddress == null)
             {
@@ -283,9 +296,22 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <param name="broadcastAddress">The broadcast address.</param>
         /// <param name="community">The community.</param>
         /// <param name="interval">The discovering time interval, in milliseconds.</param>
+        /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
+        {
+            await DiscoverAsync(version, broadcastAddress, community, interval, OctetString.Empty);
+        }
+
+        /// <summary>
+        /// Discovers agents of the specified version in a specific time interval.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="broadcastAddress">The broadcast address.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="interval">The discovering time interval, in milliseconds.</param>
         /// <param name="contextName">The optional context name.</param>
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, OctetString? contextName = null)
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval, OctetString contextName)
         {
             if (broadcastAddress == null)
             {
