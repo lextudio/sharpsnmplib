@@ -35,7 +35,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <IsTrimmable>true</IsTrimmable>
+    <IsTrimmable Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND '$(TargetFrameworkVersion)' >= '8.0'">true</IsTrimmable>
     <IncludeSymbols>true</IncludeSymbols>
     <DebugType>portable</DebugType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
