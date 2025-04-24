@@ -151,7 +151,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         }
 
         [Fact]
-        public void TestGetRequestV3AuthPriv()
+        public void TestGetRequestV3AuthPriv_MD5_DES()
         {
             if (!DESPrivacyProvider.IsSupported)
             {
@@ -194,7 +194,7 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
         }
 
         [Fact]
-        public void TestGetRequestV3AuthPrivAES()
+        public void TestGetRequestV3AuthPriv_SHA1_AES()
         {
             if (!AESPrivacyProviderBase.IsSupported)
             {
