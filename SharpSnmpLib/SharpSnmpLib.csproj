@@ -66,6 +66,12 @@
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' AND '$(Configuration)' == 'Release' ">
-    <Exec Command="pwsh -ExecutionPolicy Bypass -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" />
+    <Exec Command="pwsh -ExecutionPolicy Bypass -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" 
+          IgnoreExitCode="true" 
+          StandardOutputImportance="High" 
+          StandardErrorImportance="High">
+      <Output TaskParameter="ExitCode" PropertyName="SignExitCode" />
+    </Exec>
+    <Warning Text="Signing assembly failed with exit code $(SignExitCode)." Condition="'$(SignExitCode)' != '0'" />
   </Target>
 </Project>
