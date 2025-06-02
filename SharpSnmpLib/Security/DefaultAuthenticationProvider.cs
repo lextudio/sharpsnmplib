@@ -43,16 +43,7 @@ namespace Lextm.SharpSnmpLib.Security
 
         #region IAuthenticationProvider Members
 
-        /// <summary>
-        /// Computes the hash.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="header">The header.</param>
-        /// <param name="parameters">The parameters.</param>
-        /// <param name="data">The scope data.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        /// <param name="length">The length bytes.</param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public OctetString ComputeHash(VersionCode version, ISegment header, SecurityParameters parameters, ISnmpData data, IPrivacyProvider privacy, byte[]? length)
         {
             if (header == null)
@@ -81,6 +72,8 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Computes the hash.
         /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="engineId">The engine identifier.</param>
         /// <returns></returns>
         public OctetString ComputeHash(byte[] buffer, OctetString engineId)
         {
@@ -103,12 +96,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <value>The clean digest.</value>
         public OctetString CleanDigest => OctetString.Empty;
 
-        /// <summary>
-        /// Converts password to key.
-        /// </summary>
-        /// <param name="password"></param>
-        /// <param name="engineId"></param>
-        /// <returns></returns>
+        /// <inheritdoc />
         public byte[] PasswordToKey(byte[] password, byte[] engineId)
         {
             if (password == null)

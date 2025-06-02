@@ -178,7 +178,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="string"/> that represents this <see cref="InformRequestPdu"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="string"/> that represents this <see cref="InformRequestPdu"/>.</returns>
         public override string ToString()
         {
             return string.Format(

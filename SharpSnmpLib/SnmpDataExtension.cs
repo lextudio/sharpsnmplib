@@ -28,9 +28,11 @@ namespace Lextm.SharpSnmpLib
     public static class SnmpDataExtension
     {
         /// <summary>
-        /// Converts to byte format.
+        /// Converts <see cref="ISnmpData"/> to a byte array.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="data">The SNMP data.</param>
+        /// <returns>
+        /// A byte array representing the SNMP data.</returns>
         public static byte[] ToBytes(this ISnmpData data)
         {
             if (data == null)

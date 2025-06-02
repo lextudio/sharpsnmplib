@@ -28,13 +28,15 @@ namespace Lextm.SharpSnmpLib
         /// Gets the data.
         /// </summary>
         /// <param name="version">The version.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// The data, or <c>null</c> if not available.</returns> 
         ISnmpData? GetData(VersionCode version);
 
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="Sequence"/> object representing this segment.</returns>
         Sequence ToSequence();
     }
 }

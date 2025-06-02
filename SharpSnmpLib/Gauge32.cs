@@ -102,7 +102,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="UInt32"/> that represents a <see cref="Gauge32"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="UInt32"/> that represents a <see cref="Gauge32"/>.</returns>
         [CLSCompliant(false)]
         public uint ToUInt32()
         {
@@ -112,7 +112,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Gauge32"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="String"/> that represents this <see cref="Gauge32"/>.</returns>
         public override string ToString()
         {
             return ToUInt32().ToString(CultureInfo.InvariantCulture);

@@ -107,7 +107,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Converts to <see cref="Sequence"/> object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// The <see cref="Sequence"/> object.
+        /// </returns>
         public Sequence ToSequence()
         {
             return _container ??= new Sequence(null, _messageId, _maxSize, _messageId == null ? null : _flags, _securityModel);
@@ -117,7 +119,9 @@ namespace Lextm.SharpSnmpLib
         /// Gets the data.
         /// </summary>
         /// <param name="version">The version.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// The <see cref="ISnmpData"/> object.
+        /// </returns>
         public ISnmpData? GetData(VersionCode version)
         {
             return version == VersionCode.V3 ? ToSequence() : null;

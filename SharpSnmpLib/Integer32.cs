@@ -120,7 +120,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns an <see cref="Int32"/> that represents this <see cref="Integer32"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// An <see cref="Int32"/> that represents this <see cref="Integer32"/>.
+        /// </returns>
         public int ToInt32()
         {
             return _int;
@@ -129,7 +131,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Converts to <see cref="ErrorCode"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// An <see cref="ErrorCode"/> that represents this <see cref="Integer32"/>.
+        /// </returns>
         public ErrorCode ToErrorCode()
         {
             if (_int > 19 || _int < 0)
@@ -143,7 +147,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Integer32"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="String"/> that represents this <see cref="Integer32"/>.
+        /// </returns>
         public override string ToString()
         {
             return _int.ToString(CultureInfo.InvariantCulture);

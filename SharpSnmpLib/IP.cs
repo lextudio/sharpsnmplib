@@ -202,7 +202,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="IP"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="String"/> that represents this <see cref="IP"/>.</returns>
         public override string ToString()
         {
             return $"{_ip[0]}.{_ip[1]}.{_ip[2]}.{_ip[3]}";

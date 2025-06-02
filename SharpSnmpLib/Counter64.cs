@@ -128,7 +128,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="UInt64"/> that represents a <see cref="Counter64"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="UInt64"/> that represents a <see cref="Counter64"/>.</returns>
         [CLSCompliant(false)]
         public ulong ToUInt64()
         {
@@ -138,7 +138,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="Counter64"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="String"/> that represents this <see cref="Counter64"/>.</returns>
         public override string ToString()
         {
             return ToUInt64().ToString(CultureInfo.InvariantCulture);

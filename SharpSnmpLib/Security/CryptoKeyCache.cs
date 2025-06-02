@@ -29,6 +29,7 @@ namespace Lextm.SharpSnmpLib.Security
             /// <summary>
             /// Default ctor initializes EngineIdCache
             /// </summary>
+            /// <param name="capacity">Capacity of the cache</param>
             public EngineIdCache(int capacity)
             {
                 _engineIdCache = new Cache<string, byte[]>(capacity);

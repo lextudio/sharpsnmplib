@@ -143,7 +143,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="String"/> that represents this <see cref="NoSuchInstance"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="String"/> that represents this <see cref="NoSuchInstance"/>.</returns>
         public override string ToString()
         {
             return "NoSuchInstance";

@@ -37,6 +37,7 @@ namespace Lextm.SharpSnmpLib.Security
         /// <summary>
         /// Converts to <see cref="Levels"/>.
         /// </summary>
+        /// <param name="privacy">The privacy provider.</param>
         /// <returns>Levels.</returns>
         public static Levels ToSecurityLevel(this IPrivacyProvider privacy)
         {

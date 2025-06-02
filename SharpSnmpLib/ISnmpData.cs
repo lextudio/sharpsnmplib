@@ -53,7 +53,8 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Returns a <see cref="String"/> that represents this object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="String"/> that represents this object.</returns>
         string ToString();
     }
 }

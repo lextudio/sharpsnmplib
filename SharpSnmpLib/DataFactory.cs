@@ -41,7 +41,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ISnmpData"/> instance from buffer.
         /// </summary>
         /// <param name="buffer">Buffer</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="ISnmpData"/> instance created from the specified buffer.</returns>
         public static ISnmpData CreateSnmpData(byte[] buffer)
         {
             if (buffer == null)
@@ -57,7 +57,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="stream">Stream.</param>
         /// <param name="type">Type code.</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="ISnmpData"/> instance created from the specified stream and type code.</returns>
         public static ISnmpData CreateSnmpData(int type, Stream stream)
         {
             if (stream == null)
@@ -115,7 +115,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="buffer">Buffer</param>
         /// <param name="index">Index</param>
         /// <param name="count">Count</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="ISnmpData"/> instance created from the specified buffer, index, and count.</returns>
         public static ISnmpData CreateSnmpData(byte[] buffer, int index, int count)
         {
             if (buffer == null)
@@ -131,7 +131,7 @@ namespace Lextm.SharpSnmpLib
         /// Creates an <see cref="ISnmpData"/> instance from stream.
         /// </summary>
         /// <param name="stream">Stream</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="ISnmpData"/> instance created from the specified stream.</returns>
         public static ISnmpData CreateSnmpData(Stream stream)
         {
             if (stream == null)
