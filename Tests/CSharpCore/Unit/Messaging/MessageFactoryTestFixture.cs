@@ -13,6 +13,7 @@ using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
 using Xunit;
 using System.IO;
+using System.Net.Security;
 
 #pragma warning disable 1591, 0618
 namespace Lextm.SharpSnmpLib.Unit.Messaging
@@ -278,6 +279,19 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
                 "08 45 63 3D EA A9 43 5E 0E B3 5D 29 91 92 6A 4E " +
                 "AF 9D D0 75 DB 6B AC 3D A3 1B 10 5C 9F 50 13 A6 " +
                 "01 5D 01 F1 F4 EF 70 53 CC", output);
+        }
+
+        [Fact]
+        public void TestGetRequestV3AuthPriv_MD5_3DES()
+        {
+            const string bytes = "30 81 9A 02 01 03 30 11 02 04 16 39 99 3C 02 03 00 FF E3 04 01 07 02 01 03 04 40 30 3E 04 0E 80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC 02 01 00 02 03 75 6B 5D 04 0C 75 73 72 2D 6D 64 35 2D 33 64 65 73 04 0C 88 3A 31 F2 4D FA 37 1D 40 43 51 EC 04 08 00 00 00 00 3A 90 A4 49 04 40 77 0E B3 60 5E 97 7B 53 3E 21 FD B1 74 6B 73 CF 8A AF C1 14 0B C5 AA EF 2C A3 4F 5E FF 07 BD 37 AF 14 64 91 1B AB 23 E5 C8 52 8E 64 0F FF 67 A3 CB 6D 68 0B 96 67 C5 79 93 AF 02 B2 02 CD B5 CF";
+            var auth = new MD5AuthenticationProvider(new OctetString("authkey1"));
+            var privacy = new TripleDESPrivacyProvider(new OctetString("privkey1"), auth);
+
+            var registry = new UserRegistry();
+            registry.Add(new OctetString("usr-md5-3des"), privacy);
+            var messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.Single(messages);
         }
 
         [Fact]
@@ -592,6 +606,117 @@ namespace Lextm.SharpSnmpLib.Unit.Messaging
             var bytes = ByteTool.Convert(data);
             var exception = Assert.Throws<SnmpException>(() => MessageFactory.ParseMessages(bytes, new UserRegistry()));
             Assert.Contains($"Byte length cannot be 0.", exception.InnerException.Message);
+        }
+
+        [Fact]
+        public void TestIsInvalidWithWrongPassword()
+        {
+            byte[] bytes = File.ReadAllBytes(Path.Combine("Resources", "trapv3auth"));
+
+            // Create registry with a user that has the wrong authentication password
+            UserRegistry registry = new UserRegistry();
+            registry.Add(new OctetString("lextm"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("wrongpassword"))));
+
+            // Parse the message with the wrong password
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.Single(messages);
+            ISnmpMessage message = messages[0];
+
+            // Verify the message was parsed but the IsInvalid flag was set due to hash verification failure
+            Assert.Equal("lextm", message.Parameters.UserName.ToString());
+            Assert.True(message.Parameters.IsInvalid, "IsInvalid flag should be true when authentication fails");
+
+            // Verify correct message properties despite invalid authentication
+            Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.Equal(0, message.Parameters.EngineBoots.ToInt32());
+            Assert.Equal(0, message.Parameters.EngineTime.ToInt32());
+            Assert.Equal("84433969457707152C289A3E", message.Parameters.AuthenticationParameters.ToHexString());
+        }
+
+        [Fact]
+        public void TestIsInvalidWithCorrectPassword()
+        {
+            byte[] bytes = File.ReadAllBytes(Path.Combine("Resources", "trapv3auth"));
+
+            // Create registry with a user that has the correct authentication password
+            UserRegistry registry = new UserRegistry();
+            registry.Add(new OctetString("lextm"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("authentication"))));
+
+            // Parse the message with the correct password
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.Single(messages);
+            ISnmpMessage message = messages[0];
+
+            // The message should be valid when the correct password is used
+            Assert.Equal("lextm", message.Parameters.UserName.ToString());
+            Assert.False(message.Parameters.IsInvalid, "IsInvalid flag should be false when authentication succeeds");
+
+            // Verify correct message properties with valid authentication
+            Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+            Assert.Equal("84433969457707152C289A3E", message.Parameters.AuthenticationParameters.ToHexString());
+        }
+
+        [Fact]
+        public void TestIsInvalidWithSHA1Authentication()
+        {
+            byte[] bytes = File.ReadAllBytes(Path.Combine("Resources", "v3authNoPriv_BER_Issue"));
+
+            // Test with wrong password
+            UserRegistry registry = new UserRegistry();
+            SHA1AuthenticationProvider wrongAuth = new SHA1AuthenticationProvider(new OctetString("wrongpassword"));
+            registry.Add(new OctetString("test"), new DefaultPrivacyProvider(wrongAuth));
+
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.Single(messages);
+            ISnmpMessage message = messages[0];
+
+            // Verify the IsInvalid flag is set when SHA1 authentication fails
+            Assert.Equal("test", message.Parameters.UserName.ToString());
+            Assert.True(message.Parameters.IsInvalid, "IsInvalid flag should be true when SHA1 authentication fails");
+
+            // Now test with correct password
+            registry = new UserRegistry();
+            SHA1AuthenticationProvider correctAuth = new SHA1AuthenticationProvider(new OctetString("testpass"));
+            registry.Add(new OctetString("test"), new DefaultPrivacyProvider(correctAuth));
+
+            messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.Single(messages);
+            message = messages[0];
+
+            // The IsInvalid flag should be false when using correct password
+            Assert.False(message.Parameters.IsInvalid, "IsInvalid flag should be false when SHA1 authentication succeeds");
+        }
+
+        [Fact]
+        public void TestIsInvalidCanBeCheckedByApplication()
+        {
+            byte[] bytes = File.ReadAllBytes(Path.Combine("Resources", "trapv3auth"));
+
+            // Create registry with a user that has the wrong authentication password
+            UserRegistry registry = new UserRegistry();
+            registry.Add(new OctetString("lextm"), new DefaultPrivacyProvider(new MD5AuthenticationProvider(new OctetString("wrongpassword"))));
+
+            // Parse the message with the wrong password
+            IList<ISnmpMessage> messages = MessageFactory.ParseMessages(bytes, registry);
+            Assert.Single(messages);
+            ISnmpMessage message = messages[0];
+
+            // This demonstrates how an application can check the IsInvalid flag to detect auth failures
+            if (message.Parameters.IsInvalid)
+            {
+                // The application can log or handle the authentication failure here,
+                // but still has access to the message content for inspection
+                Assert.Equal("lextm", message.Parameters.UserName.ToString());
+                Assert.Equal("80001F8880E9630000D61FF449", message.Parameters.EngineId.ToHexString());
+
+                // In real-world applications, you would typically reject the message or log the authentication failure
+                // Rather than accepting the potentially tampered contents
+            }
+            else
+            {
+                // Should not reach here
+                Assert.True(message.Parameters.IsInvalid, "Authentication should have failed with wrong password");
+            }
         }
     }
 }
