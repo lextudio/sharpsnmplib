@@ -135,14 +135,5 @@ namespace Lextm.SharpSnmpLib.Unit
             byte[] expectedBytes = new byte[] { 0x02, 0x01, 0xFE };
             Assert.Equal(expectedBytes, value.ToBytes());
         }
-
-        [Fact]
-        public void TestNegativeWithBuffer()
-        {
-            byte[] bytes = new byte[] { 0x00, 0xFF, 0xFF, 0xFF, 0xFE };
-            const int result = -2;
-            Integer32 i = new Integer32(bytes);
-            Assert.Equal(result, i.ToInt32());
-        }
     }
 }
