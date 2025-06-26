@@ -97,7 +97,12 @@ namespace Lextm.SharpSnmpLib
 
             if (length.Item1 > 4)
             {
-                throw new ArgumentException("Truncation error for 32-bit integer coding.", nameof(length));
+                if (length.Item1 != 5 || stream.ReadByte() != 0x00)
+                {
+                    throw new ArgumentException("Truncation error for 32-bit integer coding.", nameof(length));
+                }
+
+                length = new Tuple<int, byte[]>(length.Item1 - 1, [(byte)(length.Item2.Length - 1)]);
             }
 
             _raw = new byte[length.Item1];

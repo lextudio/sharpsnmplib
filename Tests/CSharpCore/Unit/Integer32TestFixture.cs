@@ -27,6 +27,7 @@ namespace Lextm.SharpSnmpLib.Unit
             Assert.Throws<ArgumentException>(() => new Integer32(new Tuple<int, byte[]>(6, new byte[] { 6 }), new MemoryStream()));
             Assert.Throws<ArgumentNullException>(() => new Integer32(6).AppendBytesTo(null));
             Assert.Throws<ArgumentNullException>(() => new Integer32(null, new MemoryStream()));
+            Assert.Throws<ArgumentException>(() => new Integer32(new Tuple<int, byte[]>(5, new byte[] { 5 }), new MemoryStream(new byte[] { 0x01, 0xFF, 0xFF, 0xFF, 0xFE })));
         }
 
         [Fact]
@@ -119,6 +120,29 @@ namespace Lextm.SharpSnmpLib.Unit
             var result = DataFactory.CreateSnmpData(i.ToBytes());
             Assert.Equal(SnmpType.Integer32, result.TypeCode);
             Assert.Equal(-250, ((Integer32)result).ToInt32());
+        }
+
+        [Fact]
+        public void TestNegativeToBytes()
+        {
+            const int result = -2;
+            Integer32 i = new Integer32(result);
+            Assert.Equal(result, i.ToInt32());
+
+            var value = DataFactory.CreateSnmpData(i.ToBytes());
+            Assert.Equal(SnmpType.Integer32, value.TypeCode);
+
+            byte[] expectedBytes = new byte[] { 0x02, 0x01, 0xFE };
+            Assert.Equal(expectedBytes, value.ToBytes());
+        }
+
+        [Fact]
+        public void TestNegativeWithBuffer()
+        {
+            byte[] bytes = new byte[] { 0x00, 0xFF, 0xFF, 0xFF, 0xFE };
+            const int result = -2;
+            Integer32 i = new Integer32(bytes);
+            Assert.Equal(result, i.ToInt32());
         }
     }
 }

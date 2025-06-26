@@ -65,6 +65,16 @@ namespace Lextm.SharpSnmpLib.Unit
         }
 
         [Fact]
+        public void TestNegativeWithBuffer()
+        {
+            byte[] expected = new byte[] { 0x02, 0x05, 0x00, 0xFF, 0xFF, 0xFF, 0xFE };
+            ISnmpData data = DataFactory.CreateSnmpData(expected);
+            Assert.Equal(SnmpType.Integer32, data.TypeCode);
+            Integer32 i = (Integer32)data;
+            Assert.Equal(-2, i.ToInt32());
+        }
+
+        [Fact]
         public void TestCreateOctetString()
         {
             byte[] expected = new byte[] { 0x04, 0x06, 0x70, 0x75, 0x62, 0x6C, 0x69, 0x63 };
