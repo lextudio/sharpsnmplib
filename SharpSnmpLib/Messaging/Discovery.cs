@@ -60,18 +60,42 @@ namespace Lextm.SharpSnmpLib.Messaging
         public Discovery(int messageId, int requestId, int maxMessageSize)
         {
             _discovery = new GetRequestMessage(
-                VersionCode.V3,
-                new Header(
-                    new Integer32(messageId),
-                    new Integer32(maxMessageSize),
-                    Levels.Reportable),
-                DefaultSecurityParameters,
-                new Scope(
-                    OctetString.Empty,
-                    OctetString.Empty,
-                    new GetRequestPdu(requestId, new List<Variable>())),
-                DefaultPrivacyProvider.DefaultPair,
-                null);
+                                               VersionCode.V3,
+                                               new Header(
+                                                          new Integer32(messageId),
+                                                          new Integer32(maxMessageSize),
+                                                          Levels.Reportable),
+                                               DefaultSecurityParameters,
+                                               new Scope(
+                                                         OctetString.Empty,
+                                                         OctetString.Empty,
+                                                         new GetRequestPdu(requestId, new List<Variable>())),
+                                               DefaultPrivacyProvider.DefaultPair,
+                                               null);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Discovery"/> class.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="maxMessageSize">The max size of message.</param>
+        /// <param name="contextName">The optional Context Name.</param>
+        public Discovery(int messageId, int requestId, int maxMessageSize, OctetString contextName)
+        {
+            _discovery = new GetRequestMessage(
+                                               VersionCode.V3,
+                                               new Header(
+                                                          new Integer32(messageId),
+                                                          new Integer32(maxMessageSize),
+                                                          Levels.Reportable),
+                                               DefaultSecurityParameters,
+                                               new Scope(
+                                                         OctetString.Empty,
+                                                         contextName,
+                                                         new GetRequestPdu(requestId, new List<Variable>())),
+                                               DefaultPrivacyProvider.DefaultPair,
+                                               null);
         }
 
         /// <summary>
@@ -181,6 +205,113 @@ namespace Lextm.SharpSnmpLib.Messaging
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Discovery"/> class.
+        /// </summary>
+        /// <param name="requestId">The request id.</param>
+        /// <param name="messageId">The message id.</param>
+        /// <param name="maxMessageSize">The max size of message.</param>
+        /// <param name="type">Message type.</param>
+        /// <param name="contextName">The optional Context Name.</param>
+        public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type, OctetString contextName)
+        {
+            switch (type)
+            {
+                case SnmpType.GetRequestPdu:
+                    {
+                        _discovery = new GetRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            contextName,
+                            new GetRequestPdu(requestId, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+
+                case SnmpType.GetNextRequestPdu:
+                    {
+                        _discovery = new GetNextRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            contextName,
+                            new GetNextRequestPdu(requestId, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+
+                case SnmpType.GetBulkRequestPdu:
+                    {
+                        _discovery = new GetBulkRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            contextName,
+                            new GetBulkRequestPdu(requestId, 0, 0, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+
+                case SnmpType.SetRequestPdu:
+                    {
+                        _discovery = new SetRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            contextName,
+                            new SetRequestPdu(requestId, new List<Variable>())),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+
+                case SnmpType.InformRequestPdu:
+                    {
+                        _discovery = new InformRequestMessage(
+                            VersionCode.V3,
+                            new Header(
+                            new Integer32(messageId),
+                            new Integer32(maxMessageSize),
+                            Levels.Reportable),
+                            DefaultSecurityParameters,
+                            new Scope(
+                            OctetString.Empty,
+                            contextName,
+                            new InformRequestPdu(requestId)),
+                            DefaultPrivacyProvider.DefaultPair,
+                            null);
+                        break;
+                    }
+
+                default:
+                    throw new ArgumentException("Discovery message must be a request.", nameof(type));
+            }
+        }
+
+        /// <summary>
         /// Gets the response.
         /// </summary>
         /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
@@ -197,7 +328,17 @@ namespace Lextm.SharpSnmpLib.Messaging
             }
 
             using var socket = receiver.GetSocket();
-            return (ReportMessage)_discovery.GetResponse(timeout, receiver, Empty, socket);
+            var response = _discovery.GetResponse(timeout, receiver, Empty, socket);
+
+            try
+            {
+                return (ReportMessage)response;
+            }
+            catch
+            {
+                //The cast was not possible with a system that needed contextname=public
+                return new ReportMessage(response.Version, response.Header, response.Parameters, response.Scope, response.Privacy, response?.ToBytes());
+            }
         }
 
         /// <summary>

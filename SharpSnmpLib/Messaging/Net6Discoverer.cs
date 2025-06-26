@@ -41,6 +41,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
         public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, CancellationToken token)
         {
+            Discover(version, broadcastAddress, community, token, OctetString.Empty);
+        }
+
+        /// <summary>
+        /// Discovers agents of the specified version in a specific time interval.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="broadcastAddress">The broadcast address.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <param name="contextName">The optional context name.</param>
+        /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
+        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, CancellationToken token, OctetString contextName)
+        {
             if (broadcastAddress == null)
             {
                 throw new ArgumentNullException(nameof(broadcastAddress));
@@ -61,7 +75,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize, contextName);
                 bytes = discovery.ToBytes();
             }
             else
@@ -143,6 +157,20 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
         public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, CancellationToken token)
         {
+            await DiscoverAsync(version, broadcastAddress, community, token, OctetString.Empty);
+        }
+
+        /// <summary>
+        /// Discovers agents of the specified version in a specific time interval.
+        /// </summary>
+        /// <param name="version">The version.</param>
+        /// <param name="broadcastAddress">The broadcast address.</param>
+        /// <param name="community">The community.</param>
+        /// <param name="token">The cancellation token.</param>
+        /// <param name="contextName">The context name.</param>
+        /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
+        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, CancellationToken token, OctetString contextName)
+        {
             if (broadcastAddress == null)
             {
                 throw new ArgumentNullException(nameof(broadcastAddress));
@@ -158,7 +186,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             _requestId = Messenger.NextRequestId;
             if (version == VersionCode.V3)
             {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
+                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize, contextName);
                 bytes = discovery.ToBytes();
             }
             else
