@@ -129,7 +129,7 @@ namespace Lextm.SharpSnmpLib.Messaging
             var version = (VersionCode)((Integer32)body[0]).ToInt32();
             Header header;
             SecurityParameters parameters;
-            IPrivacyProvider privacy;
+            IPrivacyProvider? privacy;
             Scope scope;
             if (body.Length == 3)
             {
@@ -142,22 +142,20 @@ namespace Lextm.SharpSnmpLib.Messaging
             {
                 header = new Header(body[1]);
                 parameters = new SecurityParameters((OctetString)body[2]);
-                var temp = registry.Find(parameters.UserName);
-                if (temp == null)
-                {
-                    // handle decryption exception.
-                    return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
-                }
-
-                privacy = temp;
+                privacy = registry.Find(parameters.UserName);
                 var code = body[3].TypeCode;
                 if (code == SnmpType.Sequence)
                 {
                     // v3 not encrypted
                     scope = new Scope((Sequence)body[3]);
+                    privacy = DefaultPrivacyProvider.DefaultPair;
                 }
                 else if (code == SnmpType.OctetString)
                 {
+                    if (privacy is null)
+                    {
+                        return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
+                    }
                     // v3 encrypted
                     try
                     {
