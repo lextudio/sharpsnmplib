@@ -371,13 +371,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
-                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address);
+                    throw ErrorException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address, response);
                 }
 
                 return response;
             }
 
-            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
+            throw ErrorException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address, response);
         }
 
         #endregion
@@ -628,13 +628,13 @@ namespace Lextm.SharpSnmpLib.Messaging
                 var responseId = response.MessageId();
                 if (responseId != requestId)
                 {
-                    throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address);
+                    throw ErrorException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response sequence: expected {0}, received {1}", requestId, responseId), receiver.Address, response);
                 }
 
                 return response;
             }
 
-            throw OperationException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address);
+            throw ErrorException.Create(string.Format(CultureInfo.InvariantCulture, "wrong response type: {0}", responseCode), receiver.Address, response);
         }
 
         #endregion
