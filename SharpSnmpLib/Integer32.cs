@@ -136,11 +136,6 @@ namespace Lextm.SharpSnmpLib
         /// </returns>
         public ErrorCode ToErrorCode()
         {
-            if (_int > 19 || _int < 0)
-            {
-                throw new InvalidCastException();
-            }
-
             return (ErrorCode)_int;
         }
 
