@@ -35,8 +35,8 @@ namespace DotNetSnmp.Protocol.V2
                 expectedTag: SnmpAsnTags.Trap2Msg);
 
             seq.TryReadInt32(out var requestId);
-            seq.TryReadInt32(out var errorStatus);
-            seq.TryReadInt32(out var errorIndex);
+            seq.TryReadInt32(out _);
+            seq.TryReadInt32(out _);
 
             var bindings = VarBindList.ReadFrom(seq);
             var time = bindings.Remove(0);

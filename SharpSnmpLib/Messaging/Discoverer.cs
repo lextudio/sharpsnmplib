@@ -183,22 +183,22 @@ public sealed class Discoverer
                 case VersionCode.V1:
                     {
                         var msg = SnmpV1Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
-                        return Convert(msg.Scope?.VariableBindings?.ToArray().FirstOrDefault());
+                        return Convert(msg.Scope?.VariableBindings?.FirstOrDefault());
                     }
                 case VersionCode.V2:
                     {
                         var msg = SnmpV2Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
-                        return Convert(msg.Scope?.VariableBindings?.ToArray().FirstOrDefault());
+                        return Convert(msg.Scope?.VariableBindings?.FirstOrDefault());
                     }
                 case VersionCode.V3:
                     {
                         var msg = SnmpV3Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
-                        if (msg.Header.MsgFlags.HasFlag(MsgFlags.Priv))
+                        if (msg.Header.MsgFlags.HasFlag(MsgFlag.Priv))
                         {
                             return null;
                         }
 
-                        return Convert(msg.Scope?.VariableBindings?.ToArray().FirstOrDefault());
+                        return Convert(msg.Scope?.VariableBindings?.FirstOrDefault());
                     }
                 default:
                     return null;

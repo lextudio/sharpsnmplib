@@ -54,7 +54,7 @@
         public int TruncatedDigestSize => 0;
 
         /// <inheritdoc/>
-        public void AuthenticateOutgoingMsg(SnmpV3Message message, Memory<byte> authParams)
+        public void AuthenticateOutgoingMsg(SnmpV3Message message, Memory<byte> newAuthParams)
         {
             // Default implementation does not perform any authentication
         }

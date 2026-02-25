@@ -142,7 +142,7 @@ public sealed class Discovery
             {
                 MsgId = _messageId,
                 MsgMaxSize = _maxMessageSize,
-                MsgFlags = MsgFlags.Reportable,
+                MsgFlags = MsgFlag.Reportable,
                 MsgSecurityModel = SecurityModel.Usm
             },
             SecurityParameters = new UsmSecurityParameters

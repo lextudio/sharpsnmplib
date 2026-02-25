@@ -43,7 +43,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
             var hasNonPrintable = Octets.Any(
                 c => char.IsControl((char)c) && !char.IsWhiteSpace((char)c));
 
-            if (hasNonPrintable == false)
+            if (!hasNonPrintable)
             {
                 return "String: " + Encoding.UTF8.GetString(Octets);
             }

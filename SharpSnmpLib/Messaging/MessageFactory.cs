@@ -172,7 +172,7 @@ public static class MessageFactory
         var auth = privacy.AuthenticationProvider;
 
         // Process authentication if needed
-        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlags.Auth))
+        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlag.Auth))
         {
             bool authenticated = auth.AuthenticateIncomingMsg(v3Message);
             if (!authenticated)
@@ -182,7 +182,7 @@ public static class MessageFactory
         }
 
         // Process privacy (decryption) if needed
-        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlags.Priv))
+        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlag.Priv))
         {
             privacy.DecryptMessage(v3Message);
         }

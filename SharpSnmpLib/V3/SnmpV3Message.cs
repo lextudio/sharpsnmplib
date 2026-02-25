@@ -48,7 +48,7 @@ public void WriteTo(AsnWriter writer)
         SecurityParameters.WriteTo(writer);
 
         // Write either the encrypted data or the ScopedPdu based on privacy flag
-        if (Header.MsgFlags.HasFlag(MsgFlags.Priv))
+        if (Header.MsgFlags.HasFlag(MsgFlag.Priv))
         {
             if (EncryptedScopedPdu.IsEmpty)
             {
@@ -78,7 +78,7 @@ public static SnmpV3Message ReadFrom(AsnReader reader)
     var rootSeq = reader.ReadSequence(expectedTag: Asn1Tag.Sequence);
 
     // version INTEGER
-    if (rootSeq.TryReadInt32(out int messageVersion) == false)
+    if (!rootSeq.TryReadInt32(out int messageVersion))
     {
         throw new SnmpDecodeException(
             "Cannot read 'version' number");
@@ -102,7 +102,7 @@ public static SnmpV3Message ReadFrom(AsnReader reader)
         SecurityParameters = usmSecurityParams
     };
 
-    if (globalData.MsgFlags.HasFlag(MsgFlags.Priv))
+    if (globalData.MsgFlags.HasFlag(MsgFlag.Priv))
     {
         msg.EncryptedScopedPdu = rootSeq.ReadOctetString();
     }

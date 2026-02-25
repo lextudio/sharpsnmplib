@@ -72,15 +72,15 @@ internal static class LegacyRequestBuilder
         var reportMessage = ExtractReportMessage(report);
         var contextEngineId = reportMessage.SecurityParameters.EngineId;
 
-        var flags = MsgFlags.Reportable;
+        var flags = MsgFlag.Reportable;
         if (privacy.AuthenticationProvider.DigestSize > 0)
         {
-            flags |= MsgFlags.Auth;
+            flags |= MsgFlag.Auth;
         }
 
         if (privacy is not DefaultPrivacyProvider)
         {
-            flags |= MsgFlags.Priv;
+            flags |= MsgFlag.Priv;
         }
 
         var pdu = pduFactory();
@@ -117,12 +117,12 @@ internal static class LegacyRequestBuilder
             }
         };
 
-        if (message.Header.MsgFlags.HasFlag(MsgFlags.Priv))
+        if (message.Header.MsgFlags.HasFlag(MsgFlag.Priv))
         {
             privacy.EncryptMessage(message);
         }
 
-        if (message.Header.MsgFlags.HasFlag(MsgFlags.Auth))
+        if (message.Header.MsgFlags.HasFlag(MsgFlag.Auth))
         {
             privacy.AuthenticationProvider.AuthenticateOutgoingMsg(message, message.SecurityParameters.AuthParams);
         }

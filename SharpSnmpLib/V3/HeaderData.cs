@@ -25,7 +25,7 @@ namespace DotNetSnmp.Protocol.V3
         /// <summary>
         /// Gets msg Flags.
         /// </summary>
-        public MsgFlags MsgFlags { get; set; }
+        public MsgFlag MsgFlags { get; set; }
 
         /// <summary>
         /// Gets msg Security Model.
@@ -61,7 +61,7 @@ namespace DotNetSnmp.Protocol.V3
 
             rootSeq.TryReadInt32(out var msgMaxSize);
 
-            var flags = (MsgFlags)rootSeq.ReadOctetString()[0];
+            var flags = (MsgFlag)rootSeq.ReadOctetString()[0];
 
             rootSeq.TryReadInt32(out var msgSecurityModel);
 

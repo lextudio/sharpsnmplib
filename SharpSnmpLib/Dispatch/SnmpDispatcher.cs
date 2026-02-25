@@ -15,8 +15,24 @@ using DotNetSnmp.Protocol.V3.Security.Privacy;
 namespace DotNetSnmp.Client
 {
     /// <summary>
-    /// Represents the SnmpDispatcher type.
+    /// Coordinates SNMP Protocol Data Unit (PDU) transmission and reception across all SNMP versions (v1, v2c, v3).
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// SnmpDispatcher is the central component for SNMP communication, handling:
+    /// </para>
+    /// <list type="bullet">
+    /// <item><description>Protocol version detection and routing (SNMPv1, SNMPv2c, SNMPv3)</description></item>
+    /// <item><description>Message preparation and encoding via version-specific models</description></item>
+    /// <item><description>Transport abstraction for UDP communication</description></item>
+    /// <item><description>Timeout management and response correlation by PDU handle</description></item>
+    /// <item><description>SNMPv3 engine discovery and parameter caching (RFC 3414)</description></item>
+    /// </list>
+    /// <para>
+    /// The dispatcher lazily loads and caches protocol models to avoid repeated instantiation.
+    /// It enforces target-specific timeouts by creating linked cancellation tokens.
+    /// </para>
+    /// </remarks>
     public class SnmpDispatcher : ISnmpDispatcher
     {
         private readonly ILogger<SnmpDispatcher>? _logger;
@@ -25,25 +41,78 @@ namespace DotNetSnmp.Client
         private IMessageProcessingModel? _v3UsmMsgProcModel;
 
         /// <summary>
-        /// Initializes a new instance of SnmpDispatcher.
+        /// Initializes a new instance of <see cref="SnmpDispatcher"/>.
         /// </summary>
+        /// <param name="logger">Optional logger for diagnostic output. If <c>null</c>, logging is disabled.</param>
+        /// <remarks>
+        /// Protocol models (v1, v2c, v3) are created on-demand to minimize startup overhead.
+        /// </remarks>
         public SnmpDispatcher(ILogger<SnmpDispatcher>? logger = null)
         {
             _logger = logger;
             _logger?.LogDebug("SnmpDispatcher initialized");
         }
 
-        private IMessageProcessingModel GetMessageProcessingModel(VersionCode version) => version switch
+        /// <summary>
+        /// Gets or creates the message processing model for the specified SNMP protocol version.
+        /// </summary>
+        /// <param name="version">The SNMP protocol version (v1, v2c, or v3).</param>
+        /// <returns>The lazy-initialized message processing model for the specified version.</returns>
+        /// <exception cref="NotImplementedException">Thrown when <paramref name="version"/> is not supported.</exception>
+        /// <remarks>
+        /// Models are cached to avoid repeated instantiation across multiple PDU operations.
+        /// </remarks>
+        private IMessageProcessingModel GetMessageProcessingModel(VersionCode version)
         {
-            VersionCode.V1 => _v1MsgProcModel ??= new V1MessageProcessingModel(),
-            VersionCode.V2 => _v2MsgProcModel ??= new V2MessageProcessingModel(),
-            VersionCode.V3 => _v3UsmMsgProcModel ??= new V3MessageProcessingModel(),
-            _ => throw new NotImplementedException(),
-        };
+            return version switch
+            {
+                VersionCode.V1 => GetOrCreateV1Model(),
+                VersionCode.V2 => GetOrCreateV2Model(),
+                VersionCode.V3 => GetOrCreateV3Model(),
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        private IMessageProcessingModel GetOrCreateV1Model()
+        {
+            _v1MsgProcModel ??= new V1MessageProcessingModel();
+            return _v1MsgProcModel;
+        }
+
+        private IMessageProcessingModel GetOrCreateV2Model()
+        {
+            _v2MsgProcModel ??= new V2MessageProcessingModel();
+            return _v2MsgProcModel;
+        }
+
+        private IMessageProcessingModel GetOrCreateV3Model()
+        {
+            _v3UsmMsgProcModel ??= new V3MessageProcessingModel();
+            return _v3UsmMsgProcModel;
+        }
 
         /// <summary>
-        /// Sends pdu.
+        /// Sends an SNMP PDU to the target and optionally waits for the response.
         /// </summary>
+        /// <param name="transport">The network transport layer (e.g., UDP) used to send/receive data.</param>
+        /// <param name="target">The SNMP target containing protocol version, security, and timeout parameters.</param>
+        /// <param name="targetAddress">The network address (IP:port) of the SNMP agent.</param>
+        /// <param name="scope">The PDU wrapped in a scope object containing version-specific data.</param>
+        /// <param name="expectResponse">If <c>true</c>, waits for and validates the response; if <c>false</c>, returns immediately.</param>
+        /// <param name="cancellationToken">A cancellation token to abort the operation. The dispatcher also enforces the target's timeout.</param>
+        /// <returns>The response scope containing the SNMP agent's reply, or the original scope if no response expected.</returns>
+        /// <exception cref="SnmpTimeoutException">Thrown when the response is not received within the target's timeout period.</exception>
+        /// <exception cref="SnmpMessageProcessingException">Thrown when message preparation, encoding, or processing fails.</exception>
+        /// <remarks>
+        /// <para>
+        /// This method handles all protocol versions by delegating to version-specific processors.
+        /// For SNMPv3, it performs engine discovery if the target lacks cached engine parameters.
+        /// </para>
+        /// <para>
+        /// A linked cancellation token is created from both the target's timeout and the caller's cancellation token,
+        /// ensuring the operation respects both time constraints.
+        /// </para>
+        /// </remarks>
         public async ValueTask<IScope> SendPdu(
             ISnmpTransport transport,
             ISnmpTarget target,
@@ -55,7 +124,7 @@ namespace DotNetSnmp.Client
             _logger?.LogDebug("Sending PDU to target {TargetAddress} with protocol version {ProtocolVersion}", targetAddress, target.ProtocolVersion);
 
             // IMPORTANT: enforce the target's timeout value
-            var timeoutCts = new CancellationTokenSource(target.Timeout);
+            using var timeoutCts = new CancellationTokenSource(target.Timeout);
             using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(timeoutCts.Token, cancellationToken);
 
             var mpModel = GetMessageProcessingModel(
@@ -101,9 +170,9 @@ namespace DotNetSnmp.Client
                         if (mpModel.TryPrepareDataElements(
                             incomingData,
                             target,
-                            out var resSecurityName,
-                            out var resSecurityLevel,
-                            out var resSecurityModel,
+                            out var _,
+                            out var _,
+                            out var _,
                             out ISnmpMessage? message,
                             out int resPduHandle,
                             out var resProcessingResult))
@@ -140,9 +209,10 @@ namespace DotNetSnmp.Client
                 _logger?.LogWarning(ex, "Timeout occurred while communicating with {TargetAddress} after {Timeout}ms", targetAddress, target.Timeout);
                 throw new SnmpTimeoutException($"Operation timed out while communicating with {targetAddress}", targetAddress, target.Timeout);
             }
-            catch (SnmpMessageProcessingException)
+            catch (SnmpMessageProcessingException ex)
             {
-                // Already logged and contains the right information, just rethrow
+                // Already logged with appropriate context in throw site, rethrow as-is
+                _logger?.LogDebug(ex, "Rethrowing SnmpMessageProcessingException from SendPdu");
                 throw;
             }
             catch (Exception ex)
@@ -152,6 +222,31 @@ namespace DotNetSnmp.Client
             }
         }
 
+        /// <summary>
+        /// Sends an SNMPv3 PDU with security parameters, performing engine discovery if needed.
+        /// </summary>
+        /// <param name="transport">The network transport layer for sending/receiving data.</param>
+        /// <param name="target">The SNMPv3 target containing user security parameters.</param>
+        /// <param name="targetAddress">The network address (IP:port) of the SNMPv3 agent.</param>
+        /// <param name="scope">The PDU to send.</param>
+        /// <param name="expectResponse">If <c>true</c>, waits for and validates the response.</param>
+        /// <param name="cancellationToken">Cancellation token for the operation.</param>
+        /// <returns>The response scope or original scope if no response expected.</returns>
+        /// <remarks>
+        /// <para>
+        /// This method implements RFC 3414 SNMPv3 engine discovery:
+        /// </para>
+        /// <list type="number">
+        /// <item><description>Checks if the target has cached engine parameters (EngineId, EngineBoots, EngineTime)</description></item>
+        /// <item><description>If parameters are missing, discovers them from the agent</description></item>
+        /// <item><description>Caches discovered parameters in the target for future PDUs</description></item>
+        /// <item><description>Prepares and sends the actual request with security parameters</description></item>
+        /// </list>
+        /// <para>
+        /// If the response indicates engine time has changed (RFC 3414), it updates the cached parameters
+        /// and recursively sends the PDU again with updated timing.
+        /// </para>
+        /// </remarks>
         private async ValueTask<IScope> SendPduV3(
             ISnmpTransport transport,
             ISnmpTarget target,
@@ -238,9 +333,9 @@ namespace DotNetSnmp.Client
                             if (mpModel.TryPrepareDataElements(
                                 incomingData,
                                 target,
-                                out var resSecurityName,
-                                out var resSecurityLevel,
-                                out var resSecurityModel,
+                                out var _,
+                                out var _,
+                                out var _,
                                 out ISnmpMessage? message,
                                 out int resPduHandle,
                                 out var resProcessingResult))
@@ -302,14 +397,16 @@ namespace DotNetSnmp.Client
                     ArrayPool<byte>.Shared.Return(digestArray);
                 }
             }
-            catch (SnmpMessageProcessingException)
+            catch (SnmpMessageProcessingException ex)
             {
-                // Already logged with appropriate context, just rethrow
+                // Already logged with appropriate context in throw site, rethrow as-is
+                _logger?.LogDebug(ex, "Rethrowing SnmpMessageProcessingException from SendPduV3");
                 throw;
             }
-            catch (SnmpTimeoutException)
+            catch (SnmpTimeoutException ex)
             {
-                // Already logged with appropriate context, just rethrow
+                // Already logged with appropriate context in throw site, rethrow as-is
+                _logger?.LogDebug(ex, "Rethrowing SnmpTimeoutException from SendPduV3");
                 throw;
             }
             catch (Exception ex)
@@ -319,6 +416,30 @@ namespace DotNetSnmp.Client
             }
         }
 
+        /// <summary>
+        /// Discovers the SNMPv3 engine ID and timing parameters from the target agent.
+        /// </summary>
+        /// <param name="transport">The network transport layer.</param>
+        /// <param name="target">The SNMPv3 target.</param>
+        /// <param name="targetAddress">The agent's network address.</param>
+        /// <param name="cancellationToken">Cancellation token for the operation.</param>
+        /// <param name="originalScope">Optional original PDU scope to use for discovery context; if null, a generic probe is sent.</param>
+        /// <returns>An <see cref="EngineDiscoveryResult"/> containing the EngineId, EngineBoots, and EngineTime.</returns>
+        /// <remarks>
+        /// <para>
+        /// Engine discovery is performed as per RFC 3414 Section 4.3:
+        /// </para>
+        /// <list type="number">
+        /// <item><description>Sends an unauthenticated message to the agent's discovery port</description></item>
+        /// <item><description>Receives the agent's engine parameters in the response</description></item>
+        /// <item><description>Extracts and validates the engine ID, boots counter, and current time</description></item>
+        /// <item><description>Caches these parameters for subsequent authenticated operations</description></item>
+        /// </list>
+        /// <para>
+        /// If <paramref name="originalScope"/> is provided, it's used to discover with the actual operation context;
+        /// otherwise, a generic probe request is sent. This helps align engine discovery with the operation type.
+        /// </para>
+        /// </remarks>
         private async ValueTask<EngineDiscoveryResult> DiscoverEngineIdAndTime(
             ISnmpTransport transport,
             ISnmpTarget target,
@@ -368,7 +489,7 @@ namespace DotNetSnmp.Client
                 discoveryTarget,
                 discoveryPdu,
                 ReadOnlyMemory<byte>.Empty,
-                out int pduHandle,
+                out int _,
                 out ISnmpMessage? outgoingMessage,
                 out MessageProcessingResult result,
                 Memory<byte>.Empty,
@@ -439,7 +560,7 @@ namespace DotNetSnmp.Client
             return newPdu;
         }
 
-        private record EngineDiscoveryResult(
+        private sealed record EngineDiscoveryResult(
             ReadOnlyMemory<byte> EngineId,
             int EngineBoots,
             int EngineTime);

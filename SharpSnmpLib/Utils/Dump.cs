@@ -28,7 +28,7 @@ namespace DotNetSnmp.Utils
                 .Select(x => x.Trim())
                 .ToList();
 
-            var headerLine = lines.First();
+            var headerLine = lines[0];
 
             var hexData = lines
                 .Skip(1)
@@ -45,7 +45,7 @@ namespace DotNetSnmp.Utils
 
             if (bytes != hexData.Length)
             {
-                throw new Exception("Dump parse error");
+                throw new InvalidOperationException("Dump parse error");
             }
 
             return hexData;

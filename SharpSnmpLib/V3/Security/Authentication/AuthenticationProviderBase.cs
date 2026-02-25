@@ -56,13 +56,13 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
         }
 
         /// <inheritdoc/>
-        public void AuthenticateOutgoingMsg(SnmpV3Message message, Memory<byte> authParams)
+        public void AuthenticateOutgoingMsg(SnmpV3Message message, Memory<byte> newAuthParams)
         {
             using var hmac = CreateHmac(message.SecurityParameters.EngineId);
 
             // Ensure auth parameters buffer is properly initialized before encoding
-            authParams.Span.Fill(0);
-            message.SecurityParameters.AuthParams = authParams;
+            newAuthParams.Span.Fill(0);
+            message.SecurityParameters.AuthParams = newAuthParams;
 
             // This will encode the message with zeroed auth parameters
             // Note: message.Encode() creates a new byte array - this allocation is inherent to the encoding process

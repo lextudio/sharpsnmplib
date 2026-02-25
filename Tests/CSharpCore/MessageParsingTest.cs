@@ -42,7 +42,7 @@ namespace DotNetSnmp.Test
             // Verify Header Data
             Assert.Equal(0x4721, message.Header.MsgId);
             Assert.Equal(0xFFE3, message.Header.MsgMaxSize);
-            Assert.Equal(MsgFlags.Auth | MsgFlags.Reportable, message.Header.MsgFlags);
+            Assert.Equal(MsgFlag.Auth | MsgFlag.Reportable, message.Header.MsgFlags);
             Assert.Equal(SecurityModel.Usm, message.Header.MsgSecurityModel);
 
             // Verify Security Parameters
@@ -128,7 +128,7 @@ namespace DotNetSnmp.Test
             // Verify Header Data
             Assert.Equal(0x6CF581EC, message.Header.MsgId);
             Assert.Equal(0xFFE3, message.Header.MsgMaxSize);
-            Assert.Equal(MsgFlags.Auth | MsgFlags.Priv | MsgFlags.Reportable, message.Header.MsgFlags);
+            Assert.Equal(MsgFlag.Auth | MsgFlag.Priv | MsgFlag.Reportable, message.Header.MsgFlags);
             Assert.Equal(SecurityModel.Usm, message.Header.MsgSecurityModel);
 
             // Verify Security Parameters
@@ -221,7 +221,7 @@ namespace DotNetSnmp.Test
             // Verify Header Data
             Assert.Equal(0x1639993C, message.Header.MsgId);
             Assert.Equal(0xFFE3, message.Header.MsgMaxSize);
-            Assert.Equal(MsgFlags.Auth | MsgFlags.Priv | MsgFlags.Reportable, message.Header.MsgFlags);
+            Assert.Equal(MsgFlag.Auth | MsgFlag.Priv | MsgFlag.Reportable, message.Header.MsgFlags);
             Assert.Equal(SecurityModel.Usm, message.Header.MsgSecurityModel);
 
             // Verify Security Parameters

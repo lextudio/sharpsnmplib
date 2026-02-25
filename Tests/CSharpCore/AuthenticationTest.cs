@@ -36,7 +36,7 @@ namespace DotNetSnmp.Test
                 VersionCode.V3,
                 message.ProtocolVersion);
 
-            Assert.Equal(MsgFlags.Reportable, message.Header.MsgFlags);
+            Assert.Equal(MsgFlag.Reportable, message.Header.MsgFlags);
 
             var usmSecParams = message.SecurityParameters;
 
@@ -74,7 +74,7 @@ namespace DotNetSnmp.Test
                 VersionCode.V3,
                 message.ProtocolVersion);
 
-            Assert.Equal(MsgFlags.NoAuthNoPriv, message.Header.MsgFlags);
+            Assert.Equal(MsgFlag.NoAuthNoPriv, message.Header.MsgFlags);
 
             var usmSecParams = message.SecurityParameters;
 
@@ -111,9 +111,9 @@ namespace DotNetSnmp.Test
                 VersionCode.V3,
                 message.ProtocolVersion);
 
-            Assert.True(message.Header.MsgFlags.HasFlag(MsgFlags.Auth));
+            Assert.True(message.Header.MsgFlags.HasFlag(MsgFlag.Auth));
 
-            Assert.False(message.Header.MsgFlags.HasFlag(MsgFlags.Priv));
+            Assert.False(message.Header.MsgFlags.HasFlag(MsgFlag.Priv));
 
             var usmSecParams = message.SecurityParameters;
 
@@ -155,9 +155,9 @@ namespace DotNetSnmp.Test
                 VersionCode.V3,
                 message.ProtocolVersion);
 
-            Assert.True(message.Header.MsgFlags.HasFlag(MsgFlags.Auth));
+            Assert.True(message.Header.MsgFlags.HasFlag(MsgFlag.Auth));
 
-            Assert.False(message.Header.MsgFlags.HasFlag(MsgFlags.Priv));
+            Assert.False(message.Header.MsgFlags.HasFlag(MsgFlag.Priv));
 
             var usmSecParams = message.SecurityParameters;
 

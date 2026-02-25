@@ -121,7 +121,7 @@ namespace DotNetSnmp.Utils
             void AddMember(Asn1Tag tag, string tagName, object tagValue, int indent,
                 (int HeaderLen, int ContentLen) len, bool opaqueOctetString = false)
             {
-                if (colorize == false)
+                if (!colorize)
                 {
                     Console.WriteLine($"    {indent}{tagName}: {tagValue}");
                 }
@@ -244,7 +244,7 @@ namespace DotNetSnmp.Utils
                             var maybeTag = octetStringReader.PeekTag();
                             if (maybeTag == Asn1Tag.Sequence)
                             {
-                                var opaque = reader.ReadOctetString();
+                                _ = reader.ReadOctetString();
                                 AddMember(tag, "OctetString", tagValue, indentLevel, size, true);
                                 var nestedSeqReader = octetStringReader.ReadSequence();
                                 stack.Push((reader, indentLevel));
@@ -255,6 +255,7 @@ namespace DotNetSnmp.Utils
                         }
                         catch
                         {
+                            // Nested sequence reading is optional; failures are silently ignored
                         }
 
                         tagValue = OctetString.ReadFrom(reader)
@@ -293,10 +294,6 @@ namespace DotNetSnmp.Utils
                     {
                         reader.TryReadUInt32(out var uint32, AsnTypes.Unsigned32);
                         tagValue = uint32;
-                    }
-                    else if (tag == Asn1Tag.ObjectIdentifier)
-                    {
-                        tagValue = reader.ReadObjectIdentifier();
                     }
                     else if (tag == SnmpAsnTags.NoSuchObject)
                     {

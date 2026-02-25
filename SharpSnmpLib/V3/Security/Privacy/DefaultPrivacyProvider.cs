@@ -41,7 +41,7 @@ public class DefaultPrivacyProvider : IPrivacyProvider
     /// </summary>
     public void DecryptScopedPdu(in ReadOnlyMemory<byte> encryptedPdu, in UsmSecurityParameters parameters, Span<byte> decryptedPdu)
     {
-
+        // No decryption needed for NoPrivacyService
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public class DefaultPrivacyProvider : IPrivacyProvider
     /// <inheritdoc/>
     public void DecryptMessage(SnmpV3Message message)
     {
-
+        // No decryption needed for NoPrivacyService
     }
 
     /// <inheritdoc/>

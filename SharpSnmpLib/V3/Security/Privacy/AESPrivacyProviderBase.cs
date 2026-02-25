@@ -15,7 +15,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
         /// </summary>
         protected const int MinimalBlockSize = 16;
 
-        private int _keyLength;
+        private readonly int _keyLength;
 
         /// <summary>
         /// Initializes a new instance of AESPrivacyProviderBase.
@@ -68,7 +68,6 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
 
                 // Generate an 8-octet salt value
                 var saltValue = GetNextSalt();
-                ReadOnlySpan<byte> salt = BitConverter.GetBytes(saltValue);
 
                 Span<byte> iv = stackalloc byte[16];
 

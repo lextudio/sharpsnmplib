@@ -19,7 +19,7 @@ namespace DotNetSnmp.Asn1
             if (expectedValue.HasValue)
             {
                 var span = expectedValue.Value.Span;
-                if (span.SequenceEqual(octetString.Span) == false)
+                if (!span.SequenceEqual(octetString.Span))
                 {
                     throw new InvalidOperationException();
                 }
@@ -34,7 +34,7 @@ namespace DotNetSnmp.Asn1
             int? expectedValue = null)
         {
             if (reader.TryReadInt32(out var value)
-                && (expectedValue.HasValue == false
+                && (!expectedValue.HasValue
                     || expectedValue == value))
             {
                 return;

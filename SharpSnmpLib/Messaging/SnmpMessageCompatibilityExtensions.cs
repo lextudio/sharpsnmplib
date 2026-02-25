@@ -153,7 +153,7 @@ public static class SnmpMessageCompatibilityExtensions
 
         if (request is ILegacyV3Request v3Request)
         {
-            if (response.Header.MsgFlags.HasFlag(MsgFlags.Auth))
+            if (response.Header.MsgFlags.HasFlag(MsgFlag.Auth))
             {
                 var authenticated = v3Request.Privacy.AuthenticationProvider.AuthenticateIncomingMsg(response);
                 if (!authenticated)
@@ -162,7 +162,7 @@ public static class SnmpMessageCompatibilityExtensions
                 }
             }
 
-            if (response.Header.MsgFlags.HasFlag(MsgFlags.Priv))
+            if (response.Header.MsgFlags.HasFlag(MsgFlag.Priv))
             {
                 v3Request.Privacy.DecryptMessage(response);
             }

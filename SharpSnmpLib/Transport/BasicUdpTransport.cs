@@ -109,6 +109,9 @@ namespace DotNetSnmp.Transport
             }
         }
 
+        /// <summary>
+        /// Finalizer to ensure resources are released if Dispose is not called.
+        /// </summary>
         ~BasicUdpTransport()
         {
             Dispose(false);

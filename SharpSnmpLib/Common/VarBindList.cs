@@ -66,6 +66,12 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         /// </summary>
         public VarBindList Add(Variable varBind)
         {
+            if (_variableBindings.Count >= MaxVariableBindings)
+            {
+                throw new InvalidOperationException(
+                    $"Maximum variable bindings ({MaxVariableBindings}) exceeded.");
+            }
+
             _variableBindings.Add(varBind);
             return this;
         }
@@ -126,15 +132,19 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
 
             var bindings = new VarBindList();
 
-            if (sequence.HasData == false)
+            if (!sequence.HasData)
             {
                 return bindings;
             }
 
-            var t = sequence.PeekTag();
-
             while (sequence.HasData)
             {
+                if (bindings._variableBindings.Count >= MaxVariableBindings)
+                {
+                    throw new InvalidOperationException(
+                        $"Maximum variable bindings ({MaxVariableBindings}) exceeded during deserialization.");
+                }
+
                 var vbSeq = sequence.ReadSequence();
                 var oid = vbSeq.ReadObjectIdentifier();
                 var tag = vbSeq.PeekTag();

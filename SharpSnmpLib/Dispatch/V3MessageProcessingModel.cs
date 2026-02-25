@@ -52,8 +52,8 @@ namespace DotNetSnmp.Client
                 // Determine security level from flags
                 var msgFlags = v3Message.Header.MsgFlags;
                 securityLevel = 0;
-                var isAuth = msgFlags.HasFlag(MsgFlags.Auth);
-                var isPriv = msgFlags.HasFlag(MsgFlags.Priv);
+                var isAuth = msgFlags.HasFlag(MsgFlag.Auth);
+                var isPriv = msgFlags.HasFlag(MsgFlag.Priv);
                 if (isAuth)
                 {
                     securityLevel |= Levels.Authentication;
@@ -166,16 +166,16 @@ namespace DotNetSnmp.Client
 
             var msgFlags = securityLevel switch
             {
-                Levels.Authentication => MsgFlags.Auth,
-                Levels.Privacy => MsgFlags.Priv,
-                Levels.Authentication | Levels.Privacy => MsgFlags.Auth | MsgFlags.Priv,
-                0 => MsgFlags.NoAuthNoPriv,
-                _ => MsgFlags.NoAuthNoPriv
+                Levels.Authentication => MsgFlag.Auth,
+                Levels.Privacy => MsgFlag.Priv,
+                Levels.Authentication | Levels.Privacy => MsgFlag.Auth | MsgFlag.Priv,
+                0 => MsgFlag.NoAuthNoPriv,
+                _ => MsgFlag.NoAuthNoPriv
             };
 
             if (scopedPdu.Pdu.IsConfirmed())
             {
-                msgFlags |= MsgFlags.Reportable;
+                msgFlags |= MsgFlag.Reportable;
             }
 
             var message = new SnmpV3Message
@@ -197,12 +197,12 @@ namespace DotNetSnmp.Client
                 Scope = scopedPdu,
             };
 
-            if (msgFlags.HasFlag(MsgFlags.Priv))
+            if (msgFlags.HasFlag(MsgFlag.Priv))
             {
                 userTarget.PrivacyService.EncryptMessage(message);
             }
 
-            if (msgFlags.HasFlag(MsgFlags.Auth))
+            if (msgFlags.HasFlag(MsgFlag.Auth))
             {
                 var authModel = userTarget.AuthenticationService;
                 authModel.AuthenticateOutgoingMsg(message, digestBuffer);

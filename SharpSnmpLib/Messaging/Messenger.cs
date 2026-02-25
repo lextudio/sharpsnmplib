@@ -324,11 +324,6 @@ public static partial class Messenger
                 continue;
             }
 
-            // if (seed == null)
-            // {
-            //     break;
-            // }
-
             if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
             {
                 // not in sub tree
@@ -349,11 +344,6 @@ public static partial class Messenger
 
     private static async Task<Tuple<bool, Variable?>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
     {
-        // if (seed == null)
-        // {
-        //     throw new ArgumentNullException(nameof(seed));
-        // }
-
         var variables = new List<Variable> { new(seed.Id) };
         var dispatcher = new SnmpDispatcher();
 
@@ -797,7 +787,7 @@ public static partial class Messenger
             {
                 NonRepeaters = 0,
                 MaxRepetitions = maxRepetitions,
-                VariableBindings = new VarBindList(new[] { seed })
+                VariableBindings = new VarBindList(seed)
             }
         };
 
@@ -860,7 +850,7 @@ public static partial class Messenger
                 {
                     NonRepeaters = 0,
                     MaxRepetitions = maxRepetitions,
-                    VariableBindings = new VarBindList(new[] { seed })
+                    VariableBindings = new VarBindList(seed)
                 }
             };
 

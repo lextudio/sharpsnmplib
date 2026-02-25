@@ -8,7 +8,6 @@ namespace DotNetSnmp.Protocol.V3.Security
     /// </summary>
     public class SecureAgentParameters
     {
-        private string? _securityName;
         private byte[]? _userPassphraseBytes;
 
         /// <summary>
@@ -19,20 +18,14 @@ namespace DotNetSnmp.Protocol.V3.Security
         /// <summary>
         /// Represents this member.
         /// </summary>
-        public string? SecurityName
-        {
-            get => _securityName;
-            set
-            {
-                _securityName = value;
-            }
-        }
+        public string? SecurityName { get; set; }
 
         /// <summary>
         /// Represents this member.
         /// </summary>
         public string UserPassphrase
         {
+            get => _userPassphraseBytes != null ? Encoding.UTF8.GetString(_userPassphraseBytes) : string.Empty;
             set
             {
                 _userPassphraseBytes = Encoding.UTF8.GetBytes(value);
