@@ -1,0 +1,5 @@
+workflow: GitFlow/v1
+branches:
+  release:
+    prevent-increment:
+      when-current-commit-tagged: true
