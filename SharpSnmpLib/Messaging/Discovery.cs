@@ -1,242 +1,199 @@
-// Discovery type.
-// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this
-// software and associated documentation files (the "Software"), to deal in the Software
-// without restriction, including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-// to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-
-/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 5/24/2009
- * Time: 11:56 AM
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
-using System;
-using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Globalization;
 using System.Net;
-using Lextm.SharpSnmpLib.Security;
-using System.Threading.Tasks;
+using DotNetSnmp.Asn1;
+using DotNetSnmp.Asn1.Serialization;
+using DotNetSnmp.Asn1.SyntaxObjects;
+using DotNetSnmp.Common.Definitions;
+using DotNetSnmp.Protocol.V1;
+using DotNetSnmp.Protocol.V2;
+using DotNetSnmp.Protocol.V3;
+using DotNetSnmp.Protocol.V3.Security;
+using DotNetSnmp.Transport;
 
-namespace Lextm.SharpSnmpLib.Messaging
+namespace Lextm.SharpSnmpLib.Messaging;
+
+/// <summary>
+/// Discovery class that participates in SNMP v3 discovery process.
+/// </summary>
+public sealed class Discovery
 {
+    private readonly int _messageId;
+    private readonly int _requestId;
+    private readonly int _maxMessageSize;
+    private readonly SnmpType _type;
+
     /// <summary>
-    /// Discovery class that participates in SNMP v3 discovery process.
+    /// Initializes a new instance of the <see cref="Discovery"/> class.
     /// </summary>
-    public sealed partial class Discovery
+    /// <param name="messageId">The message id.</param>
+    /// <param name="requestId">The request id.</param>
+    /// <param name="maxMessageSize">The max size of message.</param>
+    public Discovery(int messageId, int requestId, int maxMessageSize)
+        : this(messageId, requestId, maxMessageSize, SnmpType.GetRequestPdu)
     {
-        private readonly ISnmpMessage _discovery;
-        private static readonly UserRegistry Empty = new();
-        private static readonly SecurityParameters DefaultSecurityParameters =
-            new(
-                OctetString.Empty,
-                Integer32.Zero,
-                Integer32.Zero,
-                OctetString.Empty,
-                OctetString.Empty,
-                OctetString.Empty);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Discovery"/> class.
-        /// </summary>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="messageId">The message id.</param>
-        /// <param name="maxMessageSize">The max size of message.</param>
-        public Discovery(int messageId, int requestId, int maxMessageSize)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Discovery"/> class.
+    /// </summary>
+    /// <param name="messageId">The message id.</param>
+    /// <param name="requestId">The request id.</param>
+    /// <param name="maxMessageSize">The max size of message.</param>
+    /// <param name="type">Message type.</param>
+    public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type)
+    {
+        _messageId = messageId;
+        _requestId = requestId;
+        _maxMessageSize = maxMessageSize;
+        _type = type;
+
+        // validate immediately so constructor behavior matches legacy expectations.
+        _ = CreateDiscoveryPdu(type, requestId);
+    }
+
+    /// <summary>
+    /// Gets the response.
+    /// </summary>
+    /// <param name="timeout">
+    /// The timeout value in milliseconds. 0 and -1 indicate infinite timeout.
+    /// </param>
+    /// <param name="receiver">The receiver endpoint.</param>
+    /// <returns>A parsed report message.</returns>
+    public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
+    {
+        if (timeout < -1)
         {
-            _discovery = new GetRequestMessage(
-                VersionCode.V3,
-                new Header(
-                    new Integer32(messageId),
-                    new Integer32(maxMessageSize),
-                    Levels.Reportable),
-                DefaultSecurityParameters,
-                new Scope(
-                    OctetString.Empty,
-                    OctetString.Empty,
-                    new GetRequestPdu(requestId, new List<Variable>())),
-                DefaultPrivacyProvider.DefaultPair,
-                null);
+            throw new ArgumentOutOfRangeException(nameof(timeout));
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Discovery"/> class.
-        /// </summary>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="messageId">The message id.</param>
-        /// <param name="maxMessageSize">The max size of message.</param>
-        /// <param name="type">Message type.</param>
-        public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type)
+        if (timeout == 0 || timeout == -1)
         {
-            switch (type)
+            return GetResponseAsync(receiver).GetAwaiter().GetResult();
+        }
+
+        try
+        {
+            return GetResponseAsync(receiver)
+                .WaitAsync(TimeSpan.FromMilliseconds(timeout))
+                .GetAwaiter()
+                .GetResult();
+        }
+        catch (TimeoutException ex)
+        {
+            throw new TimeoutException($"Discovery timed out after {timeout} milliseconds.", ex);
+        }
+    }
+
+    /// <summary>
+    /// Gets the response asynchronously.
+    /// </summary>
+    /// <param name="receiver">The receiver endpoint.</param>
+    /// <returns>A parsed report message.</returns>
+    public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver)
+    {
+        if (receiver == null)
+        {
+            throw new ArgumentNullException(nameof(receiver));
+        }
+
+        using var transport = new BasicUdpTransport(receiver);
+        var outbound = ToBytes();
+        await transport.SendAsync(outbound, receiver).ConfigureAwait(false);
+
+        var incoming = await transport.ReceiveAsync(receiver, CancellationToken.None).ConfigureAwait(false);
+        var reader = new AsnReader(incoming, AsnEncodingRules.BER);
+        var response = SnmpV3Message.ReadFrom(reader);
+
+        return new ReportMessage(response);
+    }
+
+    /// <summary>
+    /// Converts this discovery request to bytes.
+    /// </summary>
+    /// <returns>Encoded bytes.</returns>
+    public byte[] ToBytes()
+    {
+        return CreateMessage().Encode();
+    }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return string.Format(
+            CultureInfo.InvariantCulture,
+            "discovery class: message id: {0}; request id: {1}",
+            _messageId,
+            _requestId);
+    }
+
+    private SnmpV3Message CreateMessage()
+    {
+        var scope = new Scope
+        {
+            ContextEngineId = ReadOnlyMemory<byte>.Empty,
+            ContextName = string.Empty,
+            Pdu = CreateDiscoveryPdu(_type, _requestId)
+        };
+
+        return new SnmpV3Message
+        {
+            Header = new HeaderData
             {
-                case SnmpType.GetRequestPdu:
-                    {
-                        _discovery = new GetRequestMessage(
-                            VersionCode.V3,
-                            new Header(
-                            new Integer32(messageId),
-                            new Integer32(maxMessageSize),
-                            Levels.Reportable),
-                            DefaultSecurityParameters,
-                            new Scope(
-                            OctetString.Empty,
-                            OctetString.Empty,
-                            new GetRequestPdu(requestId, new List<Variable>())),
-                            DefaultPrivacyProvider.DefaultPair,
-                            null);
-                        break;
-                    }
-
-                case SnmpType.GetNextRequestPdu:
-                    {
-                        _discovery = new GetNextRequestMessage(
-                            VersionCode.V3,
-                            new Header(
-                            new Integer32(messageId),
-                            new Integer32(maxMessageSize),
-                            Levels.Reportable),
-                            DefaultSecurityParameters,
-                            new Scope(
-                            OctetString.Empty,
-                            OctetString.Empty,
-                            new GetNextRequestPdu(requestId, new List<Variable>())),
-                            DefaultPrivacyProvider.DefaultPair,
-                            null);
-                        break;
-                    }
-
-                case SnmpType.GetBulkRequestPdu:
-                    {
-                        _discovery = new GetBulkRequestMessage(
-                            VersionCode.V3,
-                            new Header(
-                            new Integer32(messageId),
-                            new Integer32(maxMessageSize),
-                            Levels.Reportable),
-                            DefaultSecurityParameters,
-                            new Scope(
-                            OctetString.Empty,
-                            OctetString.Empty,
-                            new GetBulkRequestPdu(requestId, 0, 0, new List<Variable>())),
-                            DefaultPrivacyProvider.DefaultPair,
-                            null);
-                        break;
-                    }
-
-                case SnmpType.SetRequestPdu:
-                    {
-                        _discovery = new SetRequestMessage(
-                            VersionCode.V3,
-                            new Header(
-                            new Integer32(messageId),
-                            new Integer32(maxMessageSize),
-                            Levels.Reportable),
-                            DefaultSecurityParameters,
-                            new Scope(
-                            OctetString.Empty,
-                            OctetString.Empty,
-                            new SetRequestPdu(requestId, new List<Variable>())),
-                            DefaultPrivacyProvider.DefaultPair,
-                            null);
-                        break;
-                    }
-
-                case SnmpType.InformRequestPdu:
-                    {
-                        _discovery = new InformRequestMessage(
-                            VersionCode.V3,
-                            new Header(
-                            new Integer32(messageId),
-                            new Integer32(maxMessageSize),
-                            Levels.Reportable),
-                            DefaultSecurityParameters,
-                            new Scope(
-                            OctetString.Empty,
-                            OctetString.Empty,
-                            new InformRequestPdu(requestId)),
-                            DefaultPrivacyProvider.DefaultPair,
-                            null);
-                        break;
-                    }
-
-                default:
-                    throw new ArgumentException("Discovery message must be a request.", nameof(type));
-            }
-        }
-
-        /// <summary>
-        /// Gets the response.
-        /// </summary>
-        /// <param name="timeout">The time-out value, in milliseconds. The default value is 0, which indicates an infinite time-out period. Specifying -1 also indicates an infinite time-out period.</param>
-        /// <param name="receiver">The receiver.</param>
-        /// <returns></returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("GetResponse is incompatible with trimming.")]
-#endif
-        public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
-        {
-            if (receiver == null)
+                MsgId = _messageId,
+                MsgMaxSize = _maxMessageSize,
+                MsgFlags = MsgFlags.Reportable,
+                MsgSecurityModel = SecurityModel.Usm
+            },
+            SecurityParameters = new UsmSecurityParameters
             {
-                throw new ArgumentNullException(nameof(receiver));
-            }
+                SecurityName = OctetString.Empty,
+                EngineId = Memory<byte>.Empty,
+                EngineBoots = 0,
+                EngineTime = 0,
+                AuthParams = Memory<byte>.Empty,
+                PrivParams = Memory<byte>.Empty
+            },
+            Scope = scope
+        };
+    }
 
-            using var socket = receiver.GetSocket();
-            return (ReportMessage)_discovery.GetResponse(timeout, receiver, Empty, socket);
-        }
-
-        /// <summary>
-        /// Gets the response.
-        /// </summary>
-        /// <param name="receiver">The receiver.</param>
-        /// <returns></returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("GetResponseAsync is incompatible with trimming.")]
-#endif
-        public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver)
+    private static Pdu CreateDiscoveryPdu(SnmpType type, int requestId)
+    {
+        return type switch
         {
-            if (receiver == null)
+            SnmpType.GetRequestPdu => new GetRequestPdu
             {
-                throw new ArgumentNullException(nameof(receiver));
-            }
-
-            using var socket = receiver.GetSocket();
-            return (ReportMessage)await _discovery.GetResponseAsync(receiver, Empty, socket).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Converts to the bytes.
-        /// </summary>
-        /// <returns></returns>
-        public byte[] ToBytes()
-        {
-            return _discovery.ToBytes();
-        }
-
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            return string.Format(CultureInfo.InvariantCulture, "discovery class: message id: {0}; request id: {1}", _discovery.MessageId(), _discovery.RequestId());
-        }
+                RequestId = requestId,
+                VariableBindings = new VarBindList()
+            },
+            SnmpType.GetNextRequestPdu => new GetNextRequestPdu
+            {
+                RequestId = requestId,
+                VariableBindings = new VarBindList()
+            },
+            SnmpType.GetBulkRequestPdu => new GetBulkRequestPdu
+            {
+                RequestId = requestId,
+                NonRepeaters = 0,
+                MaxRepetitions = 0,
+                VariableBindings = new VarBindList()
+            },
+            SnmpType.SetRequestPdu => new SetRequestPdu
+            {
+                RequestId = requestId,
+                VariableBindings = new VarBindList()
+            },
+            SnmpType.InformRequestPdu => new InformRequestPdu
+            {
+                RequestId = requestId,
+                TimeStamp = 0,
+                Enterprise = new ObjectIdentifier("1.3.6.1.6.3.1.1.5.1"),
+                VariableBindings = new VarBindList(
+                    new Variable("1.3.6.1.2.1.1.3.0", new TimeTicks(0)),
+                    new Variable("1.3.6.1.6.3.1.1.4.1.0", new ObjectIdentifier("1.3.6.1.6.3.1.1.5.1")))
+            },
+            _ => throw new ArgumentException("Discovery message must be a request.", nameof(type))
+        };
     }
 }

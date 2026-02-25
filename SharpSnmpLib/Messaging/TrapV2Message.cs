@@ -1,247 +1,114 @@
-﻿// TRAP message type (SNMP version 2 and above).
-// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this
-// software and associated documentation files (the "Software"), to deal in the Software
-// without restriction, including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-// to whom the Software is furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
+using System.Text;
+using System.Net;
+using DotNetSnmp.Asn1.SyntaxObjects;
+using DotNetSnmp.Common.Definitions;
+using DotNetSnmp.Protocol.V3.Security.Privacy;
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using Lextm.SharpSnmpLib.Security;
+namespace Lextm.SharpSnmpLib.Messaging;
 
-namespace Lextm.SharpSnmpLib.Messaging
+/// <summary>
+/// Legacy compatibility wrapper for TrapV2 message sending.
+/// </summary>
+public sealed class TrapV2Message
 {
-    /// <summary>
-    /// TRAP v2 message.
-    /// </summary>
-    public sealed class TrapV2Message : ISnmpMessage
+    private readonly int _requestId;
+    private readonly OctetString _securityName;
+    private readonly IPrivacyProvider? _privacy;
+
+    public TrapV2Message(
+        int requestId,
+        VersionCode version,
+        OctetString community,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables)
     {
-        private readonly byte[] _bytes;
+        _requestId = requestId;
+        Version = version;
+        _securityName = community;
+        Enterprise = enterprise;
+        TimeStamp = timestamp;
+        _variables = variables ?? throw new ArgumentNullException(nameof(variables));
+    }
 
-        /// <summary>
-        /// Creates a <see cref="TrapV2Message"/> instance with all content.
-        /// </summary>
-        /// <param name="version">Version code.</param>
-        /// <param name="community">Community.</param>
-        /// <param name="enterprise">Enterprise.</param>
-        /// <param name="time">Time stamp.</param>
-        /// <param name="variables">Variables.</param>
-        /// <param name="requestId">Request ID.</param>
-        [CLSCompliant(false)]
-        public TrapV2Message(int requestId, VersionCode version, OctetString community, ObjectIdentifier enterprise, uint time, IList<Variable> variables)
+    public TrapV2Message(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString user,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        int maxMessageSize,
+        OctetString engineId,
+        int engineBoots,
+        int engineTime)
+    {
+        Version = version;
+        MessageId = messageId;
+        _requestId = requestId;
+        _securityName = user;
+        Enterprise = enterprise;
+        TimeStamp = timestamp;
+        _variables = variables ?? throw new ArgumentNullException(nameof(variables));
+        _privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
+        MaxMessageSize = maxMessageSize;
+        EngineId = engineId;
+        EngineBoots = engineBoots;
+        EngineTime = engineTime;
+    }
+
+    public VersionCode Version { get; }
+
+    public int MessageId { get; }
+
+    public int MaxMessageSize { get; }
+
+    public OctetString EngineId { get; }
+
+    public int EngineBoots { get; }
+
+    public int EngineTime { get; }
+
+    public ObjectIdentifier Enterprise { get; }
+
+    public uint TimeStamp { get; }
+
+    private readonly IList<Variable> _variables;
+
+    public IList<Variable> Variables()
+    {
+        return _variables;
+    }
+
+    public void Send(IPEndPoint endpoint)
+    {
+        if (endpoint == null)
         {
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
-
-            if (community == null)
-            {
-                throw new ArgumentNullException(nameof(community));
-            }
-
-            if (version != VersionCode.V2)
-            {
-                throw new ArgumentException("Only v2c are supported.", nameof(version));
-            }
-
-            Version = version;
-            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
-            TimeStamp = time;
-            Header = Header.Empty;
-            Parameters = SecurityParameters.Create(community);
-            var pdu = new TrapV2Pdu(
-                requestId,
-                enterprise,
-                time,
-                variables);
-            Scope = new Scope(pdu);
-            Privacy = DefaultPrivacyProvider.DefaultPair;
-            _bytes = this.PackMessage(null).ToBytes();
+            throw new ArgumentNullException(nameof(endpoint));
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrapV2Message"/> class.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="messageId">The message id.</param>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="enterprise">The enterprise.</param>
-        /// <param name="time">The time.</param>
-        /// <param name="variables">The variables.</param>
-        /// <param name="privacy">The privacy.</param>
-        /// <param name="maxMessageSize">Size of the max message.</param>
-        /// <param name="engineId">The engine ID.</param>
-        /// <param name="engineBoots">The engine boots.</param>
-        /// <param name="engineTime">The engine time.</param>
-        [CLSCompliant(false)]
-        public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, int engineBoots, int engineTime)
-            : this(version, messageId, requestId, userName, enterprise, time, variables, privacy, maxMessageSize, engineId, engineBoots, engineTime, OctetString.Empty, OctetString.Empty)
+        if (Version == VersionCode.V2)
         {
+            Messenger.SendTrapV2(_requestId, Version, endpoint, _securityName, Enterprise, TimeStamp, _variables);
+            return;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TrapV2Message"/> class.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="messageId">The message id.</param>
-        /// <param name="requestId">The request id.</param>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="enterprise">The enterprise.</param>
-        /// <param name="time">The time.</param>
-        /// <param name="variables">The variables.</param>
-        /// <param name="privacy">The privacy.</param>
-        /// <param name="maxMessageSize">Size of the max message.</param>
-        /// <param name="engineId">The engine ID.</param>
-        /// <param name="engineBoots">The engine boots.</param>
-        /// <param name="engineTime">The engine time.</param>
-        /// <param name="contextEngineId">The context engine ID.</param>
-        /// <param name="contextName">The context name.</param>
-        [CLSCompliant(false)]
-        public TrapV2Message(VersionCode version, int messageId, int requestId, OctetString userName, ObjectIdentifier enterprise, uint time, IList<Variable> variables, IPrivacyProvider privacy, int maxMessageSize, OctetString engineId, int engineBoots, int engineTime, OctetString contextEngineId, OctetString contextName)
+        if (Version == VersionCode.V3)
         {
-            if (userName == null)
-            {
-                throw new ArgumentNullException(nameof(userName));
-            }
-
-            if (variables == null)
-            {
-                throw new ArgumentNullException(nameof(variables));
-            }
-
-            if (version != VersionCode.V3)
-            {
-                throw new ArgumentException("Only v3 is supported.", nameof(version));
-            }
-
-            if (engineId == null)
-            {
-                throw new ArgumentNullException(nameof(engineId));
-            }
-
-            Version = version;
-            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
-            Enterprise = enterprise ?? throw new ArgumentNullException(nameof(enterprise));
-            TimeStamp = time;
-
-            Header = new Header(new Integer32(messageId), new Integer32(maxMessageSize), privacy.ToSecurityLevel());
-            var authenticationProvider = Privacy.AuthenticationProvider;
-            Parameters = new SecurityParameters(
-                engineId,
-                new Integer32(engineBoots),
-                new Integer32(engineTime),
-                userName,
-                authenticationProvider.CleanDigest,
-                Privacy.Salt);
-            var pdu = new TrapV2Pdu(
-                requestId,
-                enterprise,
-                time,
-                variables);
-
-            Scope = new Scope(contextEngineId, contextName, pdu);
-            Privacy.ComputeHash(Version, Header, Parameters, Scope);
-            _bytes = this.PackMessage(null).ToBytes();
+            var username = Encoding.UTF8.GetString(_securityName.Octets);
+            Messenger.SendInformV3Async(endpoint, username, _privacy ?? new DefaultPrivacyProvider(), Enterprise, TimeStamp, _variables)
+                .GetAwaiter()
+                .GetResult();
+            return;
         }
 
-        internal TrapV2Message(VersionCode version, Header header, SecurityParameters parameters, Scope scope, IPrivacyProvider privacy, byte[]? length)
-        {
-            Version = version;
-            Header = header ?? throw new ArgumentNullException(nameof(header));
-            Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
-            Scope = scope ?? throw new ArgumentNullException(nameof(scope));
-            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
-            var pdu = (TrapV2Pdu)Scope.Pdu;
-            Enterprise = pdu.Enterprise;
-            TimeStamp = pdu.TimeStamp;
-            _bytes = this.PackMessage(length).ToBytes();
-        }
+        throw new NotSupportedException("TrapV2Message only supports v2c and v3 in this compatibility layer.");
+    }
 
-        #region ISnmpMessage Members
-
-        /// <summary>
-        /// Gets the header.
-        /// </summary>
-        public Header Header { get; }
-
-        /// <summary>
-        /// Gets the privacy provider.
-        /// </summary>
-        /// <value>The privacy provider.</value>
-        public IPrivacyProvider Privacy { get; }
-
-        /// <summary>
-        /// Gets the parameters.
-        /// </summary>
-        /// <value>The parameters.</value>
-        public SecurityParameters Parameters { get; }
-
-        /// <summary>
-        /// Gets the scope.
-        /// </summary>
-        /// <value>The scope.</value>
-        public Scope Scope { get; }
-
-        #endregion
-
-        #region ISnmpData Members
-
-        /// <summary>
-        /// Converts to byte format.
-        /// </summary>
-        /// <returns></returns>
-        public byte[] ToBytes()
-        {
-            return _bytes;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Enterprise.
-        /// </summary>
-        public ObjectIdentifier Enterprise { get; }
-
-        /// <summary>
-        /// Time stamp.
-        /// </summary>
-        [CLSCompliant(false)]
-        public uint TimeStamp { get; }
-
-        /// <summary>
-        /// Gets the version.
-        /// </summary>
-        /// <value>The version.</value>
-        public VersionCode Version { get; }
-
-        /// <summary>
-        /// Returns a <see cref="string"/> that represents the current <see cref="TrapV2Message"/>.
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return string.Format(
-                CultureInfo.InvariantCulture,
-                "SNMPv2 trap: time stamp: {0}; community: {1}; enterprise: {2}; varbind count: {3}",
-                TimeStamp.ToString(CultureInfo.InvariantCulture),
-                this.Community(),
-                Enterprise,
-                this.Variables().Count.ToString(CultureInfo.InvariantCulture));
-        }
+    public override string ToString()
+    {
+        return $"TrapV2Message: version={Version}; enterprise={Enterprise}; vars={_variables.Count}";
     }
 }

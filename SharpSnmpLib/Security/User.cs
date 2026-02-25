@@ -17,48 +17,48 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System;
 using System.Globalization;
+using DotNetSnmp.Asn1.SyntaxObjects;
+using DotNetSnmp.Protocol.V3.Security.Privacy;
 
-namespace Lextm.SharpSnmpLib.Security
+namespace Lextm.SharpSnmpLib.Security;
+
+/// <summary>
+/// User class.
+/// </summary>
+public sealed class User
 {
     /// <summary>
-    /// User class.
+    /// Initializes a new instance of the <see cref="User"/> class.
     /// </summary>
-    public sealed class User
+    /// <param name="name">The name.</param>
+    /// <param name="privacy">The privacy provider.</param>
+    public User(OctetString name, IPrivacyProvider privacy)
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="User"/> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        public User(OctetString name, IPrivacyProvider privacy)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
-        }
+        Name = name;
+        Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
+    }
 
-        /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public OctetString Name { get; }
+    /// <summary>
+    /// Gets the name.
+    /// </summary>
+    /// <value>The name.</value>
+    public OctetString Name { get; }
 
-        /// <summary>
-        /// Gets the privacy provider.
-        /// </summary>
-        /// <value>The provider.</value>
-        public IPrivacyProvider Privacy { get; }
+    /// <summary>
+    /// Gets the privacy provider.
+    /// </summary>
+    /// <value>The provider.</value>
+    public IPrivacyProvider Privacy { get; }
 
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        public override string ToString()
-        {
-            return string.Format(CultureInfo.InvariantCulture, "User: name: {0}; provider: {1}", Name, Privacy);
-        }
+    /// <summary>
+    /// Returns a <see cref="System.String"/> that represents this instance.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="System.String"/> that represents this instance.
+    /// </returns>
+    public override string ToString()
+    {
+        return string.Format(CultureInfo.InvariantCulture, "User: name: {0}; provider: {1}", Name, Privacy);
     }
 }

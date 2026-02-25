@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup Label="Configuration">
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.tests.snk</AssemblyOriginatorKeyFile>
     <AssemblyName>SharpSnmpLib.Tests.NetStandard</AssemblyName>
@@ -9,13 +11,17 @@
   </PropertyGroup>
   <PropertyGroup>
     <OutputType Condition="'$(TargetFramework)'!='net471'">Exe</OutputType>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
     <!-- Detect SDK version -->
     <ParsedSdkVersion>$([System.Text.RegularExpressions.Regex]::Replace($(NETCoreSdkVersion), '-.*', ''))</ParsedSdkVersion>
     <IsNet80Supported Condition="'$(ParsedSdkVersion)' >= '8.0'">true</IsNet80Supported>
     <IsNet90Supported Condition="'$(ParsedSdkVersion)' >= '9.0'">true</IsNet90Supported>
-    <!-- Only support .NET 8/9 and .NET Framework 4.7.1 right now. -->
+    <IsNet100Supported Condition="'$(ParsedSdkVersion)' >= '10.0'">true</IsNet100Supported>
+    <!-- Only support .NET 8/9/10 and .NET Framework 4.7.1 right now. -->
     <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true' ">net8.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true' ">$(TargetFrameworks);net9.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet100Supported)' == 'true' ">$(TargetFrameworks);net10.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net471</TargetFrameworks>
     <TestTfmsInParallel>false</TestTfmsInParallel>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
@@ -36,16 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AltCover" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio" />
-    <PackageReference Include="AltCover" />
     <PackageReference Include="NSubstitute" />
-    <PackageReference Include="xunit" />
-    <PackageReference Include="xunit.runner.visualstudio">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3.mtp-v2" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'!='net471'">
     <PackageReference Include="System.Net.Sockets" />

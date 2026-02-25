@@ -1,285 +1,91 @@
-// Byte related function helper.
-// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this
-// software and associated documentation files (the "Software"), to deal in the Software
-// without restriction, including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-// to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-
-/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 2008/5/1
- * Time: 12:31
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Text;
+using DotNetSnmp.Utils;
 
-namespace Lextm.SharpSnmpLib
+namespace Lextm.SharpSnmpLib;
+
+public static class ByteTool
 {
-    /// <summary>
-    /// Helper utility that performs data conversions from/to bytes.
-    /// </summary>
-    public static class ByteTool
+    [Obsolete("Use Convert(this string str) instead.")]
+    public static byte[] ConvertDecimal(string description)
     {
-        /// <summary>
-        /// Converts decimal string to bytes.
-        /// </summary>
-        /// <param name="description">The decimal string.</param>
-        /// <returns>The converted bytes.</returns>
-        /// <remarks><c>" 16 18 "</c> is converted to <c>new byte[] { 0x10, 0x12 }</c>.</remarks>
-        public static byte[] ConvertDecimal(string description)
+        if (description == null)
         {
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
-
-            var result = new List<byte>();
-            var content = description.Trim().Split(' ');
-            foreach (var part in content)
-            {
-                if (byte.TryParse(part, out byte temp))
-                {
-                    result.Add(temp);
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid decimal string.", nameof(description));
-                }
-            }
-
-            return result.ToArray();
+            throw new ArgumentNullException(nameof(description));
         }
 
-        /// <summary>
-        /// Converts the byte string to bytes.
-        /// </summary>
-        /// <param name="description">The HEX string.</param>
-        /// <returns>The converted bytes.</returns>
-        /// <remarks><c>"80 00"</c> is converted to <c>new byte[] { 0x80, 0x00 }</c>.</remarks>
-        public static byte[] Convert(IEnumerable<char> description)
+        var result = new List<byte>();
+        var content = description.Trim().Split(' ');
+        foreach (var part in content)
         {
-            if (description == null)
+            if (part.Length == 0)
             {
-                throw new ArgumentNullException(nameof(description));
+                continue;
             }
 
-            var result = new List<byte>();
-            var buffer = new StringBuilder(2);
-            foreach (var c in description.Where(c => !char.IsWhiteSpace(c)))
+            if (!byte.TryParse(part, out byte value))
             {
-                if (!char.IsLetterOrDigit(c))
-                {
-                    throw new ArgumentException("Illegal character found.", nameof(description));
-                }
-
-                buffer.Append(c);
-                if (buffer.Length != 2)
-                {
-                    continue;
-                }
-                if (byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out byte temp))
-                {
-                    result.Add(temp);
-                }
-                else
-                {
-                    throw new ArgumentException("Invalid byte string.", nameof(description));
-                }
-
-                buffer.Length = 0;
+                throw new ArgumentException("Invalid decimal string.", nameof(description));
             }
 
-            if (buffer.Length != 0)
-            {
-                throw new ArgumentException("Not a complete byte string.", nameof(description));
-            }
-
-            return result.ToArray();
+            result.Add(value);
         }
 
-        /// <summary>
-        /// Converts bytes to a byte string.
-        /// </summary>
-        /// <param name="buffer">The bytes.</param>
-        /// <returns>The formatted string.</returns>
-        /// <remarks><c>new byte[] { 0x80, 0x00 }</c> is converted to <c>"80 00"</c>.</remarks>
-        public static string Convert(byte[] buffer)
-        {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
+        return result.ToArray();
+    }
 
-            return BitConverter.ToString(buffer).Replace('-', ' ');
+    [Obsolete("Use Convert(this string str) instead.")]
+    public static byte[] Convert(this IEnumerable<char> description)
+    {
+        if (description == null)
+        {
+            throw new ArgumentNullException(nameof(description));
         }
 
-        internal static byte[] ParseItems(params ISnmpData[] items)
+        var result = new List<byte>();
+        var buffer = new StringBuilder(2);
+        foreach (var c in description)
         {
-            if (items == null)
+            if (char.IsWhiteSpace(c))
             {
-                throw new ArgumentNullException(nameof(items));
+                continue;
             }
 
-            using var result = new MemoryStream();
-            foreach (var item in items)
+            if (!char.IsLetterOrDigit(c))
             {
-                if (item == null)
-                {
-                    throw new ArgumentException("Item in the collection cannot be null.", nameof(items));
-                }
-
-                item.AppendBytesTo(result);
+                throw new ArgumentException("Illegal character found.", nameof(description));
             }
 
-            return result.ToArray();
+            buffer.Append(c);
+            if (buffer.Length != 2)
+            {
+                continue;
+            }
+
+            if (!byte.TryParse(buffer.ToString(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out byte value))
+            {
+                throw new ArgumentException("Invalid byte string.", nameof(description));
+            }
+
+            result.Add(value);
+            buffer.Length = 0;
         }
 
-        internal static byte[] ParseItems(IEnumerable<ISnmpData> items)
+        if (buffer.Length != 0)
         {
-            if (items == null)
-            {
-                throw new ArgumentNullException(nameof(items));
-            }
-
-            using var result = new MemoryStream();
-            foreach (var item in items)
-            {
-                item.AppendBytesTo(result);
-            }
-
-            return result.ToArray();
+            throw new ArgumentException("Not a complete byte string.", nameof(description));
         }
 
-        internal static byte[] GetRawBytes(IEnumerable<byte> orig, bool negative)
-        {
-            if (orig == null)
-            {
-                throw new ArgumentNullException(nameof(orig));
-            }
+        return result.ToArray();
+    }
 
-            byte flag;
-            byte sign;
-            if (negative)
-            {
-                flag = 0xff;
-                sign = 0x80;
-            }
-            else
-            {
-                flag = 0x0;
-                sign = 0x0;
-            }
+    public static byte[] Convert(this string str)
+    {
+        return Dump.BytesFromHexString(str);
+    }
 
-            var list = new List<byte>(orig);
-            while (list.Count > 1)
-            {
-                if (list[list.Count - 1] == flag)
-                {
-                    list.RemoveAt(list.Count - 1);
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            // if sign bit is not correct, add an extra byte
-            if ((list[list.Count - 1] & 0x80) != sign)
-            {
-                list.Add(flag);
-            }
-
-            list.Reverse();
-            return list.ToArray();
-        }
-
-        /// <summary>
-        /// Packs parts into a single message body.
-        /// </summary>
-        /// <param name="length">Message length.</param>
-        /// <param name="version">Message version.</param>
-        /// <param name="header">Header.</param>
-        /// <param name="parameters">Security parameters.</param>
-        /// <param name="data">Scope data.</param>
-        /// <returns>The <see cref="Sequence" /> object that represents the message body.</returns>
-        public static Sequence PackMessage(byte[]? length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
-        {
-            if (header == null)
-            {
-                throw new ArgumentNullException(nameof(header));
-            }
-
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
-
-            var items = new[]
-            {
-                new Integer32((int)version),
-                header.GetData(version),
-                parameters.GetData(version),
-                data
-            };
-            return new Sequence(length, items);
-        }
-
-        internal static byte[] WritePayloadLength(this int length) // excluding initial octet
-        {
-            if (length < 0)
-            {
-                throw new ArgumentException("length cannot be negative.", nameof(length));
-            }
-
-            var stream = new MemoryStream();
-
-            if (length < 127)
-            {
-                stream.WriteByte((byte)length);
-                return stream.ToArray();
-            }
-
-            var c = new byte[16];
-            var j = 0;
-            while (length > 0)
-            {
-                c[j++] = (byte)(length & 0xff);
-                length >>= 8;
-            }
-
-            stream.WriteByte((byte)(0x80 | j));
-            while (j > 0)
-            {
-                int x = c[--j];
-                stream.WriteByte((byte)x);
-            }
-
-            return stream.ToArray();
-        }
+    public static string Convert(this byte[] bytes)
+    {
+        return Dump.BytesToHexString(bytes);
     }
 }

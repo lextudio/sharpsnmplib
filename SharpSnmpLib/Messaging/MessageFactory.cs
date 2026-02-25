@@ -1,211 +1,178 @@
-// Message factory type.
-// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this
-// software and associated documentation files (the "Software"), to deal in the Software
-// without restriction, including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-// to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-
-/*
- * Created by SharpDevelop.
- * User: lextm
- * Date: 2008/5/1
- * Time: 11:17
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
+using System.Formats.Asn1;
+using DotNetSnmp.Asn1.Serialization;
+using DotNetSnmp.Common.Definitions;
 using Lextm.SharpSnmpLib.Security;
 
-namespace Lextm.SharpSnmpLib.Messaging
+namespace Lextm.SharpSnmpLib.Messaging;
+
+public static class MessageFactory
 {
-    /// <summary>
-    /// Factory that creates <see cref="ISnmpMessage"/> instances from byte format.
-    /// </summary>
-    public static class MessageFactory
+    public static IList<ISnmpMessage> ParseMessages(IEnumerable<char> bytes, UserRegistry registry)
     {
-        /// <summary>
-        /// Creates <see cref="ISnmpMessage"/> instances from a string.
-        /// </summary>
-        /// <param name="bytes">Byte string.</param>
-        /// <param name="registry">The registry.</param>
-        /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(IEnumerable<char> bytes, UserRegistry registry)
+        if (bytes == null)
         {
-            if (bytes == null)
-            {
-                throw new ArgumentNullException(nameof(bytes));
-            }
+            throw new ArgumentNullException(nameof(bytes));
+        }
+#pragma warning disable CS0618 // Compatibility overload intentionally targets legacy char-sequence parsing semantics.
+        return ParseMessages(ByteTool.Convert(bytes), registry);
+#pragma warning restore CS0618
+    }
 
-            if (registry == null)
-            {
-                throw new ArgumentNullException(nameof(registry));
-            }
-
-            return ParseMessages(ByteTool.Convert(bytes), registry);
+    public static IList<ISnmpMessage> ParseMessages(byte[] buffer, UserRegistry registry)
+    {
+        if (buffer == null)
+        {
+            throw new ArgumentNullException(nameof(buffer));
         }
 
-        /// <summary>
-        /// Creates <see cref="ISnmpMessage"/> instances from buffer.
-        /// </summary>
-        /// <param name="buffer">Buffer.</param>
-        /// <param name="registry">The registry.</param>
-        /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, UserRegistry registry)
+        return ParseMessages(buffer, 0, buffer.Length, registry);
+    }
+
+    public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int length, UserRegistry registry)
+    {
+        if (buffer == null)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-
-            if (registry == null)
-            {
-                throw new ArgumentNullException(nameof(registry));
-            }
-
-            return ParseMessages(buffer, 0, buffer.Length, registry);
+            throw new ArgumentNullException(nameof(buffer));
         }
 
-        /// <summary>
-        /// Creates <see cref="ISnmpMessage"/> instances from buffer.
-        /// </summary>
-        /// <param name="buffer">Buffer.</param>
-        /// <param name="index">The index.</param>
-        /// <param name="length">The length.</param>
-        /// <param name="registry">The registry.</param>
-        /// <returns></returns>
-        public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int length, UserRegistry registry)
+        if (index < 0 || index > buffer.Length)
         {
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-
-            if (registry == null)
-            {
-                throw new ArgumentNullException(nameof(registry));
-            }
-
-            IList<ISnmpMessage> result = new List<ISnmpMessage>();
-            using Stream stream = new MemoryStream(buffer, index, length, true);
-            int first;
-            while ((first = stream.ReadByte()) != -1)
-            {
-                result.Add(ParseMessage(first, stream, registry));
-            }
-
-            return result;
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
-        private static ISnmpMessage ParseMessage(int first, Stream stream, UserRegistry registry)
+        if (length < 0 || length > buffer.Length - index)
         {
-            var array = DataFactory.CreateSnmpData(first, stream);
-            if (array.TypeCode != SnmpType.Sequence)
-            {
-                throw new SnmpException("not an SNMP message");
-            }
+            throw new ArgumentOutOfRangeException(nameof(length));
+        }
 
-            var body = (Sequence)array;
-            if (body.Length != 3 && body.Length != 4)
-            {
-                throw new SnmpException("not an SNMP message");
-            }
+        return ParseMessages(new ReadOnlyMemory<byte>(buffer, index, length), registry);
+    }
 
-            var version = (VersionCode)((Integer32)body[0]).ToInt32();
-            Header header;
-            SecurityParameters parameters;
-            IPrivacyProvider privacy;
-            Scope scope;
-            if (body.Length == 3)
+    /// <summary>
+    /// Creates <see cref="ISnmpMessage"/> instances from a string.
+    /// </summary>
+    /// <param name="bytes">Byte string.</param>
+    /// <param name="registry">The registry.</param>
+    /// <returns></returns>
+    public static IList<ISnmpMessage> ParseMessages(ReadOnlyMemory<byte> bytes, UserRegistry registry)
+    {
+        if (registry == null)
+        {
+            throw new ArgumentNullException(nameof(registry));
+        }
+
+        var result = new List<ISnmpMessage>();
+
+        try
+        {
+            // Create an AsnReader for the entire byte array
+            var reader = new AsnReader(bytes, AsnEncodingRules.BER);
+
+            // Continue parsing messages until we've consumed all data
+            while (reader.HasData)
             {
-                header = Header.Empty;
-                parameters = SecurityParameters.Create((OctetString)body[1]);
-                privacy = DefaultPrivacyProvider.DefaultPair;
-                scope = new Scope((ISnmpPdu)body[2]);
-            }
-            else
-            {
-                header = new Header(body[1]);
-                parameters = new SecurityParameters((OctetString)body[2]);
-                var temp = registry.Find(parameters.UserName);
-                if (temp == null)
+                // Get the entire message data before we move on to the next one
+                ReadOnlyMemory<byte> messageData = reader.PeekEncodedValue().ToArray();
+
+                // Skip over this message in the main reader so we can continue with the next message
+                reader.ReadEncodedValue();
+
+                // Use a temporary reader to peek at the version
+                var versionReader = new AsnReader(messageData, AsnEncodingRules.BER);
+                var rootSeq = versionReader.ReadSequence();
+                if (!rootSeq.TryReadInt32(out var messageVersion))
                 {
-                    // handle decryption exception.
-                    return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
+                    throw new SnmpDecodeException("Failed to read SNMP version from message");
                 }
 
-                privacy = temp;
-                var code = body[3].TypeCode;
-                if (code == SnmpType.Sequence)
+                // Convert version number to enum
+                var version = (VersionCode)messageVersion;
+
+                // Parse the message based on its version, passing the full message data
+                // to the appropriate version-specific parser
+                ISnmpMessage message;
+
+                switch (version)
                 {
-                    // v3 not encrypted
-                    scope = new Scope((Sequence)body[3]);
-                }
-                else if (code == SnmpType.OctetString)
-                {
-                    // v3 encrypted
-                    try
-                    {
-                        scope = new Scope((Sequence)privacy.Decrypt(body[3], parameters));
-                    }
-                    catch (SnmpException)
-                    {
-                        // If decryption failed or gave back invalid data, handle parsing exceptions.
-                        return new MalformedMessage(header.MessageId, parameters.UserName, body[3]);
-                    }
-                }
-                else
-                {
-                    throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "invalid v3 packets scoped data: {0}", code));
+                    case VersionCode.V1:
+                        message = DotNetSnmp.Protocol.V1.SnmpV1Message.ReadFrom(
+                            new AsnReader(messageData, AsnEncodingRules.BER));
+                        break;
+
+                    case VersionCode.V2:
+                        message = DotNetSnmp.Protocol.V2.SnmpV2Message.ReadFrom(
+                            new AsnReader(messageData, AsnEncodingRules.BER));
+                        break;
+
+                    case VersionCode.V3:
+                        var v3Message = DotNetSnmp.Protocol.V3.SnmpV3Message.ReadFrom(
+                            new AsnReader(messageData, AsnEncodingRules.BER));
+
+                        // For V3, handle security operations if message has security flags
+                        ProcessV3Security(v3Message, registry);
+
+                        message = v3Message;
+                        break;
+
+                    default:
+                        throw new SnmpDecodeException($"Unsupported SNMP version: {version}");
                 }
 
-                if (!privacy.VerifyHash(version, header, parameters, body[3], body.GetLengthBytes()))
-                {
-                    parameters.IsInvalid = true;
-                }
+                result.Add(message);
             }
+        }
+        catch (AsnContentException ex)
+        {
+            throw new SnmpDecodeException($"Error parsing SNMP message: {ex.Message}");
+        }
+        catch (SnmpDecodeException)
+        {
+            throw; // Just rethrow already formatted SNMP-specific exceptions
+        }
+        catch (Exception ex)
+        {
+            throw new SnmpDecodeException($"Error processing SNMP message: {ex.Message}");
+        }
 
-            var scopeCode = scope.Pdu.TypeCode;
-            try
+        return result;
+    }
+
+    private static void ProcessV3Security(DotNetSnmp.Protocol.V3.SnmpV3Message v3Message, UserRegistry registry)
+    {
+        // Only process security if the message contains security flags
+        var msgFlags = v3Message.Header.MsgFlags;
+
+        // Skip security processing for discovery messages (which have empty security name)
+        if (string.IsNullOrEmpty(v3Message.SecurityParameters.SecurityName))
+        {
+            return;
+        }
+
+        // Find the appropriate security parameters from registry
+        var userName = v3Message.SecurityParameters.SecurityName;
+        var privacy = registry.Find(userName);
+
+        if (privacy == null)
+        {
+            throw new SnmpDecodeException($"User '{userName}' not found in registry");
+        }
+
+        var auth = privacy.AuthenticationProvider;
+
+        // Process authentication if needed
+        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlags.Auth))
+        {
+            bool authenticated = auth.AuthenticateIncomingMsg(v3Message);
+            if (!authenticated)
             {
-                return scopeCode switch
-                {
-                    SnmpType.TrapV1Pdu => new TrapV1Message(body),
-                    SnmpType.TrapV2Pdu => new TrapV2Message(version, header, parameters, scope, privacy, body.GetLengthBytes()),
-                    SnmpType.GetRequestPdu => new GetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes()),
-                    SnmpType.ResponsePdu => new ResponseMessage(version, header, parameters, scope, privacy, false, body.GetLengthBytes()),
-                    SnmpType.SetRequestPdu => new SetRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes()),
-                    SnmpType.GetNextRequestPdu => new GetNextRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes()),
-                    SnmpType.GetBulkRequestPdu => new GetBulkRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes()),
-                    SnmpType.ReportPdu => new ReportMessage(version, header, parameters, scope, privacy, body.GetLengthBytes()),
-                    SnmpType.InformRequestPdu => new InformRequestMessage(version, header, parameters, scope, privacy, body.GetLengthBytes()),
-                    _ => throw new SnmpException(string.Format(CultureInfo.InvariantCulture, "unsupported pdu: {0}", scopeCode)),
-                };
+                throw new SnmpDecodeException("Authentication failed for incoming message");
             }
-            catch (Exception ex)
-            {
-                if (ex is SnmpException)
-                {
-                    throw;
-                }
+        }
 
-                throw new SnmpException("message construction exception", ex);
-            }
+        // Process privacy (decryption) if needed
+        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlags.Priv))
+        {
+            privacy.DecryptMessage(v3Message);
         }
     }
 }

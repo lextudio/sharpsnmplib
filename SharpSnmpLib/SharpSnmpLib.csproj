@@ -2,13 +2,18 @@
   <PropertyGroup>
     <AssemblyName>SharpSnmpLib</AssemblyName>
     <RootNamespace>Lextm.SharpSnmpLib</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>false</UseWPF>
     <UseWindowsForms>false</UseWindowsForms>
     <!-- Detect SDK version -->
     <ParsedSdkVersion>$([System.Text.RegularExpressions.Regex]::Replace($(NETCoreSdkVersion), '-.*', ''))</ParsedSdkVersion>
     <IsNet80Supported Condition="'$(ParsedSdkVersion)' >= '8.0'">true</IsNet80Supported>
-    <!-- Only support .NET 8 and .NET Framework 4.7.1 right now. -->
+    <IsNet90Supported Condition="'$(ParsedSdkVersion)' >= '9.0'">true</IsNet90Supported>
+    <IsNet100Supported Condition="'$(ParsedSdkVersion)' >= '10.0'">true</IsNet100Supported>
+    <!-- Only support .NET 8/9/10 and .NET Framework 4.7.1 right now. -->
     <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true'">net8.0;net471</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true'">$(TargetFrameworks);net9.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet100Supported)' == 'true'">$(TargetFrameworks);net10.0</TargetFrameworks>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>#SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -49,6 +54,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="all" />
     <PackageReference Include="Nullable">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -58,6 +64,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="System.Formats.Asn1" Condition="'$(TargetFramework)'=='net471'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="../readme.md" Pack="true" PackagePath="" />

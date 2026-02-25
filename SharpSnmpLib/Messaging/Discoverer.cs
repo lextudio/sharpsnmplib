@@ -1,387 +1,187 @@
-// Discoverer classes.
-// Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this
-// software and associated documentation files (the "Software"), to deal in the Software
-// without restriction, including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-// to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-
-using System;
-using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
-using Lextm.SharpSnmpLib.Security;
-using System.Threading.Tasks;
+using DotNetSnmp.Asn1;
+using DotNetSnmp.Asn1.Serialization;
+using DotNetSnmp.Asn1.SyntaxObjects;
+using DotNetSnmp.Common.Definitions;
+using DotNetSnmp.Protocol.V1;
+using DotNetSnmp.Protocol.V2;
+using DotNetSnmp.Protocol.V3;
+using DotNetSnmp.Protocol.V3.Security;
 
-namespace Lextm.SharpSnmpLib.Messaging
+namespace Lextm.SharpSnmpLib.Messaging;
+
+public sealed class AgentFoundEventArgs : EventArgs
 {
-    /// <summary>
-    /// Discoverer class to discover SNMP agents in the same network.
-    /// </summary>
-    public sealed partial class Discoverer
+    public AgentFoundEventArgs(IPEndPoint agent, AgentVariable? variable)
     {
-        private int _active;
-        private int _requestId;
-        private static readonly UserRegistry Empty = new();
-        private readonly IList<Variable> _defaultVariables = new List<Variable> { new(new ObjectIdentifier(new uint[] { 1, 3, 6, 1, 2, 1, 1, 1, 0 })) };
-        private const int Active = 1;
-        private const int Inactive = 0;
+        Agent = agent ?? throw new ArgumentNullException(nameof(agent));
+        Variable = variable;
+    }
 
-        /// <summary>
-        /// Occurs when an SNMP agent is found.
-        /// </summary>
-        public event EventHandler<AgentFoundEventArgs>? AgentFound;
+    public IPEndPoint Agent { get; }
 
-        /// <summary>
-        /// Occurs when an exception is raised.
-        /// </summary>
-        /// <remarks>The exception is typical <see cref="SocketException"/> here.</remarks>
-        public event EventHandler<ExceptionRaisedEventArgs>? ExceptionRaised;
+    public AgentVariable? Variable { get; }
+}
 
-        /// <summary>
-        /// Discovers agents of the specified version in a specific time interval.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="broadcastAddress">The broadcast address.</param>
-        /// <param name="community">The community.</param>
-        /// <param name="interval">The discovering time interval, in milliseconds.</param>
-        /// <remarks><paramref name="broadcastAddress"/> must be configured to a valid multicast address when IPv6 is used. For example, "[ff02::1]:161"</remarks>
-        public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
+public sealed class AgentVariable
+{
+    public AgentVariable(ObjectIdentifier id, IAsnSerializable data)
+    {
+        Id = id;
+        Data = data;
+    }
+
+    public ObjectIdentifier Id { get; }
+
+    public IAsnSerializable Data { get; }
+
+    public override string ToString()
+    {
+        return $"{Id} = {Data}";
+    }
+}
+
+public sealed class Discoverer
+{
+    public event EventHandler<AgentFoundEventArgs>? AgentFound;
+
+    public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout)
+    {
+        if (broadcastAddress == null)
         {
-            if (broadcastAddress == null)
-            {
-                throw new ArgumentNullException(nameof(broadcastAddress));
-            }
-
-            if (version != VersionCode.V3 && community == null)
-            {
-                throw new ArgumentNullException(nameof(community));
-            }
-
-            var addressFamily = broadcastAddress.AddressFamily;
-            byte[] bytes;
-            _requestId = Messenger.NextRequestId;
-            if (version == VersionCode.V3)
-            {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
-                bytes = discovery.ToBytes();
-            }
-            else
-            {
-                var message = new GetRequestMessage(_requestId, version, community, _defaultVariables);
-                bytes = message.ToBytes();
-            }
-
-            using var udp = new UdpClient(addressFamily);
-            if (addressFamily == AddressFamily.InterNetworkV6)
-            {
-                udp.MulticastLoopback = false;
-            }
-            else if (addressFamily == AddressFamily.InterNetwork)
-            {
-#if (!CF)
-                udp.EnableBroadcast = true;
-#endif
-            }
-#if NET471
-            udp.Send(bytes, bytes.Length, broadcastAddress);
-#else
-            AsyncHelper.RunSync(() => udp.SendAsync(bytes, bytes.Length, broadcastAddress));
-#endif
-            var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
-            if (activeBefore == Active)
-            {
-                // If already started, we've nothing to do.
-                return;
-            }
-
-            udp.Client.ReceiveBufferSize = Messenger.MaxMessageSize;
-
-#if ASYNC
-            Task.Factory.StartNew(() => AsyncBeginReceive(udp));
-#else
-            Task.Factory.StartNew(() => AsyncReceive(udp));
-#endif
-
-            Thread.Sleep(interval);
-            Interlocked.CompareExchange(ref _active, Inactive, Active);
-#if NET471
-            udp.Close();
-#endif
+            throw new ArgumentNullException(nameof(broadcastAddress));
         }
 
-#if ASYNC
-        private void AsyncBeginReceive(Socket socket)
+        if (timeout < 0)
         {
-            while (true)
-            {
-                // If no more active, then stop.
-                if (Interlocked.Exchange(ref _active, _active) == Inactive)
-                {
-                    return;
-                }
-
-                byte[] buffer = new byte[_bufferSize];
-                EndPoint remote = new IPEndPoint(IPAddress.Any, 0);
-                try
-                {
-                    var iar = socket.BeginReceiveFrom(buffer, 0, _bufferSize, SocketFlags.None, ref remote, AsyncEndReceive, new Tuple<Socket, byte[]>(socket, buffer));
-                    iar.AsyncWaitHandle.WaitOne();
-                }
-                catch (SocketException ex)
-                {
-                    // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
-                    {
-                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
-                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                        long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
-                        if (activeBefore == Active)
-                        {
-                            HandleException(ex);
-                        }
-                    }
-                }
-            }
+            throw new ArgumentOutOfRangeException(nameof(timeout));
         }
 
-        private void AsyncEndReceive(IAsyncResult iar)
+        var any = broadcastAddress.AddressFamily == AddressFamily.InterNetworkV6
+            ? IPAddress.IPv6Any
+            : IPAddress.Any;
+
+        using var udp = new UdpClient(new IPEndPoint(any, 0));
+        if (broadcastAddress.AddressFamily == AddressFamily.InterNetwork)
         {
-            // If no more active, then stop. This discards the received packet, if any (indeed, we may be there either
-            // because we've received a packet, or because the socket has been closed).
-            if (Interlocked.Exchange(ref _active, _active) == Inactive)
-            {
-                return;
-            }
+            udp.EnableBroadcast = true;
+        }
 
-            if (iar.AsyncState == null)
-            {
-                return;
-            }
-            
-            Tuple<Socket, byte[]> data = (Tuple<Socket, byte[]>)iar.AsyncState;
-            byte[] buffer = data.Item2;
+        var probe = CreateProbe(version, community);
+        await udp.SendAsync(probe, probe.Length, broadcastAddress).ConfigureAwait(false);
 
+        using var cts = new CancellationTokenSource(timeout);
+        while (!cts.IsCancellationRequested)
+        {
+            UdpReceiveResult received;
             try
             {
-                EndPoint remote = data.Item1.AddressFamily == AddressFamily.InterNetwork ? new IPEndPoint(IPAddress.Any, 0) : new IPEndPoint(IPAddress.IPv6Any, 0);
-                int count = data.Item1.EndReceiveFrom(iar, ref remote);
-                HandleMessage(buffer, count, (IPEndPoint)remote);
-            }
-            catch (SocketException ex)
-            {
-                // ignore WSAECONNRESET, http://bytes.com/topic/c-sharp/answers/237558-strange-udp-socket-problem
-                if (ex.SocketErrorCode != SocketError.ConnectionReset)
-                {
-                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
-                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                    long activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
-                    if (activeBefore == Active)
-                    {
-                        HandleException(ex);
-                    }
-                }
-            }
-        }
-#else
-
-        private void AsyncReceive(UdpClient client)
-        {
-            while (true)
-            {
-                // If no more active, then stop.
-                if (Interlocked.Exchange(ref _active, _active) == Inactive)
-                {
-                    return;
-                }
-
-                try
-                {
-                    var remote = new IPEndPoint(IPAddress.Any, 0);
-                    var buffer = client.Receive(ref remote);
-                    Task.Factory.StartNew(() => HandleMessage(buffer, buffer.Length, remote));
-                }
-                catch (SocketException ex)
-                {
-                    if (ex.SocketErrorCode != SocketError.ConnectionReset)
-                    {
-                        // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
-                        // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                        var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
-                        if (activeBefore == Active)
-                        {
-                            HandleException(ex);
-                        }
-                    }
-                }
-            }
-        }
-#endif
-        private void HandleException(Exception exception)
-        {
-            ExceptionRaised?.Invoke(this, new ExceptionRaisedEventArgs(exception));
-        }
-
-        private void HandleMessage(byte[] buffer, int count, IPEndPoint remote)
-        {
-            foreach (var message in MessageFactory.ParseMessages(buffer, 0, count, Empty))
-            {
-                var code = message.TypeCode();
-                if (code == SnmpType.ReportPdu)
-                {
-                    var report = (ReportMessage)message;
-                    if (report.RequestId() != _requestId)
-                    {
-                        continue;
-                    }
-
-                    if (report.Pdu().ErrorStatus.ToErrorCode() != ErrorCode.NoError)
-                    {
-                        continue;
-                    }
-
-                    AgentFound?.Invoke(this, new AgentFoundEventArgs(remote, null));
-                }
-
-                if (code != SnmpType.ResponsePdu)
-                {
-                    continue;
-                }
-
-                var response = (ResponseMessage)message;
-                if (response.RequestId() != _requestId)
-                {
-                    continue;
-                }
-
-                if (response.ErrorStatus != ErrorCode.NoError)
-                {
-                    continue;
-                }
-
-                AgentFound?.Invoke(this, new AgentFoundEventArgs(remote, response.Variables()[0]));
-            }
-        }
-
-        /// <summary>
-        /// Discovers agents of the specified version in a specific time interval.
-        /// </summary>
-        /// <param name="version">The version.</param>
-        /// <param name="broadcastAddress">The broadcast address.</param>
-        /// <param name="community">The community.</param>
-        /// <param name="interval">The discovering time interval, in milliseconds.</param>
-        /// <remarks><paramref name="broadcastAddress"/> must be an IPv4 address. IPv6 is not yet supported here.</remarks>
-        public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, int interval)
-        {
-            if (broadcastAddress == null)
-            {
-                throw new ArgumentNullException(nameof(broadcastAddress));
-            }
-
-            if (version != VersionCode.V3 && community == null)
-            {
-                throw new ArgumentNullException(nameof(community));
-            }
-
-            var addressFamily = broadcastAddress.AddressFamily;
-            byte[] bytes;
-            _requestId = Messenger.NextRequestId;
-            if (version == VersionCode.V3)
-            {
-                var discovery = new Discovery(Messenger.NextMessageId, _requestId, Messenger.MaxMessageSize);
-                bytes = discovery.ToBytes();
-            }
-            else
-            {
-                var message = new GetRequestMessage(_requestId, version, community, _defaultVariables);
-                bytes = message.ToBytes();
-            }
-
-            using var udp = new UdpClient(addressFamily);
-            if (addressFamily == AddressFamily.InterNetworkV6)
-            {
-                udp.MulticastLoopback = false;
-            }
-            else if (addressFamily == AddressFamily.InterNetwork)
-            {
-#if (!CF)
-                udp.EnableBroadcast = true;
-#endif
-            }
-
-            await udp.SendAsync(bytes, bytes.Length, broadcastAddress);
-            var activeBefore = Interlocked.CompareExchange(ref _active, Active, Inactive);
-            if (activeBefore == Active)
-            {
-                // If already started, we've nothing to do.
-                return;
-            }
-
-#if NET6_0_OR_GREATER
-            using var source = new CancellationTokenSource();
-            source.CancelAfter(interval);
-            try
-            {
-                await ReceiveAsync(udp.Client, source.Token);
+                received = await udp.ReceiveAsync(cts.Token).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
-                // IMPORTANT: eat the exception.
+                break;
             }
-#else
-            await Task.WhenAny(
-                ReceiveAsync(udp),
-                Task.Delay(interval));
-#endif
-            Interlocked.CompareExchange(ref _active, Inactive, Active);
-            udp.Close();
-        }
-#if !NET6_0_OR_GREATER
-        private async Task ReceiveAsync(UdpClient client)
-        {
-            while (true)
+            catch (SocketException)
             {
-                // If no more active, then stop.
-                if (Interlocked.Exchange(ref _active, _active) == Inactive)
-                {
-                    return;
-                }
+                break;
+            }
 
-                try
-                {
-                    var result = await client.ReceiveAsync();
-                    await Task.Factory.StartNew(() => HandleMessage(result.Buffer, result.Buffer.Length, result.RemoteEndPoint))
-                        .ConfigureAwait(false);
-                }
-                catch (SocketException ex)
-                {
-                    if (ex.SocketErrorCode == SocketError.ConnectionReset)
-                    {
-                        continue;
-                    }
+            var variable = TryExtractVariable(received.Buffer);
+            AgentFound?.Invoke(this, new AgentFoundEventArgs(received.RemoteEndPoint, variable));
+        }
+    }
 
-                    // If the SnmpTrapListener was active, marks it as stopped and call HandleException.
-                    // If it was inactive, the exception is likely to result from this, and we raise nothing.
-                    var activeBefore = Interlocked.CompareExchange(ref _active, Inactive, Active);
-                    if (activeBefore == Active)
+    private static byte[] CreateProbe(VersionCode version, OctetString? community)
+    {
+        if (version == VersionCode.V3)
+        {
+            return Messenger.GetNextDiscovery(SnmpType.GetRequestPdu).ToBytes();
+        }
+
+        var pdu = new GetRequestPdu
+        {
+            RequestId = Messenger.NextRequestId,
+            VariableBindings = new VarBindList(new Variable("1.3.6.1.2.1.1.1.0"))
+        };
+
+        ISnmpMessage message = version switch
+        {
+            VersionCode.V1 => new SnmpV1Message
+            {
+                Community = community ?? OctetString.Empty,
+                Scope = pdu
+            },
+            VersionCode.V2 => new SnmpV2Message
+            {
+                Community = community ?? OctetString.Empty,
+                Scope = pdu
+            },
+            _ => throw new NotSupportedException($"Unsupported discovery version: {version}")
+        };
+
+        return message.Encode();
+    }
+
+    private static AgentVariable? TryExtractVariable(byte[] packet)
+    {
+        if (packet == null || packet.Length == 0)
+        {
+            return null;
+        }
+
+        try
+        {
+            var reader = new AsnReader(packet, AsnEncodingRules.BER);
+            var seq = reader.ReadSequence();
+            if (!seq.TryReadInt32(out var versionRaw))
+            {
+                return null;
+            }
+
+            var version = (VersionCode)versionRaw;
+            switch (version)
+            {
+                case VersionCode.V1:
                     {
-                        HandleException(ex);
+                        var msg = SnmpV1Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
+                        return Convert(msg.Scope?.VariableBindings?.ToArray().FirstOrDefault());
                     }
-                }
+                case VersionCode.V2:
+                    {
+                        var msg = SnmpV2Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
+                        return Convert(msg.Scope?.VariableBindings?.ToArray().FirstOrDefault());
+                    }
+                case VersionCode.V3:
+                    {
+                        var msg = SnmpV3Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
+                        if (msg.Header.MsgFlags.HasFlag(MsgFlags.Priv))
+                        {
+                            return null;
+                        }
+
+                        return Convert(msg.Scope?.VariableBindings?.ToArray().FirstOrDefault());
+                    }
+                default:
+                    return null;
             }
         }
-#endif
+        catch
+        {
+            return null;
+        }
+    }
+
+    private static AgentVariable? Convert(Variable? variable)
+    {
+        if (variable == null)
+        {
+            return null;
+        }
+
+        var value = variable.Value;
+        return new AgentVariable(value.Id, value.Data);
     }
 }

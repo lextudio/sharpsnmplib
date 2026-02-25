@@ -1,0 +1,23 @@
+using System.Security.Cryptography;
+
+namespace DotNetSnmp.Protocol.V3.Security.Authentication
+{
+    /// <summary>
+    /// Provides authentication for SNMP v3 messages using HMAC-MD5.
+    /// </summary>
+    /// <remarks>
+    /// This authentication provider implements the usmHMACMD5AuthProtocol which is defined in RFC 3414.
+    /// It uses a 16-byte digest size with 12 bytes used for authentication parameters.
+    /// </remarks>
+    public class MD5AuthenticationProvider : AuthenticationProviderBase
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MD5AuthenticationProvider"/> class.
+        /// </summary>
+        /// <param name="passcode">The password or passphrase to be used for authentication.</param>
+        public MD5AuthenticationProvider(ReadOnlyMemory<byte> passcode)
+            : base(16, 12, HashAlgorithmName.MD5, passcode, bytes => new HMACMD5(bytes))
+        {
+        }
+    }
+}

@@ -17,103 +17,103 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Collections.Generic;
 using System.Globalization;
+using DotNetSnmp.Asn1.SyntaxObjects;
+using DotNetSnmp.Protocol.V3.Security.Authentication;
+using DotNetSnmp.Protocol.V3.Security.Privacy;
 
-namespace Lextm.SharpSnmpLib.Security
+namespace Lextm.SharpSnmpLib.Security;
+
+/// <summary>
+/// A repository to store user information for providers.
+/// </summary>
+public sealed class UserRegistry
 {
+    private readonly IDictionary<OctetString, User> _users = new Dictionary<OctetString, User>();
+
     /// <summary>
-    /// A repository to store user information for providers.
+    /// Initializes a new instance of the <see cref="UserRegistry"/> class.
     /// </summary>
-    public sealed class UserRegistry
+    /// <param name="users">The users.</param>
+    public UserRegistry(User[]? users)
     {
-        private readonly IDictionary<OctetString, User> _users = new Dictionary<OctetString, User>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserRegistry"/> class.
-        /// </summary>
-        /// <param name="users">The users.</param>
-        public UserRegistry(User[]? users)
+        if (users == null)
         {
-            if (users == null)
-            {
-                return;
-            }
-
-            foreach (var user in users)
-            {
-                Add(user);
-            }
+            return;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserRegistry"/> class.
-        /// </summary>
-        public UserRegistry() : this(null)
+        foreach (var user in users)
         {
+            Add(user);
         }
+    }
 
-        /// <summary>
-        /// Returns the user count.
-        /// </summary>
-        public int Count => _users.Count;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserRegistry"/> class.
+    /// </summary>
+    public UserRegistry() : this(null)
+    {
+    }
 
-        /// <summary>
-        /// Adds the specified user name.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <param name="privacy">The privacy provider.</param>
-        public UserRegistry Add(OctetString userName, IPrivacyProvider privacy)
+    /// <summary>
+    /// Returns the user count.
+    /// </summary>
+    public int Count => _users.Count;
+
+    /// <summary>
+    /// Adds the specified user name.
+    /// </summary>
+    /// <param name="userName">Name of the user.</param>
+    /// <param name="privacy">The privacy provider.</param>
+    public UserRegistry Add(OctetString userName, IPrivacyProvider privacy)
+    {
+        return Add(new User(userName, privacy));
+    }
+
+    /// <summary>
+    /// Adds the specified user.
+    /// </summary>
+    /// <param name="user">The user.</param>
+    public UserRegistry Add(User? user)
+    {
+        if (user == null)
         {
-            return Add(new User(userName, privacy));
-        }
-
-        /// <summary>
-        /// Adds the specified user.
-        /// </summary>
-        /// <param name="user">The user.</param>
-        public UserRegistry Add(User? user)
-        {
-            if (user == null)
-            {
-                return this;
-            }
-
-            if (_users.ContainsKey(user.Name))
-            {
-                _users.Remove(user.Name);
-            }
-
-            _users.Add(user.Name, user);
             return this;
         }
 
-        /// <summary>
-        /// Finds the specified user name.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
-        public IPrivacyProvider? Find(OctetString userName)
+        if (_users.ContainsKey(user.Name))
         {
-            if (userName == OctetString.Empty)
-            {
-                // IMPORTANT: used in MessageFactory to decrypt discovery messages.
-                return DefaultPrivacyProvider.DefaultPair;
-            }
-
-            return _users.ContainsKey(userName) ? _users[userName].Privacy : null;
+            _users.Remove(user.Name);
         }
 
-        /// <summary>
-        /// Returns a <see cref="System.String"/> that represents this instance.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="System.String"/> that represents this instance.
-        /// </returns>
-        public override string ToString()
+        _users.Add(user.Name, user);
+        return this;
+    }
+
+    /// <summary>
+    /// Finds the specified user name.
+    /// </summary>
+    /// <param name="userName">Name of the user.</param>
+    /// <returns></returns>
+    public IPrivacyProvider? Find(OctetString userName)
+    {
+        if (userName == OctetString.Empty)
         {
-            return string.Format(CultureInfo.InvariantCulture, "User registry: count: {0}", Count);
+            // IMPORTANT: used in MessageFactory to decrypt discovery messages.
+            return new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance);
         }
+
+        return _users.ContainsKey(userName) ? _users[userName].Privacy : null;
+    }
+
+    /// <summary>
+    /// Returns a <see cref="System.String"/> that represents this instance.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="System.String"/> that represents this instance.
+    /// </returns>
+    public override string ToString()
+    {
+        return string.Format(CultureInfo.InvariantCulture, "User registry: count: {0}", Count);
     }
 }
