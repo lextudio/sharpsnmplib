@@ -4,8 +4,14 @@ using DotNetSnmp.Utils;
 
 namespace Lextm.SharpSnmpLib;
 
+/// <summary>
+/// Helper utility that performs data conversions from/to bytes.
+/// </summary>
 public static class ByteTool
 {
+    /// <summary>
+    /// Converts decimal.
+    /// </summary>
     [Obsolete("Use Convert(this string str) instead.")]
     public static byte[] ConvertDecimal(string description)
     {
@@ -34,6 +40,9 @@ public static class ByteTool
         return result.ToArray();
     }
 
+    /// <summary>
+    /// Converts a hexadecimal character sequence into bytes.
+    /// </summary>
     [Obsolete("Use Convert(this string str) instead.")]
     public static byte[] Convert(this IEnumerable<char> description)
     {
@@ -79,11 +88,17 @@ public static class ByteTool
         return result.ToArray();
     }
 
+    /// <summary>
+    /// Converts a hexadecimal string into bytes.
+    /// </summary>
     public static byte[] Convert(this string str)
     {
         return Dump.BytesFromHexString(str);
     }
 
+    /// <summary>
+    /// Converts bytes into an uppercase hexadecimal string without separators.
+    /// </summary>
     public static string Convert(this byte[] bytes)
     {
         return Dump.BytesToHexString(bytes);

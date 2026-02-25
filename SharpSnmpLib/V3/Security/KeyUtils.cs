@@ -2,12 +2,24 @@
 
 namespace DotNetSnmp.Protocol.V3.Security
 {
+    /// <summary>
+    /// Provides helper methods for KeyUtils.
+    /// </summary>
     public static class KeyUtils
     {
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public const int UsmExpandedPassphraseLengthInBytes = 1024 * 1024; // 1 Mb - 1048576 bytes
 
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public const int UsmHashBlockSizeInBytes = 64; // bytes
 
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public const int UsmMinPassPhraseLen = 8; // in characters
 
         /// <summary>

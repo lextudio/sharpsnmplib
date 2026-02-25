@@ -11,17 +11,24 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <param name="Value"></param>
     public readonly record struct Gauge32(uint Value) : IAsnSerializable
     {
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
     {
         writer.WriteInteger(
             Value,
             tag: AsnTypes.Gauge32);
     }
+    /// <summary>
+    /// Deconstructs the value into its components.
+    /// </summary>
     public void Deconstruct(out uint value)
     {
         value = Value;
     }
 
+    /// <summary>
+    /// Performs a conversion to uint.
+    /// </summary>
     public static implicit operator uint(Gauge32 x) => x.Value;
 }
 }

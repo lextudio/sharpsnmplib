@@ -2,8 +2,14 @@
 
 namespace DotNetSnmp
 {
+    /// <summary>
+    /// Provides helper methods for StringExtensions.
+    /// </summary>
     public static class StringExtensions
     {
+        /// <summary>
+        /// Gets bytes Span Or Default.
+        /// </summary>
         public static ReadOnlySpan<byte> GetBytesSpanOrDefault(
             this string s,
             Encoding encoding)
@@ -13,6 +19,9 @@ namespace DotNetSnmp
                 : encoding.GetBytes(s);
         }
 
+        /// <summary>
+        /// Gets bytes Memory Or Default.
+        /// </summary>
         public static ReadOnlyMemory<byte> GetBytesMemoryOrDefault(
             this string s,
             Encoding encoding)

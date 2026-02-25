@@ -12,6 +12,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <param name="Value"></param>
     public readonly record struct Counter32(uint Value) : IAsnSerializable
     {
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
     {
         writer.WriteInteger(
@@ -19,11 +20,17 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
             tag: AsnTypes.Counter32);
     }
 
+    /// <summary>
+    /// Deconstructs the value into its components.
+    /// </summary>
     public void Deconstruct(out uint value)
     {
         value = Value;
     }
 
+    /// <summary>
+    /// Performs a conversion to uint.
+    /// </summary>
     public static implicit operator uint(Counter32 x) => x.Value;
 }
 }

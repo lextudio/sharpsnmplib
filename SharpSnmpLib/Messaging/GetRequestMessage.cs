@@ -15,6 +15,9 @@ public sealed class GetRequestMessage : ISnmpMessage, ILegacyV3Request
 {
     private readonly SnmpV3Message _message;
 
+    /// <summary>
+    /// Initializes a new instance of GetRequestMessage.
+    /// </summary>
     public GetRequestMessage(
         VersionCode version,
         int messageId,
@@ -44,22 +47,38 @@ public sealed class GetRequestMessage : ISnmpMessage, ILegacyV3Request
             () => new GetRequestPdu());
     }
 
+    /// <summary>
+    /// Gets privacy.
+    /// </summary>
     public IPrivacyProvider Privacy { get; }
 
+    /// <summary>
+    /// Represents protocol Version.
+    /// </summary>
     public VersionCode ProtocolVersion => _message.ProtocolVersion;
 
+    /// <summary>
+    /// Represents scope.
+    /// </summary>
     public IScope? Scope => _message.Scope;
 
+    /// <summary>
+    /// Serializes the message to a byte array.
+    /// </summary>
     public byte[] ToBytes()
     {
         return _message.Encode();
     }
 
+    /// <inheritdoc/>
     public void WriteTo(AsnWriter writer)
     {
         _message.WriteTo(writer);
     }
 
+    /// <summary>
+    /// Returns a <see cref="string"/> that represents this <see cref="GetRequestMessage"/>.
+    /// </summary>
     public override string ToString()
     {
         return _message.ToString() ?? base.ToString()!;

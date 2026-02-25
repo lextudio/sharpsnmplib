@@ -6,16 +6,38 @@ using System.Net;
 
 namespace DotNetSnmp.Protocol.V1
 {
+    /// <summary>
+    /// Represents the TrapPdu type.
+    /// </summary>
     public class TrapPdu : Pdu
     {
+        /// <summary>
+        /// Gets enterprise.
+        /// </summary>
         public ObjectIdentifier Enterprise { get; set; }
+        /// <summary>
+        /// Gets agent Address.
+        /// </summary>
         public IPAddress? AgentAddress { get; set; }
+        /// <summary>
+        /// Gets generic Trap.
+        /// </summary>
         public int GenericTrap { get; set; }
+        /// <summary>
+        /// Gets specific Trap.
+        /// </summary>
         public int SpecificTrap { get; set; }
+        /// <summary>
+        /// Gets time Stamp.
+        /// </summary>
         public uint TimeStamp { get; set; }
 
+        /// <summary>
+        /// Represents trap Msg.
+        /// </summary>
         public override Asn1Tag PduType => SnmpAsnTags.TrapMsg;
 
+        /// <inheritdoc/>
         public override void WriteTo(AsnWriter writer)
         {
             using (_ = writer.PushSequence(tag: PduType))
@@ -32,6 +54,9 @@ namespace DotNetSnmp.Protocol.V1
             }
         }
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static TrapPdu ReadFrom(AsnReader reader)
         {
             var pduReader = reader.ReadSequence(SnmpAsnTags.TrapMsg);

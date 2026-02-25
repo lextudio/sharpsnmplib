@@ -23,15 +23,30 @@ public sealed class LegacyPdu
         ErrorIndex = new Integer32(pdu.ErrorIndex);
     }
 
+    /// <summary>
+    /// Gets variables.
+    /// </summary>
     public IList<Variable> Variables { get; }
 
+    /// <summary>
+    /// Gets error Status.
+    /// </summary>
     public Integer32 ErrorStatus { get; }
 
+    /// <summary>
+    /// Gets error Index.
+    /// </summary>
     public Integer32 ErrorIndex { get; }
 }
 
+/// <summary>
+/// Provides helper methods for SnmpMessageCompatibilityExtensions.
+/// </summary>
 public static class SnmpMessageCompatibilityExtensions
 {
+    /// <summary>
+    /// Serializes the message to a byte array.
+    /// </summary>
     public static byte[] ToBytes(this ISnmpMessage message)
     {
         if (message == null)
@@ -47,6 +62,9 @@ public static class SnmpMessageCompatibilityExtensions
         return message.Encode();
     }
 
+    /// <summary>
+    /// Returns the message PDU wrapped in the legacy compatibility facade.
+    /// </summary>
     public static LegacyPdu Pdu(this ISnmpMessage message)
     {
         if (message == null)
@@ -63,6 +81,9 @@ public static class SnmpMessageCompatibilityExtensions
         return new LegacyPdu(pdu);
     }
 
+    /// <summary>
+    /// Gets the response message.
+    /// </summary>
     public static ISnmpMessage GetResponse(this ISnmpMessage request, int timeout, IPEndPoint receiver)
     {
         if (request == null)

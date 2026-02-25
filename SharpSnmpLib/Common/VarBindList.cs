@@ -5,6 +5,9 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Asn1.SyntaxObjects
 {
+    /// <summary>
+    /// Represents the VarBindList type.
+    /// </summary>
     public class VarBindList : IAsnSerializable, IEnumerable<Variable>
     {
         private readonly IList<Variable> _variableBindings;
@@ -12,46 +15,73 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         // rfc 3416 (4.2)
         private const int MaxVariableBindings = 2147483647;
 
+        /// <summary>
+        /// Gets a value indicating whether this list has no variable bindings.
+        /// </summary>
         public bool IsEmpty => _variableBindings?.Count == 0;
 
+        /// <summary>
+        /// Initializes a new instance of VarBindList.
+        /// </summary>
         public VarBindList()
         {
             _variableBindings = new List<Variable>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of VarBindList.
+        /// </summary>
         public VarBindList(params Variable[] bindings)
         {
             _variableBindings = new List<Variable>(bindings);
         }
 
+        /// <summary>
+        /// Initializes a new instance of VarBindList.
+        /// </summary>
         public VarBindList(params string[] oids)
         {
             _variableBindings = oids.Select(
                 oid => new Variable(oid)).ToList();
         }
 
+        /// <summary>
+        /// Initializes a new instance of VarBindList.
+        /// </summary>
         public VarBindList(params ObjectIdentifier[] oids)
         {
             _variableBindings = oids.Select(
                 oid => new Variable(oid)).ToList();
         }
+        /// <summary>
+        /// Initializes a new instance of VarBindList.
+        /// </summary>
         public VarBindList(VarBindList other)
         {
             _variableBindings = other.ToList();
         }
 
+        /// <summary>
+        /// Adds a variable binding to the end of the list.
+        /// </summary>
         public VarBindList Add(Variable varBind)
         {
             _variableBindings.Add(varBind);
             return this;
         }
 
+        /// <summary>
+        /// Inserts a variable binding at the specified index.
+        /// </summary>
         public VarBindList Insert(int index, Variable varBind)
         {
             _variableBindings.Insert(index, varBind);
             return this;
         }
 
+        /// <summary>
+        /// Removes and returns the variable binding at the specified index.
+        /// </summary>
         public Variable Remove(int index)
         {
             var item = _variableBindings[index];
@@ -59,11 +89,15 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
             return item;
         }
 
+        /// <summary>
+        /// Removes all variable bindings from the list.
+        /// </summary>
         public void Clear()
         {
             _variableBindings.Clear();
         }
 
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             if (_variableBindings == null
@@ -81,6 +115,9 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
             }
         }
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static VarBindList ReadFrom(AsnReader reader)
         {
             Span<byte> ipAddressBuff = stackalloc byte[4];
@@ -207,6 +244,9 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
             return bindings;
         }
 
+        /// <summary>
+        /// Gets enumerator.
+        /// </summary>
         public IEnumerator<Variable> GetEnumerator()
         {
             return _variableBindings?.GetEnumerator()

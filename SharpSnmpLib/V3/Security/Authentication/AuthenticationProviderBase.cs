@@ -24,7 +24,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
         private readonly HashAlgorithmName _name;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthenticationProviderBase"/> class.
+        /// Initializes a new instance of AuthenticationProviderBase.
         /// </summary>
         /// <param name="digestSize">The full size of the digest in bytes produced by the hash algorithm.</param>
         /// <param name="truncatedDigestSize">The size of the truncated digest in bytes used for authentication parameters.</param>
@@ -41,7 +41,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
         }
 
         /// <summary>
-        /// Creates an HMAC algorithm instance with a key derived from the password and engine ID.
+        /// Creates hmac.
         /// </summary>
         /// <param name="engineId">The engine ID used for key localization.</param>
         /// <returns>An HMAC algorithm instance initialized with the localized key.</returns>

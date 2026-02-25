@@ -5,8 +5,14 @@ using System.Security.Cryptography;
 
 namespace DotNetSnmp.Protocol.V3.Security.Privacy
 {
+    /// <summary>
+    /// Privacy provider for DES.
+    /// </summary>
     public class DESPrivacyProvider : PrivacyProviderBase
     {
+        /// <summary>
+        /// Initializes a new instance of DESPrivacyProvider.
+        /// </summary>
         public DESPrivacyProvider(
             in IAuthenticationProvider authenticationService,
             in ReadOnlyMemory<byte> passcode)
@@ -14,6 +20,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
         {
         }
 
+        /// <inheritdoc/>
         public override int EncryptScopedPdu(
             in ReadOnlyMemory<byte> scopedPdu,
             in UsmSecurityParameters parameters,
@@ -92,6 +99,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             }
         }
 
+        /// <inheritdoc/>
         public override void DecryptScopedPdu(
             in ReadOnlyMemory<byte> encryptedPdu,
             in UsmSecurityParameters parameters,

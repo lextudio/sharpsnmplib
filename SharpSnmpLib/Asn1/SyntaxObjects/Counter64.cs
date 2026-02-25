@@ -3,8 +3,12 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Asn1.SyntaxObjects
 {
+    /// <summary>
+    /// Represents the Counter64 type.
+    /// </summary>
     public readonly record struct Counter64(ulong Value) : IAsnSerializable
     {
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
     {
         writer.WriteInteger(
@@ -12,6 +16,9 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
             tag: AsnTypes.Counter64);
     }
 
+    /// <summary>
+    /// Reads a value from an ASN.1 reader.
+    /// </summary>
     public static Counter64 ReadFrom(AsnReader reader)
     {
         reader.TryReadUInt64(
@@ -20,11 +27,17 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         return new(value);
     }
 
+    /// <summary>
+    /// Deconstructs the value into its components.
+    /// </summary>
     public void Deconstruct(out ulong value)
     {
         value = Value;
     }
 
+    /// <summary>
+    /// Performs a conversion to ulong.
+    /// </summary>
     public static implicit operator ulong(Counter64 x) => x.Value;
 }
 }

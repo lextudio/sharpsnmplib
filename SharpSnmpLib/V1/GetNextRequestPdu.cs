@@ -5,16 +5,28 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Protocol.V1
 {
+    /// <summary>
+    /// GETNEXT request PDU.
+    /// </summary>
     public class GetNextRequestPdu : Pdu
     {
+        /// <summary>
+        /// Represents get Next Msg.
+        /// </summary>
         public override Asn1Tag PduType => SnmpAsnTags.GetNextMsg;
 
+        /// <summary>
+        /// Initializes a new instance of GetNextRequestPdu.
+        /// </summary>
         public GetNextRequestPdu()
         {
             ErrorIndex = 0;
             ErrorStatus = ErrorCode.NoError;
         }
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static GetNextRequestPdu ReadFrom(AsnReader reader)
         {
             var seq = reader.ReadSequence(
@@ -35,6 +47,7 @@ namespace DotNetSnmp.Protocol.V1
             };
         }
 
+        /// <inheritdoc/>
         public override void WriteTo(AsnWriter writer)
         {
             using (_ = writer.PushSequence(tag: PduType))

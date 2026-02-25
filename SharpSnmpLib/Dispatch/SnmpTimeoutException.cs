@@ -8,17 +8,17 @@ namespace DotNetSnmp.Client
     public class SnmpTimeoutException : Exception
     {
         /// <summary>
-        /// Gets the endpoint associated with the timeout.
+        /// Gets target Endpoint.
         /// </summary>
         public IPEndPoint? TargetEndpoint { get; }
 
         /// <summary>
-        /// Gets the timeout duration that was exceeded (in milliseconds).
+        /// Gets timeout.
         /// </summary>
         public int Timeout { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpTimeoutException"/> class.
+        /// Initializes a new instance of SnmpTimeoutException.
         /// </summary>
         /// <param name="message">The error message.</param>
         public SnmpTimeoutException(string message)
@@ -27,7 +27,7 @@ namespace DotNetSnmp.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpTimeoutException"/> class.
+        /// Initializes a new instance of SnmpTimeoutException.
         /// </summary>
         /// <param name="message">The error message.</param>
         /// <param name="targetEndpoint">The target endpoint that timed out.</param>
@@ -38,7 +38,7 @@ namespace DotNetSnmp.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpTimeoutException"/> class.
+        /// Initializes a new instance of SnmpTimeoutException.
         /// </summary>
         /// <param name="message">The error message.</param>
         /// <param name="targetEndpoint">The target endpoint that timed out.</param>
@@ -51,7 +51,7 @@ namespace DotNetSnmp.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpTimeoutException"/> class.
+        /// Initializes a new instance of SnmpTimeoutException.
         /// </summary>
         /// <param name="message">The error message.</param>
         /// <param name="innerException">The inner exception.</param>
@@ -61,7 +61,7 @@ namespace DotNetSnmp.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpTimeoutException"/> class.
+        /// Initializes a new instance of SnmpTimeoutException.
         /// </summary>
         /// <param name="message">The error message.</param>
         /// <param name="targetEndpoint">The target endpoint that timed out.</param>

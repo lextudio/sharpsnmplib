@@ -6,32 +6,50 @@ using System.Text.RegularExpressions;
 
 namespace DotNetSnmp.Transport
 {
+    /// <summary>
+    /// Represents the UdpEndpoint type.
+    /// </summary>
     public class UdpEndpoint : IAsnSerializable
     {
         private IPEndPoint Endpoint { get; init; }
 
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public int Port => Endpoint?.Port ?? 0;
 
         // match only, no validation
         private static Regex _udpAddrRegex =
             new(@"^(?<ip>(?:\d{1,3}\.){3}\d{1,3})(?<port>(?::|\/)\d+)*$");
 
+        /// <summary>
+        /// Initializes a new instance of UdpEndpoint.
+        /// </summary>
         public UdpEndpoint(int port)
         {
             Endpoint = new(IPAddress.Any, port);
         }
 
+        /// <summary>
+        /// Initializes a new instance of UdpEndpoint.
+        /// </summary>
         public UdpEndpoint(IPEndPoint endpoint)
         {
             Endpoint = endpoint;
         }
 
+        /// <summary>
+        /// Initializes a new instance of UdpEndpoint.
+        /// </summary>
         public UdpEndpoint(string address, int port)
         {
             Endpoint = new IPEndPoint(
                 IPAddress.Parse(address),
                 port);
         }
+        /// <summary>
+        /// Initializes a new instance of UdpEndpoint.
+        /// </summary>
         public UdpEndpoint(string address)
         {
             var m = _udpAddrRegex.Match(address);
@@ -64,6 +82,7 @@ namespace DotNetSnmp.Transport
             Endpoint = new IPEndPoint(ipAddr, port);
         }
 
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             Span<byte> octets = stackalloc byte[6];

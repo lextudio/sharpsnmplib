@@ -7,6 +7,9 @@ namespace DotNetSnmp.Asn1
     /// </summary>
     public static class AsnReaderExtensions
     {
+        /// <summary>
+        /// Reads an OCTET STRING and optionally validates its value.
+        /// </summary>
         public static void ConsumeOctetString(
             this AsnReader reader,
             ReadOnlyMemory<byte>? expectedValue = null)

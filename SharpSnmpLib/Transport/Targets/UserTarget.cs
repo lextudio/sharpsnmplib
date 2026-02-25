@@ -6,34 +6,40 @@ using DotNetSnmp.Protocol.V3.Security.Privacy;
 namespace DotNetSnmp.Transport.Targets
 {
     /// <summary>
-    /// Represents a target for SNMPv3 operations requiring a username and security parameters.
+    /// Represents the UserTarget type.
     /// </summary>
     public record UserTarget : AbstractTarget
     {
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public IAuthenticationProvider AuthenticationService
         {
             get { return PrivacyService.AuthenticationProvider; }
         }
 
+        /// <summary>
+        /// Gets privacy Service.
+        /// </summary>
         public IPrivacyProvider PrivacyService { get; }
 
         /// <summary>
-        /// Gets or sets the engine ID of the remote SNMP agent.
+        /// Gets engine Id.
         /// </summary>
         public ReadOnlyMemory<byte> EngineId { get; set; } = ReadOnlyMemory<byte>.Empty;
 
         /// <summary>
-        /// Gets or sets the engine boots value of the remote SNMP agent.
+        /// Gets engine Boots.
         /// </summary>
         public int EngineBoots { get; set; }
 
         /// <summary>
-        /// Gets or sets the engine time value of the remote SNMP agent.
+        /// Gets engine Time.
         /// </summary>
         public int EngineTime { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserTarget"/> class with default values.
+        /// Initializes a new instance of UserTarget.
         /// </summary>
         public UserTarget(OctetString securityName, IPrivacyProvider privacy, int maxMessageSize = 65507)
             : base(VersionCode.V3, securityName)
@@ -42,6 +48,9 @@ namespace DotNetSnmp.Transport.Targets
             PrivacyService = privacy;
         }
 
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public Levels SecurityLevel
         {
             get
@@ -64,6 +73,9 @@ namespace DotNetSnmp.Transport.Targets
             }
         }
 
+        /// <summary>
+        /// Represents usm.
+        /// </summary>
         public SecurityModel SecurityModel => SecurityModel.Usm;
     }
 }

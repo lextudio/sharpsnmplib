@@ -4,8 +4,14 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Protocol.V3.Security
 {
+    /// <summary>
+    /// Represents the UsmSecurityParameters type.
+    /// </summary>
     public class UsmSecurityParameters : IAsnSerializable
     {
+        /// <summary>
+        /// Gets engine Id.
+        /// </summary>
         public Memory<byte> EngineId { get; set; }
 
         /// <summary>
@@ -21,12 +27,22 @@ namespace DotNetSnmp.Protocol.V3.Security
         /// </summary>
         public int EngineTime { get; set; }
 
+        /// <summary>
+        /// Gets security Name.
+        /// </summary>
         public OctetString SecurityName { get; set; }
 
+        /// <summary>
+        /// Gets auth Params.
+        /// </summary>
         public Memory<byte> AuthParams { get; set; } = Memory<byte>.Empty;
 
+        /// <summary>
+        /// Gets priv Params.
+        /// </summary>
         public Memory<byte> PrivParams { get; set; } = Memory<byte>.Empty;
 
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             var innerSeq = new AsnWriter(AsnEncodingRules.BER);
@@ -53,6 +69,9 @@ namespace DotNetSnmp.Protocol.V3.Security
             writer.WriteOctetString(innerSequence);
         }
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static UsmSecurityParameters ReadFrom(AsnReader reader)
         {
             var innerSeqBytes = reader.ReadOctetString();

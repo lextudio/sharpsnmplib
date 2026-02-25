@@ -4,7 +4,7 @@ using DotNetSnmp.Asn1.SyntaxObjects;
 namespace DotNetSnmp.Common.Definitions
 {
     /// <summary>
-    /// Defines the common interface for SNMP PDU scope implementations across different SNMP versions.
+    /// Defines the contract for IScope.
     /// </summary>
     /// <remarks>
     /// The scope of an SNMP PDU contains the request ID, variable bindings, and PDU type.
@@ -15,7 +15,7 @@ namespace DotNetSnmp.Common.Definitions
     public interface IScope : IAsnSerializable
     {
         /// <summary>
-        /// Gets the unique identifier for this request/response pair.
+        /// Gets request Id.
         /// </summary>
         /// <value>
         /// An integer value that uniquely identifies this SNMP request or response.
@@ -27,7 +27,7 @@ namespace DotNetSnmp.Common.Definitions
         int RequestId { get; }
 
         /// <summary>
-        /// Gets or sets the list of variable bindings for this SNMP scope.
+        /// Gets variable Bindings.
         /// </summary>
         /// <value>
         /// A collection of OID-value pairs representing the variables being requested,
@@ -40,7 +40,7 @@ namespace DotNetSnmp.Common.Definitions
         VarBindList? VariableBindings { get; set; }
 
         /// <summary>
-        /// Gets the PDU type for this scope.
+        /// Gets the protocol data unit (PDU).
         /// </summary>
         /// <value>
         /// An enumeration value indicating the type of PDU (e.g., Get, GetNext, Set, Response).
@@ -51,7 +51,7 @@ namespace DotNetSnmp.Common.Definitions
         Pdu Pdu { get; }
 
         /// <summary>
-        /// Determines whether this scope represents a response PDU.
+        /// Determines whether response.
         /// </summary>
         /// <returns>
         /// <c>true</c> if this scope is a response; otherwise, <c>false</c>.

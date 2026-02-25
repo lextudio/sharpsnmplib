@@ -4,6 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace DotNetSnmp.Utils
 {
+    /// <summary>
+    /// Provides helper methods for Dump.
+    /// </summary>
     [ExcludeFromCodeCoverage]
     public static class Dump
     {
@@ -16,6 +19,9 @@ namespace DotNetSnmp.Utils
 
         private static readonly Regex _headerRegex = new(@"^(?:Received|Sending) (?<bytes>\d+) (?:.*) (:?from|to)");
 
+        /// <summary>
+        /// Parses a textual packet dump into raw bytes.
+        /// </summary>
         public static byte[] BytesFromDumpString(string textualDump)
         {
             var lines = Regex.Split(textualDump.TrimStart(), @"\r*\n")
@@ -45,6 +51,9 @@ namespace DotNetSnmp.Utils
             return hexData;
         }
 
+        /// <summary>
+        /// Parses a hexadecimal string into raw bytes.
+        /// </summary>
         public static byte[] BytesFromHexString(string hexString)
         {
             hexString = hexString.Replace(" ", string.Empty); // Remove any spaces
@@ -56,6 +65,9 @@ namespace DotNetSnmp.Utils
             return bytes;
         }
 
+        /// <summary>
+        /// Converts raw bytes to an uppercase hexadecimal string without separators.
+        /// </summary>
         public static string BytesToHexString(byte[] bytes)
         {
             if (bytes == null || bytes.Length == 0)

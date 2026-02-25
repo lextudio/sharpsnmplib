@@ -13,12 +13,16 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <param name="Value"></param>
     public readonly record struct TimeTicks(uint Value) : IAsnSerializable
     {
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
     {
         writer.WriteInteger(
             Value, tag: AsnTypes.TimeTicks);
     }
 
+    /// <summary>
+    /// Reads a value from an ASN.1 reader.
+    /// </summary>
     public static TimeTicks ReadFrom(AsnReader reader)
     {
         reader.TryReadUInt32(
@@ -27,6 +31,9 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         return new(ticks);
     }
 
+    /// <summary>
+    /// Returns a <see cref="String"/> that represents this <see cref="TimeTicks"/>.
+    /// </summary>
     public override string ToString()
     {
         var ts = TimeSpan.FromSeconds(Value / 100f);
@@ -34,6 +41,9 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         return $"Timeticks: ({Value}) {repr}";
     }
 
+    /// <summary>
+    /// Performs a conversion to uint.
+    /// </summary>
     public static implicit operator uint(TimeTicks t) => t.Value;
 }
 }

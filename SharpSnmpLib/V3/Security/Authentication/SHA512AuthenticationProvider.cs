@@ -12,7 +12,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
     public class SHA512AuthenticationProvider : AuthenticationProviderBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SHA512AuthenticationProvider"/> class.
+        /// Initializes a new instance of SHA512AuthenticationProvider.
         /// </summary>
         /// <param name="passcode">The password or passphrase to be used for authentication.</param>
         public SHA512AuthenticationProvider(ReadOnlyMemory<byte> passcode)

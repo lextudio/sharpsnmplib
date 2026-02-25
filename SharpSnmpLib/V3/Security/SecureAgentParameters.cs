@@ -3,13 +3,22 @@ using System.Text;
 
 namespace DotNetSnmp.Protocol.V3.Security
 {
+    /// <summary>
+    /// Represents the SecureAgentParameters type.
+    /// </summary>
     public class SecureAgentParameters
     {
         private string? _securityName;
         private byte[]? _userPassphraseBytes;
 
+        /// <summary>
+        /// Gets hash Algorithm.
+        /// </summary>
         public HashAlgorithmName? HashAlgorithm { get; set; }
 
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public string? SecurityName
         {
             get => _securityName;
@@ -19,6 +28,9 @@ namespace DotNetSnmp.Protocol.V3.Security
             }
         }
 
+        /// <summary>
+        /// Represents this member.
+        /// </summary>
         public string UserPassphrase
         {
             set
@@ -27,6 +39,9 @@ namespace DotNetSnmp.Protocol.V3.Security
             }
         }
 
+        /// <summary>
+        /// Stores user Passphrase Bytes.
+        /// </summary>
         public ReadOnlyMemory<byte> UserPassphraseBytes => _userPassphraseBytes;
     }
 }

@@ -15,6 +15,9 @@ public sealed class SetRequestMessage : ISnmpMessage, ILegacyV3Request
 {
     private readonly ISnmpMessage _message;
 
+    /// <summary>
+    /// Initializes a new instance of SetRequestMessage.
+    /// </summary>
     public SetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
     {
         _message = LegacyRequestBuilder.BuildCommunityRequest(
@@ -27,6 +30,9 @@ public sealed class SetRequestMessage : ISnmpMessage, ILegacyV3Request
         Privacy = new DefaultPrivacyProvider();
     }
 
+    /// <summary>
+    /// Initializes a new instance of SetRequestMessage.
+    /// </summary>
     public SetRequestMessage(
         VersionCode version,
         int messageId,
@@ -56,22 +62,38 @@ public sealed class SetRequestMessage : ISnmpMessage, ILegacyV3Request
             () => new SetRequestPdu());
     }
 
+    /// <summary>
+    /// Gets privacy.
+    /// </summary>
     public IPrivacyProvider Privacy { get; }
 
+    /// <summary>
+    /// Represents protocol Version.
+    /// </summary>
     public VersionCode ProtocolVersion => _message.ProtocolVersion;
 
+    /// <summary>
+    /// Represents scope.
+    /// </summary>
     public IScope? Scope => _message.Scope;
 
+    /// <summary>
+    /// Serializes the message to a byte array.
+    /// </summary>
     public byte[] ToBytes()
     {
         return _message.Encode();
     }
 
+    /// <inheritdoc/>
     public void WriteTo(AsnWriter writer)
     {
         _message.WriteTo(writer);
     }
 
+    /// <summary>
+    /// Returns a <see cref="string"/> that represents this <see cref="SetRequestMessage"/>.
+    /// </summary>
     public override string ToString()
     {
         return _message.ToString() ?? base.ToString()!;

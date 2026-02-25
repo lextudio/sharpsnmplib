@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// Gets the singleton instance of the <see cref="DefaultAuthenticationProvider"/> class.
+        /// Represents this member.
         /// </summary>
         /// <value>
         /// The singleton instance.

@@ -24,7 +24,7 @@ public sealed class Discovery
     private readonly SnmpType _type;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Discovery"/> class.
+    /// Initializes a new instance of Discovery.
     /// </summary>
     /// <param name="messageId">The message id.</param>
     /// <param name="requestId">The request id.</param>
@@ -35,7 +35,7 @@ public sealed class Discovery
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Discovery"/> class.
+    /// Initializes a new instance of Discovery.
     /// </summary>
     /// <param name="messageId">The message id.</param>
     /// <param name="requestId">The request id.</param>
@@ -53,7 +53,7 @@ public sealed class Discovery
     }
 
     /// <summary>
-    /// Gets the response.
+    /// Gets the response message.
     /// </summary>
     /// <param name="timeout">
     /// The timeout value in milliseconds. 0 and -1 indicate infinite timeout.
@@ -86,7 +86,7 @@ public sealed class Discovery
     }
 
     /// <summary>
-    /// Gets the response asynchronously.
+    /// Gets response Async.
     /// </summary>
     /// <param name="receiver">The receiver endpoint.</param>
     /// <returns>A parsed report message.</returns>
@@ -109,7 +109,7 @@ public sealed class Discovery
     }
 
     /// <summary>
-    /// Converts this discovery request to bytes.
+    /// Serializes the message to a byte array.
     /// </summary>
     /// <returns>Encoded bytes.</returns>
     public byte[] ToBytes()

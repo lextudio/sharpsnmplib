@@ -5,14 +5,29 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Protocol.V2
 {
+    /// <summary>
+    /// INFORM request PDU.
+    /// </summary>
     public class InformRequestPdu : Pdu
     {
+        /// <summary>
+        /// Gets time Stamp.
+        /// </summary>
         public uint TimeStamp { get; set; } = 0;
 
+        /// <summary>
+        /// Gets enterprise.
+        /// </summary>
         public ObjectIdentifier Enterprise { get; set; }
 
+        /// <summary>
+        /// Represents inform Msg.
+        /// </summary>
         public override Asn1Tag PduType => SnmpAsnTags.InformMsg;
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static InformRequestPdu ReadFrom(AsnReader reader)
         {
             var seq = reader.ReadSequence(
@@ -35,6 +50,7 @@ namespace DotNetSnmp.Protocol.V2
             };
         }
 
+        /// <inheritdoc/>
         public override void WriteTo(AsnWriter writer)
         {
             using (_ = writer.PushSequence(tag: SnmpAsnTags.InformMsg))

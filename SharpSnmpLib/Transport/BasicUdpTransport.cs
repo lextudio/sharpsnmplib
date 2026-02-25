@@ -3,18 +3,33 @@ using System.Net.Sockets;
 
 namespace DotNetSnmp.Transport
 {
+    /// <summary>
+    /// Represents the BasicUdpTransport type.
+    /// </summary>
     public class BasicUdpTransport : ISnmpTransport
     {
         private readonly UdpClient _udpClient;
 
+        /// <summary>
+        /// Stores udp Client.
+        /// </summary>
         public UdpClient UdpClient => _udpClient;
 
+        /// <summary>
+        /// Gets listen Endpoint.
+        /// </summary>
         public IPEndPoint ListenEndpoint { get; init; }
 
         private const int MaxUdpSize = 65536;
 
+        /// <summary>
+        /// Gets target End Point.
+        /// </summary>
         public IPEndPoint TargetEndPoint { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of BasicUdpTransport.
+        /// </summary>
         public BasicUdpTransport(
             IPEndPoint localEndPoint,
             IPEndPoint targetEndPoint
@@ -25,12 +40,18 @@ namespace DotNetSnmp.Transport
             _udpClient = new UdpClient(localEndPoint);
         }
 
+        /// <summary>
+        /// Initializes a new instance of BasicUdpTransport.
+        /// </summary>
         public BasicUdpTransport(IPEndPoint targetEndPoint)
             : this(new IPEndPoint(IPAddress.Any, 0), targetEndPoint)
         {
 
         }
 
+        /// <summary>
+        /// Sends async.
+        /// </summary>
         public ValueTask<int> SendAsync(
             ReadOnlyMemory<byte> message,
             IPEndPoint targetEndPoint,
@@ -42,6 +63,9 @@ namespace DotNetSnmp.Transport
                 cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Receives async.
+        /// </summary>
         public async ValueTask<ReadOnlyMemory<byte>> ReceiveAsync(
             IPEndPoint targetEndPoint,
             CancellationToken cancellationToken = default)
@@ -58,11 +82,15 @@ namespace DotNetSnmp.Transport
             return buffer.AsMemory(0, receivedBytes);
         }
 
+        /// <summary>
+        /// Closes the underlying UDP socket.
+        /// </summary>
         public void Close()
         {
             _udpClient.Close();
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             GC.SuppressFinalize(this);

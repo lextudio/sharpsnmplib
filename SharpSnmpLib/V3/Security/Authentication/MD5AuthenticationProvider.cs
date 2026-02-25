@@ -12,7 +12,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
     public class MD5AuthenticationProvider : AuthenticationProviderBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MD5AuthenticationProvider"/> class.
+        /// Initializes a new instance of MD5AuthenticationProvider.
         /// </summary>
         /// <param name="passcode">The password or passphrase to be used for authentication.</param>
         public MD5AuthenticationProvider(ReadOnlyMemory<byte> passcode)

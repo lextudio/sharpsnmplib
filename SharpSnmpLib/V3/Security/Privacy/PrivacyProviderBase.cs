@@ -5,14 +5,32 @@ using System.Buffers;
 
 namespace DotNetSnmp.Protocol.V3.Security.Privacy
 {
+    /// <summary>
+    /// Represents the PrivacyProviderBase type.
+    /// </summary>
     public abstract class PrivacyProviderBase : IPrivacyProvider
     {
         private int _salt = -1;
+        /// <summary>
+        /// Represents engine Boots Memory.
+        /// </summary>
         protected Memory<byte> EngineBootsMemory;
+        /// <summary>
+        /// Represents engine Time Memory.
+        /// </summary>
         protected Memory<byte> EngineTimeMemory;
+        /// <summary>
+        /// Gets the authentication provider associated with this privacy provider.
+        /// </summary>
         public IAuthenticationProvider AuthenticationProvider { get; }
+        /// <summary>
+        /// Represents passcode.
+        /// </summary>
         protected ReadOnlyMemory<byte> Passcode;
 
+        /// <summary>
+        /// Initializes a new instance of PrivacyProviderBase.
+        /// </summary>
         protected PrivacyProviderBase(int privacyParametersLength, IAuthenticationProvider authenticationService, ReadOnlyMemory<byte> passcode)
         {
             PrivacyParametersLength = privacyParametersLength;
@@ -20,17 +38,30 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             Passcode = passcode;
         }
 
+        /// <inheritdoc/>
         public int PrivacyParametersLength { get; }
+        /// <inheritdoc/>
         public int EngineTime { get; protected set; }
+        /// <inheritdoc/>
         public int EngineBoots { get; protected set; }
+        /// <summary>
+        /// Decrypts an encrypted scoped PDU payload into plaintext bytes.
+        /// </summary>
         public abstract void DecryptScopedPdu(in ReadOnlyMemory<byte> encryptedPdu, in UsmSecurityParameters parameters, Span<byte> decryptedPdu);
+        /// <summary>
+        /// Allocates a temporary buffer for scoped-PDU encryption output.
+        /// </summary>
         public virtual byte[] PrepareBuffer(int encodedLength)
         {
             return ArrayPool<byte>.Shared.Rent(encodedLength);
         }
 
+        /// <summary>
+        /// Encrypts a scoped PDU payload and returns the number of bytes written.
+        /// </summary>
         public abstract int EncryptScopedPdu(in ReadOnlyMemory<byte> scopedPdu, in UsmSecurityParameters parameters, Span<byte> encryptedScopedPdu);
 
+        /// <inheritdoc/>
         public void DecryptMessage(SnmpV3Message message)
         {
             byte[] rentedArray = ArrayPool<byte>.Shared.Rent(message.EncryptedScopedPdu.Length);
@@ -54,6 +85,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             }
         }
 
+        /// <inheritdoc/>
         public void EncryptMessage(SnmpV3Message message)
         {
             var encodedScopedPdu = message.Scope!.Encode();
@@ -78,6 +110,9 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
 
         private readonly object _saltLock = new object();
 
+        /// <summary>
+        /// Gets next Salt.
+        /// </summary>
         protected int GetNextSalt()
         {
             lock (_saltLock)
@@ -94,6 +129,9 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             }
         }
 
+        /// <summary>
+        /// Updates engine Boots.
+        /// </summary>
         protected void UpdateEngineBoots(int authoritativeEngineBoots)
         {
             EngineBoots = authoritativeEngineBoots;
@@ -103,6 +141,9 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
                 EngineBootsMemory.Span);
         }
 
+        /// <summary>
+        /// Updates engine Time.
+        /// </summary>
         protected void UpdateEngineTime(int authoritativeEngineTime)
         {
             EngineTime = authoritativeEngineTime;

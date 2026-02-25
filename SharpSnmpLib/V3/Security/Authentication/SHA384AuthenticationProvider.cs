@@ -12,7 +12,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
     public class SHA384AuthenticationProvider : AuthenticationProviderBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SHA384AuthenticationProvider"/> class.
+        /// Initializes a new instance of SHA384AuthenticationProvider.
         /// </summary>
         /// <param name="passcode">The password or passphrase to be used for authentication.</param>
         public SHA384AuthenticationProvider(ReadOnlyMemory<byte> passcode)

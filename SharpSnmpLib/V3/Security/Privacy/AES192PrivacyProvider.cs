@@ -9,6 +9,9 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
     {
         private const int KeyLength = 24; // 192 bits = 24 bytes
 
+        /// <summary>
+        /// Initializes a new instance of AES192PrivacyProvider.
+        /// </summary>
         public AES192PrivacyProvider(
             IAuthenticationProvider authenticationService,
             ReadOnlyMemory<byte> passcode)

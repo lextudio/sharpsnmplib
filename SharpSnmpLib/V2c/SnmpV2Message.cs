@@ -6,16 +6,32 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Protocol.V2
 {
+    /// <summary>
+    /// Represents the SnmpV2Message type.
+    /// </summary>
     public class SnmpV2Message : ISnmpMessage
     {
+        /// <summary>
+        /// Represents v2.
+        /// </summary>
         public VersionCode ProtocolVersion => VersionCode.V2;
 
+        /// <summary>
+        /// Gets community.
+        /// </summary>
         public OctetString Community { get; set; }
 
+        /// <summary>
+        /// Gets the message scope.
+        /// </summary>
         public IScope? Scope { get; init; }
 
+        /// <summary>
+        /// Represents pdu.
+        /// </summary>
         public Pdu Pdu => Scope!.Pdu;
 
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             using (_ = writer.PushSequence())
@@ -31,6 +47,9 @@ namespace DotNetSnmp.Protocol.V2
             }
         }
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static SnmpV2Message ReadFrom(AsnReader reader)
         {
             var rootSeq = reader.ReadSequence();

@@ -15,6 +15,9 @@ public sealed class GetBulkRequestMessage : ISnmpMessage, ILegacyV3Request
 {
     private readonly ISnmpMessage _message;
 
+    /// <summary>
+    /// Initializes a new instance of GetBulkRequestMessage.
+    /// </summary>
     public GetBulkRequestMessage(
         int requestId,
         VersionCode version,
@@ -42,6 +45,9 @@ public sealed class GetBulkRequestMessage : ISnmpMessage, ILegacyV3Request
         Privacy = new DefaultPrivacyProvider();
     }
 
+    /// <summary>
+    /// Initializes a new instance of GetBulkRequestMessage.
+    /// </summary>
     public GetBulkRequestMessage(
         VersionCode version,
         int messageId,
@@ -77,22 +83,38 @@ public sealed class GetBulkRequestMessage : ISnmpMessage, ILegacyV3Request
             });
     }
 
+    /// <summary>
+    /// Gets privacy.
+    /// </summary>
     public IPrivacyProvider Privacy { get; }
 
+    /// <summary>
+    /// Represents protocol Version.
+    /// </summary>
     public VersionCode ProtocolVersion => _message.ProtocolVersion;
 
+    /// <summary>
+    /// Represents scope.
+    /// </summary>
     public IScope? Scope => _message.Scope;
 
+    /// <summary>
+    /// Serializes the message to a byte array.
+    /// </summary>
     public byte[] ToBytes()
     {
         return _message.Encode();
     }
 
+    /// <inheritdoc/>
     public void WriteTo(AsnWriter writer)
     {
         _message.WriteTo(writer);
     }
 
+    /// <summary>
+    /// Returns a <see cref="string"/> that represents this <see cref="GetBulkRequestMessage"/>.
+    /// </summary>
     public override string ToString()
     {
         return _message.ToString() ?? base.ToString()!;

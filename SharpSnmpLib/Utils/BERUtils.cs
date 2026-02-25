@@ -5,35 +5,77 @@ using System.Text.RegularExpressions;
 
 namespace DotNetSnmp.Utils
 {
+    /// <summary>
+    /// Represents the AsnMember type.
+    /// </summary>
     public record AsnMember
     {
         private const string Reset = "\u001b[0m";
         private const string Gray = $"\u001b[38;2;65;65;65m";
 
+        /// <summary>
+        /// Gets tag.
+        /// </summary>
         public Asn1Tag Tag { get; init; }
 
+        /// <summary>
+        /// Gets header Size.
+        /// </summary>
         public int HeaderSize { get; init; }
 
+        /// <summary>
+        /// Gets content Size.
+        /// </summary>
         public int ContentSize { get; init; }
 
+        /// <summary>
+        /// Gets offset.
+        /// </summary>
         public int Offset { get; init; }
 
+        /// <summary>
+        /// Gets tag Label.
+        /// </summary>
         public string TagLabel { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets value Label.
+        /// </summary>
         public string ValueLabel { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets tag Color.
+        /// </summary>
         public string TagColor { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets value Color.
+        /// </summary>
         public string ValueColor { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Gets indent Level.
+        /// </summary>
         public int IndentLevel { get; set; }
 
+        /// <summary>
+        /// Gets ber Header Len.
+        /// </summary>
         public int BerHeaderLen { get; internal set; }
 
+        /// <summary>
+        /// Gets content Len.
+        /// </summary>
         public int ContentLen { get; internal set; }
 
+        /// <summary>
+        /// Represents content Size.
+        /// </summary>
         public int OffsetEnd => Offset + HeaderSize + ContentSize;
 
+        /// <summary>
+        /// Returns a string representation of the current value.
+        /// </summary>
         public override string ToString()
         {
             var indent = IndentLevel > 0
@@ -48,6 +90,9 @@ namespace DotNetSnmp.Utils
         }
     }
 
+    /// <summary>
+    /// Provides helper methods for BERUtils.
+    /// </summary>
     public static class BERUtils
     {
         private const string BrightGreen = "\u001b[32;1m";
@@ -58,6 +103,9 @@ namespace DotNetSnmp.Utils
 
         private static Regex _isHexString = new(@"\A\b[0-9a-fA-F]+\b\Z");
 
+        /// <summary>
+        /// Decodes BER bytes into a list of tagged members for inspection and diagnostics.
+        /// </summary>
         public static IList<AsnMember> Dump(ReadOnlyMemory<byte> berEncodedBytes, bool colorize = true)
         {
             var result = new List<AsnMember>();

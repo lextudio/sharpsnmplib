@@ -32,7 +32,7 @@ public sealed class UserRegistry
     private readonly IDictionary<OctetString, User> _users = new Dictionary<OctetString, User>();
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UserRegistry"/> class.
+    /// Initializes a new instance of UserRegistry.
     /// </summary>
     /// <param name="users">The users.</param>
     public UserRegistry(User[]? users)
@@ -49,7 +49,7 @@ public sealed class UserRegistry
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="UserRegistry"/> class.
+    /// Initializes a new instance of UserRegistry.
     /// </summary>
     public UserRegistry() : this(null)
     {

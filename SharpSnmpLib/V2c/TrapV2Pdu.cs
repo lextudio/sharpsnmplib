@@ -5,14 +5,29 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Protocol.V2
 {
+    /// <summary>
+    /// TRAP v2 PDU.
+    /// </summary>
     public class TrapV2Pdu : Pdu
     {
+        /// <summary>
+        /// Gets time Stamp.
+        /// </summary>
         public uint TimeStamp { get; set; } = 0;
 
+        /// <summary>
+        /// Enterprise.
+        /// </summary>
         public ObjectIdentifier Enterprise { get; set; }
 
+        /// <summary>
+        /// Represents trap2 Msg.
+        /// </summary>
         public override Asn1Tag PduType => SnmpAsnTags.Trap2Msg;
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static TrapV2Pdu ReadFrom(AsnReader reader)
         {
             var seq = reader.ReadSequence(
@@ -35,6 +50,7 @@ namespace DotNetSnmp.Protocol.V2
             };
         }
 
+        /// <inheritdoc/>
         public override void WriteTo(AsnWriter writer)
         {
             using (_ = writer.PushSequence(tag: SnmpAsnTags.Trap2Msg))

@@ -6,18 +6,34 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Protocol.V3
 {
+    /// <summary>
+    /// Represents the HeaderData type.
+    /// </summary>
     public class HeaderData : IAsnSerializable
     {
+        /// <summary>
+        /// Gets msg Id.
+        /// </summary>
         public int MsgId { get; set; }
 
+        /// <summary>
+        /// Gets msg Max Size.
+        /// </summary>
         [Range(384, int.MaxValue)]
         public int MsgMaxSize { get; set; } = 65536;
 
+        /// <summary>
+        /// Gets msg Flags.
+        /// </summary>
         public MsgFlags MsgFlags { get; set; }
 
+        /// <summary>
+        /// Gets msg Security Model.
+        /// </summary>
         [Range(1, int.MaxValue)]
         public SecurityModel MsgSecurityModel { get; set; } = SecurityModel.Usm;
 
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             using (_ = writer.PushSequence())
@@ -34,6 +50,9 @@ namespace DotNetSnmp.Protocol.V3
             }
         }
 
+        /// <summary>
+        /// Reads a value from an ASN.1 reader.
+        /// </summary>
         public static HeaderData ReadFrom(AsnReader reader)
         {
             var rootSeq = reader.ReadSequence();

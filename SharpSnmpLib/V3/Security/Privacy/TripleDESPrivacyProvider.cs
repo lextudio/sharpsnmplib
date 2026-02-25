@@ -54,6 +54,9 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of TripleDESPrivacyProvider.
+        /// </summary>
         public TripleDESPrivacyProvider(
             in IAuthenticationProvider authenticationService,
             in ReadOnlyMemory<byte> passcode)
@@ -61,6 +64,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
         {
         }
 
+        /// <inheritdoc/>
         public override int EncryptScopedPdu(
             in ReadOnlyMemory<byte> scopedPdu,
             in UsmSecurityParameters parameters,
@@ -147,6 +151,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             }
         }
 
+        /// <inheritdoc/>
         public override void DecryptScopedPdu(
             in ReadOnlyMemory<byte> encryptedPdu,
             in UsmSecurityParameters parameters,

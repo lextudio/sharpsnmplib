@@ -11,7 +11,7 @@ public sealed class NumberGenerator
     private int _salt;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NumberGenerator"/> class.
+    /// Initializes a new instance of NumberGenerator.
     /// </summary>
     /// <param name="min">The minimum generated value.</param>
     /// <param name="max">The maximum generated value.</param>

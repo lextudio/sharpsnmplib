@@ -20,7 +20,7 @@ namespace DotNetSnmp.Protocol.V3
     public class Scope : IScope
     {
         /// <summary>
-        /// Gets or sets the context engine ID that identifies the SNMP entity to which this scoped PDU applies.
+        /// Gets context Engine Id.
         /// </summary>
         /// <value>
         /// A byte array containing the context engine ID.
@@ -32,7 +32,7 @@ namespace DotNetSnmp.Protocol.V3
         public ReadOnlyMemory<byte> ContextEngineId { get; set; }
 
         /// <summary>
-        /// Gets or sets the context name that identifies a specific context within the SNMP entity.
+        /// Gets context Name.
         /// </summary>
         /// <value>
         /// A string containing the context name.
@@ -44,7 +44,7 @@ namespace DotNetSnmp.Protocol.V3
         public required string ContextName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Protocol Data Unit (PDU) contained within this scope.
+        /// Gets the protocol data unit (PDU).
         /// </summary>
         /// <value>
         /// The PDU object representing an SNMP operation.

@@ -10,10 +10,16 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
     /// </summary>
     public abstract class AESPrivacyProviderBase : PrivacyProviderBase
     {
+        /// <summary>
+        /// Minimum AES block size in bytes.
+        /// </summary>
         protected const int MinimalBlockSize = 16;
 
         private int _keyLength;
 
+        /// <summary>
+        /// Initializes a new instance of AESPrivacyProviderBase.
+        /// </summary>
         protected AESPrivacyProviderBase(
             IAuthenticationProvider authenticationService,
             ReadOnlyMemory<byte> passcode,
@@ -23,6 +29,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             _keyLength = keyLength;
         }
 
+        /// <inheritdoc/>
         public override int EncryptScopedPdu(
             in ReadOnlyMemory<byte> scopedPdu,
             in UsmSecurityParameters parameters,
@@ -92,6 +99,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             }
         }
 
+        /// <inheritdoc/>
         public override void DecryptScopedPdu(
             in ReadOnlyMemory<byte> encryptedPdu,
             in UsmSecurityParameters parameters,
@@ -183,6 +191,7 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             }
         }
 
+        /// <inheritdoc/>
         public override byte[] PrepareBuffer(int encodedLength)
         {
             var length = (encodedLength % MinimalBlockSize == 0)

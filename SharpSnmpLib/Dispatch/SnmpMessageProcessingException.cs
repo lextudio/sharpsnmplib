@@ -6,12 +6,12 @@ namespace DotNetSnmp.Client
     public class SnmpMessageProcessingException : Exception
     {
         /// <summary>
-        /// Gets the message processing result that caused the exception.
+        /// Gets processing Result.
         /// </summary>
         public MessageProcessingResult ProcessingResult { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpMessageProcessingException"/> class.
+        /// Initializes a new instance of SnmpMessageProcessingException.
         /// </summary>
         /// <param name="message">The error message.</param>
         public SnmpMessageProcessingException(string message)
@@ -20,7 +20,7 @@ namespace DotNetSnmp.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpMessageProcessingException"/> class.
+        /// Initializes a new instance of SnmpMessageProcessingException.
         /// </summary>
         /// <param name="message">The error message.</param>
         /// <param name="processingResult">The message processing result that caused the exception.</param>
@@ -31,7 +31,7 @@ namespace DotNetSnmp.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpMessageProcessingException"/> class.
+        /// Initializes a new instance of SnmpMessageProcessingException.
         /// </summary>
         /// <param name="message">The error message.</param>
         /// <param name="innerException">The inner exception.</param>
@@ -41,7 +41,7 @@ namespace DotNetSnmp.Client
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SnmpMessageProcessingException"/> class.
+        /// Initializes a new instance of SnmpMessageProcessingException.
         /// </summary>
         /// <param name="message">The error message.</param>
         /// <param name="processingResult">The message processing result that caused the exception.</param>

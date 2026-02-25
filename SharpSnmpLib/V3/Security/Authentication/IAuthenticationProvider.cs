@@ -1,7 +1,7 @@
 ﻿namespace DotNetSnmp.Protocol.V3.Security.Authentication
 {
     /// <summary>
-    /// Defines methods and properties required by authentication providers in SNMP v3 security model.
+    /// Authentication provider interface.
     /// </summary>
     /// <remarks>
     /// Authentication providers are responsible for message authentication and key generation
@@ -11,7 +11,7 @@
     public interface IAuthenticationProvider
     {
         /// <summary>
-        /// Gets the size of the truncated digest in bytes, used for authentication parameters.
+        /// Gets truncated Digest Size.
         /// </summary>
         /// <value>
         /// The size of the truncated digest in bytes.
@@ -19,7 +19,7 @@
         public int TruncatedDigestSize { get; }
 
         /// <summary>
-        /// Gets the full size of the digest in bytes, produced by the hash algorithm.
+        /// Gets digest Size.
         /// </summary>
         /// <value>
         /// The full size of the digest in bytes.
@@ -27,7 +27,7 @@
         public int DigestSize { get; }
 
         /// <summary>
-        /// Converts a user password or passphrase into a localized authentication key.
+        /// Localizes a user secret into an engine-specific authentication key.
         /// </summary>
         /// <param name="secret">The password or secret to convert.</param>
         /// <param name="engineId">The engine ID to use in the key generation process.</param>

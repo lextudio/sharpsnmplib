@@ -14,6 +14,9 @@ using DotNetSnmp.Protocol.V3.Security.Privacy;
 
 namespace DotNetSnmp.Client
 {
+    /// <summary>
+    /// Represents the SnmpDispatcher type.
+    /// </summary>
     public class SnmpDispatcher : ISnmpDispatcher
     {
         private readonly ILogger<SnmpDispatcher>? _logger;
@@ -21,6 +24,9 @@ namespace DotNetSnmp.Client
         private IMessageProcessingModel? _v2MsgProcModel;
         private IMessageProcessingModel? _v3UsmMsgProcModel;
 
+        /// <summary>
+        /// Initializes a new instance of SnmpDispatcher.
+        /// </summary>
         public SnmpDispatcher(ILogger<SnmpDispatcher>? logger = null)
         {
             _logger = logger;
@@ -35,6 +41,9 @@ namespace DotNetSnmp.Client
             _ => throw new NotImplementedException(),
         };
 
+        /// <summary>
+        /// Sends pdu.
+        /// </summary>
         public async ValueTask<IScope> SendPdu(
             ISnmpTransport transport,
             ISnmpTarget target,

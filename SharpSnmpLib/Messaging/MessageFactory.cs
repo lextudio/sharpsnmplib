@@ -5,8 +5,14 @@ using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 
+/// <summary>
+/// Factory that creates <see cref="ISnmpMessage"/> instances from byte format.
+/// </summary>
 public static class MessageFactory
 {
+    /// <summary>
+    /// Parses one or more SNMP messages from hexadecimal text.
+    /// </summary>
     public static IList<ISnmpMessage> ParseMessages(IEnumerable<char> bytes, UserRegistry registry)
     {
         if (bytes == null)
@@ -18,6 +24,9 @@ public static class MessageFactory
 #pragma warning restore CS0618
     }
 
+    /// <summary>
+    /// Parses one or more SNMP messages from a byte array.
+    /// </summary>
     public static IList<ISnmpMessage> ParseMessages(byte[] buffer, UserRegistry registry)
     {
         if (buffer == null)
@@ -28,6 +37,9 @@ public static class MessageFactory
         return ParseMessages(buffer, 0, buffer.Length, registry);
     }
 
+    /// <summary>
+    /// Parses one or more SNMP messages from a segment of a byte array.
+    /// </summary>
     public static IList<ISnmpMessage> ParseMessages(byte[] buffer, int index, int length, UserRegistry registry)
     {
         if (buffer == null)
@@ -49,7 +61,7 @@ public static class MessageFactory
     }
 
     /// <summary>
-    /// Creates <see cref="ISnmpMessage"/> instances from a string.
+    /// Parses one or more SNMP messages from BER-encoded bytes.
     /// </summary>
     /// <param name="bytes">Byte string.</param>
     /// <param name="registry">The registry.</param>

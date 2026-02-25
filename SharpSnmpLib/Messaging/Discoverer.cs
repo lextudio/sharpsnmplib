@@ -12,41 +12,77 @@ using DotNetSnmp.Protocol.V3.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 
+/// <summary>
+/// Represents the AgentFoundEventArgs type.
+/// </summary>
 public sealed class AgentFoundEventArgs : EventArgs
 {
+    /// <summary>
+    /// Initializes a new instance of AgentFoundEventArgs.
+    /// </summary>
     public AgentFoundEventArgs(IPEndPoint agent, AgentVariable? variable)
     {
         Agent = agent ?? throw new ArgumentNullException(nameof(agent));
         Variable = variable;
     }
 
+    /// <summary>
+    /// Gets agent.
+    /// </summary>
     public IPEndPoint Agent { get; }
 
+    /// <summary>
+    /// Gets variable.
+    /// </summary>
     public AgentVariable? Variable { get; }
 }
 
+/// <summary>
+/// Represents the AgentVariable type.
+/// </summary>
 public sealed class AgentVariable
 {
+    /// <summary>
+    /// Initializes a new instance of AgentVariable.
+    /// </summary>
     public AgentVariable(ObjectIdentifier id, IAsnSerializable data)
     {
         Id = id;
         Data = data;
     }
 
+    /// <summary>
+    /// Gets id.
+    /// </summary>
     public ObjectIdentifier Id { get; }
 
+    /// <summary>
+    /// Gets data.
+    /// </summary>
     public IAsnSerializable Data { get; }
 
+    /// <summary>
+    /// Returns a string representation of the current value.
+    /// </summary>
     public override string ToString()
     {
         return $"{Id} = {Data}";
     }
 }
 
+/// <summary>
+/// Discoverer class to discover SNMP agents in the same network.
+/// </summary>
 public sealed class Discoverer
 {
+    /// <summary>
+    /// Occurs when an SNMP agent is found.
+    /// </summary>
     public event EventHandler<AgentFoundEventArgs>? AgentFound;
 
+    /// <summary>
+    /// Discovers agents of the specified version in a specific time interval.
+    /// </summary>
     public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout)
     {
         if (broadcastAddress == null)

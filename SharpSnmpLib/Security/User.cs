@@ -29,7 +29,7 @@ namespace Lextm.SharpSnmpLib.Security;
 public sealed class User
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="User"/> class.
+    /// Initializes a new instance of User.
     /// </summary>
     /// <param name="name">The name.</param>
     /// <param name="privacy">The privacy provider.</param>
@@ -40,13 +40,13 @@ public sealed class User
     }
 
     /// <summary>
-    /// Gets the name.
+    /// Gets name.
     /// </summary>
     /// <value>The name.</value>
     public OctetString Name { get; }
 
     /// <summary>
-    /// Gets the privacy provider.
+    /// Gets privacy.
     /// </summary>
     /// <value>The provider.</value>
     public IPrivacyProvider Privacy { get; }

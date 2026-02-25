@@ -17,16 +17,34 @@ namespace DotNetSnmp.Common.Definitions
     /// </remarks>
     public abstract class Pdu : IScope
     {
+        /// <summary>
+        /// Gets pdu Type.
+        /// </summary>
         public abstract Asn1Tag PduType { get; }
 
+        /// <summary>
+        /// Gets request Id.
+        /// </summary>
         public int RequestId { get; set; } = 0;
 
+        /// <summary>
+        /// Gets error Status.
+        /// </summary>
         public ErrorCode ErrorStatus { get; set; } = 0;
 
+        /// <summary>
+        /// Gets error Index.
+        /// </summary>
         public int ErrorIndex { get; set; } = 0;
 
+        /// <summary>
+        /// Gets variable Bindings.
+        /// </summary>
         public VarBindList? VariableBindings { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether variable bindings are present.
+        /// </summary>
         public bool HasData => VariableBindings?.IsEmpty == false;
 
         /// <inheritdoc/>

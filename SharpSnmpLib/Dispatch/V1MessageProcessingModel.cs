@@ -12,11 +12,13 @@ namespace DotNetSnmp.Client
     /// </summary>
     public class V1MessageProcessingModel : IMessageProcessingModel
     {
+        /// <inheritdoc/>
         public bool IsProtocolVersionSupported(VersionCode version)
         {
             return version == VersionCode.V1;
         }
 
+        /// <inheritdoc/>
         public bool TryPrepareDataElements(
             in ReadOnlyMemory<byte> incomingMessage,
             in ISnmpTarget target,
@@ -50,6 +52,7 @@ namespace DotNetSnmp.Client
             }
         }
 
+        /// <inheritdoc/>
         public bool TryPrepareOutgoingMessage(
             in ISnmpTarget target,
             in IScope scope,

@@ -13,6 +13,10 @@ using Lextm.SharpSnmpLib;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 
+/// <summary>
+/// Messenger class contains all static helper methods you need to send out SNMP messages.
+/// Static methods in Manager or Agent class will be removed in the future.
+/// </summary>
 public static partial class Messenger
 {
     private static readonly Lazy<NumberGenerator> RequestCounterFullRange = new(() => new NumberGenerator(int.MinValue, int.MaxValue));
@@ -27,6 +31,9 @@ public static partial class Messenger
     private static readonly ObjectIdentifier IdAuthenticationFailure = new("1.3.6.1.6.3.15.1.1.5.0");
     private static readonly ObjectIdentifier IdDecryptionError = new("1.3.6.1.6.3.15.1.1.6.0");
 
+    /// <summary>
+    /// The universal counter for request IDs and other IDs.
+    /// </summary>
     public static NumberGenerator RequestCounter
     {
         get
@@ -39,31 +46,96 @@ public static partial class Messenger
         }
     }
 
+    /// <summary>
+    /// A flag to control request ID range.
+    /// </summary>
     public static bool UseFullRange { get; set; } = true;
 
+    /// <summary>
+    /// Represents next Id.
+    /// </summary>
     public static int NextRequestId => RequestCounter.NextId;
 
+    /// <summary>
+    /// Represents next Id.
+    /// </summary>
     public static int NextMessageId => MessageCounter.NextId;
 
+    /// <summary>
+    /// Max message size used in #SNMP. 
+    /// </summary>
     public static int MaxMessageSize { get; set; } = 0xFFE3;
 
+    /// <summary>
+    /// If the privacy module returns failure, then the message can
+    /// not be processed, so the usmStatsDecryptionErrors counter is
+    /// incremented and an error indication (decryptionError) together
+    /// with the OID and value of the incremented counter is returned
+    /// to the calling module.
+    /// </summary>
     public static ObjectIdentifier DecryptionError => IdDecryptionError;
 
+    /// <summary>
+    /// If the authentication module returns failure, then the message
+    /// cannot be trusted, so the usmStatsWrongDigests counter is
+    /// incremented and an error indication (authenticationFailure)
+    /// together with the OID and value of the incremented counter is
+    /// returned to the calling module.
+    /// </summary>
     public static ObjectIdentifier AuthenticationFailure => IdAuthenticationFailure;
 
+    /// <summary>
+    /// If the value of the msgAuthoritativeEngineID field in the
+    /// securityParameters is unknown then
+    /// the usmStatsUnknownEngineIDs counter is incremented, and an
+    /// error indication (unknownEngineID) together with the OID and
+    /// value of the incremented counter is returned to the calling
+    /// module.
+    /// </summary>
     public static ObjectIdentifier UnknownEngineId => IdUnknownEngineId;
 
+    /// <summary>
+    /// Information about the value of the msgUserName and
+    /// msgAuthoritativeEngineID fields is extracted from the Local
+    /// Configuration Datastore (LCD, usmUserTable).  If no information
+    /// is available for the user, then the usmStatsUnknownUserNames
+    /// counter is incremented and an error indication
+    /// (unknownSecurityName) together with the OID and value of the
+    /// incremented counter is returned to the calling module.
+    /// </summary>
     public static ObjectIdentifier UnknownSecurityName => IdUnknownSecurityName;
 
+    /// <summary>
+    /// If the message is considered to be outside of the Time Window
+    /// then the usmStatsNotInTimeWindows counter is incremented and
+    /// an error indication (notInTimeWindow) together with the OID,
+    /// the value of the incremented counter, and an indication that
+    /// the error must be reported with a securityLevel of authNoPriv,
+    /// is returned to the calling module
+    /// </summary>
     public static ObjectIdentifier NotInTimeWindow => IdNotInTimeWindow;
 
+    /// <summary>
+    /// If the information about the user indicates that it does not
+    /// support the securityLevel requested by the caller, then the
+    /// usmStatsUnsupportedSecLevels counter is incremented and an error
+    /// indication (unsupportedSecurityLevel) together with the OID and
+    /// value of the incremented counter is returned to the calling
+    /// module.
+    /// </summary>
     public static ObjectIdentifier UnsupportedSecurityLevel => IdUnsupportedSecurityLevel;
 
+    /// <summary>
+    /// Returns a new discovery request.
+    /// </summary>
     public static Discovery GetNextDiscovery(SnmpType type)
     {
         return new Discovery(NextMessageId, NextRequestId, MaxMessageSize, type);
     }
 
+    /// <summary>
+    /// Returns error message for the specific <see cref="ObjectIdentifier"/>.
+    /// </summary>
     public static string GetErrorMessage(this ObjectIdentifier id)
     {
         if (id == IdUnsupportedSecurityLevel)
@@ -99,6 +171,9 @@ public static partial class Messenger
         return "unknown error";
     }
 
+    /// <summary>
+    /// Performs asynchronous retrieval.
+    /// </summary>
     public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
     {
         var dispatcher = new SnmpDispatcher();
@@ -126,12 +201,18 @@ public static partial class Messenger
         return response!.VariableBindings!.ToList();
     }
 
+    /// <summary>
+    /// Gets v3 Async.
+    /// </summary>
     public static Task<IList<Variable>> GetV3Async(IPEndPoint endpoint, string username, IList<Variable> variables)
     {
         return GetV3Async(endpoint, username, new DefaultPrivacyProvider(), variables);
     }
 
 
+    /// <summary>
+    /// Gets v3 Async.
+    /// </summary>
     public static async Task<IList<Variable>> GetV3Async(IPEndPoint endpoint, string username, IPrivacyProvider privacyProvider, IList<Variable> variables, string contextName = "")
     {
         var dispatcher = new SnmpDispatcher();
@@ -157,6 +238,9 @@ public static partial class Messenger
         return response!.VariableBindings!.ToList();
     }
 
+    /// <summary>
+    /// Performs asynchronous update.
+    /// </summary>
     public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
     {
         if (version == VersionCode.V3)
@@ -179,6 +263,9 @@ public static partial class Messenger
         return response!.VariableBindings!.ToList();
     }
 
+    /// <summary>
+    /// Sets v3 Async.
+    /// </summary>
     public static async Task<IList<Variable>> SetV3Async(IPEndPoint endpoint, string username, IPrivacyProvider privacyProvider,
         IList<Variable> variables, string contextName = "")
     {
@@ -205,6 +292,9 @@ public static partial class Messenger
         return response!.VariableBindings!.ToList();
     }
 
+    /// <summary>
+    /// Performs an asynchronous walk operation.
+    /// </summary>
     public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode)
     {
         if (list == null)
@@ -281,6 +371,9 @@ public static partial class Messenger
         return new Tuple<bool, Variable?>(!errorFound, errorFound ? null : response.VariableBindings!.ToArray()[0]);
     }
 
+    /// <summary>
+    /// Performs an asynchronous bulk walk operation.
+    /// </summary>
     public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode)
     {
         if (list == null)
@@ -354,6 +447,9 @@ public static partial class Messenger
         return new Tuple<bool, IList<Variable>, Pdu?>(!next!.IsEmpty, next.ToArray(), null);
     }
 
+    /// <summary>
+    /// Performs an asynchronous bulk walk operation.
+    /// </summary>
     public static Task<int> BulkWalkAsync(
         VersionCode version,
         IPEndPoint endpoint,
@@ -369,21 +465,33 @@ public static partial class Messenger
         return BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode);
     }
 
+    /// <summary>
+    /// Retrieves data.
+    /// </summary>
     public static IList<Variable> Get(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
     {
         return ExecuteWithTimeout(() => GetAsync(version, endpoint, community, variables), timeout);
     }
 
+    /// <summary>
+    /// Sends updated data.
+    /// </summary>
     public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
     {
         return ExecuteWithTimeout(() => SetAsync(version, endpoint, community, variables), timeout);
     }
 
+    /// <summary>
+    /// Performs a walk operation.
+    /// </summary>
     public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
     {
         return ExecuteWithTimeout(() => WalkAsync(version, endpoint, community, table, list, mode), timeout);
     }
 
+    /// <summary>
+    /// Performs a bulk walk operation.
+    /// </summary>
     public static int BulkWalk(
         VersionCode version,
         IPEndPoint endpoint,
@@ -402,6 +510,9 @@ public static partial class Messenger
             timeout);
     }
 
+    /// <summary>
+    /// Gets table.
+    /// </summary>
     [Obsolete("This method only works for a few scenarios. Might be replaced by new methods in the future. If it does not work for you, parse WALK result on your own.")]
     public static Variable[,] GetTable(
         VersionCode version,
@@ -441,6 +552,9 @@ public static partial class Messenger
         return result;
     }
 
+    /// <summary>
+    /// Sends inform Async.
+    /// </summary>
     public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
         if (variables == null)
@@ -470,6 +584,9 @@ public static partial class Messenger
         }
     }
 
+    /// <summary>
+    /// Sends inform Async.
+    /// </summary>
     public static Task SendInformAsync(
         int requestId,
         VersionCode version,
@@ -485,6 +602,9 @@ public static partial class Messenger
         return SendInformAsync(requestId, version, endpoint, community, contextName, enterprise, timestamp, variables);
     }
 
+    /// <summary>
+    /// Sends trap V1 Async.
+    /// </summary>
     public static async Task SendTrapV1Async(
         EndPoint receiver,
         IPAddress agent,
@@ -529,6 +649,9 @@ public static partial class Messenger
             false).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Sends trap V1.
+    /// </summary>
     public static void SendTrapV1(
         EndPoint receiver,
         IPAddress agent,
@@ -544,6 +667,9 @@ public static partial class Messenger
             .GetResult();
     }
 
+    /// <summary>
+    /// Sends trap V2 Async.
+    /// </summary>
     public static async Task SendTrapV2Async(int requestId, VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
         if (version != VersionCode.V2)
@@ -574,6 +700,9 @@ public static partial class Messenger
         );
     }
 
+    /// <summary>
+    /// Sends trap V2 Async.
+    /// </summary>
     public static Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
         if (receiver is not IPEndPoint endpoint)
@@ -584,6 +713,9 @@ public static partial class Messenger
         return SendTrapV2Async(requestId, version, endpoint, community, OctetString.Empty, enterprise, timestamp, variables);
     }
 
+    /// <summary>
+    /// Sends inform.
+    /// </summary>
     public static void SendInform(
         int requestId,
         VersionCode version,
@@ -602,6 +734,9 @@ public static partial class Messenger
             timeout);
     }
 
+    /// <summary>
+    /// Sends trap V2.
+    /// </summary>
     public static void SendTrapV2(
         int requestId,
         VersionCode version,
@@ -621,6 +756,9 @@ public static partial class Messenger
             .GetResult();
     }
 
+    /// <summary>
+    /// Walks a subtree with GetBulk requests over SNMPv3 and appends results to <paramref name="list"/>.
+    /// </summary>
     public static async Task<int> BulkWalkV3Async(
         IPEndPoint endpoint,
         string username,
@@ -732,6 +870,9 @@ public static partial class Messenger
         return result;
     }
 
+    /// <summary>
+    /// Sends inform V3 Async.
+    /// </summary>
     public static async Task SendInformV3Async(
         IPEndPoint endpoint,
         string username,
@@ -782,6 +923,9 @@ public static partial class Messenger
         }
     }
 
+    /// <summary>
+    /// Sends trap V2 V3 Async.
+    /// </summary>
     public static async Task SendTrapV2V3Async(
         IPEndPoint endpoint,
         string username,

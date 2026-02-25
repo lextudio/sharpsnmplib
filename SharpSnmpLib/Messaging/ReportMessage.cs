@@ -12,7 +12,7 @@ namespace Lextm.SharpSnmpLib.Messaging;
 public sealed class ReportMessage : ISnmpMessage
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="ReportMessage"/> class.
+    /// Initializes a new instance of ReportMessage.
     /// </summary>
     /// <param name="message">The parsed SNMP v3 message.</param>
     public ReportMessage(SnmpV3Message message)
@@ -36,21 +36,27 @@ public sealed class ReportMessage : ISnmpMessage
     }
 
     /// <summary>
-    /// Gets the wrapped message.
+    /// Gets message.
     /// </summary>
     public SnmpV3Message Message { get; }
 
     /// <summary>
-    /// Gets the message version.
+    /// Represents protocol Version.
     /// </summary>
     public VersionCode Version => Message.ProtocolVersion;
 
+    /// <summary>
+    /// Represents protocol Version.
+    /// </summary>
     public VersionCode ProtocolVersion => Message.ProtocolVersion;
 
+    /// <summary>
+    /// Represents scope.
+    /// </summary>
     public IScope? Scope => Message.Scope;
 
     /// <summary>
-    /// Converts this message to bytes.
+    /// Serializes the message to a byte array.
     /// </summary>
     /// <returns>Encoded SNMP message bytes.</returns>
     public byte[] ToBytes()
@@ -58,6 +64,7 @@ public sealed class ReportMessage : ISnmpMessage
         return Message.Encode();
     }
 
+    /// <inheritdoc/>
     public void WriteTo(AsnWriter writer)
     {
         Message.WriteTo(writer);

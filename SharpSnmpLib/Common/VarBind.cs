@@ -3,18 +3,31 @@ using System.Formats.Asn1;
 
 namespace DotNetSnmp.Asn1.SyntaxObjects
 {
+    /// <summary>
+    /// Represents the Variable type.
+    /// </summary>
     public readonly record struct Variable : IAsnSerializable
     {
+        /// <summary>
+        /// Gets id.
+        /// </summary>
         public readonly ObjectIdentifier Id { get; }
 
+        /// <summary>
+        /// Gets data.
+        /// </summary>
         public readonly IAsnSerializable Data { get; }
 
+        /// <summary>
+        /// Initializes a new instance of Variable.
+        /// </summary>
         public Variable(string oid, IAsnSerializable? value = null)
         {
             Id = new ObjectIdentifier(oid);
             Data = value ?? Null.Instance;
         }
 
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             using (var varBind = writer.PushSequence())
@@ -32,17 +45,26 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
             }
         }
 
+        /// <summary>
+        /// Deconstructs the value into its components.
+        /// </summary>
         public void Deconstruct(out string name, out object value)
         {
             name = Id;
             value = Data;
         }
 
+        /// <summary>
+        /// Returns a string representation of the current value.
+        /// </summary>
         public override string ToString()
         {
             return $"{Id} = {Data}";
         }
 
+        /// <summary>
+        /// Performs a conversion to Variable.
+        /// </summary>
         public static explicit operator Variable(string oid) => new(oid);
     }
 }
