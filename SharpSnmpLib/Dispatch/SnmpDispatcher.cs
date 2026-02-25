@@ -123,9 +123,9 @@ namespace DotNetSnmp.Client
                             throw new SnmpMessageProcessingException($"Failed to process the response from {targetAddress}", resProcessingResult);
                         }
                     }
-                    catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested)
+                    catch (OperationCanceledException ex) when (timeoutCts.IsCancellationRequested)
                     {
-                        _logger?.LogWarning("Timeout occurred while waiting for response from {TargetAddress} after {Timeout}ms", targetAddress, target.Timeout);
+                        _logger?.LogWarning(ex, "Timeout occurred while waiting for response from {TargetAddress} after {Timeout}ms", targetAddress, target.Timeout);
                         throw new SnmpTimeoutException($"Timeout waiting for response from {targetAddress}", targetAddress, target.Timeout);
                     }
                 }
@@ -135,9 +135,9 @@ namespace DotNetSnmp.Client
                     throw new SnmpMessageProcessingException($"Failed to prepare outgoing message for {targetAddress}", result);
                 }
             }
-            catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested)
+            catch (OperationCanceledException ex) when (timeoutCts.IsCancellationRequested)
             {
-                _logger?.LogWarning("Timeout occurred while communicating with {TargetAddress} after {Timeout}ms", targetAddress, target.Timeout);
+                _logger?.LogWarning(ex, "Timeout occurred while communicating with {TargetAddress} after {Timeout}ms", targetAddress, target.Timeout);
                 throw new SnmpTimeoutException($"Operation timed out while communicating with {targetAddress}", targetAddress, target.Timeout);
             }
             catch (SnmpMessageProcessingException)
@@ -284,9 +284,9 @@ namespace DotNetSnmp.Client
                                 throw new SnmpMessageProcessingException($"Failed to process the response from {targetAddress}", resProcessingResult);
                             }
                         }
-                        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                        catch (OperationCanceledException ex) when (cancellationToken.IsCancellationRequested)
                         {
-                            _logger?.LogWarning("Timeout occurred while waiting for response from {TargetAddress}", targetAddress);
+                            _logger?.LogWarning(ex, "Timeout occurred while waiting for response from {TargetAddress}", targetAddress);
                             throw new SnmpTimeoutException($"Timeout waiting for response from {targetAddress}", targetAddress, target.Timeout);
                         }
                     }

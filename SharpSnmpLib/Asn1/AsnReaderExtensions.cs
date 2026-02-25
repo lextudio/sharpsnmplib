@@ -33,13 +33,11 @@ namespace DotNetSnmp.Asn1
             this AsnReader reader,
             int? expectedValue = null)
         {
-            if (reader.TryReadInt32(out var value))
+            if (reader.TryReadInt32(out var value)
+                && (expectedValue.HasValue == false
+                    || expectedValue == value))
             {
-                if (expectedValue.HasValue == false
-                    || expectedValue == value)
-                {
-                    return;
-                }
+                return;
             }
 
             throw new InvalidOperationException();

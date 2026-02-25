@@ -10,7 +10,7 @@
     <EnableUnsafeBinaryFormatterSerialization Condition="'$(TargetFramework)'=='net8.0'">true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
   <PropertyGroup>
-    <OutputType Condition="'$(TargetFramework)'!='net471'">Exe</OutputType>
+    <OutputType>Exe</OutputType>
     <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
     <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
     <!-- Detect SDK version -->
@@ -18,11 +18,10 @@
     <IsNet80Supported Condition="'$(ParsedSdkVersion)' >= '8.0'">true</IsNet80Supported>
     <IsNet90Supported Condition="'$(ParsedSdkVersion)' >= '9.0'">true</IsNet90Supported>
     <IsNet100Supported Condition="'$(ParsedSdkVersion)' >= '10.0'">true</IsNet100Supported>
-    <!-- Only support .NET 8/9/10 and .NET Framework 4.7.1 right now. -->
+    <!-- Only support .NET 8/9/10 right now. -->
     <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true' ">net8.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true' ">$(TargetFrameworks);net9.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsNet100Supported)' == 'true' ">$(TargetFrameworks);net10.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(TargetFrameworks);net471</TargetFrameworks>
     <TestTfmsInParallel>false</TestTfmsInParallel>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
@@ -45,10 +44,7 @@
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="xunit.v3.mtp-v2" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net471'">
-    <PackageReference Include="System.Net.Sockets" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'!='net471'">
+  <ItemGroup>
     <PackageReference Include="System.Runtime.Serialization.Formatters" />
   </ItemGroup>
   <ItemGroup>

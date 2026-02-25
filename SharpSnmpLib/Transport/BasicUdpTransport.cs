@@ -93,9 +93,25 @@ namespace DotNetSnmp.Transport
         /// <inheritdoc/>
         public void Dispose()
         {
+            Dispose(true);
             GC.SuppressFinalize(this);
-            _udpClient.Close();
-            _udpClient.Dispose();
+        }
+
+        /// <summary>
+        /// Disposes the underlying UDP client.
+        /// </summary>
+        /// <param name="disposing">Whether to dispose managed resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _udpClient?.Dispose();
+            }
+        }
+
+        ~BasicUdpTransport()
+        {
+            Dispose(false);
         }
     }
 }

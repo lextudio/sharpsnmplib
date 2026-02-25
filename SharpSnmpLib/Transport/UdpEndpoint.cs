@@ -63,20 +63,16 @@ namespace DotNetSnmp.Transport
 
             var ipAddr = IPAddress.None;
 
-            if (m.Groups.TryGetValue("ip", out var ipGroup))
+            if (m.Groups.TryGetValue("ip", out var ipGroup)
+                && !IPAddress.TryParse(ipGroup.Value, out ipAddr))
             {
-                if (!IPAddress.TryParse(ipGroup.Value, out ipAddr))
-                {
-                    throw new ArgumentException($"invalid op {ipGroup.Value}");
-                }
+                throw new ArgumentException($"invalid op {ipGroup.Value}");
             }
 
-            if (m.Groups.TryGetValue("port", out var portGroup) && portGroup != null)
+            if (m.Groups.TryGetValue("port", out var portGroup) && portGroup != null
+                && !short.TryParse(portGroup.Value, out port))
             {
-                if (!short.TryParse(portGroup.Value, out port))
-                {
-                    throw new ArgumentException($"invalid port {portGroup.Value}");
-                }
+                throw new ArgumentException($"invalid port {portGroup.Value}");
             }
 
             Endpoint = new IPEndPoint(ipAddr, port);

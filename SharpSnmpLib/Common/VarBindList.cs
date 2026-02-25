@@ -176,13 +176,11 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
                     if (vbSeq.TryReadOctetString(
                         ipAddressBuff,
                         out var len,
-                        AsnTypes.IpAddress))
+                        AsnTypes.IpAddress)
+                        && len == 4)
                     {
-                        if (len == 4)
-                        {
-                            bindings.Add(
-                                new(oid, new IP(ipAddressBuff.ToArray())));
-                        }
+                        bindings.Add(
+                            new(oid, new IP(ipAddressBuff.ToArray())));
                     }
                 }
                 else if (tag == AsnTypes.TimeTicks)
