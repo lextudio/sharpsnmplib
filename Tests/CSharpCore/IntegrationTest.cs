@@ -17,7 +17,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V1;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -42,7 +42,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -68,7 +68,7 @@ namespace DotNetSnmp.Test
             var expected = "Test" + new Random().Next(1, 1000);
             var version = VersionCode.V1;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -93,7 +93,7 @@ namespace DotNetSnmp.Test
             var expected = "Test" + new Random().Next(1, 1000);
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -117,7 +117,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V1;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -138,7 +138,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V1;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -159,7 +159,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -180,7 +180,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -201,7 +201,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -222,7 +222,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -243,7 +243,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 162);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -261,7 +261,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var version = VersionCode.V2;
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 162);
             var community = new OctetString("public");
             var variables = new List<Variable>
@@ -278,7 +278,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -312,7 +312,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -348,7 +348,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -385,7 +385,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -422,7 +422,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -460,7 +460,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -497,7 +497,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -534,7 +534,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -572,7 +572,7 @@ namespace DotNetSnmp.Test
             // Arrange
             var expected = "Test" + new Random().Next(1, 1000);
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -604,7 +604,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 161);
 
             // SNMPv3 credentials
@@ -640,7 +640,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 162); // Notice the trap port 162
 
             // SNMPv3 credentials
@@ -670,7 +670,7 @@ namespace DotNetSnmp.Test
         {
             // Arrange
             var host = "demo.pysnmp.com";
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            var addresses = await Dns.GetHostAddressesAsync(host, TestContext.Current.CancellationToken);
             var endpoint = new IPEndPoint(addresses[0], 162); // Notice the trap port 162
 
             // SNMPv3 credentials
