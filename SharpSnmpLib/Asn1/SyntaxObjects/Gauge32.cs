@@ -9,6 +9,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// fall below a minimum value. (doesn't wrap)
     /// </summary>
     /// <param name="Value"></param>
+    [System.CLSCompliant(false)]
     public readonly record struct Gauge32(uint Value) : IAsnSerializable
     {
         /// <inheritdoc/>
@@ -29,6 +30,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <summary>
     /// Performs a conversion to uint.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static implicit operator uint(Gauge32 x) => x.Value;
 }
 }

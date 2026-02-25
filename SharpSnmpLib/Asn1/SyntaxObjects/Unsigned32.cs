@@ -6,6 +6,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <summary>
     /// Represents the Unsigned32 type.
     /// </summary>
+    [System.CLSCompliant(false)]
     public readonly record struct Unsigned32(uint Value) : IAsnSerializable
     {
         /// <inheritdoc/>
@@ -27,6 +28,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <summary>
     /// Performs a conversion to uint.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static implicit operator uint(Unsigned32 x) => x.Value;
 }
 }

@@ -555,6 +555,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends inform Async.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
         if (variables == null)
@@ -587,6 +588,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends inform Async.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static Task SendInformAsync(
         int requestId,
         VersionCode version,
@@ -605,6 +607,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends trap V1 Async.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static async Task SendTrapV1Async(
         EndPoint receiver,
         IPAddress agent,
@@ -652,6 +655,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends trap V1.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static void SendTrapV1(
         EndPoint receiver,
         IPAddress agent,
@@ -670,6 +674,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends trap V2 Async.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static async Task SendTrapV2Async(int requestId, VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
         if (version != VersionCode.V2)
@@ -703,6 +708,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends trap V2 Async.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
         if (receiver is not IPEndPoint endpoint)
@@ -716,6 +722,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends inform.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static void SendInform(
         int requestId,
         VersionCode version,
@@ -737,6 +744,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends trap V2.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static void SendTrapV2(
         int requestId,
         VersionCode version,
@@ -873,6 +881,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends inform V3 Async.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static async Task SendInformV3Async(
         IPEndPoint endpoint,
         string username,
@@ -926,6 +935,7 @@ public static partial class Messenger
     /// <summary>
     /// Sends trap V2 V3 Async.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static async Task SendTrapV2V3Async(
         IPEndPoint endpoint,
         string username,

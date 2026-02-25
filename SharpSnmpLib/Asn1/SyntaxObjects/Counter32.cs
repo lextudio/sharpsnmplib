@@ -10,6 +10,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// again from zero. (wraps)
     /// </summary>
     /// <param name="Value"></param>
+    [System.CLSCompliant(false)]
     public readonly record struct Counter32(uint Value) : IAsnSerializable
     {
         /// <inheritdoc/>
@@ -31,6 +32,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <summary>
     /// Performs a conversion to uint.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static implicit operator uint(Counter32 x) => x.Value;
 }
 }

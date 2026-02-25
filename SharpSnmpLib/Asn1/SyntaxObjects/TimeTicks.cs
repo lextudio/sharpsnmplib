@@ -11,6 +11,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// epochs.
     /// </summary>
     /// <param name="Value"></param>
+    [System.CLSCompliant(false)]
     public readonly record struct TimeTicks(uint Value) : IAsnSerializable
     {
         /// <inheritdoc/>
@@ -44,6 +45,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <summary>
     /// Performs a conversion to uint.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static implicit operator uint(TimeTicks t) => t.Value;
 }
 }

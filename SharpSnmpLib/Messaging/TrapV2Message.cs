@@ -18,6 +18,7 @@ public sealed class TrapV2Message
     /// <summary>
     /// Initializes a new instance of TrapV2Message.
     /// </summary>
+    [System.CLSCompliant(false)]
     public TrapV2Message(
         int requestId,
         VersionCode version,
@@ -37,6 +38,7 @@ public sealed class TrapV2Message
     /// <summary>
     /// Initializes a new instance of TrapV2Message.
     /// </summary>
+    [System.CLSCompliant(false)]
     public TrapV2Message(
         VersionCode version,
         int messageId,
@@ -103,6 +105,7 @@ public sealed class TrapV2Message
     /// <summary>
     /// Time stamp.
     /// </summary>
+    [System.CLSCompliant(false)]
     public uint TimeStamp { get; }
 
     private readonly IList<Variable> _variables;

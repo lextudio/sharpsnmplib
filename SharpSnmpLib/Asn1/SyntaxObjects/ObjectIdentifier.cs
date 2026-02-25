@@ -12,7 +12,8 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         /// <summary>
         /// Initializes a new instance of ObjectIdentifier.
         /// </summary>
-        public ObjectIdentifier(uint[] ids)
+        [System.CLSCompliant(false)]
+    public ObjectIdentifier(uint[] ids)
             : this(string.Join(".", ids))
     {
     }

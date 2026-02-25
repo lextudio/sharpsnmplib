@@ -13,6 +13,7 @@ namespace DotNetSnmp.Protocol.V2
         /// <summary>
         /// Gets time Stamp.
         /// </summary>
+        [System.CLSCompliant(false)]
         public uint TimeStamp { get; set; } = 0;
 
         /// <summary>

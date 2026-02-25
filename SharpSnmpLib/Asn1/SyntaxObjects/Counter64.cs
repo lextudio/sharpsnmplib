@@ -6,6 +6,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <summary>
     /// Represents the Counter64 type.
     /// </summary>
+    [System.CLSCompliant(false)]
     public readonly record struct Counter64(ulong Value) : IAsnSerializable
     {
         /// <inheritdoc/>
@@ -38,6 +39,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// <summary>
     /// Performs a conversion to ulong.
     /// </summary>
+    [System.CLSCompliant(false)]
     public static implicit operator ulong(Counter64 x) => x.Value;
 }
 }

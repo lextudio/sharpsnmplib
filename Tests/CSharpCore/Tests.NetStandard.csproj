@@ -45,8 +45,10 @@
     <PackageReference Include="NSubstitute" />
     <PackageReference Include="xunit.v3.mtp-v2" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'!='net471'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net471'">
     <PackageReference Include="System.Net.Sockets" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'!='net471'">
     <PackageReference Include="System.Runtime.Serialization.Formatters" />
   </ItemGroup>
   <ItemGroup>
