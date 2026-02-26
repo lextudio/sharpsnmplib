@@ -1,0 +1,19 @@
+<Project>
+  <ItemGroup>
+    <!-- ASN.1 syntax types: Variable, ObjectIdentifier, OctetString, Integer32, Counter32, etc. -->
+    <Using Include="DotNetSnmp.Asn1.SyntaxObjects" />
+
+    <!-- Common definitions: VersionCode, ErrorCode, Levels, ISnmpMessage, Pdu, IScope -->
+    <Using Include="DotNetSnmp.Common.Definitions" />
+    <Using Include="DotNetSnmp.Protocol.V1" />
+    <Using Include="DotNetSnmp.Protocol.V2" />
+    <Using Include="DotNetSnmp.Protocol.V3" />
+
+    <!-- ISnmpData backward compatibility alias -->
+    <Using Include="DotNetSnmp.Asn1.Serialization.IAsnSerializable" Alias="ISnmpData" />
+
+    <!-- Security interfaces used via Lextm.SharpSnmpLib.Security -->
+    <Using Include="DotNetSnmp.Protocol.V3.Security.Authentication.IAuthenticationProvider" Alias="IAuthenticationProvider" />
+    <Using Include="DotNetSnmp.Protocol.V3.Security.Privacy.IPrivacyProvider" Alias="IPrivacyProvider" />
+  </ItemGroup>
+</Project>

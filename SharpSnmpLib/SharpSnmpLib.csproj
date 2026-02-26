@@ -67,6 +67,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="../readme.md" Pack="true" PackagePath="" />
+    <None Include="build/Lextm.SharpSnmpLib.targets" Pack="true" PackagePath="build/" />
+    <None Include="build/Lextm.SharpSnmpLib.targets" Pack="true" PackagePath="buildTransitive/" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' AND '$(Configuration)' == 'Release' ">
     <Exec Command="pwsh -ExecutionPolicy Bypass -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" 
