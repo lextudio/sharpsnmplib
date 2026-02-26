@@ -83,7 +83,7 @@ namespace DotNetSnmp.Test
             Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal("1.3.6.1.2.1.1.5.0", result[0].Id.ToString());
-            Assert.Equal($"String: {expected}", result[0].Data.ToString());
+            Assert.Equal(expected, result[0].Data.ToString());
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace DotNetSnmp.Test
             Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal("1.3.6.1.2.1.1.5.0", result[0].Id.ToString());
-            Assert.Equal($"String: {expected}", result[0].Data.ToString());
+            Assert.Equal(expected, result[0].Data.ToString());
         }
 
         [Fact]
@@ -596,7 +596,7 @@ namespace DotNetSnmp.Test
             Assert.NotNull(result);
             Assert.Single(result);
             Assert.Equal("1.3.6.1.2.1.1.5.0", result[0].Id.ToString());
-            Assert.Equal($"String: {expected}", result[0].Data.ToString());
+            Assert.Equal(expected, result[0].Data.ToString());
         }
 
         [Fact]

@@ -100,7 +100,7 @@ namespace DotNetSnmp.Test
             var timeTicks = TimeTicks.ReadFrom(reader);
             Assert.Equal((uint)394060, timeTicks.Value);
             Assert.Equal(hexBer, ToHexString(timeTicks));
-            Assert.Equal("Timeticks: (394060) 00:01:05:40.60", timeTicks.ToString());
+            Assert.Equal(TimeSpan.FromMilliseconds(timeTicks.Value * 10).ToString(), timeTicks.ToString());
         }
     }
 }

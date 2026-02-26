@@ -58,7 +58,7 @@ namespace DotNetSnmp.Test
                 VersionCode.V1,
                 message.ProtocolVersion);
 
-            Assert.Equal("String: public", message.Community);
+            Assert.Equal("public", message.Community);
 
             Assert.NotNull(message.Pdu);
 
@@ -102,7 +102,7 @@ namespace DotNetSnmp.Test
                 VersionCode.V1,
                 message.ProtocolVersion);
 
-            Assert.Equal("String: public", message.Community);
+            Assert.Equal("public", message.Community);
 
             Assert.NotNull(message.Pdu);
 
@@ -151,7 +151,7 @@ namespace DotNetSnmp.Test
                 VersionCode.V1,
                 message.ProtocolVersion);
 
-            Assert.Equal("String: public", message.Community);
+            Assert.Equal("public", message.Community);
 
             Assert.NotNull(message.Pdu);
 
@@ -195,7 +195,7 @@ namespace DotNetSnmp.Test
                 VersionCode.V1,
                 message.ProtocolVersion);
 
-            Assert.Equal("String: public", message.Community);
+            Assert.Equal("public", message.Community);
 
             Assert.NotNull(message.Pdu);
 

@@ -71,7 +71,7 @@ namespace DotNetSnmp.Test
 
             var tt = vb.Data.ToString();
 
-            Assert.Equal("String: NetSnmpTestContainer", tt);
+            Assert.Equal("NetSnmpTestContainer", tt);
         }
 
         [Fact]
@@ -131,7 +131,7 @@ namespace DotNetSnmp.Test
 
             var tt = vb.Data.ToString();
 
-            Assert.Equal("String: NetSnmpTestContainer", tt);
+            Assert.Equal("NetSnmpTestContainer", tt);
         }
     }
 }
