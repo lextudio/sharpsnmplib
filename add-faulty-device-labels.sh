@@ -19,18 +19,8 @@ for issue in "${issues_to_tag[@]}"; do
     echo ""
 done
 
-# Also add 'imported' label to #101 which is missing it
-echo "Adding 'imported' label to issue #101..."
-gh issue edit 101 --add-label "imported"
-if [ $? -eq 0 ]; then
-    echo "✓ Successfully added 'imported' label to issue #101"
-else
-    echo "✗ Failed to add 'imported' label to issue #101"
-fi
-
 echo ""
 echo "Done! All labels have been processed."
 echo ""
 echo "Summary:"
 echo "- Added 'area:faulty-device' label to 6 issues: #62, #89, #101, #370, #436, #475"
-echo "- Added 'imported' label to issue #101"

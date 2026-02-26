@@ -11,8 +11,8 @@ gh issue edit 62 --add-label "area:faulty-device"
 # Issue #89 - MikroTik unsupported data type 18  
 gh issue edit 89 --add-label "area:faulty-device"
 
-# Issue #101 - Cisco ASA MsgFlags (also needs 'imported' label)
-gh issue edit 101 --add-label "area:faulty-device,imported"
+# Issue #101 - Cisco ASA MsgFlags
+gh issue edit 101 --add-label "area:faulty-device"
 
 # Issue #370 - QNap NAS GetTable truncation
 gh issue edit 370 --add-label "area:faulty-device"

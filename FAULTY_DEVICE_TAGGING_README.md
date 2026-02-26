@@ -35,8 +35,6 @@ Issues were identified as device-related if they met one or more of these criter
 - #436: Cisco switch - MAC address per VLAN (needs VLAN context)
 - #475: Citrix Xen - GetTable timeout (works in iReasoning)
 
-**Note:** Issue #101 also needs the "imported" label added.
-
 ## Files Created
 
 ### 1. `FAULTY_DEVICE_ISSUES.md`
@@ -81,7 +79,7 @@ Navigate to each issue and add the `area:faulty-device` label:
 ```bash
 gh issue edit 62 --add-label "area:faulty-device"
 gh issue edit 89 --add-label "area:faulty-device"
-gh issue edit 101 --add-label "area:faulty-device,imported"
+gh issue edit 101 --add-label "area:faulty-device"
 gh issue edit 370 --add-label "area:faulty-device"
 gh issue edit 436 --add-label "area:faulty-device"
 gh issue edit 475 --add-label "area:faulty-device"

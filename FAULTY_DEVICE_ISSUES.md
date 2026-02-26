@@ -32,7 +32,7 @@ The following imported issues are related to faulty devices but currently **miss
 - **Reason**: Device uses non-standard SNMP data type 18 that is not part of standard SNMP data types
 
 ### #101 - Cisco ASA 5510 MsgFlags Issue
-- **Status**: Needs tag (note: currently only has "bug" label, missing "imported" label too)
+- **Status**: Needs tag (note: currently only has "bug" label)
 - **Device**: Cisco ASA 5510 firewall
 - **Issue**: Returns MsgFlags=8 during SNMPv3 discovery, library only handles 0-7
 - **Reason**: Works in Net::SNMP, device returns out-of-spec value; Cisco C2960 switch works correctly

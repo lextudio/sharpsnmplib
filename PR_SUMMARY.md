@@ -50,8 +50,6 @@ This PR provides a comprehensive review of all imported issues to identify which
 | [#436](https://github.com/lextudio/sharpsnmplib/issues/436) | Cisco Switch | MAC per VLAN empty | Requires VLAN context support |
 | [#475](https://github.com/lextudio/sharpsnmplib/issues/475) | Citrix Xen | GetTable timeout | Works in iReasoning, single reads work |
 
-**Note:** Issue #101 also needs the `imported` label added.
-
 ## Criteria Used
 
 Issues qualified as "device-related" if they met one or more of these criteria:
@@ -73,7 +71,7 @@ Issues qualified as "device-related" if they met one or more of these criteria:
 ```bash
 gh issue edit 62 --add-label "area:faulty-device"
 gh issue edit 89 --add-label "area:faulty-device"
-gh issue edit 101 --add-label "area:faulty-device,imported"
+gh issue edit 101 --add-label "area:faulty-device"
 gh issue edit 370 --add-label "area:faulty-device"
 gh issue edit 436 --add-label "area:faulty-device"
 gh issue edit 475 --add-label "area:faulty-device"
