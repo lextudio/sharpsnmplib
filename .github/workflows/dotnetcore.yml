@@ -15,6 +15,7 @@ jobs:
         dotnet-version: |
           8.0.x
           9.0.x
+          10.0.x
     - name: Build
       shell: bash
       run: |
@@ -24,7 +25,7 @@ jobs:
         pwsh -file release.ps1 Release
     - name: Test
       shell: pwsh
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
+      run: dotnet test --project Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
 
   linux:
     runs-on: ubuntu-latest
@@ -38,6 +39,7 @@ jobs:
         dotnet-version: |
           8.0.x
           9.0.x
+          10.0.x
     - name: Build
       shell: bash
       run: |
@@ -46,7 +48,7 @@ jobs:
         pwsh -file release.ps1 Release
     - name: Test
       shell: pwsh
-      run: dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
+      run: dotnet test --project Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
 
   windows:
 
@@ -62,15 +64,18 @@ jobs:
         dotnet-version: |
           8.0.x
           9.0.x
+          10.0.x
     - name: Build
       shell: cmd
       run: build.release.bat
     - name: Test
       shell: pwsh
       run: |
-        dotnet test Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
+        dotnet test --project Tests/CSharpCore/Tests.NetStandard.csproj --configuration Release --no-build /p:AltCover=true /p:AltCoverStrongNameKey=../../SharpSnmpLib/sharpsnmplib.snk /p:AltCoverAssemblyFilter='^(xunit)|(AltCover)|(SharpSnmpLib\.Tests)'
         dotnet tool install --global dotnet-reportgenerator-globaltool
-        reportgenerator -reports:${{ github.workspace }}\Tests\CSharpCore\coverage.net8.0.xml -targetdir:${{ github.workspace }}\TestResults -reporttypes:lcov
+        $coverage = Get-ChildItem "${{ github.workspace }}\\Tests\\CSharpCore" -Filter "coverage.net*.xml" | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+        if (-not $coverage) { throw "Coverage file not found under Tests/CSharpCore." }
+        reportgenerator -reports:$($coverage.FullName) -targetdir:${{ github.workspace }}\TestResults -reporttypes:lcov
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@v2
       with:
