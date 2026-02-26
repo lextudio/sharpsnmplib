@@ -133,11 +133,8 @@ public static class MessageFactory
             // Continue parsing messages until we've consumed all data
             while (reader.HasData)
             {
-                // Get the entire message data before we move on to the next one
-                ReadOnlyMemory<byte> messageData = reader.PeekEncodedValue().ToArray();
-
-                // Skip over this message in the main reader so we can continue with the next message
-                reader.ReadEncodedValue();
+                // Read the full encoded message directly to avoid extra copy/allocation.
+                ReadOnlyMemory<byte> messageData = reader.ReadEncodedValue();
 
                 // Use a temporary reader to peek at the version
                 var versionReader = new AsnReader(messageData, AsnEncodingRules.BER);
@@ -213,11 +210,6 @@ public static class MessageFactory
         return result;
     }
 
-    private static void ProcessV3Security(DotNetSnmp.Protocol.V3.SnmpV3Message v3Message, UserRegistry registry)
-    {
-        _ = ProcessV3Security(v3Message, registry, throwOnV3SecurityError: true);
-    }
-
     private static V3SecurityState ProcessV3Security(
         DotNetSnmp.Protocol.V3.SnmpV3Message v3Message,
         UserRegistry registry,
@@ -254,7 +246,7 @@ public static class MessageFactory
         var auth = privacy.AuthenticationProvider;
 
         // Process authentication if needed
-        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlag.Auth))
+        if ((msgFlags & DotNetSnmp.Protocol.V3.Security.MsgFlag.Auth) != 0)
         {
             bool authenticated = auth.AuthenticateIncomingMsg(v3Message);
             if (!authenticated)
@@ -270,7 +262,7 @@ public static class MessageFactory
         }
 
         // Process privacy (decryption) if needed
-        if (msgFlags.HasFlag(DotNetSnmp.Protocol.V3.Security.MsgFlag.Priv))
+        if ((msgFlags & DotNetSnmp.Protocol.V3.Security.MsgFlag.Priv) != 0)
         {
             try
             {

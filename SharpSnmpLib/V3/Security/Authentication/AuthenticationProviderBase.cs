@@ -22,6 +22,18 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
         private readonly Func<byte[], HMAC> _create;
         private readonly ReadOnlyMemory<byte> _passcode;
         private readonly HashAlgorithmName _name;
+        private readonly object _localizedKeyCacheLock = new();
+        private readonly List<LocalizedKeyCacheEntry> _localizedKeyCache = [];
+        private const int LocalizedKeyCacheCapacity = 64;
+
+        private sealed class LocalizedKeyCacheEntry
+        {
+            public required byte[] Secret { get; init; }
+
+            public required byte[] EngineId { get; init; }
+
+            public required byte[] LocalizedKey { get; init; }
+        }
 
         /// <summary>
         /// Initializes a new instance of AuthenticationProviderBase.
@@ -47,12 +59,59 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
         /// <returns>An HMAC algorithm instance initialized with the localized key.</returns>
         private HMAC CreateHmac(ReadOnlyMemory<byte> engineId)
         {
-            // Use stackalloc for small keys, typically digest sizes are reasonable for stack allocation
-            Span<byte> key = stackalloc byte[DigestSize];
-            PasswordToKey(_passcode, engineId, key);
+            // Localized keys are expensive to derive (RFC 3414 1MB passphrase expansion),
+            // so cache them for this provider instance.
+            var localizedKey = GetLocalizedKey(engineId);
+            return _create(localizedKey);
+        }
 
-            // Unfortunately, this allocation is unavoidable due to the HMAC API requiring a byte[]
-            return _create(key.ToArray());
+        private byte[] GetLocalizedKey(ReadOnlyMemory<byte> engineId)
+            => GetLocalizedKey(_passcode, engineId);
+
+        private byte[] GetLocalizedKey(ReadOnlyMemory<byte> secret, ReadOnlyMemory<byte> engineId)
+        {
+            lock (_localizedKeyCacheLock)
+            {
+                foreach (var entry in _localizedKeyCache)
+                {
+                    if (secret.Span.SequenceEqual(entry.Secret)
+                        && engineId.Span.SequenceEqual(entry.EngineId))
+                    {
+                        return entry.LocalizedKey;
+                    }
+                }
+            }
+
+            var computed = new byte[DigestSize];
+            ComputeLocalizedKey(secret, engineId, computed);
+            var copiedSecret = secret.ToArray();
+            var copiedEngineId = engineId.ToArray();
+
+            lock (_localizedKeyCacheLock)
+            {
+                foreach (var entry in _localizedKeyCache)
+                {
+                    if (copiedSecret.AsSpan().SequenceEqual(entry.Secret)
+                        && copiedEngineId.AsSpan().SequenceEqual(entry.EngineId))
+                    {
+                        return entry.LocalizedKey;
+                    }
+                }
+
+                if (_localizedKeyCache.Count >= LocalizedKeyCacheCapacity)
+                {
+                    _localizedKeyCache.RemoveAt(0);
+                }
+
+                _localizedKeyCache.Add(new LocalizedKeyCacheEntry
+                {
+                    Secret = copiedSecret,
+                    EngineId = copiedEngineId,
+                    LocalizedKey = computed,
+                });
+            }
+
+            return computed;
         }
 
         /// <inheritdoc/>
@@ -107,6 +166,25 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
 
         /// <inheritdoc/>
         public void PasswordToKey(in ReadOnlyMemory<byte> secret, in ReadOnlyMemory<byte> engineId, Span<byte> destination)
+        {
+            if (destination.Length < DigestSize)
+            {
+                throw new ArgumentException($"Destination is too small. Must be >= {DigestSize}. Current: {destination.Length}.", nameof(destination));
+            }
+
+            // Common hot path: key localization into digest-sized buffer (auth/priv providers).
+            // Reuse cached localized key instead of repeating RFC 3414 1MB expansion every call.
+            if (destination.Length == DigestSize)
+            {
+                var localizedKey = GetLocalizedKey(secret, engineId);
+                localizedKey.CopyTo(destination);
+                return;
+            }
+
+            ComputeLocalizedKey(secret, engineId, destination);
+        }
+
+        private void ComputeLocalizedKey(in ReadOnlyMemory<byte> secret, in ReadOnlyMemory<byte> engineId, Span<byte> destination)
         {
             using var hash = IncrementalHash.CreateHash(_name);
             KeyUtils.GenerateLocalizedKey(secret.Span, engineId.Span, hash, destination);

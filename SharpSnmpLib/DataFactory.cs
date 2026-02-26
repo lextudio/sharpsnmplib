@@ -46,9 +46,12 @@ public static class DataFactory
             throw new SnmpException("empty data buffer");
         }
 
-        var slice = new byte[count];
-        Buffer.BlockCopy(buffer, index, slice, 0, count);
-        return Parse(slice);
+        if (index == 0 && count == buffer.Length)
+        {
+            return Parse(buffer);
+        }
+
+        return Parse(new ReadOnlyMemory<byte>(buffer, index, count));
     }
 
     /// <summary>
@@ -90,6 +93,11 @@ public static class DataFactory
     }
 
     private static IAsnSerializable Parse(byte[] payload)
+    {
+        return Parse(new ReadOnlyMemory<byte>(payload));
+    }
+
+    private static IAsnSerializable Parse(ReadOnlyMemory<byte> payload)
     {
         try
         {
@@ -212,11 +220,20 @@ public static class DataFactory
 
             if (tag.HasSameClassAndValue(Asn1Tag.Sequence))
             {
-                try
+                var sequenceKind = ClassifySequence(trimmedPayload);
+                if (sequenceKind == SequenceKind.Scope)
                 {
-                    return Scope.ReadFrom(new AsnReader(trimmedPayload, AsnEncodingRules.BER));
+                    try
+                    {
+                        return Scope.ReadFrom(new AsnReader(trimmedPayload, AsnEncodingRules.BER));
+                    }
+                    catch
+                    {
+                        return new EncodedSequence(trimmedPayload);
+                    }
                 }
-                catch
+
+                if (sequenceKind == SequenceKind.VarBindList)
                 {
                     try
                     {
@@ -227,6 +244,8 @@ public static class DataFactory
                         return new EncodedSequence(trimmedPayload);
                     }
                 }
+
+                return new EncodedSequence(trimmedPayload);
             }
         }
         catch (Exception ex) when (ex is not SnmpException)
@@ -239,24 +258,80 @@ public static class DataFactory
 
     private sealed class EncodedSequence : IAsnSerializable
     {
-        private readonly byte[] _encoded;
+        private readonly ReadOnlyMemory<byte> _encoded;
 
-        public EncodedSequence(byte[] encoded)
+        public EncodedSequence(ReadOnlyMemory<byte> encoded)
         {
-            _encoded = encoded ?? throw new ArgumentNullException(nameof(encoded));
+            _encoded = encoded;
         }
 
         public SnmpType TypeCode => SnmpType.Sequence;
 
         public void WriteTo(AsnWriter writer)
         {
-            writer.WriteEncodedValue(_encoded);
+            writer.WriteEncodedValue(_encoded.Span);
         }
     }
 
-    private static byte[] TrimToSingleBerValue(byte[] payload)
+    private enum SequenceKind
     {
-        if (payload.Length < 2)
+        Unknown = 0,
+        Scope = 1,
+        VarBindList = 2,
+    }
+
+    private static SequenceKind ClassifySequence(ReadOnlyMemory<byte> payload)
+    {
+        try
+        {
+            var reader = new AsnReader(payload, AsnEncodingRules.BER);
+            var sequence = reader.ReadSequence();
+            if (!sequence.HasData)
+            {
+                return SequenceKind.Unknown;
+            }
+
+            var firstTag = sequence.PeekTag();
+            if (firstTag.HasSameClassAndValue(Asn1Tag.Sequence))
+            {
+                return SequenceKind.VarBindList;
+            }
+
+            if (!firstTag.HasSameClassAndValue(Asn1Tag.PrimitiveOctetString))
+            {
+                return SequenceKind.Unknown;
+            }
+
+            // Scope starts with contextEngineId + contextName (octet strings),
+            // followed by a context-specific constructed PDU.
+            sequence.ReadOctetString();
+            if (!sequence.HasData || !sequence.PeekTag().HasSameClassAndValue(Asn1Tag.PrimitiveOctetString))
+            {
+                return SequenceKind.Unknown;
+            }
+
+            sequence.ReadOctetString();
+            if (!sequence.HasData)
+            {
+                return SequenceKind.Unknown;
+            }
+
+            var pduTag = sequence.PeekTag();
+            return pduTag.TagClass == TagClass.ContextSpecific && pduTag.IsConstructed
+                ? SequenceKind.Scope
+                : SequenceKind.Unknown;
+        }
+        catch
+        {
+            return SequenceKind.Unknown;
+        }
+    }
+
+    private static ReadOnlyMemory<byte> TrimToSingleBerValue(ReadOnlyMemory<byte> payload)
+    {
+        var span = payload.Span;
+
+        if (span.Length < 2)
         {
             throw new SnmpException("invalid BER data");
         }
@@ -264,16 +339,16 @@ public static class DataFactory
         var offset = 1; // tag octet
 
         // High-tag-number form.
-        if ((payload[0] & 0x1F) == 0x1F)
+        if ((span[0] & 0x1F) == 0x1F)
         {
             while (true)
             {
-                if (offset >= payload.Length)
+                if (offset >= span.Length)
                 {
                     throw new SnmpException("invalid BER data");
                 }
 
-                var octet = payload[offset++];
+                var octet = span[offset++];
                 if ((octet & 0x80) == 0)
                 {
                     break;
@@ -281,12 +356,12 @@ public static class DataFactory
             }
         }
 
-        if (offset >= payload.Length)
+        if (offset >= span.Length)
         {
             throw new SnmpException("invalid BER data");
         }
 
-        var firstLengthOctet = payload[offset++];
+        var firstLengthOctet = span[offset++];
         long contentLength;
         if ((firstLengthOctet & 0x80) == 0)
         {
@@ -295,7 +370,7 @@ public static class DataFactory
         else
         {
             var lengthOctetCount = firstLengthOctet & 0x7F;
-            if (lengthOctetCount == 0 || offset + lengthOctetCount > payload.Length)
+            if (lengthOctetCount == 0 || offset + lengthOctetCount > span.Length)
             {
                 throw new SnmpException("invalid BER length");
             }
@@ -303,17 +378,17 @@ public static class DataFactory
             contentLength = 0;
             for (var i = 0; i < lengthOctetCount; i++)
             {
-                contentLength = (contentLength << 8) | payload[offset++];
+                contentLength = (contentLength << 8) | span[offset++];
             }
         }
 
         var totalLength = offset + contentLength;
-        if (totalLength <= 0 || totalLength > payload.Length)
+        if (totalLength <= 0 || totalLength > span.Length)
         {
             throw new SnmpException("invalid BER length");
         }
 
-        if (totalLength == payload.Length)
+        if (totalLength == span.Length)
         {
             return payload;
         }
@@ -323,8 +398,6 @@ public static class DataFactory
             throw new SnmpException("BER value too large");
         }
 
-        var trimmed = new byte[(int)totalLength];
-        Buffer.BlockCopy(payload, 0, trimmed, 0, trimmed.Length);
-        return trimmed;
+        return payload.Slice(0, (int)totalLength);
     }
 }
