@@ -15,11 +15,11 @@
     <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true'">$(TargetFrameworks);net9.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(IsNet100Supported)' == 'true'">$(TargetFrameworks);net10.0</TargetFrameworks>
     <PackageId>Lextm.SharpSnmpLib</PackageId>
-    <Title>#SNMP Library</Title>
+    <Title>C# SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>Malcolm Crowe,Lex Li,and other contributors.</Authors>
-    <Description>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more.</Description>
-    <Summary>#SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more. It supports .NET 8 and above.</Summary>
+    <Description>C# SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more.</Description>
+    <Summary>C# SNMP (SharpSNMP) Library is an open source library for developers who target Microsoft .NET platforms. It's developed in C# and can be used for F#, VB.NET, Oxygene, and more. It supports .NET 8 and above.</Summary>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://docs.sharpsnmp.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/lextudio/sharpsnmplib.git</RepositoryUrl>
@@ -28,7 +28,7 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     <PackageReleaseNotes>https://github.com/lextudio/sharpsnmplib/releases</PackageReleaseNotes>
-    <Copyright>Copyright (c) 2008-2024 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
+    <Copyright>Copyright (c) 2008-2026 Malcolm Crowe, Lex Li, and other contributors.</Copyright>
     <PackageTags>smi snmp mib</PackageTags>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>sharpsnmplib.snk</AssemblyOriginatorKeyFile>

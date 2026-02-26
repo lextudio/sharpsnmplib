@@ -49,5 +49,5 @@ C# SNMP Library is licensed under the MIT/X11 license.
 
 For technical support, please visit [this page](https://docs.lextudio.com/sharpsnmplib/support/services), or contact [LeXtudio Inc.](https://www.lextudio.com).
 
-Copyright (c) 2008-2024 Malcolm Crowe, Lex Li, and other contributors.
-Copyright (c) 2018-2024 LeXtudio Inc.
+Copyright (c) 2008-2026 Malcolm Crowe, Lex Li, and other contributors.
+Copyright (c) 2018-2026 LeXtudio Inc.
