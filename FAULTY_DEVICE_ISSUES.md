@@ -22,74 +22,38 @@ The following imported issues are related to faulty devices but currently **miss
 ### #62 - HP Server OctetString Issue
 - **Status**: Needs tag
 - **Device**: HP server (OID .1.3.6.1.4.1.232.11.2.10.7.0)
-- **Issue**: OctetString field returning faulty hex values
-- **Reason**: Device-specific data encoding issue
-
-### #83 - Dell iDRAC 8 SNMPv3 Trap Issue
-- **Status**: Needs tag
-- **Device**: Dell iDRAC 8
-- **Issue**: SNMPv3 trap receiving issue
-- **Reason**: Works in PowerSNMP Manager but not SharpSnmpLib (device-specific compatibility)
+- **Issue**: OctetString field returning different hex values than iReasoning Browser
+- **Reason**: Works correctly in iReasoning Browser but returns "completely different" values in SharpSnmpLib - device-specific data encoding issue
 
 ### #89 - MikroTik RouterOS Unsupported Data Type
 - **Status**: Needs tag
 - **Device**: MikroTik RouterOS
-- **Issue**: Unsupported data type 18 exception
-- **Reason**: Device uses non-standard SNMP data types
+- **Issue**: BulkWalk causes "unsupported data type: 18" exception (SNMPv2), but Walk with SNMPv1 works fine
+- **Reason**: Device uses non-standard SNMP data type 18 that is not part of standard SNMP data types
 
 ### #101 - Cisco ASA 5510 MsgFlags Issue
-- **Status**: Needs tag
+- **Status**: Needs tag (note: currently only has "bug" label, missing "imported" label too)
 - **Device**: Cisco ASA 5510 firewall
-- **Issue**: Returns MsgFlags=8, library only handles 0-7
-- **Reason**: Works in Net::SNMP, device returns out-of-spec value
-
-### #114 - Fortis Device Data Construction Exception
-- **Status**: Needs tag
-- **Device**: Fortis device
-- **Issue**: Data construction exception with mismatched communities
-- **Reason**: Device-specific behavior
+- **Issue**: Returns MsgFlags=8 during SNMPv3 discovery, library only handles 0-7
+- **Reason**: Works in Net::SNMP, device returns out-of-spec value; Cisco C2960 switch works correctly
 
 ### #370 - QNap NAS GetTable Truncation
 - **Status**: Needs tag
 - **Device**: QNap NAS (Firmware 3.2.3 Build 0209T)
-- **Issue**: GetTable returns truncated/misaligned table data
-- **Reason**: Works in iReasoning Browser but not SharpSnmpLib (device-specific compatibility)
-
-### #420 - HP v1910-24G Switch VLAN Query
-- **Status**: Needs tag
-- **Device**: HP v1910-24G switch
-- **Issue**: VLAN query issue
-- **Reason**: Device-specific behavior
+- **Issue**: GetTable on hrStorageTable returns only 6 columns instead of 7, with misaligned/shifted values
+- **Reason**: Works correctly in iReasoning Browser but fails in SharpSnmpLib (device-specific compatibility)
 
 ### #436 - Cisco Switch MAC Address per VLAN
 - **Status**: Needs tag
 - **Device**: Cisco switch
-- **Issue**: MAC address retrieval per VLAN in SNMPv3 returns empty data
-- **Reason**: Device-specific VLAN context handling required
-
-### #469 - HP OpenView Integration Issue
-- **Status**: Needs tag
-- **Device**: HP OpenView
-- **Issue**: Integration issue
-- **Reason**: Device/platform-specific compatibility
-
-### #471 - Dell Server MIBs RFC1212 Loading
-- **Status**: Needs tag
-- **Device**: Dell server
-- **Issue**: RFC1212 loading issue with Dell MIBs
-- **Reason**: Device-specific MIB format
+- **Issue**: MAC address retrieval per VLAN in SNMPv3 returns empty data (OID 1.3.6.1.2.1.17.4.3.1.1)
+- **Reason**: Requires VLAN context support (community@VLANnum in v2c) which may not be properly supported in v3
 
 ### #475 - Citrix Xen GetTable Timeout
 - **Status**: Needs tag
 - **Device**: Citrix Xen SNMP Agent
-- **Issue**: GetTable operations timeout
-- **Reason**: Works in iReasoning Browser but not SharpSnmpLib, single OID reads work (device-specific compatibility)
-
-### #630 - HP Switch Firmware Download Status
-- **Status**: Needs tag
-- **Device**: HP switch
-- **Issue**: Firmware download status field issue
-- **Reason**: Device-specific behavior
+- **Issue**: GetTable operations timeout on sessionTable and procTable
+- **Reason**: Works in iReasoning Browser, single OID reads work fine with SharpSnmpLib (device-specific GetTable compatibility)
 
 ## Issues Already Properly Tagged
 
@@ -107,29 +71,37 @@ The following issues already have the `area:faulty-device` label:
 
 - **Total imported issues reviewed**: 490
 - **Issues already tagged with area:faulty-device**: 7
-- **Issues that need area:faulty-device tag**: 12
-- **Total device-related issues**: 19
+- **Issues that need area:faulty-device tag**: 6
+- **Total device-related issues**: 13
 
 ## Device Vendor Distribution
 
 - **Cisco**: 3 issues (#101, #318, #436)
-- **HP**: 4 issues (#62, #420, #469, #630)
-- **Dell**: 2 issues (#83, #471)
+- **HP**: 1 issue (#62)
+- **Dell**: 0 confirmed device issues
 - **QNap**: 1 issue (#370)
 - **Citrix**: 1 issue (#475)
 - **MikroTik**: 1 issue (#89)
-- **Fortis**: 1 issue (#114)
 - **Eaton**: 1 issue (#698)
 - **Unknown/Generic**: 5 issues (#291, #474, #608, #693, #700)
 
 ## Recommendations
 
-1. **Add the `area:faulty-device` label** to all 12 issues listed in the "Issues Requiring Label" section
+1. **Add the `area:faulty-device` label** to the 6 issues listed in the "Issues Requiring Label" section:
+   - #62 (HP server OctetString)
+   - #89 (MikroTik unsupported data type)
+   - #101 (Cisco ASA MsgFlags) - also needs "imported" label
+   - #370 (QNap GetTable)
+   - #436 (Cisco MAC address per VLAN)
+   - #475 (Citrix GetTable timeout)
+
 2. **Maintain this label** for device-specific compatibility issues to help:
    - Distinguish between library bugs and device non-compliance
    - Track which devices have known issues
    - Prioritize compatibility improvements
    - Document workarounds for specific devices
+
+3. **Consider creating** device-specific documentation or wiki pages for known compatibility issues with popular devices (Cisco, HP, Dell, etc.)
 
 ## Notes
 
