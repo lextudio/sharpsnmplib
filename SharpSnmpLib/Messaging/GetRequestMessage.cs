@@ -13,7 +13,22 @@ namespace Lextm.SharpSnmpLib.Messaging;
 /// </summary>
 public sealed class GetRequestMessage : ISnmpMessage, ILegacyV3Request
 {
-    private readonly SnmpV3Message _message;
+    private readonly ISnmpMessage _message;
+
+    /// <summary>
+    /// Initializes a new instance of GetRequestMessage.
+    /// </summary>
+    public GetRequestMessage(int requestId, VersionCode version, OctetString community, IList<Variable> variables)
+    {
+        _message = LegacyRequestBuilder.BuildCommunityRequest(
+            requestId,
+            version,
+            community,
+            variables,
+            () => new GetRequestPdu());
+
+        Privacy = new DefaultPrivacyProvider();
+    }
 
     /// <summary>
     /// Initializes a new instance of GetRequestMessage.
@@ -45,6 +60,57 @@ public sealed class GetRequestMessage : ISnmpMessage, ILegacyV3Request
             maxMessageSize,
             report,
             () => new GetRequestPdu());
+    }
+
+    /// <summary>
+    /// Initializes a new instance of GetRequestMessage.
+    /// </summary>
+    [Obsolete("Please use overloads with contextName.")]
+    public GetRequestMessage(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString user,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        ISnmpMessage report)
+        : this(
+            version,
+            messageId,
+            requestId,
+            user,
+            OctetString.Empty,
+            variables,
+            privacy,
+            Messenger.MaxMessageSize,
+            report)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of GetRequestMessage.
+    /// </summary>
+    [Obsolete("Please use overloads with contextName.")]
+    public GetRequestMessage(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString user,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        int maxMessageSize,
+        ISnmpMessage report)
+        : this(
+            version,
+            messageId,
+            requestId,
+            user,
+            OctetString.Empty,
+            variables,
+            privacy,
+            maxMessageSize,
+            report)
+    {
     }
 
     /// <summary>

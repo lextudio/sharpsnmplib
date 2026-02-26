@@ -2,6 +2,8 @@
 using DotNetSnmp.Asn1.SyntaxObjects;
 using DotNetSnmp.Common.Definitions;
 using DotNetSnmp.Protocol.V1;
+using DotNetSnmp.Protocol.V2;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.Text;
 
@@ -19,6 +21,25 @@ namespace DotNetSnmp.Protocol.V3
     /// </remarks>
     public class Scope : IScope
     {
+        /// <summary>
+        /// Initializes a new instance of <see cref="Scope"/>.
+        /// </summary>
+        public Scope()
+        {
+            ContextName = string.Empty;
+            Pdu = new GetRequestPdu();
+        }
+
+        /// <summary>
+        /// Initializes a legacy-compatible instance of <see cref="Scope"/>.
+        /// </summary>
+        public Scope(OctetString contextEngineId, OctetString contextName, Pdu pdu)
+        {
+            ContextEngineId = contextEngineId.Octets;
+            ContextName = Encoding.UTF8.GetString(contextName.Octets);
+            Pdu = pdu;
+        }
+
         /// <summary>
         /// Gets context Engine Id.
         /// </summary>
@@ -41,7 +62,7 @@ namespace DotNetSnmp.Protocol.V3
         /// The context name identifies a particular context within an SNMP entity.
         /// Different contexts can provide access to different subsets of managed objects.
         /// </remarks>
-        public required string ContextName { get; set; }
+        public string ContextName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets the protocol data unit (PDU).
@@ -53,100 +74,121 @@ namespace DotNetSnmp.Protocol.V3
         /// The PDU contains the actual SNMP operation (Get, Set, GetNext, etc.) and
         /// the associated variable bindings.
         /// </remarks>
-        public required Pdu Pdu { get; set; }
+        public Pdu Pdu { get; set; } = new GetRequestPdu();
 
-    /// <inheritdoc/>
-    public int RequestId => Pdu.RequestId;
+        /// <summary>
+        /// Legacy type code compatibility for scoped PDUs.
+        /// </summary>
+        public SnmpType TypeCode => SnmpType.Sequence;
 
-    /// <inheritdoc/>
-    public VarBindList? VariableBindings
-    {
-        get { return Pdu.VariableBindings; }
-        set { Pdu.VariableBindings = value; }
-    }
+        /// <inheritdoc/>
+        public int RequestId => Pdu.RequestId;
 
-    /// <inheritdoc/>
-    public void WriteTo(AsnWriter writer)
-    {
-        using (_ = writer.PushSequence())
+        /// <inheritdoc/>
+        public VarBindList? VariableBindings
         {
-            var enc = Encoding.UTF8;
+            get { return Pdu.VariableBindings; }
+            set { Pdu.VariableBindings = value; }
+        }
 
-            writer.WriteOctetString(ContextEngineId.Span);
+        /// <inheritdoc/>
+        public void WriteTo(AsnWriter writer)
+        {
+            using (_ = writer.PushSequence())
+            {
+                var enc = Encoding.UTF8;
 
-            writer.WriteOctetString(
-                ContextName.GetBytesSpanOrDefault(enc));
+                writer.WriteOctetString(ContextEngineId.Span);
 
-            Pdu.WriteTo(writer);
+                writer.WriteOctetString(
+                    ContextName.GetBytesSpanOrDefault(enc));
+
+                Pdu.WriteTo(writer);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes a Scope object from an ASN.1 encoded representation.
+        /// </summary>
+        /// <param name="reader">The ASN.1 reader containing the encoded scope data.</param>
+        /// <returns>A new instance of the Scope class populated with the deserialized data.</returns>
+        /// <exception cref="AsnContentException">Thrown when an unexpected PDU type is encountered.</exception>
+        /// <exception cref="NotImplementedException">Thrown when a PDU type is recognized but not yet implemented.</exception>
+        /// <remarks>
+        /// This method handles the deserialization of various PDU types within the scope
+        /// and constructs the appropriate PDU object based on the detected type.
+        /// </remarks>
+        public static Scope ReadFrom(AsnReader reader)
+        {
+            var seq = reader.ReadSequence();
+
+            var ctxEngineId = seq.ReadOctetString();
+
+            var ctxName = seq.ReadOctetString();
+
+            var utf8 = Encoding.UTF8;
+
+            var pduType = seq.PeekTag();
+
+            Pdu? pdu = null;
+            if (pduType == SnmpAsnTags.GetResponseMsg)
+            {
+                pdu = ResponsePdu.ReadFrom(seq);
+            }
+            else if (pduType == SnmpAsnTags.GetMsg)
+            {
+                pdu = GetRequestPdu.ReadFrom(seq);
+            }
+            else if (pduType == SnmpAsnTags.GetNextMsg)
+            {
+                pdu = GetNextRequestPdu.ReadFrom(seq);
+            }
+            else if (pduType == SnmpAsnTags.SetMsg)
+            {
+                pdu = SetRequestPdu.ReadFrom(seq);
+            }
+            else if (pduType == SnmpAsnTags.BulkMsg)
+            {
+                pdu = GetBulkRequestPdu.ReadFrom(seq);
+            }
+            else if (pduType == SnmpAsnTags.InformMsg)
+            {
+                pdu = InformRequestPdu.ReadFrom(seq);
+            }
+            else if (pduType == SnmpAsnTags.Trap2Msg)
+            {
+                pdu = TrapV2Pdu.ReadFrom(seq);
+            }
+            else if (pduType == SnmpAsnTags.ReportMsg)
+            {
+                pdu = ReportPdu.ReadFrom(seq);
+            }
+            else
+            {
+                throw new AsnContentException(
+                    $"Unexpected PDU type: {pduType}");
+            }
+
+            return new()
+            {
+                ContextEngineId = ctxEngineId,
+                ContextName = utf8.GetString(ctxName),
+                Pdu = pdu
+            };
+        }
+
+        /// <inheritdoc/>
+        public bool IsResponse()
+        {
+            return Pdu.IsResponse();
+        }
+
+        /// <summary>
+        /// Gets serialized scope data for the specified protocol version (legacy compatibility member).
+        /// </summary>
+        public IAsnSerializable GetData(VersionCode version)
+        {
+            return version == VersionCode.V3 ? this : Pdu;
         }
     }
-
-    /// <summary>
-    /// Deserializes a Scope object from an ASN.1 encoded representation.
-    /// </summary>
-    /// <param name="reader">The ASN.1 reader containing the encoded scope data.</param>
-    /// <returns>A new instance of the Scope class populated with the deserialized data.</returns>
-    /// <exception cref="AsnContentException">Thrown when an unexpected PDU type is encountered.</exception>
-    /// <exception cref="NotImplementedException">Thrown when a PDU type is recognized but not yet implemented.</exception>
-    /// <remarks>
-    /// This method handles the deserialization of various PDU types within the scope
-    /// and constructs the appropriate PDU object based on the detected type.
-    /// </remarks>
-    public static Scope ReadFrom(AsnReader reader)
-    {
-        var seq = reader.ReadSequence();
-
-        var ctxEngineId = seq.ReadOctetString();
-
-        var ctxName = seq.ReadOctetString();
-
-        var utf8 = Encoding.UTF8;
-
-        var pduType = seq.PeekTag();
-
-        Pdu? pdu = null;
-        if (pduType == SnmpAsnTags.GetResponseMsg)
-        {
-            pdu = ResponsePdu.ReadFrom(seq);
-        }
-        else if (pduType == SnmpAsnTags.GetMsg)
-        {
-            pdu = GetRequestPdu.ReadFrom(seq);
-        }
-        else if (pduType == SnmpAsnTags.GetNextMsg)
-        {
-            pdu = GetNextRequestPdu.ReadFrom(seq);
-        }
-        else if (pduType == SnmpAsnTags.BulkMsg)
-        {
-            throw new NotImplementedException();
-        }
-        else if (pduType == SnmpAsnTags.InformMsg)
-        {
-            throw new NotImplementedException();
-        }
-        else if (pduType == SnmpAsnTags.ReportMsg)
-        {
-            pdu = ReportPdu.ReadFrom(seq);
-        }
-        else
-        {
-            throw new AsnContentException(
-                $"Unexpected PDU type: {pduType}");
-        }
-
-        return new()
-        {
-            ContextEngineId = ctxEngineId,
-            ContextName = utf8.GetString(ctxName),
-            Pdu = pdu
-        };
-    }
-
-    /// <inheritdoc/>
-    public bool IsResponse()
-    {
-        return Pdu.IsResponse();
-    }
-}
 }

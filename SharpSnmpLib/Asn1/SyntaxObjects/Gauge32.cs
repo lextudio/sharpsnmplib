@@ -12,8 +12,17 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     [System.CLSCompliant(false)]
     public readonly record struct Gauge32(uint Value) : IAsnSerializable
     {
-        /// <inheritdoc/>
-        public void WriteTo(AsnWriter writer)
+        /// <summary>
+        /// Initializes a new instance from a legacy long value.
+        /// </summary>
+        [System.CLSCompliant(false)]
+    public Gauge32(long value)
+            : this(unchecked((uint)value))
+    {
+    }
+
+    /// <inheritdoc/>
+    public void WriteTo(AsnWriter writer)
     {
         writer.WriteInteger(
             Value,
@@ -32,5 +41,11 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// </summary>
     [System.CLSCompliant(false)]
     public static implicit operator uint(Gauge32 x) => x.Value;
+
+    /// <summary>
+    /// Performs a compatibility conversion from long.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static implicit operator Gauge32(long value) => new(unchecked((uint)value));
 }
 }

@@ -8,8 +8,13 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// </summary>
     public readonly record struct Integer32(int Value) : IAsnSerializable
     {
-        /// <inheritdoc/>
-        public void WriteTo(AsnWriter writer)
+        /// <summary>
+        /// Zero value.
+        /// </summary>
+        public static Integer32 Zero { get; } = new(0);
+
+    /// <inheritdoc/>
+    public void WriteTo(AsnWriter writer)
     {
         writer.WriteInteger(
             Value,
@@ -23,6 +28,11 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     {
         value = Value;
     }
+
+    /// <summary>
+    /// Returns a string representation of this value.
+    /// </summary>
+    public override string ToString() => Value.ToString();
 
     /// <summary>
     /// Reads a value from an ASN.1 reader.

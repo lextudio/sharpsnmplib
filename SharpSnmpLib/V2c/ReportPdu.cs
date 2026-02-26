@@ -11,6 +11,24 @@ namespace DotNetSnmp.Protocol.V1
     public class ReportPdu : Pdu
     {
         /// <summary>
+        /// Initializes a new instance of <see cref="ReportPdu"/>.
+        /// </summary>
+        public ReportPdu()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a legacy-compatible instance of <see cref="ReportPdu"/>.
+        /// </summary>
+        public ReportPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
+        {
+            RequestId = requestId;
+            ErrorStatus = errorStatus;
+            ErrorIndex = errorIndex;
+            VariableBindings = new VarBindList(variables.ToArray());
+        }
+
+        /// <summary>
         /// Represents report Msg.
         /// </summary>
         public override Asn1Tag PduType => SnmpAsnTags.ReportMsg;
@@ -18,7 +36,16 @@ namespace DotNetSnmp.Protocol.V1
         /// <inheritdoc/>
         public override void WriteTo(AsnWriter writer)
         {
-            throw new NotImplementedException();
+            using (_ = writer.PushSequence(tag: SnmpAsnTags.ReportMsg))
+            {
+                writer.WriteInteger(RequestId);
+                writer.WriteInteger((int)ErrorStatus);
+                writer.WriteInteger(ErrorIndex);
+                if (VariableBindings != null)
+                {
+                    VariableBindings.WriteTo(writer);
+                }
+            }
         }
 
         /// <summary>

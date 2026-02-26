@@ -79,7 +79,7 @@ public sealed class Discovery
                 .GetAwaiter()
                 .GetResult();
         }
-        catch (TimeoutException ex)
+        catch (System.TimeoutException ex)
         {
             throw new TimeoutException($"Discovery timed out after {timeout} milliseconds.", ex);
         }

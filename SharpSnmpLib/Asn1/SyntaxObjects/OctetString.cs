@@ -40,20 +40,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         /// </summary>
         public override string ToString()
         {
-            var hasNonPrintable = Octets.Any(
-                c => char.IsControl((char)c) && !char.IsWhiteSpace((char)c));
-
-            if (!hasNonPrintable)
-            {
-                return "String: " + Encoding.UTF8.GetString(Octets);
-            }
-
-            var hex = Convert.ToHexString(Octets)
-                          .Chunk(2)
-                          .Select(c => string.Concat(c))
-                          .Aggregate((a, b) => a + " " + b);
-
-            return "HexString: " + hex;
+            return Octets is null ? string.Empty : Encoding.UTF8.GetString(Octets);
         }
 
         /// <inheritdoc/>

@@ -11,6 +11,24 @@ namespace DotNetSnmp.Protocol.V1
     public class ResponsePdu : Pdu
     {
         /// <summary>
+        /// Initializes a new instance of <see cref="ResponsePdu"/>.
+        /// </summary>
+        public ResponsePdu()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a legacy-compatible instance of <see cref="ResponsePdu"/>.
+        /// </summary>
+        public ResponsePdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
+        {
+            RequestId = requestId;
+            ErrorStatus = errorStatus;
+            ErrorIndex = errorIndex;
+            VariableBindings = new VarBindList(variables.ToArray());
+        }
+
+        /// <summary>
         /// Represents get Response Msg.
         /// </summary>
         public override Asn1Tag PduType => SnmpAsnTags.GetResponseMsg;

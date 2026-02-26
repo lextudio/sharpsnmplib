@@ -309,6 +309,7 @@ public static partial class Messenger
         var rowMask = string.Format(CultureInfo.InvariantCulture, "{0}.1.1.", table);
         var subTreeMask = string.Format(CultureInfo.InvariantCulture, "{0}.", table);
         Tuple<bool, Variable?> data = new(false, next);
+        ObjectIdentifier? previousId = null;
         do
         {
             seed = data.Item2!.Value;
@@ -324,6 +325,12 @@ public static partial class Messenger
                 continue;
             }
 
+            // Guard against buggy agents returning duplicate or backward OIDs, which can cause endless walks.
+            if (previousId != null && seed.Id <= previousId)
+            {
+                break;
+            }
+
             if (mode == WalkMode.WithinSubtree && !seed.Id.ToString().StartsWith(subTreeMask, StringComparison.Ordinal))
             {
                 // not in sub tree
@@ -336,10 +343,20 @@ public static partial class Messenger
                 result++;
             }
 
+            previousId = seed.Id;
             data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
         }
         while (data.Item1);
         return result;
+    }
+
+    /// <summary>
+    /// Performs an asynchronous walk operation.
+    /// </summary>
+    public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return await WalkAsync(version, endpoint, community, table, list, mode).WaitAsync(cancellationToken).ConfigureAwait(false);
     }
 
     private static async Task<Tuple<bool, Variable?>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
@@ -401,7 +418,13 @@ public static partial class Messenger
                 }
             }
 
-            seed = next[next.Count - 1];
+            var candidate = next[next.Count - 1];
+            if (candidate.Id <= seed.Id)
+            {
+                break;
+            }
+
+            seed = candidate;
             data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions).ConfigureAwait(false);
             next = data.Item2;
         }
@@ -453,6 +476,28 @@ public static partial class Messenger
         ISnmpMessage report)
     {
         return BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode);
+    }
+
+    /// <summary>
+    /// Performs an asynchronous bulk walk operation.
+    /// </summary>
+    public static async Task<int> BulkWalkAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier table,
+        IList<Variable> list,
+        int maxRepetitions,
+        WalkMode mode,
+        IPrivacyProvider privacy,
+        ISnmpMessage report,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return await BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode, privacy, report)
+            .WaitAsync(cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -553,6 +598,11 @@ public static partial class Messenger
             throw new ArgumentNullException(nameof(variables));
         }
 
+        if (version == VersionCode.V3)
+        {
+            throw new ArgumentException("SNMP v3 INFORM requires privacy and report parameters.", nameof(version));
+        }
+
         var pdu = new InformRequestPdu
         {
             RequestId = requestId,
@@ -591,7 +641,130 @@ public static partial class Messenger
         IPrivacyProvider privacy,
         ISnmpMessage report)
     {
-        return SendInformAsync(requestId, version, endpoint, community, contextName, enterprise, timestamp, variables);
+        return SendInformWithSecurityAsync(
+            requestId,
+            version,
+            endpoint,
+            community,
+            contextName,
+            enterprise,
+            timestamp,
+            variables,
+            privacy,
+            report,
+            CancellationToken.None);
+    }
+
+    /// <summary>
+    /// Sends inform Async.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static async Task SendInformAsync(
+        int requestId,
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        ISnmpMessage report,
+        CancellationToken cancellationToken)
+    {
+        await SendInformWithSecurityAsync(
+                requestId,
+                version,
+                endpoint,
+                community,
+                contextName,
+                enterprise,
+                timestamp,
+                variables,
+                privacy,
+                report,
+                cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    private static async Task SendInformWithSecurityAsync(
+        int requestId,
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        ISnmpMessage report,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        if (variables == null)
+        {
+            throw new ArgumentNullException(nameof(variables));
+        }
+
+        if (version != VersionCode.V3)
+        {
+            await SendInformAsync(requestId, version, endpoint, community, contextName, enterprise, timestamp, variables)
+                .WaitAsync(cancellationToken)
+                .ConfigureAwait(false);
+            return;
+        }
+
+        if (privacy == null)
+        {
+            throw new ArgumentNullException(nameof(privacy));
+        }
+
+        if (report == null)
+        {
+            throw new ArgumentNullException(nameof(report));
+        }
+
+        var target = new UserTarget(community, privacy);
+        target.EngineId = report.Parameters.EngineId.GetRaw();
+        target.EngineBoots = report.Parameters.EngineBoots.ToInt32();
+        target.EngineTime = report.Parameters.EngineTime.ToInt32();
+
+        var pdu = new InformRequestPdu
+        {
+            RequestId = requestId,
+            Enterprise = enterprise,
+            TimeStamp = timestamp,
+            VariableBindings = new VarBindList(variables.ToArray())
+        };
+
+        var scope = new Scope
+        {
+            ContextEngineId = target.EngineId,
+            ContextName = contextName,
+            Pdu = pdu
+        };
+
+        var dispatcher = new SnmpDispatcher();
+        var response = await dispatcher.SendPdu(
+                new BasicUdpTransport(endpoint),
+                target,
+                endpoint,
+                scope,
+                true,
+                cancellationToken)
+            .ConfigureAwait(false) as Scope;
+
+        var responsePdu = response?.Pdu as ResponsePdu;
+        if (responsePdu == null)
+        {
+            throw new InvalidOperationException("Expected a response PDU for INFORM request.");
+        }
+
+        if (responsePdu.ErrorStatus != ErrorCode.NoError)
+        {
+            throw new InvalidOperationException($"Error in response: {responsePdu.ErrorStatus}");
+        }
     }
 
     /// <summary>

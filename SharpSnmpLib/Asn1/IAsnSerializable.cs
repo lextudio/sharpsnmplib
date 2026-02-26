@@ -1,4 +1,6 @@
-﻿using System.Formats.Asn1;
+﻿using DotNetSnmp.Asn1.SyntaxObjects;
+using Lextm.SharpSnmpLib;
+using System.Formats.Asn1;
 
 namespace DotNetSnmp.Asn1.Serialization
 {
@@ -12,5 +14,27 @@ namespace DotNetSnmp.Asn1.Serialization
         /// </summary>
         /// <param name="writer">The writer that receives the encoded value.</param>
         public void WriteTo(AsnWriter writer);
+
+        /// <summary>
+        /// Gets SNMP type code (legacy compatibility member).
+        /// </summary>
+        public SnmpType TypeCode => this switch
+        {
+            Integer32 => SnmpType.Integer32,
+            OctetString => SnmpType.OctetString,
+            Null => SnmpType.Null,
+            ObjectIdentifier => SnmpType.ObjectIdentifier,
+            IP => SnmpType.IPAddress,
+            Counter32 => SnmpType.Counter32,
+            Gauge32 => SnmpType.Gauge32,
+            TimeTicks => SnmpType.TimeTicks,
+            Opaque => SnmpType.Opaque,
+            Counter64 => SnmpType.Counter64,
+            Unsigned32 => SnmpType.Unsigned32,
+            NoSuchObject => SnmpType.NoSuchObject,
+            NoSuchInstance => SnmpType.NoSuchInstance,
+            EndOfMibView => SnmpType.EndOfMibView,
+            _ => SnmpType.Unknown
+        };
     }
 }

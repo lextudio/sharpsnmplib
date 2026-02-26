@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using DotNetSnmp.Asn1.SyntaxObjects;
 using DotNetSnmp.Protocol.V3.Security.Authentication;
@@ -113,6 +114,11 @@ public class DefaultPrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.De
         : base(authenticationProvider)
     {
     }
+
+    /// <summary>
+    /// Gets or sets known engine IDs (legacy compatibility member).
+    /// </summary>
+    public ICollection<OctetString>? EngineIds { get; set; }
 }
 
 /// <summary>
@@ -120,6 +126,10 @@ public class DefaultPrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.De
 /// </summary>
 public sealed class DESPrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.DESPrivacyProvider
 {
+    private const int LegacyPrivacyParametersLength = 8;
+    private const int LegacyMinimumKeyLength = 16;
+    internal ReadOnlyMemory<byte> Passphrase { get; }
+
     /// <summary>
     /// Represents this member.
     /// </summary>
@@ -142,9 +152,149 @@ public sealed class DESPrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy
     /// <summary>
     /// Initializes a new instance of DESPrivacyProvider.
     /// </summary>
-    public DESPrivacyProvider(OctetString passphrase, IAuthenticationProvider authenticationProvider)
-        : base(authenticationProvider, passphrase.Octets)
+    public DESPrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+        : this(RequirePassphrase(passphrase), authenticationProvider)
     {
+    }
+
+    private DESPrivacyProvider(byte[] passphrase, IAuthenticationProvider authenticationProvider)
+        : base(authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)), passphrase)
+    {
+        Passphrase = passphrase;
+    }
+
+    /// <summary>
+    /// Encrypts scoped PDU payload bytes using legacy DES helper signature.
+    /// </summary>
+    public static byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
+    {
+        if (!IsSupported)
+        {
+            throw new PlatformNotSupportedException();
+        }
+
+        if (unencryptedData == null)
+        {
+            throw new ArgumentNullException(nameof(unencryptedData));
+        }
+
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
+
+        if (privacyParameters == null)
+        {
+            throw new ArgumentNullException(nameof(privacyParameters));
+        }
+
+        if (privacyParameters.Length != LegacyPrivacyParametersLength)
+        {
+            throw new ArgumentOutOfRangeException(nameof(privacyParameters), "Privacy parameters argument has to be 8 bytes long.");
+        }
+
+        if (key.Length < LegacyMinimumKeyLength)
+        {
+            throw new ArgumentException($"Encryption key length has to 16 bytes or more. Current: {key.Length}.", nameof(key));
+        }
+
+        var iv = GetLegacyIv(key, privacyParameters);
+        var outKey = GetLegacyKey(key);
+
+        if ((unencryptedData.Length % 8) != 0)
+        {
+            var tmpBuffer = new byte[8 * ((unencryptedData.Length / 8) + 1)];
+            Buffer.BlockCopy(unencryptedData, 0, tmpBuffer, 0, unencryptedData.Length);
+            unencryptedData = tmpBuffer;
+        }
+
+        using var des = DES.Create();
+        des.Key = outKey;
+        return des.EncryptCbc(unencryptedData, iv, PaddingMode.None);
+    }
+
+    /// <summary>
+    /// Decrypts scoped PDU payload bytes using legacy DES helper signature.
+    /// </summary>
+    public static byte[] Decrypt(byte[] encryptedData, byte[] key, byte[] privacyParameters)
+    {
+        if (!IsSupported)
+        {
+            throw new PlatformNotSupportedException();
+        }
+
+        if (encryptedData == null)
+        {
+            throw new ArgumentNullException(nameof(encryptedData));
+        }
+
+        if (key == null)
+        {
+            throw new ArgumentNullException(nameof(key));
+        }
+
+        if (privacyParameters == null)
+        {
+            throw new ArgumentNullException(nameof(privacyParameters));
+        }
+
+        if (encryptedData.Length == 0)
+        {
+            throw new ArgumentException("Empty encrypted data.", nameof(encryptedData));
+        }
+
+        if ((encryptedData.Length % 8) != 0)
+        {
+            throw new ArgumentException("Encrypted data buffer has to be divisible by 8.", nameof(encryptedData));
+        }
+
+        if (privacyParameters.Length != LegacyPrivacyParametersLength)
+        {
+            throw new ArgumentOutOfRangeException(nameof(privacyParameters), "Privacy parameters argument has to be 8 bytes long.");
+        }
+
+        if (key.Length < LegacyMinimumKeyLength)
+        {
+            throw new ArgumentOutOfRangeException(nameof(key), "Decryption key has to be at least 16 bytes long.");
+        }
+
+        var iv = GetLegacyIv(key, privacyParameters);
+        var outKey = GetLegacyKey(key);
+        using var des = DES.Create();
+        des.Key = outKey;
+        return des.DecryptCbc(encryptedData, iv, PaddingMode.Zeros);
+    }
+
+    private static byte[] GetLegacyIv(IReadOnlyList<byte> key, IReadOnlyList<byte> privacyParameters)
+    {
+        var iv = new byte[LegacyPrivacyParametersLength];
+        for (var i = 0; i < iv.Length; i++)
+        {
+            iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
+        }
+
+        return iv;
+    }
+
+    private static byte[] GetLegacyKey(IReadOnlyList<byte> privacyPassword)
+    {
+        var outKey = new byte[8];
+        for (var i = 0; i < outKey.Length; i++)
+        {
+            outKey[i] = privacyPassword[i];
+        }
+
+        return outKey;
+    }
+
+    private static byte[] RequirePassphrase(OctetString? passphrase)
+    {
+        if (passphrase == null)
+        {
+            throw new ArgumentNullException(nameof(passphrase));
+        }
+
+        return passphrase.Value.Octets;
     }
 }
 
@@ -156,8 +306,8 @@ public sealed class TripleDESPrivacyProvider : DotNetSnmp.Protocol.V3.Security.P
     /// <summary>
     /// Initializes a new instance of TripleDESPrivacyProvider.
     /// </summary>
-    public TripleDESPrivacyProvider(OctetString passphrase, IAuthenticationProvider authenticationProvider)
-        : base(authenticationProvider, passphrase.Octets)
+    public TripleDESPrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+        : base(authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)), (passphrase ?? throw new ArgumentNullException(nameof(passphrase))).Octets)
     {
     }
 }
@@ -167,6 +317,8 @@ public sealed class TripleDESPrivacyProvider : DotNetSnmp.Protocol.V3.Security.P
 /// </summary>
 public class AESPrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.AESPrivacyProvider
 {
+    internal ReadOnlyMemory<byte> Passphrase { get; }
+
     /// <summary>
     /// Represents this member.
     /// </summary>
@@ -189,10 +341,38 @@ public class AESPrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.AESPri
     /// <summary>
     /// Initializes a new instance of AESPrivacyProvider.
     /// </summary>
-    public AESPrivacyProvider(OctetString passphrase, IAuthenticationProvider authenticationProvider)
-        : base(authenticationProvider, passphrase.Octets)
+    public AESPrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+        : this(RequirePassphrase(passphrase), authenticationProvider)
     {
     }
+
+    private AESPrivacyProvider(byte[] passphrase, IAuthenticationProvider authenticationProvider)
+        : base(authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)), passphrase)
+    {
+        Passphrase = passphrase;
+    }
+
+    private static byte[] RequirePassphrase(OctetString? passphrase)
+    {
+        if (passphrase == null)
+        {
+            throw new ArgumentNullException(nameof(passphrase));
+        }
+
+        return passphrase.Value.Octets;
+    }
+}
+
+/// <summary>
+/// Legacy facade for AES privacy provider capability checks.
+/// </summary>
+[Obsolete("This type is for internal use only and may be removed in a future release.")]
+public abstract class AESPrivacyProviderBase
+{
+    /// <summary>
+    /// Gets a value indicating whether AES is supported on current runtime.
+    /// </summary>
+    public static bool IsSupported => AESPrivacyProvider.IsSupported;
 }
 
 /// <summary>
@@ -200,12 +380,30 @@ public class AESPrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.AESPri
 /// </summary>
 public sealed class AES192PrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.AES192PrivacyProvider
 {
+    internal ReadOnlyMemory<byte> Passphrase { get; }
+
     /// <summary>
     /// Initializes a new instance of AES192PrivacyProvider.
     /// </summary>
-    public AES192PrivacyProvider(OctetString passphrase, IAuthenticationProvider authenticationProvider)
-        : base(authenticationProvider, passphrase.Octets)
+    public AES192PrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+        : this(RequirePassphrase(passphrase), authenticationProvider)
     {
+    }
+
+    private AES192PrivacyProvider(byte[] passphrase, IAuthenticationProvider authenticationProvider)
+        : base(authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)), passphrase)
+    {
+        Passphrase = passphrase;
+    }
+
+    private static byte[] RequirePassphrase(OctetString? passphrase)
+    {
+        if (passphrase == null)
+        {
+            throw new ArgumentNullException(nameof(passphrase));
+        }
+
+        return passphrase.Value.Octets;
     }
 }
 
@@ -214,11 +412,29 @@ public sealed class AES192PrivacyProvider : DotNetSnmp.Protocol.V3.Security.Priv
 /// </summary>
 public sealed class AES256PrivacyProvider : DotNetSnmp.Protocol.V3.Security.Privacy.AES256PrivacyProvider
 {
+    internal ReadOnlyMemory<byte> Passphrase { get; }
+
     /// <summary>
     /// Initializes a new instance of AES256PrivacyProvider.
     /// </summary>
-    public AES256PrivacyProvider(OctetString passphrase, IAuthenticationProvider authenticationProvider)
-        : base(authenticationProvider, passphrase.Octets)
+    public AES256PrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+        : this(RequirePassphrase(passphrase), authenticationProvider)
     {
+    }
+
+    private AES256PrivacyProvider(byte[] passphrase, IAuthenticationProvider authenticationProvider)
+        : base(authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)), passphrase)
+    {
+        Passphrase = passphrase;
+    }
+
+    private static byte[] RequirePassphrase(OctetString? passphrase)
+    {
+        if (passphrase == null)
+        {
+            throw new ArgumentNullException(nameof(passphrase));
+        }
+
+        return passphrase.Value.Octets;
     }
 }

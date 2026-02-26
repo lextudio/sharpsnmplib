@@ -13,8 +13,17 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     [System.CLSCompliant(false)]
     public readonly record struct Counter32(uint Value) : IAsnSerializable
     {
-        /// <inheritdoc/>
-        public void WriteTo(AsnWriter writer)
+        /// <summary>
+        /// Initializes a new instance from a legacy long value.
+        /// </summary>
+        [System.CLSCompliant(false)]
+    public Counter32(long value)
+            : this(unchecked((uint)value))
+    {
+    }
+
+    /// <inheritdoc/>
+    public void WriteTo(AsnWriter writer)
     {
         writer.WriteInteger(
             Value,
@@ -34,5 +43,11 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// </summary>
     [System.CLSCompliant(false)]
     public static implicit operator uint(Counter32 x) => x.Value;
+
+    /// <summary>
+    /// Performs a compatibility conversion from long.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static implicit operator Counter32(long value) => new(unchecked((uint)value));
 }
 }

@@ -83,6 +83,14 @@ public sealed class Discoverer
     /// <summary>
     /// Discovers agents of the specified version in a specific time interval.
     /// </summary>
+    public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout)
+    {
+        DiscoverAsync(version, broadcastAddress, community, timeout).GetAwaiter().GetResult();
+    }
+
+    /// <summary>
+    /// Discovers agents of the specified version in a specific time interval.
+    /// </summary>
     public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout)
     {
         if (broadcastAddress == null)
@@ -120,8 +128,13 @@ public sealed class Discoverer
             {
                 break;
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
+                if (ex.SocketErrorCode == SocketError.ConnectionReset)
+                {
+                    continue;
+                }
+
                 break;
             }
 

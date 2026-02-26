@@ -45,7 +45,7 @@ namespace DotNetSnmp.Protocol.V1
         public static SetRequestPdu ReadFrom(AsnReader reader)
         {
             var seq = reader.ReadSequence(
-                expectedTag: SnmpAsnTags.GetMsg);
+                expectedTag: SnmpAsnTags.SetMsg);
 
             seq.TryReadInt32(out var requestId);
             seq.TryReadInt32(out var errorStatus);

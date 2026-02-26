@@ -10,6 +10,29 @@ namespace DotNetSnmp.Protocol.V2
     /// </summary>
     public class TrapV2Pdu : Pdu
     {
+        private const string TimeId = "1.3.6.1.2.1.1.3.0";
+        private const string EnterpriseId = "1.3.6.1.6.3.1.1.4.1.0";
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TrapV2Pdu"/>.
+        /// </summary>
+        public TrapV2Pdu()
+        {
+            Enterprise = new ObjectIdentifier("0.0");
+        }
+
+        /// <summary>
+        /// Initializes a legacy-compatible instance of <see cref="TrapV2Pdu"/>.
+        /// </summary>
+        [System.CLSCompliant(false)]
+        public TrapV2Pdu(int requestId, ObjectIdentifier enterprise, uint timeStamp, IList<Variable> variables)
+        {
+            RequestId = requestId;
+            Enterprise = enterprise;
+            TimeStamp = timeStamp;
+            VariableBindings = new VarBindList(variables.ToArray());
+        }
+
         /// <summary>
         /// Gets time Stamp.
         /// </summary>
@@ -60,23 +83,30 @@ namespace DotNetSnmp.Protocol.V2
                 writer.WriteInteger(0);
                 writer.WriteInteger(0);
 
-                if (VariableBindings != null)
+                VariableBindings ??= new VarBindList();
+                if (!VariableBindings.Any() || VariableBindings.First().Id.Oid != "1.3.6.1.2.1.1.3.0")
                 {
-                    var first = VariableBindings.First();
-                    if (first.Id.Oid != "1.3.6.1.2.1.1.3.0")
-                    {
-                        VariableBindings.Insert(0, new Variable("1.3.6.1.2.1.1.3.0", new TimeTicks(TimeStamp)));
-                    }
-
-                    var second = VariableBindings.ElementAt(1);
-                    if (second.Id.Oid != "1.3.6.1.6.3.1.1.4.1.0")
-                    {
-                        VariableBindings.Insert(1, new Variable("1.3.6.1.6.3.1.1.4.1.0", Enterprise));
-                    }
-
-                    VariableBindings.WriteTo(writer);
+                    VariableBindings.Insert(0, new Variable("1.3.6.1.2.1.1.3.0", new TimeTicks(TimeStamp)));
                 }
+
+                if (!VariableBindings.Skip(1).Any() || VariableBindings.ElementAt(1).Id.Oid != "1.3.6.1.6.3.1.1.4.1.0")
+                {
+                    VariableBindings.Insert(1, new Variable("1.3.6.1.6.3.1.1.4.1.0", Enterprise));
+                }
+
+                VariableBindings.WriteTo(writer);
             }
+        }
+
+        /// <summary>
+        /// Decorates variable bindings with timestamp and enterprise metadata.
+        /// </summary>
+        public IList<Variable> Decorate(IList<Variable> variables)
+        {
+            var result = new List<Variable>(variables);
+            result.Insert(0, new Variable(TimeId, new TimeTicks(TimeStamp)));
+            result.Insert(1, new Variable(EnterpriseId, Enterprise));
+            return result;
         }
     }
 }

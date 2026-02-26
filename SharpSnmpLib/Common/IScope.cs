@@ -1,5 +1,7 @@
 using DotNetSnmp.Asn1.Serialization;
 using DotNetSnmp.Asn1.SyntaxObjects;
+using DotNetSnmp.Protocol.V3;
+using System.Text;
 
 namespace DotNetSnmp.Common.Definitions
 {
@@ -61,5 +63,25 @@ namespace DotNetSnmp.Common.Definitions
         /// examine the PDU type directly.
         /// </remarks>
         bool IsResponse();
+
+        /// <summary>
+        /// Gets context engine id (legacy compatibility member).
+        /// </summary>
+        OctetString ContextEngineId
+            => this is Scope scoped ? new OctetString(scoped.ContextEngineId.ToArray()) : OctetString.Empty;
+
+        /// <summary>
+        /// Gets context name (legacy compatibility member).
+        /// </summary>
+        OctetString ContextName
+            => this is Scope scoped ? new OctetString(Encoding.UTF8.GetBytes(scoped.ContextName)) : OctetString.Empty;
+
+        /// <summary>
+        /// Gets serialized scope data for a target protocol version (legacy compatibility member).
+        /// </summary>
+        IAsnSerializable GetData(VersionCode version)
+        {
+            return version == VersionCode.V3 ? this : Pdu;
+        }
     }
 }

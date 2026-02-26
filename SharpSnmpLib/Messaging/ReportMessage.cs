@@ -2,6 +2,8 @@ using DotNetSnmp.Asn1;
 using DotNetSnmp.Common.Definitions;
 using DotNetSnmp.Protocol.V1;
 using DotNetSnmp.Protocol.V3;
+using DotNetSnmp.Protocol.V3.Security;
+using DotNetSnmp.Protocol.V3.Security.Privacy;
 using System.Formats.Asn1;
 
 namespace Lextm.SharpSnmpLib.Messaging;
@@ -33,12 +35,91 @@ public sealed class ReportMessage : ISnmpMessage
         }
 
         Message = message;
+        Header = new Header(message.Header);
+        Parameters = new SecurityParameters(message.SecurityParameters);
+        Privacy = new Lextm.SharpSnmpLib.Security.DefaultPrivacyProvider();
+    }
+
+    /// <summary>
+    /// Initializes a new instance of ReportMessage from legacy v3 constructor arguments.
+    /// </summary>
+    public ReportMessage(
+        VersionCode version,
+        Header header,
+        SecurityParameters parameters,
+        Scope scope,
+        IPrivacyProvider privacy,
+        byte[]? length)
+    {
+        if (version != VersionCode.V3)
+        {
+            throw new ArgumentException("Only v3 report messages are supported.", nameof(version));
+        }
+
+        if (header == null)
+        {
+            throw new ArgumentNullException(nameof(header));
+        }
+
+        if (parameters == null)
+        {
+            throw new ArgumentNullException(nameof(parameters));
+        }
+
+        if (scope == null)
+        {
+            throw new ArgumentNullException(nameof(scope));
+        }
+
+        if (privacy == null)
+        {
+            throw new ArgumentNullException(nameof(privacy));
+        }
+
+        _ = length; // preserved for source compatibility
+
+        var message = new SnmpV3Message
+        {
+            Header = header.ToHeaderData(),
+            SecurityParameters = parameters.ToUsmSecurityParameters(),
+            Scope = scope
+        };
+
+        if (message.Header.MsgFlags.HasFlag(MsgFlag.Priv))
+        {
+            privacy.EncryptMessage(message);
+        }
+
+        if (message.Header.MsgFlags.HasFlag(MsgFlag.Auth))
+        {
+            privacy.AuthenticationProvider.AuthenticateOutgoingMsg(message, message.SecurityParameters.AuthParams);
+        }
+
+        Message = message;
+        Header = header;
+        Parameters = parameters;
+        Privacy = privacy;
     }
 
     /// <summary>
     /// Gets message.
     /// </summary>
     public SnmpV3Message Message { get; }
+
+    /// <summary>
+    /// Gets header.
+    /// </summary>
+    public Header Header { get; }
+
+    /// <summary>
+    /// Gets security parameters.
+    /// </summary>
+    public SecurityParameters Parameters { get; }
+
+    /// <summary>
+    /// Gets privacy provider.
+    /// </summary>
+    public IPrivacyProvider Privacy { get; }
 
     /// <summary>
     /// Represents protocol Version.

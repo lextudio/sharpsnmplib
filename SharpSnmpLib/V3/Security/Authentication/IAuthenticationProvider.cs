@@ -1,4 +1,6 @@
-﻿namespace DotNetSnmp.Protocol.V3.Security.Authentication
+﻿using DotNetSnmp.Asn1.SyntaxObjects;
+
+namespace DotNetSnmp.Protocol.V3.Security.Authentication
 {
     /// <summary>
     /// Authentication provider interface.
@@ -64,5 +66,10 @@
         /// </remarks>
         bool AuthenticateIncomingMsg(
             SnmpV3Message message);
+
+        /// <summary>
+        /// Gets a zeroed digest with provider-specific truncated size (legacy compatibility member).
+        /// </summary>
+        OctetString CleanDigest => new(new byte[TruncatedDigestSize]);
     }
 }

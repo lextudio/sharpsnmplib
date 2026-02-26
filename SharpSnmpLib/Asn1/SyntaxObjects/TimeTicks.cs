@@ -37,9 +37,7 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// </summary>
     public override string ToString()
     {
-        var ts = TimeSpan.FromSeconds(Value / 100f);
-        var repr = ts.ToString(@"dd\:hh\:mm\:ss\.ff");
-        return $"Timeticks: ({Value}) {repr}";
+        return new TimeSpan(Value * 100000L).ToString();
     }
 
     /// <summary>
