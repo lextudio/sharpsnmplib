@@ -41,7 +41,38 @@ public static class CompatibilityExtensions
     /// </summary>
     public static ErrorCode ToErrorCode(this Integer32 value)
     {
-        return (ErrorCode)value.Value;
+        if (!TryToErrorCode(value, out var code))
+        {
+            throw new InvalidCastException(
+                string.Format(
+                    CultureInfo.InvariantCulture,
+                    "Integer32 value {0} cannot be converted to a known ErrorCode.",
+                    value.Value));
+        }
+
+        return code;
+    }
+
+    /// <summary>
+    /// Tries to convert an <see cref="Integer32"/> value to <see cref="ErrorCode"/>.
+    /// </summary>
+    public static bool TryToErrorCode(this Integer32 value, out ErrorCode code)
+    {
+        var raw = value.Value;
+        if (raw < byte.MinValue || raw > byte.MaxValue)
+        {
+            code = default;
+            return false;
+        }
+
+        code = (ErrorCode)(byte)raw;
+        if (!Enum.IsDefined(code))
+        {
+            code = default;
+            return false;
+        }
+
+        return true;
     }
 
     /// <summary>
