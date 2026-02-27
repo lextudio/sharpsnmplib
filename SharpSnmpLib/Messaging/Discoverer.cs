@@ -85,13 +85,29 @@ public sealed class Discoverer
     /// </summary>
     public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout)
     {
-        DiscoverAsync(version, broadcastAddress, community, timeout).GetAwaiter().GetResult();
+        DiscoverAsync(version, broadcastAddress, community, timeout, OctetString.Empty).GetAwaiter().GetResult();
+    }
+
+    /// <summary>
+    /// Discovers agents of the specified version in a specific time interval.
+    /// </summary>
+    public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout, OctetString contextName)
+    {
+        DiscoverAsync(version, broadcastAddress, community, timeout, contextName).GetAwaiter().GetResult();
     }
 
     /// <summary>
     /// Discovers agents of the specified version in a specific time interval.
     /// </summary>
     public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout)
+    {
+        await DiscoverAsync(version, broadcastAddress, community, timeout, OctetString.Empty).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Discovers agents of the specified version in a specific time interval.
+    /// </summary>
+    public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout, OctetString contextName)
     {
         if (broadcastAddress == null)
         {
@@ -113,7 +129,7 @@ public sealed class Discoverer
             udp.EnableBroadcast = true;
         }
 
-        var probe = CreateProbe(version, community);
+        var probe = CreateProbe(version, community, contextName);
         await udp.SendAsync(probe, probe.Length, broadcastAddress).ConfigureAwait(false);
 
         using var cts = new CancellationTokenSource(timeout);
@@ -143,11 +159,11 @@ public sealed class Discoverer
         }
     }
 
-    private static byte[] CreateProbe(VersionCode version, OctetString? community)
+    private static byte[] CreateProbe(VersionCode version, OctetString? community, OctetString contextName)
     {
         if (version == VersionCode.V3)
         {
-            return Messenger.GetNextDiscovery(SnmpType.GetRequestPdu).ToBytes();
+            return Messenger.GetNextDiscovery(SnmpType.GetRequestPdu, contextName).ToBytes();
         }
 
         var pdu = new GetRequestPdu

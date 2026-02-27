@@ -22,6 +22,7 @@ public sealed class Discovery
     private readonly int _requestId;
     private readonly int _maxMessageSize;
     private readonly SnmpType _type;
+    private readonly string _contextName;
 
     /// <summary>
     /// Initializes a new instance of Discovery.
@@ -30,7 +31,7 @@ public sealed class Discovery
     /// <param name="requestId">The request id.</param>
     /// <param name="maxMessageSize">The max size of message.</param>
     public Discovery(int messageId, int requestId, int maxMessageSize)
-        : this(messageId, requestId, maxMessageSize, SnmpType.GetRequestPdu)
+        : this(messageId, requestId, maxMessageSize, SnmpType.GetRequestPdu, string.Empty)
     {
     }
 
@@ -42,11 +43,43 @@ public sealed class Discovery
     /// <param name="maxMessageSize">The max size of message.</param>
     /// <param name="type">Message type.</param>
     public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type)
+        : this(messageId, requestId, maxMessageSize, type, string.Empty)
     {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of Discovery.
+    /// </summary>
+    /// <param name="messageId">The message id.</param>
+    /// <param name="requestId">The request id.</param>
+    /// <param name="maxMessageSize">The max size of message.</param>
+    /// <param name="type">Message type.</param>
+    /// <param name="contextName">Scoped context name for v3 discovery.</param>
+    public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type, OctetString contextName)
+        : this(messageId, requestId, maxMessageSize, type, contextName?.ToString() ?? throw new ArgumentNullException(nameof(contextName)))
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of Discovery.
+    /// </summary>
+    /// <param name="messageId">The message id.</param>
+    /// <param name="requestId">The request id.</param>
+    /// <param name="maxMessageSize">The max size of message.</param>
+    /// <param name="type">Message type.</param>
+    /// <param name="contextName">Scoped context name for v3 discovery.</param>
+    public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type, string contextName)
+    {
+        if (contextName == null)
+        {
+            throw new ArgumentNullException(nameof(contextName));
+        }
+
         _messageId = messageId;
         _requestId = requestId;
         _maxMessageSize = maxMessageSize;
         _type = type;
+        _contextName = contextName;
 
         // validate immediately so constructor behavior matches legacy expectations.
         _ = CreateDiscoveryPdu(type, requestId);
@@ -132,7 +165,7 @@ public sealed class Discovery
         var scope = new Scope
         {
             ContextEngineId = ReadOnlyMemory<byte>.Empty,
-            ContextName = string.Empty,
+            ContextName = _contextName,
             Pdu = CreateDiscoveryPdu(_type, _requestId)
         };
 

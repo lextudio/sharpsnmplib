@@ -134,6 +134,14 @@ public static partial class Messenger
     }
 
     /// <summary>
+    /// Returns a new discovery request with scoped context name.
+    /// </summary>
+    public static Discovery GetNextDiscovery(SnmpType type, OctetString contextName)
+    {
+        return new Discovery(NextMessageId, NextRequestId, MaxMessageSize, type, contextName);
+    }
+
+    /// <summary>
     /// Returns error message for the specific <see cref="ObjectIdentifier"/>.
     /// </summary>
     public static string GetErrorMessage(this ObjectIdentifier id)

@@ -63,6 +63,24 @@ public sealed class DiscoveryCompatibilityTest
     }
 
     [Fact]
+    public void DiscoveryEncodesProvidedContextName()
+    {
+        var discovery = new Discovery(101, 202, 1500, SnmpType.GetRequestPdu, new OctetString("ctx-v3"));
+        var contextName = ReadScopedContextName(discovery.ToBytes());
+
+        Assert.Equal("ctx-v3", contextName);
+    }
+
+    [Fact]
+    public void MessengerGetNextDiscoveryEncodesProvidedContextName()
+    {
+        var discovery = Messenger.GetNextDiscovery(SnmpType.GetRequestPdu, new OctetString("ctx-v3-messenger"));
+        var contextName = ReadScopedContextName(discovery.ToBytes());
+
+        Assert.Equal("ctx-v3-messenger", contextName);
+    }
+
+    [Fact]
     public void ReportMessageRequiresReportPdu()
     {
         var nonReportMessage = new SnmpV3Message
@@ -107,5 +125,17 @@ public sealed class DiscoveryCompatibilityTest
         _ = scope.ReadOctetString();
         _ = scope.ReadOctetString();
         return scope.PeekTag();
+    }
+
+    private static string ReadScopedContextName(byte[] encoded)
+    {
+        var reader = new AsnReader(encoded, AsnEncodingRules.BER);
+        var root = reader.ReadSequence();
+        _ = root.ReadInteger();
+        _ = root.ReadSequence();
+        _ = root.ReadOctetString();
+        var scope = root.ReadSequence();
+        _ = scope.ReadOctetString();
+        return scope.ReadOctetString().ToString();
     }
 }
