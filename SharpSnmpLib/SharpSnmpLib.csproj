@@ -10,10 +10,10 @@
     <IsNet80Supported Condition="'$(ParsedSdkVersion)' >= '8.0'">true</IsNet80Supported>
     <IsNet90Supported Condition="'$(ParsedSdkVersion)' >= '9.0'">true</IsNet90Supported>
     <IsNet100Supported Condition="'$(ParsedSdkVersion)' >= '10.0'">true</IsNet100Supported>
-    <!-- Only support .NET 8/9/10 right now. -->
+    <!-- Only support .NET 8 right now. -->
     <TargetFrameworks Condition="'$(IsNet80Supported)' == 'true'">net8.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true'">$(TargetFrameworks);net9.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(IsNet100Supported)' == 'true'">$(TargetFrameworks);net10.0</TargetFrameworks>
+    <!-- <TargetFrameworks Condition="'$(IsNet90Supported)' == 'true'">$(TargetFrameworks);net9.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(IsNet100Supported)' == 'true'">$(TargetFrameworks);net10.0</TargetFrameworks> -->
     <PackageId>Lextm.SharpSnmpLib</PackageId>
     <Title>C# SNMP Library</Title>
     <NeutralLanguage>en-US</NeutralLanguage>

@@ -374,8 +374,25 @@ public static partial class Messenger
             }
         ) as ResponsePdu;
 
-        var errorFound = response!.ErrorStatus == ErrorCode.NoSuchName;
-        return new Tuple<bool, Variable?>(!errorFound, errorFound ? null : response.VariableBindings!.ToArray()[0]);
+        if (response == null)
+        {
+            return new Tuple<bool, Variable?>(false, null);
+        }
+
+        // WALK should advance only on successful GetNext responses.
+        // Any protocol error (TooBig, GenError, NoSuchName, etc.) terminates the walk.
+        if (response.ErrorStatus != ErrorCode.NoError)
+        {
+            return new Tuple<bool, Variable?>(false, null);
+        }
+
+        var next = response.VariableBindings?.ToArray();
+        if (next == null || next.Length == 0)
+        {
+            return new Tuple<bool, Variable?>(false, null);
+        }
+
+        return new Tuple<bool, Variable?>(true, next[0]);
     }
 
     /// <summary>
