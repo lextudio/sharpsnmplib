@@ -36,7 +36,7 @@ namespace DotNetSnmp.Protocol.V3
         public Scope(OctetString contextEngineId, OctetString contextName, Pdu pdu)
         {
             ContextEngineId = contextEngineId.Octets;
-            ContextName = Encoding.UTF8.GetString(contextName.Octets);
+            ContextName = contextName.ToString();
             Pdu = pdu;
         }
 
@@ -62,7 +62,7 @@ namespace DotNetSnmp.Protocol.V3
         /// The context name identifies a particular context within an SNMP entity.
         /// Different contexts can provide access to different subsets of managed objects.
         /// </remarks>
-        public string ContextName { get; set; } = string.Empty;
+        public string ContextName { get; set; }
 
         /// <summary>
         /// Gets the protocol data unit (PDU).
@@ -74,7 +74,7 @@ namespace DotNetSnmp.Protocol.V3
         /// The PDU contains the actual SNMP operation (Get, Set, GetNext, etc.) and
         /// the associated variable bindings.
         /// </remarks>
-        public Pdu Pdu { get; set; } = new GetRequestPdu();
+        public Pdu Pdu { get; set; }
 
         /// <summary>
         /// Legacy type code compatibility for scoped PDUs.
@@ -96,7 +96,7 @@ namespace DotNetSnmp.Protocol.V3
         {
             using (_ = writer.PushSequence())
             {
-                var enc = Encoding.UTF8;
+                var enc = OctetString.DefaultEncoding;
 
                 writer.WriteOctetString(ContextEngineId.Span);
 
@@ -126,7 +126,7 @@ namespace DotNetSnmp.Protocol.V3
 
             var ctxName = seq.ReadOctetString();
 
-            var utf8 = Encoding.UTF8;
+            var encoding = OctetString.DefaultEncoding;
 
             var pduType = seq.PeekTag();
 
@@ -172,7 +172,7 @@ namespace DotNetSnmp.Protocol.V3
             return new()
             {
                 ContextEngineId = ctxEngineId,
-                ContextName = utf8.GetString(ctxName),
+                ContextName = encoding.GetString(ctxName),
                 Pdu = pdu
             };
         }

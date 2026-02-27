@@ -1,7 +1,6 @@
 using DotNetSnmp.Asn1.Serialization;
 using DotNetSnmp.Asn1.SyntaxObjects;
 using DotNetSnmp.Protocol.V3;
-using System.Text;
 
 namespace DotNetSnmp.Common.Definitions
 {
@@ -74,7 +73,7 @@ namespace DotNetSnmp.Common.Definitions
         /// Gets context name (legacy compatibility member).
         /// </summary>
         OctetString ContextName
-            => this is Scope scoped ? new OctetString(Encoding.UTF8.GetBytes(scoped.ContextName)) : OctetString.Empty;
+            => this is Scope scoped ? new OctetString(scoped.ContextName, OctetString.DefaultEncoding) : OctetString.Empty;
 
         /// <summary>
         /// Gets serialized scope data for a target protocol version (legacy compatibility member).

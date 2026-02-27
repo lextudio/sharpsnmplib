@@ -6,6 +6,7 @@ using DotNetSnmp.Protocol.V1;
 using DotNetSnmp.Protocol.V3;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
+using System.Text;
 using Xunit;
 
 namespace DotNetSnmp.Test;
@@ -136,6 +137,6 @@ public sealed class DiscoveryCompatibilityTest
         _ = root.ReadOctetString();
         var scope = root.ReadSequence();
         _ = scope.ReadOctetString();
-        return scope.ReadOctetString().ToString();
+        return Encoding.UTF8.GetString(scope.ReadOctetString());
     }
 }

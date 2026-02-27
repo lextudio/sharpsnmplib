@@ -56,7 +56,7 @@ public sealed class Discovery
     /// <param name="type">Message type.</param>
     /// <param name="contextName">Scoped context name for v3 discovery.</param>
     public Discovery(int messageId, int requestId, int maxMessageSize, SnmpType type, OctetString contextName)
-        : this(messageId, requestId, maxMessageSize, type, contextName?.ToString() ?? throw new ArgumentNullException(nameof(contextName)))
+        : this(messageId, requestId, maxMessageSize, type, contextName.ToString())
     {
     }
 

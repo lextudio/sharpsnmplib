@@ -1,0 +1,19 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="Perf" />
+    <BuildType Name="Release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="global.json" />
+  </Folder>
+  <Project Path="SharpSnmpLib/SharpSnmpLib.csproj">
+    <BuildType Solution="Perf|*" Project="Release" />
+  </Project>
+  <Project Path="Tests/Tests.csproj">
+    <BuildType Solution="Perf|*" Project="Debug" />
+  </Project>
+</Solution>

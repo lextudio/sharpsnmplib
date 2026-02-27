@@ -125,7 +125,7 @@ namespace DotNetSnmp.Test
             };
 
             // Act
-            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.WithinSubtree);
+            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.WithinSubtree, TestContext.Current.CancellationToken);
 
             // Assert
             // Assert.Equal(1, result);
@@ -146,7 +146,7 @@ namespace DotNetSnmp.Test
             };
 
             // Act
-            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.Default);
+            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.Default, TestContext.Current.CancellationToken);
 
             // Assert
             // Assert.Equal(1, result);
@@ -167,7 +167,7 @@ namespace DotNetSnmp.Test
             };
 
             // Act
-            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.WithinSubtree);
+            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.WithinSubtree, TestContext.Current.CancellationToken);
 
             // Assert
             // Assert.Equal(1, result);
@@ -188,7 +188,7 @@ namespace DotNetSnmp.Test
             };
 
             // Act
-            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.Default);
+            var result = await Messenger.WalkAsync(version, endpoint, community, new ObjectIdentifier("1.3.6.1.2.1.1"), variables, WalkMode.Default, TestContext.Current.CancellationToken);
 
             // Assert
             // Assert.Equal(1, result);

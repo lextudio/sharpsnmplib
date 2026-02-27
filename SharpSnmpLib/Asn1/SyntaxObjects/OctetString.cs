@@ -1,4 +1,5 @@
 ﻿using DotNetSnmp.Asn1.Serialization;
+using System;
 using System.Formats.Asn1;
 using System.Text;
 
@@ -10,9 +11,14 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     public readonly record struct OctetString : IAsnSerializable, IEquatable<OctetString>
     {
         /// <summary>
+        /// Default text encoding used by string-based OctetString conversions.
+        /// </summary>
+        public static Encoding DefaultEncoding { get; set; } = Encoding.ASCII;
+
+        /// <summary>
         /// An empty octet string value.
         /// </summary>
-        public static OctetString Empty { get; } = new(string.Empty);
+        public static OctetString Empty { get; } = new(string.Empty, Encoding.ASCII);
 
         /// <summary>
         /// Gets octets.
@@ -20,11 +26,28 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         public byte[] Octets { get; }
 
         /// <summary>
+        /// Gets the text encoding associated with this value.
+        /// </summary>
+        public Encoding Encoding { get; }
+
+        /// <summary>
         /// Initializes a new instance of OctetString.
         /// </summary>
         public OctetString(string str)
+            : this(str, DefaultEncoding)
         {
-            Octets = Encoding.UTF8.GetBytes(str);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of OctetString.
+        /// </summary>
+        public OctetString(string str, Encoding encoding)
+        {
+            ArgumentNullException.ThrowIfNull(str);
+            ArgumentNullException.ThrowIfNull(encoding);
+
+            Octets = encoding.GetBytes(str);
+            Encoding = encoding;
         }
 
         /// <summary>
@@ -32,15 +55,26 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         /// </summary>
         public OctetString(byte[] octets)
         {
+            ArgumentNullException.ThrowIfNull(octets);
             Octets = octets;
+            Encoding = DefaultEncoding;
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> in UTF-16 that represents this <see cref="OctetString"/>.
+        /// Returns a <see cref="String"/> using a specified encoding.
+        /// </summary>
+        public string ToString(Encoding encoding)
+        {
+            ArgumentNullException.ThrowIfNull(encoding);
+            return Octets is null ? string.Empty : encoding.GetString(Octets);
+        }
+
+        /// <summary>
+        /// Returns a <see cref="String"/> that represents this <see cref="OctetString"/>.
         /// </summary>
         public override string ToString()
         {
-            return Octets is null ? string.Empty : Encoding.UTF8.GetString(Octets);
+            return ToString(Encoding);
         }
 
         /// <inheritdoc/>

@@ -3,7 +3,7 @@
       {
          "name": "dotnet-format",
          "command": "dotnet",
-         "args": [ "dotnet-format", "--include", "${staged}" ],
+         "args": [ "format", "--include", "${staged}", "--no-restore" ],
          "include": [ "**/*.cs", "**/*.vb" ]
       }
    ]

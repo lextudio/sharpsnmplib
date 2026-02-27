@@ -1,4 +1,3 @@
-using System.Text;
 using System.Net;
 using DotNetSnmp.Asn1;
 using DotNetSnmp.Asn1.SyntaxObjects;
@@ -179,7 +178,7 @@ public sealed class TrapV2Message : ISnmpMessage
 
         if (Version == VersionCode.V3)
         {
-            var username = Encoding.UTF8.GetString(_securityName.Octets);
+            var username = _securityName.ToString();
             return Messenger.SendTrapV2V3Async(endpoint, username, _privacy ?? new DefaultPrivacyProvider(), Enterprise, TimeStamp, _variables);
         }
 

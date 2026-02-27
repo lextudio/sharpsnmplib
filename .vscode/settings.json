@@ -1,3 +1,3 @@
 {
-    "dotnet.defaultSolution": "SharpSnmpLib.NetStandard.sln"
+    "dotnet.defaultSolution": "SharpSnmpLib.slnx"
 }

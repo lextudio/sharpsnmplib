@@ -1,4 +1,3 @@
-using System.Text;
 using DotNetSnmp.Asn1.SyntaxObjects;
 using DotNetSnmp.Common.Definitions;
 using DotNetSnmp.Protocol.V1;
@@ -112,7 +111,7 @@ internal static class LegacyRequestBuilder
             Scope = new Scope
             {
                 ContextEngineId = contextEngineId,
-                ContextName = Encoding.UTF8.GetString(contextName.Octets),
+                ContextName = contextName.ToString(),
                 Pdu = pdu
             }
         };
