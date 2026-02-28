@@ -1,3 +1,24 @@
+// Discoverer class for SNMP agent discovery.
+// Copyright (C) 2008-2018 Malcolm Crowe, Lex Li, and other contributors.
+// Copyright (C) 2018-2026 LeXtudio Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this
+// software and associated documentation files (the "Software"), to deal in the Software
+// without restriction, including without limitation the rights to use, copy, modify, merge,
+// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+// to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// DEALINGS IN THE SOFTWARE.
+
+using System.Buffers;
 using System.Formats.Asn1;
 using System.Net;
 using System.Net.Sockets;
@@ -119,43 +140,58 @@ public sealed class Discoverer
             throw new ArgumentOutOfRangeException(nameof(timeout));
         }
 
-        var any = broadcastAddress.AddressFamily == AddressFamily.InterNetworkV6
+        var addressFamily = broadcastAddress.AddressFamily;
+        var any = addressFamily == AddressFamily.InterNetworkV6
             ? IPAddress.IPv6Any
             : IPAddress.Any;
 
-        using var udp = new UdpClient(new IPEndPoint(any, 0));
-        if (broadcastAddress.AddressFamily == AddressFamily.InterNetwork)
+        using var socket = new Socket(addressFamily, SocketType.Dgram, ProtocolType.Udp);
+        if (addressFamily == AddressFamily.InterNetwork)
         {
-            udp.EnableBroadcast = true;
+            socket.EnableBroadcast = true;
         }
 
+        socket.Bind(new IPEndPoint(any, 0));
+
         var probe = CreateProbe(version, community, contextName);
-        await udp.SendAsync(probe, probe.Length, broadcastAddress).ConfigureAwait(false);
+        await socket.SendToAsync(probe.AsMemory(), SocketFlags.None, broadcastAddress).ConfigureAwait(false);
 
         using var cts = new CancellationTokenSource(timeout);
-        while (!cts.IsCancellationRequested)
+        var senderAddress = new SocketAddress(addressFamily);
+        var buffer = ArrayPool<byte>.Shared.Rent(65535);
+        try
         {
-            UdpReceiveResult received;
-            try
+            while (!cts.IsCancellationRequested)
             {
-                received = await udp.ReceiveAsync(cts.Token).ConfigureAwait(false);
-            }
-            catch (OperationCanceledException)
-            {
-                break;
-            }
-            catch (SocketException ex)
-            {
-                if (ex.SocketErrorCode == SocketError.ConnectionReset)
+                int bytesReceived;
+                try
+                {
+                    bytesReceived = await socket.ReceiveFromAsync(
+                        buffer.AsMemory(),
+                        SocketFlags.None,
+                        senderAddress,
+                        cts.Token).ConfigureAwait(false);
+                }
+                catch (OperationCanceledException)
+                {
+                    break;
+                }
+                catch (SocketException ex) when (ex.SocketErrorCode == SocketError.ConnectionReset)
                 {
                     continue;
                 }
 
-                break;
-            }
+                var remoteEndPoint = (IPEndPoint)new IPEndPoint(
+                    addressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any,
+                    0).Create(senderAddress);
 
-            var variable = TryExtractVariable(received.Buffer);
-            AgentFound?.Invoke(this, new AgentFoundEventArgs(received.RemoteEndPoint, variable));
+                var variable = TryExtractVariable(buffer.AsSpan(0, bytesReceived));
+                AgentFound?.Invoke(this, new AgentFoundEventArgs(remoteEndPoint, variable));
+            }
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(buffer);
         }
     }
 
@@ -190,16 +226,18 @@ public sealed class Discoverer
         return message.Encode();
     }
 
-    private static AgentVariable? TryExtractVariable(byte[] packet)
+    private static AgentVariable? TryExtractVariable(ReadOnlySpan<byte> packet)
     {
-        if (packet == null || packet.Length == 0)
+        if (packet.Length == 0)
         {
             return null;
         }
 
+        // AsnReader requires byte[], so copy from the span.
+        var bytes = packet.ToArray();
         try
         {
-            var reader = new AsnReader(packet, AsnEncodingRules.BER);
+            var reader = new AsnReader(bytes, AsnEncodingRules.BER);
             var seq = reader.ReadSequence();
             if (!seq.TryReadInt32(out var versionRaw))
             {
@@ -211,17 +249,17 @@ public sealed class Discoverer
             {
                 case VersionCode.V1:
                     {
-                        var msg = SnmpV1Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
+                        var msg = SnmpV1Message.ReadFrom(new AsnReader(bytes, AsnEncodingRules.BER));
                         return Convert(msg.Scope?.VariableBindings?.FirstOrDefault());
                     }
                 case VersionCode.V2:
                     {
-                        var msg = SnmpV2Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
+                        var msg = SnmpV2Message.ReadFrom(new AsnReader(bytes, AsnEncodingRules.BER));
                         return Convert(msg.Scope?.VariableBindings?.FirstOrDefault());
                     }
                 case VersionCode.V3:
                     {
-                        var msg = SnmpV3Message.ReadFrom(new AsnReader(packet, AsnEncodingRules.BER));
+                        var msg = SnmpV3Message.ReadFrom(new AsnReader(bytes, AsnEncodingRules.BER));
                         if (msg.Header.MsgFlags.HasFlag(MsgFlag.Priv))
                         {
                             return null;
