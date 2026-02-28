@@ -23,6 +23,16 @@ public sealed class MessengerCompatibilityTest
     }
 
     [Fact]
+    public async Task GetAsyncNullTransportGuardIsPresent()
+    {
+        var variables = new List<Variable> { new(new ObjectIdentifier("1.3.6.1.2.1.1.1.0")) };
+        var endpoint = new IPEndPoint(IPAddress.Loopback, 161);
+
+        await Assert.ThrowsAsync<ArgumentNullException>(() =>
+            Messenger.GetAsync(VersionCode.V2, endpoint, new OctetString("public"), variables, null!));
+    }
+
+    [Fact]
     public async Task SendTrapV2AsyncWithNonIPEndPointThrows()
     {
         var variables = new List<Variable>();
@@ -55,6 +65,25 @@ public sealed class MessengerCompatibilityTest
                 enterprise: new ObjectIdentifier("1.3.6.1.6.3.1.1.5.2"),
                 timestamp: 1,
                 variables: variables));
+    }
+
+    [Fact]
+    public async Task SendTrapV2AsyncNullTransportGuardIsPresent()
+    {
+        var variables = new List<Variable>();
+        var endpoint = new IPEndPoint(IPAddress.Loopback, 162);
+
+        await Assert.ThrowsAsync<ArgumentNullException>(() =>
+            Messenger.SendTrapV2Async(
+                requestId: 1,
+                version: VersionCode.V2,
+                endpoint: endpoint,
+                community: new OctetString("public"),
+                contextName: OctetString.Empty,
+                enterprise: new ObjectIdentifier("1.3.6.1.6.3.1.1.5.2"),
+                timestamp: 1,
+                variables: variables,
+                transport: null!));
     }
 
     [Fact]

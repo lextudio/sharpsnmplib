@@ -1,9 +1,11 @@
 using System.Formats.Asn1;
+using System.Net;
 using DotNetSnmp.Asn1.Serialization;
 using DotNetSnmp.Asn1.SyntaxObjects;
 using DotNetSnmp.Common.Definitions;
 using DotNetSnmp.Protocol.V1;
 using DotNetSnmp.Protocol.V3;
+using DotNetSnmp.Transport;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 using System.Text;
@@ -42,6 +44,34 @@ public sealed class DiscoveryCompatibilityTest
 
         Assert.Throws<ArgumentNullException>(() => discovery.GetResponse(1000, null!));
         await Assert.ThrowsAsync<ArgumentNullException>(() => discovery.GetResponseAsync(null!));
+    }
+
+    [Fact]
+    public async Task DiscoveryNullTransportGuardsArePresent()
+    {
+        var discovery = new Discovery(1, 2, 1500);
+        var endpoint = new IPEndPoint(IPAddress.Loopback, 161);
+
+        Assert.Throws<ArgumentNullException>(() => discovery.GetResponse(1000, endpoint, null!));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => discovery.GetResponseAsync(endpoint, null!));
+    }
+
+    [Fact]
+    public async Task DiscovererNullTransportGuardsArePresent()
+    {
+        var discoverer = new Discoverer();
+        var endpoint = new IPEndPoint(IPAddress.Loopback, 161);
+
+        Assert.Throws<ArgumentNullException>(() =>
+            discoverer.Discover(VersionCode.V2, endpoint, new OctetString("public"), 100, null!));
+        Assert.Throws<ArgumentNullException>(() =>
+            discoverer.Discover(VersionCode.V2, endpoint, new OctetString("public"), 100, OctetString.Empty, null!));
+
+        await Assert.ThrowsAsync<ArgumentNullException>(() =>
+            discoverer.DiscoverAsync(VersionCode.V2, endpoint, new OctetString("public"), 100, null!));
+
+        await Assert.ThrowsAsync<ArgumentNullException>(() =>
+            discoverer.DiscoverAsync(VersionCode.V2, endpoint, new OctetString("public"), 100, OctetString.Empty, null!));
     }
 
     [Fact]

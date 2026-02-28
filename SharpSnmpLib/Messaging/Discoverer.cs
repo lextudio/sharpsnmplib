@@ -30,6 +30,7 @@ using DotNetSnmp.Protocol.V1;
 using DotNetSnmp.Protocol.V2;
 using DotNetSnmp.Protocol.V3;
 using DotNetSnmp.Protocol.V3.Security;
+using DotNetSnmp.Transport;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 
@@ -118,11 +119,44 @@ public sealed class Discoverer
     }
 
     /// <summary>
+    /// Discovers agents of the specified version using the specified transport.
+    /// </summary>
+    public void Discover(VersionCode version, IPEndPoint endpoint, OctetString? community, int timeout, ISnmpTransport transport)
+    {
+        DiscoverAsync(version, endpoint, community, timeout, OctetString.Empty, transport).GetAwaiter().GetResult();
+    }
+
+    /// <summary>
+    /// Discovers agents of the specified version using the specified transport.
+    /// </summary>
+    public void Discover(VersionCode version, IPEndPoint endpoint, OctetString? community, int timeout, OctetString contextName, ISnmpTransport transport)
+    {
+        DiscoverAsync(version, endpoint, community, timeout, contextName, transport).GetAwaiter().GetResult();
+    }
+
+    /// <summary>
     /// Discovers agents of the specified version in a specific time interval.
     /// </summary>
     public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString? community, int timeout)
     {
         await DiscoverAsync(version, broadcastAddress, community, timeout, OctetString.Empty).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Discovers agents of the specified version using the specified transport.
+    /// </summary>
+    /// <remarks>
+    /// This overload is intended for unicast probing scenarios. For UDP broadcast discovery,
+    /// use the socket-based overloads.
+    /// </remarks>
+    public async Task DiscoverAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString? community,
+        int timeout,
+        ISnmpTransport transport)
+    {
+        await DiscoverAsync(version, endpoint, community, timeout, OctetString.Empty, transport).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -192,6 +226,62 @@ public sealed class Discoverer
         finally
         {
             ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+
+    /// <summary>
+    /// Discovers agents of the specified version using the specified transport.
+    /// </summary>
+    /// <remarks>
+    /// This overload is intended for unicast probing scenarios. For UDP broadcast discovery,
+    /// use the socket-based overloads.
+    /// </remarks>
+    public async Task DiscoverAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString? community,
+        int timeout,
+        OctetString contextName,
+        ISnmpTransport transport)
+    {
+        if (endpoint == null)
+        {
+            throw new ArgumentNullException(nameof(endpoint));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
+
+        if (timeout < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(timeout));
+        }
+
+        var probe = CreateProbe(version, community, contextName);
+        using var cts = new CancellationTokenSource(timeout);
+
+        await transport.SendAsync(probe.AsMemory(), endpoint, cts.Token).ConfigureAwait(false);
+
+        while (!cts.IsCancellationRequested)
+        {
+            try
+            {
+                var incoming = await transport.ReceiveAsync(endpoint, cts.Token).ConfigureAwait(false);
+                var variable = TryExtractVariable(incoming.Span);
+                AgentFound?.Invoke(this, new AgentFoundEventArgs(endpoint, variable));
+
+                // TCP discovery is request/response; a single parsed response is enough.
+                if (transport is BasicTcpTransport)
+                {
+                    break;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
         }
     }
 

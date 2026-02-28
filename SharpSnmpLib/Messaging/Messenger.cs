@@ -184,8 +184,27 @@ public static partial class Messenger
     /// </summary>
     public static async Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        return await GetAsync(version, endpoint, community, variables, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Performs asynchronous retrieval using the specified transport.
+    /// </summary>
+    public static async Task<IList<Variable>> GetAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        IList<Variable> variables,
+        ISnmpTransport transport)
+    {
         var dispatcher = new SnmpDispatcher();
         ISnmpTarget target;
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
 
         if (version == VersionCode.V3)
         {
@@ -197,7 +216,7 @@ public static partial class Messenger
         }
 
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             target,
             endpoint,
             new GetRequestPdu()
@@ -217,13 +236,41 @@ public static partial class Messenger
         return GetV3Async(endpoint, username, new DefaultPrivacyProvider(), variables);
     }
 
+    /// <summary>
+    /// Gets v3 Async using the specified transport.
+    /// </summary>
+    public static Task<IList<Variable>> GetV3Async(IPEndPoint endpoint, string username, IList<Variable> variables, ISnmpTransport transport)
+    {
+        return GetV3Async(endpoint, username, new DefaultPrivacyProvider(), variables, string.Empty, transport);
+    }
+
 
     /// <summary>
     /// Gets v3 Async.
     /// </summary>
     public static async Task<IList<Variable>> GetV3Async(IPEndPoint endpoint, string username, IPrivacyProvider privacyProvider, IList<Variable> variables, string contextName = "")
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        return await GetV3Async(endpoint, username, privacyProvider, variables, contextName, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Gets v3 Async using the specified transport.
+    /// </summary>
+    public static async Task<IList<Variable>> GetV3Async(
+        IPEndPoint endpoint,
+        string username,
+        IPrivacyProvider privacyProvider,
+        IList<Variable> variables,
+        string contextName,
+        ISnmpTransport transport)
+    {
         var dispatcher = new SnmpDispatcher();
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
 
         var target = new UserTarget(new OctetString(username), privacyProvider);
 
@@ -237,7 +284,7 @@ public static partial class Messenger
         };
 
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             target,
             endpoint,
             scopedPdu
@@ -251,15 +298,34 @@ public static partial class Messenger
     /// </summary>
     public static async Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables)
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        return await SetAsync(version, endpoint, community, variables, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Performs asynchronous update using the specified transport.
+    /// </summary>
+    public static async Task<IList<Variable>> SetAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        IList<Variable> variables,
+        ISnmpTransport transport)
+    {
         if (version == VersionCode.V3)
         {
             throw new ArgumentException("V3 requests require a username and security parameters. Use SetV3Async instead.");
         }
 
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
+
         var dispatcher = new SnmpDispatcher();
 
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             new CommunityTarget(version, community),
             endpoint,
             new SetRequestPdu()
@@ -277,7 +343,27 @@ public static partial class Messenger
     public static async Task<IList<Variable>> SetV3Async(IPEndPoint endpoint, string username, IPrivacyProvider privacyProvider,
         IList<Variable> variables, string contextName = "")
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        return await SetV3Async(endpoint, username, privacyProvider, variables, contextName, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sets v3 Async using the specified transport.
+    /// </summary>
+    public static async Task<IList<Variable>> SetV3Async(
+        IPEndPoint endpoint,
+        string username,
+        IPrivacyProvider privacyProvider,
+        IList<Variable> variables,
+        string contextName,
+        ISnmpTransport transport)
+    {
         var dispatcher = new SnmpDispatcher();
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
 
         var target = new UserTarget(new OctetString(username), privacyProvider);
 
@@ -291,7 +377,7 @@ public static partial class Messenger
         };
 
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             target,
             endpoint,
             scopedPdu
@@ -305,9 +391,30 @@ public static partial class Messenger
     /// </summary>
     public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode)
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        return await WalkAsync(version, endpoint, community, table, list, mode, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Performs an asynchronous walk operation using the specified transport.
+    /// </summary>
+    public static async Task<int> WalkAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        ObjectIdentifier table,
+        IList<Variable> list,
+        WalkMode mode,
+        ISnmpTransport transport)
+    {
         if (list == null)
         {
             throw new ArgumentNullException(nameof(list));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
         }
 
         var result = 0;
@@ -329,7 +436,7 @@ public static partial class Messenger
 
             if (seed == tableV)
             {
-                data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
+                data = await HasNextAsync(version, endpoint, community, seed, transport).ConfigureAwait(false);
                 continue;
             }
 
@@ -352,7 +459,7 @@ public static partial class Messenger
             }
 
             previousId = seed.Id;
-            data = await HasNextAsync(version, endpoint, community, seed).ConfigureAwait(false);
+            data = await HasNextAsync(version, endpoint, community, seed, transport).ConfigureAwait(false);
         }
         while (data.Item1);
         return result;
@@ -364,16 +471,39 @@ public static partial class Messenger
     public static async Task<int> WalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, WalkMode mode, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return await WalkAsync(version, endpoint, community, table, list, mode).WaitAsync(cancellationToken).ConfigureAwait(false);
+        using var transport = new BasicUdpTransport(endpoint);
+        return await WalkAsync(version, endpoint, community, table, list, mode, transport).WaitAsync(cancellationToken).ConfigureAwait(false);
     }
 
-    private static async Task<Tuple<bool, Variable?>> HasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, Variable seed)
+    /// <summary>
+    /// Performs an asynchronous walk operation using the specified transport.
+    /// </summary>
+    public static async Task<int> WalkAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        ObjectIdentifier table,
+        IList<Variable> list,
+        WalkMode mode,
+        ISnmpTransport transport,
+        CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        return await WalkAsync(version, endpoint, community, table, list, mode, transport).WaitAsync(cancellationToken).ConfigureAwait(false);
+    }
+
+    private static async Task<Tuple<bool, Variable?>> HasNextAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        Variable seed,
+        ISnmpTransport transport)
     {
         var variables = new List<Variable> { new(seed.Id) };
         var dispatcher = new SnmpDispatcher();
 
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             new CommunityTarget(version, community),
             endpoint,
             new GetNextRequestPdu()
@@ -408,15 +538,38 @@ public static partial class Messenger
     /// </summary>
     public static async Task<int> BulkWalkAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier table, IList<Variable> list, int maxRepetitions, WalkMode mode)
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        return await BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Performs an asynchronous bulk walk operation using the specified transport.
+    /// </summary>
+    public static async Task<int> BulkWalkAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier table,
+        IList<Variable> list,
+        int maxRepetitions,
+        WalkMode mode,
+        ISnmpTransport transport)
+    {
         if (list == null)
         {
             throw new ArgumentNullException(nameof(list));
         }
 
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
+
         var tableV = new Variable(table);
         var seed = tableV;
         var result = 0;
-        var data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions).ConfigureAwait(false);
+        var data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, transport).ConfigureAwait(false);
         var next = data.Item2;
         while (data.Item1)
         {
@@ -450,7 +603,7 @@ public static partial class Messenger
             }
 
             seed = candidate;
-            data = await BulkHasNextAsync(version, endpoint, community, contextName, seed, maxRepetitions).ConfigureAwait(false);
+            data = await BulkHasNextAsync(version, endpoint, community, seed, maxRepetitions, transport).ConfigureAwait(false);
             next = data.Item2;
         }
 
@@ -458,7 +611,13 @@ public static partial class Messenger
         return result;
     }
 
-    private static async Task<Tuple<bool, IList<Variable>, Pdu?>> BulkHasNextAsync(VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, Variable seed, int maxRepetitions)
+    private static async Task<Tuple<bool, IList<Variable>, Pdu?>> BulkHasNextAsync(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+                Variable seed,
+        int maxRepetitions,
+        ISnmpTransport transport)
     {
         // TODO: report should be updated with latest message from agent.
         if (version == VersionCode.V1 || version == VersionCode.V3)
@@ -470,7 +629,7 @@ public static partial class Messenger
         var dispatcher = new SnmpDispatcher();
 
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             new CommunityTarget(version, community),
             endpoint,
             new GetBulkRequestPdu()
@@ -520,7 +679,8 @@ public static partial class Messenger
         CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return await BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode, privacy, report)
+        using var transport = new BasicUdpTransport(endpoint);
+        return await BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode, transport)
             .WaitAsync(cancellationToken)
             .ConfigureAwait(false);
     }
@@ -534,6 +694,20 @@ public static partial class Messenger
     }
 
     /// <summary>
+    /// Retrieves data using the specified transport.
+    /// </summary>
+    public static IList<Variable> Get(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        IList<Variable> variables,
+        int timeout,
+        ISnmpTransport transport)
+    {
+        return ExecuteWithTimeout(() => GetAsync(version, endpoint, community, variables, transport), timeout);
+    }
+
+    /// <summary>
     /// Sends updated data.
     /// </summary>
     public static IList<Variable> Set(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, int timeout)
@@ -542,11 +716,41 @@ public static partial class Messenger
     }
 
     /// <summary>
+    /// Sends updated data using the specified transport.
+    /// </summary>
+    public static IList<Variable> Set(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        IList<Variable> variables,
+        int timeout,
+        ISnmpTransport transport)
+    {
+        return ExecuteWithTimeout(() => SetAsync(version, endpoint, community, variables, transport), timeout);
+    }
+
+    /// <summary>
     /// Performs a walk operation.
     /// </summary>
     public static int Walk(VersionCode version, IPEndPoint endpoint, OctetString community, ObjectIdentifier table, IList<Variable> list, int timeout, WalkMode mode)
     {
         return ExecuteWithTimeout(() => WalkAsync(version, endpoint, community, table, list, mode), timeout);
+    }
+
+    /// <summary>
+    /// Performs a walk operation using the specified transport.
+    /// </summary>
+    public static int Walk(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        ObjectIdentifier table,
+        IList<Variable> list,
+        int timeout,
+        WalkMode mode,
+        ISnmpTransport transport)
+    {
+        return ExecuteWithTimeout(() => WalkAsync(version, endpoint, community, table, list, mode, transport), timeout);
     }
 
     /// <summary>
@@ -567,6 +771,28 @@ public static partial class Messenger
     {
         return ExecuteWithTimeout(
             () => BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode),
+            timeout);
+    }
+
+    /// <summary>
+    /// Performs a bulk walk operation using the specified transport.
+    /// </summary>
+    public static int BulkWalk(
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier table,
+        IList<Variable> list,
+        int timeout,
+        int maxRepetitions,
+        WalkMode mode,
+        IPrivacyProvider? privacy,
+        ISnmpMessage? report,
+        ISnmpTransport transport)
+    {
+        return ExecuteWithTimeout(
+            () => BulkWalkAsync(version, endpoint, community, contextName, table, list, maxRepetitions, mode, transport),
             timeout);
     }
 
@@ -618,6 +844,25 @@ public static partial class Messenger
     [System.CLSCompliant(false)]
     public static async Task SendInformAsync(int requestId, VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        await SendInformAsync(requestId, version, endpoint, community, contextName, enterprise, timestamp, variables, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends inform Async using the specified transport.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static async Task SendInformAsync(
+        int requestId,
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        ISnmpTransport transport)
+    {
         if (variables == null)
         {
             throw new ArgumentNullException(nameof(variables));
@@ -626,6 +871,11 @@ public static partial class Messenger
         if (version == VersionCode.V3)
         {
             throw new ArgumentException("SNMP v3 INFORM requires privacy and report parameters.", nameof(version));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
         }
 
         var pdu = new InformRequestPdu
@@ -638,7 +888,7 @@ public static partial class Messenger
 
         var dispatcher = new SnmpDispatcher();
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             new CommunityTarget(version, community),
             endpoint,
             pdu
@@ -654,7 +904,7 @@ public static partial class Messenger
     /// Sends inform Async.
     /// </summary>
     [System.CLSCompliant(false)]
-    public static Task SendInformAsync(
+    public static async Task SendInformAsync(
         int requestId,
         VersionCode version,
         IPEndPoint endpoint,
@@ -665,6 +915,39 @@ public static partial class Messenger
         IList<Variable> variables,
         IPrivacyProvider privacy,
         ISnmpMessage report)
+    {
+        using var transport = new BasicUdpTransport(endpoint);
+        await SendInformWithSecurityAsync(
+            requestId,
+            version,
+            endpoint,
+            community,
+            contextName,
+            enterprise,
+            timestamp,
+            variables,
+            privacy,
+            report,
+            transport,
+            CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends inform Async using the specified transport.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static Task SendInformAsync(
+        int requestId,
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        ISnmpMessage report,
+        ISnmpTransport transport)
     {
         return SendInformWithSecurityAsync(
             requestId,
@@ -677,6 +960,7 @@ public static partial class Messenger
             variables,
             privacy,
             report,
+            transport,
             CancellationToken.None);
     }
 
@@ -697,6 +981,7 @@ public static partial class Messenger
         ISnmpMessage report,
         CancellationToken cancellationToken)
     {
+        using var transport = new BasicUdpTransport(endpoint);
         await SendInformWithSecurityAsync(
                 requestId,
                 version,
@@ -708,6 +993,41 @@ public static partial class Messenger
                 variables,
                 privacy,
                 report,
+                transport,
+                cancellationToken)
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends inform Async using the specified transport.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static async Task SendInformAsync(
+        int requestId,
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        ISnmpMessage report,
+        ISnmpTransport transport,
+        CancellationToken cancellationToken)
+    {
+        await SendInformWithSecurityAsync(
+                requestId,
+                version,
+                endpoint,
+                community,
+                contextName,
+                enterprise,
+                timestamp,
+                variables,
+                privacy,
+                report,
+                transport,
                 cancellationToken)
             .ConfigureAwait(false);
     }
@@ -723,6 +1043,7 @@ public static partial class Messenger
         IList<Variable> variables,
         IPrivacyProvider privacy,
         ISnmpMessage report,
+        ISnmpTransport transport,
         CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
@@ -732,9 +1053,14 @@ public static partial class Messenger
             throw new ArgumentNullException(nameof(variables));
         }
 
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
+
         if (version != VersionCode.V3)
         {
-            await SendInformAsync(requestId, version, endpoint, community, contextName, enterprise, timestamp, variables)
+            await SendInformAsync(requestId, version, endpoint, community, contextName, enterprise, timestamp, variables, transport)
                 .WaitAsync(cancellationToken)
                 .ConfigureAwait(false);
             return;
@@ -772,7 +1098,7 @@ public static partial class Messenger
 
         var dispatcher = new SnmpDispatcher();
         var response = await dispatcher.SendPdu(
-                new BasicUdpTransport(endpoint),
+                transport,
                 target,
                 endpoint,
                 scope,
@@ -821,6 +1147,40 @@ public static partial class Messenger
             throw new ArgumentNullException(nameof(variables));
         }
 
+        using var transport = new BasicUdpTransport(endpoint);
+        await SendTrapV1Async(endpoint, agent, community, enterprise, generic, specific, timestamp, variables, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends trap V1 Async using the specified transport.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static async Task SendTrapV1Async(
+        IPEndPoint endpoint,
+        IPAddress agent,
+        OctetString community,
+        ObjectIdentifier enterprise,
+        GenericCode generic,
+        int specific,
+        uint timestamp,
+        IList<Variable> variables,
+        ISnmpTransport transport)
+    {
+        if (agent == null)
+        {
+            throw new ArgumentNullException(nameof(agent));
+        }
+
+        if (variables == null)
+        {
+            throw new ArgumentNullException(nameof(variables));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
+
         var pdu = new TrapPdu
         {
             Enterprise = enterprise,
@@ -833,7 +1193,7 @@ public static partial class Messenger
 
         var dispatcher = new SnmpDispatcher();
         await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             new CommunityTarget(VersionCode.V1, community),
             endpoint,
             pdu,
@@ -865,6 +1225,25 @@ public static partial class Messenger
     [System.CLSCompliant(false)]
     public static async Task SendTrapV2Async(int requestId, VersionCode version, IPEndPoint endpoint, OctetString community, OctetString contextName, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables)
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        await SendTrapV2Async(requestId, version, endpoint, community, contextName, enterprise, timestamp, variables, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends trap V2 Async using the specified transport.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static async Task SendTrapV2Async(
+        int requestId,
+        VersionCode version,
+        IPEndPoint endpoint,
+        OctetString community,
+        OctetString contextName,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        ISnmpTransport transport)
+    {
         if (version != VersionCode.V2)
         {
             throw new NotSupportedException("Only SNMP v2c is supported");
@@ -873,6 +1252,11 @@ public static partial class Messenger
         if (variables == null)
         {
             throw new ArgumentNullException(nameof(variables));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
         }
 
         var pdu = new TrapV2Pdu
@@ -885,7 +1269,7 @@ public static partial class Messenger
 
         var dispatcher = new SnmpDispatcher();
         await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             new CommunityTarget(version, community),
             endpoint,
             pdu,
@@ -965,9 +1349,32 @@ public static partial class Messenger
         WalkMode mode,
         string contextName = "")
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        return await BulkWalkV3Async(endpoint, username, privacyProvider, table, list, maxRepetitions, mode, contextName, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Walks a subtree with GetBulk requests over SNMPv3 and appends results using the specified transport.
+    /// </summary>
+    public static async Task<int> BulkWalkV3Async(
+        IPEndPoint endpoint,
+        string username,
+        IPrivacyProvider privacyProvider,
+        ObjectIdentifier table,
+        IList<Variable> list,
+        int maxRepetitions,
+        WalkMode mode,
+        string contextName,
+        ISnmpTransport transport)
+    {
         if (list == null)
         {
             throw new ArgumentNullException(nameof(list));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
         }
 
         var dispatcher = new SnmpDispatcher();
@@ -990,7 +1397,7 @@ public static partial class Messenger
         };
 
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             target,
             endpoint,
             initialPdu
@@ -1053,7 +1460,7 @@ public static partial class Messenger
             };
 
             response = await dispatcher.SendPdu(
-                new BasicUdpTransport(endpoint),
+                transport,
                 target,
                 endpoint,
                 bulkPdu
@@ -1079,9 +1486,32 @@ public static partial class Messenger
         IList<Variable> variables,
         string contextName = "")
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        await SendInformV3Async(endpoint, username, privacyProvider, enterprise, timestamp, variables, contextName, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends inform V3 Async using the specified transport.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static async Task SendInformV3Async(
+        IPEndPoint endpoint,
+        string username,
+        IPrivacyProvider privacyProvider,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        string contextName,
+        ISnmpTransport transport)
+    {
         if (variables == null)
         {
             throw new ArgumentNullException(nameof(variables));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
         }
 
         var dispatcher = new SnmpDispatcher();
@@ -1106,7 +1536,7 @@ public static partial class Messenger
 
         // Send and await the response
         var response = await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             target,
             endpoint,
             scopedPdu
@@ -1133,9 +1563,32 @@ public static partial class Messenger
         IList<Variable> variables,
         string contextName = "")
     {
+        using var transport = new BasicUdpTransport(endpoint);
+        await SendTrapV2V3Async(endpoint, username, privacyProvider, enterprise, timestamp, variables, contextName, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Sends trap V2 V3 Async using the specified transport.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public static async Task SendTrapV2V3Async(
+        IPEndPoint endpoint,
+        string username,
+        IPrivacyProvider privacyProvider,
+        ObjectIdentifier enterprise,
+        uint timestamp,
+        IList<Variable> variables,
+        string contextName,
+        ISnmpTransport transport)
+    {
         if (variables == null)
         {
             throw new ArgumentNullException(nameof(variables));
+        }
+
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
         }
 
         var dispatcher = new SnmpDispatcher();
@@ -1154,7 +1607,7 @@ public static partial class Messenger
         };
 
         await dispatcher.SendPdu(
-            new BasicUdpTransport(endpoint),
+            transport,
             target,
             endpoint,
             scopedPdu,

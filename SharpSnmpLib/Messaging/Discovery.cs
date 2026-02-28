@@ -95,19 +95,39 @@ public sealed class Discovery
     /// <returns>A parsed report message.</returns>
     public ReportMessage GetResponse(int timeout, IPEndPoint receiver)
     {
+        using var transport = new BasicUdpTransport(receiver);
+        return GetResponse(timeout, receiver, transport);
+    }
+
+    /// <summary>
+    /// Gets the response message using the specified transport.
+    /// </summary>
+    /// <param name="timeout">
+    /// The timeout value in milliseconds. 0 and -1 indicate infinite timeout.
+    /// </param>
+    /// <param name="receiver">The receiver endpoint.</param>
+    /// <param name="transport">The transport to use for send/receive.</param>
+    /// <returns>A parsed report message.</returns>
+    public ReportMessage GetResponse(int timeout, IPEndPoint receiver, ISnmpTransport transport)
+    {
         if (timeout < -1)
         {
             throw new ArgumentOutOfRangeException(nameof(timeout));
         }
 
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
+
         if (timeout == 0 || timeout == -1)
         {
-            return GetResponseAsync(receiver).GetAwaiter().GetResult();
+            return GetResponseAsync(receiver, transport).GetAwaiter().GetResult();
         }
 
         try
         {
-            return GetResponseAsync(receiver)
+            return GetResponseAsync(receiver, transport)
                 .WaitAsync(TimeSpan.FromMilliseconds(timeout))
                 .GetAwaiter()
                 .GetResult();
@@ -125,12 +145,28 @@ public sealed class Discovery
     /// <returns>A parsed report message.</returns>
     public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver)
     {
+        using var transport = new BasicUdpTransport(receiver);
+        return await GetResponseAsync(receiver, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Gets response Async using the specified transport.
+    /// </summary>
+    /// <param name="receiver">The receiver endpoint.</param>
+    /// <param name="transport">The transport to use for send/receive.</param>
+    /// <returns>A parsed report message.</returns>
+    public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver, ISnmpTransport transport)
+    {
         if (receiver == null)
         {
             throw new ArgumentNullException(nameof(receiver));
         }
 
-        using var transport = new BasicUdpTransport(receiver);
+        if (transport == null)
+        {
+            throw new ArgumentNullException(nameof(transport));
+        }
+
         var outbound = ToBytes();
         await transport.SendAsync(outbound, receiver).ConfigureAwait(false);
 
