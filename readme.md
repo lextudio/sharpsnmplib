@@ -35,7 +35,7 @@ Install-Package Lextm.SharpSnmpLib
 
 Comprehensive documentation is available at [C# SNMP Library Docs](https://docs.sharpsnmp.com).
 
-[API references can be found here](https://help.sharpsnmp.com).
+[API references can be found here](https://docs.lextudio.com/sharpsnmplib/api/dotnet/).
 
 ## Samples
 
