@@ -36,6 +36,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageIcon>logo-256.png</PackageIcon>
     <AndroidUseIntermediateDesignerFile>False</AndroidUseIntermediateDesignerFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <LangVersion>latest</LangVersion>
@@ -69,6 +70,10 @@
     <None Include="../readme.md" Pack="true" PackagePath="" />
     <None Include="build/Lextm.SharpSnmpLib.targets" Pack="true" PackagePath="build/" />
     <None Include="build/Lextm.SharpSnmpLib.targets" Pack="true" PackagePath="buildTransitive/" />
+    <None Include="..\images\logo-256.png" Pack="true" PackagePath="" />
+    <None Include="..\images\logo-128.png" Pack="true" PackagePath="images/" />
+    <None Include="..\images\logo-64.png" Pack="true" PackagePath="images/" />
+    <None Include="..\images\logo-32.png" Pack="true" PackagePath="images/" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(OS)' == 'Windows_NT' AND '$(Configuration)' == 'Release' ">
     <Exec Command="pwsh -ExecutionPolicy Bypass -file ..\sign.assembly.ps1 &quot;$(TargetPath)&quot;" 
