@@ -22,6 +22,21 @@ namespace Lextm.SharpSnmpLib
             ErrorStatus = (int)ErrorCode.NoError;
         }
 
+        /// <summary>Initializes a new instance with request ID and variables.</summary>
+        public SetRequestPdu(int requestId, IList<Variable> variables)
+        {
+            RequestId = requestId;
+            ErrorIndex = 0;
+            ErrorStatus = (int)ErrorCode.NoError;
+            VariableBindings = new VarBindList(variables.ToArray());
+        }
+
+        /// <summary>Returns a string representation.</summary>
+        public override string ToString()
+        {
+            return $"SetRequestPdu: requestId={RequestId}; vars={VariableBindings?.Count() ?? 0}";
+        }
+
         /// <inheritdoc/>
         public override void WriteTo(AsnWriter writer)
         {

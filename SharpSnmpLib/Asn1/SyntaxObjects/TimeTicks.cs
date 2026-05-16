@@ -14,6 +14,19 @@ namespace Lextm.SharpSnmpLib
     [System.CLSCompliant(false)]
     public readonly record struct TimeTicks(uint Value) : ISnmpData
     {
+        /// <summary>Initializes a new instance from a TimeSpan.</summary>
+        public TimeTicks(TimeSpan span) : this(unchecked((uint)(span.Ticks / 100000L))) { }
+
+        /// <summary>Gets the SNMP type code.</summary>
+        public SnmpType TypeCode => SnmpType.TimeTicks;
+
+        /// <summary>Converts to uint (legacy compatibility).</summary>
+        [System.CLSCompliant(false)]
+        public uint ToUInt32() => Value;
+
+        /// <summary>Converts to TimeSpan.</summary>
+        public TimeSpan ToTimeSpan() => new(Value * 100000L);
+
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {

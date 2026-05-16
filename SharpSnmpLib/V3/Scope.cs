@@ -25,6 +25,13 @@ namespace Lextm.SharpSnmpLib
             Pdu = new GetRequestPdu();
         }
 
+        /// <summary>Initializes a new instance with a PDU (legacy compatibility).</summary>
+        public Scope(ISnmpPdu pdu)
+        {
+            ContextName = string.Empty;
+            Pdu = pdu as Pdu ?? new GetRequestPdu();
+        }
+
         /// <summary>
         /// Initializes a legacy-compatible instance of <see cref="Scope"/>.
         /// </summary>
@@ -33,6 +40,19 @@ namespace Lextm.SharpSnmpLib
             ContextEngineId = contextEngineId.Octets;
             ContextName = contextName.ToString();
             Pdu = pdu;
+        }
+
+        /// <summary>Initializes a legacy-compatible instance with ISnmpPdu.</summary>
+        public Scope(OctetString contextEngineId, OctetString contextName, ISnmpPdu pdu)
+            : this(contextEngineId, contextName, pdu as Pdu ?? new GetRequestPdu())
+        {
+        }
+
+        /// <summary>Initializes from a Sequence (legacy compatibility).</summary>
+        public Scope(Sequence data)
+        {
+            ContextName = string.Empty;
+            Pdu = new GetRequestPdu();
         }
 
         /// <summary>
@@ -185,5 +205,9 @@ namespace Lextm.SharpSnmpLib
         {
             return version == VersionCode.V3 ? this : Pdu;
         }
+
+
+        /// <summary>Converts to Sequence (legacy compatibility).</summary>
+        public Sequence ToSequence() => new();
     }
 }

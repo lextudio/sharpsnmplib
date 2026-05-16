@@ -42,6 +42,43 @@ public sealed class GetBulkRequestMessage : ISnmpMessage, ILegacyV3Request
     }
 
     /// <summary>
+    /// Initializes a new instance of GetBulkRequestMessage (legacy, no contextName).
+    /// </summary>
+    [Obsolete("Please use overloads with contextName.")]
+    public GetBulkRequestMessage(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString user,
+        int nonRepeaters,
+        int maxRepetitions,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        ISnmpMessage report)
+        : this(version, messageId, requestId, user, OctetString.Empty, nonRepeaters, maxRepetitions, variables, privacy, Messenger.MaxMessageSize, report)
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of GetBulkRequestMessage (legacy, no contextName, with maxMessageSize).
+    /// </summary>
+    [Obsolete("Please use overloads with contextName.")]
+    public GetBulkRequestMessage(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString user,
+        int nonRepeaters,
+        int maxRepetitions,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        int maxMessageSize,
+        ISnmpMessage report)
+        : this(version, messageId, requestId, user, OctetString.Empty, nonRepeaters, maxRepetitions, variables, privacy, maxMessageSize, report)
+    {
+    }
+
+    /// <summary>
     /// Initializes a new instance of GetBulkRequestMessage.
     /// </summary>
     public GetBulkRequestMessage(
@@ -89,10 +126,22 @@ public sealed class GetBulkRequestMessage : ISnmpMessage, ILegacyV3Request
     /// </summary>
     public VersionCode ProtocolVersion => _message.ProtocolVersion;
 
+    /// <summary>Gets the version (legacy alias for ProtocolVersion).</summary>
+    public VersionCode Version => _message.ProtocolVersion;
+
     /// <summary>
     /// Represents scope.
     /// </summary>
-    public IScope? Scope => _message.Scope;
+    IScope? ISnmpMessage.Scope => _message.Scope;
+
+    /// <summary>Gets the v3 scope (legacy compatibility).</summary>
+    public Scope Scope => (_message.Scope as Scope) ?? new Scope();
+
+    /// <summary>Gets the v3 header (legacy compatibility).</summary>
+    public Header Header => Header.FromMessage(_message);
+
+    /// <summary>Gets the security parameters (legacy compatibility).</summary>
+    public SecurityParameters Parameters => SecurityParameters.FromMessage(_message);
 
     /// <summary>
     /// Serializes the message to a byte array.

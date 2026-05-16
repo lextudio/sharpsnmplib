@@ -127,10 +127,11 @@ public sealed class ReportMessage : ISnmpMessage
     /// </summary>
     public VersionCode ProtocolVersion => Message.ProtocolVersion;
 
-    /// <summary>
-    /// Represents scope.
-    /// </summary>
-    public IScope? Scope => Message.Scope;
+    /// <inheritdoc/>
+    IScope? ISnmpMessage.Scope => Message.Scope;
+
+    /// <summary>Gets the v3 scope (legacy compatibility).</summary>
+    public Scope Scope => (Message.Scope as Scope) ?? new Scope();
 
     /// <summary>
     /// Serializes the message to a byte array.

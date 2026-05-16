@@ -15,6 +15,9 @@ public class SnmpException : Exception
     {
     }
 
+    /// <summary>Gets details (legacy compatibility).</summary>
+    protected string Details => Message;
+
     /// <summary>
     /// Initializes a new instance of SnmpException.
     /// </summary>
@@ -33,32 +36,48 @@ public class SnmpException : Exception
 }
 
 /// <summary>
-/// Represents the ErrorException type.
+/// Represents an operation-level SNMP exception.
 /// </summary>
-public sealed class ErrorException : SnmpException
+public class OperationException : SnmpException
 {
-    private ErrorException(string message, IPAddress address, ISnmpMessage response)
-        : base($"{message}: receiver={address}; response={response}")
+    /// <summary>
+    /// Initializes a new instance of <see cref="OperationException"/>.
+    /// </summary>
+    public OperationException()
     {
-        Address = address;
-        Response = response;
     }
 
     /// <summary>
-    /// Gets address.
+    /// Initializes a new instance of <see cref="OperationException"/>.
     /// </summary>
-    public IPAddress Address { get; }
-
-    /// <summary>
-    /// Gets response.
-    /// </summary>
-    public ISnmpMessage Response { get; }
-
-    /// <summary>
-    /// Creates an <see cref="ErrorException"/> for a failed SNMP response.
-    /// </summary>
-    public static ErrorException Create(string message, IPAddress address, ISnmpMessage response)
+    public OperationException(string message)
+        : base(message)
     {
-        return new ErrorException(message, address, response);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="OperationException"/>.
+    /// </summary>
+    public OperationException(string message, Exception inner)
+        : base(message, inner)
+    {
+    }
+
+    /// <summary>
+    /// Gets the agent IP address.
+    /// </summary>
+    public IPAddress? Agent { get; protected set; }
+
+    /// <summary>
+    /// Gets details.
+    /// </summary>
+    protected string Details => Message;
+
+    /// <summary>
+    /// Creates an <see cref="OperationException"/>.
+    /// </summary>
+    public static OperationException Create(string message, IPAddress agent)
+    {
+        return new OperationException(message) { Agent = agent };
     }
 }

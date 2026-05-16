@@ -204,5 +204,31 @@ namespace Lextm.SharpSnmpLib.Security
         {
         }
 
+        /// <summary>Decrypts data using 3DES (legacy byte-array overload).</summary>
+        public byte[] Decrypt(byte[] encryptedData, byte[] key, byte[] privacyParameters)
+        {
+            using var tripleDes = TripleDES.Create();
+            tripleDes.Mode = CipherMode.CBC;
+            tripleDes.Padding = PaddingMode.Zeros;
+            var iv = new byte[8];
+            Buffer.BlockCopy(privacyParameters, 0, iv, 0, Math.Min(privacyParameters.Length, 8));
+            using var dec = tripleDes.CreateDecryptor(key[..24], iv);
+            return dec.TransformFinalBlock(encryptedData, 0, encryptedData.Length);
+        }
+
+        /// <summary>Encrypts data using 3DES (legacy byte-array overload).</summary>
+        public byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
+        {
+            using var tripleDes = TripleDES.Create();
+            tripleDes.Mode = CipherMode.CBC;
+            tripleDes.Padding = PaddingMode.Zeros;
+            var iv = new byte[8];
+            Buffer.BlockCopy(privacyParameters, 0, iv, 0, Math.Min(privacyParameters.Length, 8));
+            using var enc = tripleDes.CreateEncryptor(key[..24], iv);
+            return enc.TransformFinalBlock(unencryptedData, 0, unencryptedData.Length);
+        }
+
+        /// <summary>Returns a string representation.</summary>
+        public override string ToString() => GetType().Name;
     }
 }

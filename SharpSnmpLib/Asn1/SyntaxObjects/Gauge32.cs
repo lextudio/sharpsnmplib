@@ -1,4 +1,4 @@
-﻿using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
 namespace Lextm.SharpSnmpLib

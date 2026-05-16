@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib
@@ -45,5 +46,8 @@ namespace Lextm.SharpSnmpLib
         /// Gets the length bytes.
         /// </summary>
         public byte[]? GetLengthBytes() => throw new NotImplementedException();
+
+        /// <inheritdoc/>
+        public IEnumerator GetEnumerator() => throw new NotImplementedException();
     }
 }

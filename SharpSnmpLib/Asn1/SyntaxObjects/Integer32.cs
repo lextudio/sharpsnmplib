@@ -11,7 +11,16 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Zero value.
         /// </summary>
-        public static Integer32 Zero { get; } = new(0);
+        public static readonly Integer32 Zero = new(0);
+
+        /// <summary>Gets the SNMP type code.</summary>
+        public SnmpType TypeCode => SnmpType.Integer32;
+
+        /// <summary>Returns the value as Int32.</summary>
+        public int ToInt32() => Value;
+
+        /// <summary>Returns the value as an ErrorCode.</summary>
+        public ErrorCode ToErrorCode() => (ErrorCode)Value;
 
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)

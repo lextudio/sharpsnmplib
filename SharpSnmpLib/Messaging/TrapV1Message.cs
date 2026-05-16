@@ -1,5 +1,7 @@
+using System.Formats.Asn1;
 using System.Net;
 using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 
@@ -60,6 +62,36 @@ public sealed class TrapV1Message : ISnmpMessage
         {
             Community = community,
             Scope = _trapPdu
+        };
+    }
+
+    /// <summary>
+    /// Creates a <see cref="TrapV1Message"/> from a parsed Sequence body (legacy compatibility).
+    /// </summary>
+    public TrapV1Message(Sequence body)
+    {
+        if (body == null) throw new ArgumentNullException(nameof(body));
+        if (body.Length != 3) throw new ArgumentException("Invalid message body.", nameof(body));
+
+        var versionInt = ((Integer32)body[0]).ToInt32();
+        if (versionInt != (int)VersionCode.V1)
+            throw new ArgumentException($"TRAP v1 is not supported in this SNMP version: {versionInt}.", nameof(body));
+
+        var community = (OctetString)body[1];
+        var trapPdu = (TrapPdu)body[2];
+
+        _trapPdu = trapPdu;
+        Enterprise = trapPdu.Enterprise;
+        AgentAddress = trapPdu.AgentAddress ?? IPAddress.Any;
+        Generic = (GenericCode)trapPdu.GenericTrap;
+        Specific = trapPdu.SpecificTrap;
+        TimeStamp = trapPdu.TimeStamp;
+        _variables = trapPdu.VariableBindings?.ToList() ?? new List<Variable>();
+
+        _message = new SnmpV1Message
+        {
+            Community = community,
+            Scope = trapPdu
         };
     }
 
@@ -126,8 +158,23 @@ public sealed class TrapV1Message : ISnmpMessage
     /// <inheritdoc/>
     public VersionCode ProtocolVersion => _message.ProtocolVersion;
 
+    /// <summary>Gets the community string.</summary>
+    public OctetString Community => _message.Community;
+
+    /// <summary>Gets v3 header (legacy compatibility).</summary>
+    public Header Header => Header.FromMessage(_message);
+
+    /// <summary>Gets security parameters (legacy compatibility).</summary>
+    public SecurityParameters Parameters => SecurityParameters.FromMessage(_message);
+
+    /// <summary>Gets privacy (legacy compatibility).</summary>
+    public IPrivacyProvider Privacy => new DefaultPrivacyProvider();
+
     /// <inheritdoc/>
-    public IScope? Scope => _message.Scope;
+    IScope? ISnmpMessage.Scope => _message.Scope;
+
+    /// <summary>Gets the v3 scope (legacy compatibility).</summary>
+    public Scope Scope => (_message.Scope as Scope) ?? new Scope();
 
     /// <inheritdoc/>
     public void WriteTo(System.Formats.Asn1.AsnWriter writer)

@@ -1,6 +1,7 @@
 ﻿using Lextm.SharpSnmpLib;
 using System;
 using System.Formats.Asn1;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace Lextm.SharpSnmpLib
@@ -51,6 +52,14 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <summary>
+        /// Initializes a new instance of OctetString with a security level.
+        /// </summary>
+        public OctetString(Levels level)
+            : this(new[] { (byte)level })
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of OctetString.
         /// </summary>
         public OctetString(byte[] octets)
@@ -91,6 +100,33 @@ namespace Lextm.SharpSnmpLib
             var octets = reader.ReadOctetString();
             return new(octets);
         }
+
+        /// <summary>Gets the SNMP type code.</summary>
+        public SnmpType TypeCode => SnmpType.OctetString;
+
+        /// <summary>Returns the raw octets.</summary>
+        public byte[] GetRaw() => Octets ?? Array.Empty<byte>();
+
+        /// <summary>Returns a hex string representation.</summary>
+        public string ToHexString()
+        {
+            var raw = GetRaw();
+            return BitConverter.ToString(raw).Replace("-", "").ToLowerInvariant();
+        }
+
+        /// <summary>Converts to PhysicalAddress (MAC address).</summary>
+        public PhysicalAddress ToPhysicalAddress() => new(GetRaw());
+
+        /// <summary>Converts to Levels (security level byte).</summary>
+        public Levels ToLevels()
+        {
+            var raw = GetRaw();
+            if (raw.Length == 0) return default;
+            return (Levels)(raw[0] & 7);
+        }
+
+        /// <summary>Returns true if value is null or empty.</summary>
+        public static bool IsNullOrEmpty(OctetString value) => value.Octets is null || value.Octets.Length == 0;
 
         /// <summary>
         /// Performs a conversion to string.

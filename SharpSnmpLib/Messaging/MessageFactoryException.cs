@@ -30,6 +30,9 @@ public sealed class MessageFactoryException : SnmpException
     {
     }
 
+    /// <summary>Gets details (legacy compatibility).</summary>
+    protected string Details => Message;
+
     /// <summary>
     /// Gets parsed bytes.
     /// </summary>

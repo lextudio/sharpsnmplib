@@ -30,6 +30,9 @@ public sealed class PortInUseException : SnmpException
     {
     }
 
+    /// <summary>Gets details (legacy compatibility).</summary>
+    protected string Details => Message;
+
     /// <summary>
     /// Gets or sets endpoint already in use.
     /// </summary>

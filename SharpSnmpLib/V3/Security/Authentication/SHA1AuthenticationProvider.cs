@@ -27,5 +27,7 @@ namespace Lextm.SharpSnmpLib.Security
             : this(passphrase.Octets)
         {
         }
+        /// <summary>Returns a string representation.</summary>
+        public override string ToString() => GetType().Name;
     }
 }

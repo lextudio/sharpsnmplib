@@ -104,10 +104,11 @@ public sealed class ResponseMessage : ISnmpMessage
     /// </summary>
     public VersionCode ProtocolVersion => _message.ProtocolVersion;
 
-    /// <summary>
-    /// Gets scope.
-    /// </summary>
-    public IScope? Scope => _message.Scope;
+    /// <inheritdoc/>
+    IScope? ISnmpMessage.Scope => _message.Scope;
+
+    /// <summary>Gets the v3 scope (legacy compatibility).</summary>
+    public Scope Scope => (_message.Scope as Scope) ?? new Scope();
 
     /// <summary>
     /// Gets header.
@@ -146,5 +147,11 @@ public sealed class ResponseMessage : ISnmpMessage
     public void WriteTo(AsnWriter writer)
     {
         _message.WriteTo(writer);
+    }
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        return _message.ToString() ?? base.ToString()!;
     }
 }

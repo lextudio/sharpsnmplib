@@ -96,6 +96,12 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"TrapV2Pdu: enterprise={Enterprise}; timestamp={TimeStamp}";
+        }
+
         /// <summary>
         /// Decorates variable bindings with timestamp and enterprise metadata.
         /// </summary>

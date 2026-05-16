@@ -67,6 +67,30 @@ public sealed class TrapV2Message : ISnmpMessage
         EngineTime = engineTime;
     }
 
+    /// <summary>
+    /// Initializes a new instance of TrapV2Message (v3 with context).
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public TrapV2Message(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString user,
+        ObjectIdentifier enterprise,
+        uint time,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        int maxMessageSize,
+        OctetString engineId,
+        int engineBoots,
+        int engineTime,
+        OctetString contextEngineId,
+        OctetString contextName)
+        : this(version, messageId, requestId, user, enterprise, time, variables, privacy, maxMessageSize, engineId, engineBoots, engineTime)
+    {
+        // contextEngineId and contextName stored for future use
+    }
+
     internal TrapV2Message(ISnmpMessage message)
     {
         _message = message ?? throw new ArgumentNullException(nameof(message));
@@ -202,8 +226,20 @@ public sealed class TrapV2Message : ISnmpMessage
     /// <inheritdoc/>
     public VersionCode ProtocolVersion => _message?.ProtocolVersion ?? Version;
 
+    /// <summary>Gets v3 header (legacy compatibility).</summary>
+    public Header Header => Header.FromMessage(_message ?? this);
+
+    /// <summary>Gets security parameters (legacy compatibility).</summary>
+    public SecurityParameters Parameters => _message != null ? SecurityParameters.FromMessage(_message) : SecurityParameters.Create(_securityName);
+
+    /// <summary>Gets privacy (legacy compatibility).</summary>
+    public IPrivacyProvider Privacy => _privacy ?? new DefaultPrivacyProvider();
+
     /// <inheritdoc/>
-    public IScope? Scope => _message?.Scope;
+    IScope? ISnmpMessage.Scope => _message?.Scope;
+
+    /// <summary>Gets the v3 scope (legacy compatibility).</summary>
+    public Scope Scope => (_message?.Scope as Scope) ?? new Scope();
 
     /// <summary>
     /// Serializes the message to bytes when this instance wraps a parsed SNMP message.

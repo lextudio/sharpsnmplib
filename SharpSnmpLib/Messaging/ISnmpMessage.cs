@@ -1,6 +1,6 @@
 using Lextm.SharpSnmpLib;
 
-namespace Lextm.SharpSnmpLib
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// SNMP message.
@@ -31,5 +31,15 @@ namespace Lextm.SharpSnmpLib
         /// Gets security parameters.
         /// </summary>
         global::Lextm.SharpSnmpLib.SecurityParameters Parameters => global::Lextm.SharpSnmpLib.SecurityParameters.FromMessage(this);
+
+        /// <summary>
+        /// Gets privacy provider (legacy compatibility).
+        /// </summary>
+        global::Lextm.SharpSnmpLib.Security.IPrivacyProvider Privacy => global::Lextm.SharpSnmpLib.Security.DefaultPrivacyProvider.DefaultPair;
+
+        /// <summary>
+        /// Serializes the message to a byte array (legacy compatibility).
+        /// </summary>
+        byte[] ToBytes() => AsnSerializableExtensions.Encode(this);
     }
 }

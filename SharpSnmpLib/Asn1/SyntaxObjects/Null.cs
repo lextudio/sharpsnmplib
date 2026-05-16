@@ -8,10 +8,16 @@ namespace Lextm.SharpSnmpLib
     /// </summary>
     public readonly record struct Null : ISnmpData
     {
+        /// <summary>Initializes a new instance.</summary>
+        public Null() { }
+
         /// <summary>
         /// A reusable SNMP NULL value instance.
         /// </summary>
         public readonly static Null Instance = new();
+
+        /// <summary>Gets the SNMP type code.</summary>
+        public SnmpType TypeCode => SnmpType.Null;
 
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)

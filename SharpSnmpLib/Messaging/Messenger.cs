@@ -286,6 +286,13 @@ public static partial class Messenger
         return response!.VariableBindings!.ToList();
     }
 
+    /// <summary>Performs asynchronous retrieval with cancellation.</summary>
+    public static Task<IList<Variable>> GetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+        return GetAsync(version, endpoint, community, variables);
+    }
+
     /// <summary>
     /// Performs asynchronous update.
     /// </summary>
@@ -293,6 +300,13 @@ public static partial class Messenger
     {
         using var transport = new BasicUdpTransport(endpoint);
         return await SetAsync(version, endpoint, community, variables, transport).ConfigureAwait(false);
+    }
+
+    /// <summary>Performs asynchronous update with cancellation.</summary>
+    public static Task<IList<Variable>> SetAsync(VersionCode version, IPEndPoint endpoint, OctetString community, IList<Variable> variables, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+        return SetAsync(version, endpoint, community, variables);
     }
 
     /// <summary>
@@ -1144,6 +1158,14 @@ public static partial class Messenger
         await SendTrapV1Async(endpoint, agent, community, enterprise, generic, specific, timestamp, variables, transport).ConfigureAwait(false);
     }
 
+    /// <summary>Sends trap V1 asynchronously with cancellation.</summary>
+    [System.CLSCompliant(false)]
+    public static Task SendTrapV1Async(EndPoint receiver, IPAddress agent, OctetString community, ObjectIdentifier enterprise, GenericCode generic, int specific, uint timestamp, IList<Variable> variables, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+        return SendTrapV1Async(receiver, agent, community, enterprise, generic, specific, timestamp, variables);
+    }
+
     /// <summary>
     /// Sends trap V1 Async using the specified transport.
     /// </summary>
@@ -1282,6 +1304,14 @@ public static partial class Messenger
         }
 
         return SendTrapV2Async(requestId, version, endpoint, community, OctetString.Empty, enterprise, timestamp, variables);
+    }
+
+    /// <summary>Sends trap V2 asynchronously with cancellation.</summary>
+    [System.CLSCompliant(false)]
+    public static Task SendTrapV2Async(int requestId, VersionCode version, EndPoint receiver, OctetString community, ObjectIdentifier enterprise, uint timestamp, IList<Variable> variables, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+        return SendTrapV2Async(requestId, version, receiver, community, enterprise, timestamp, variables);
     }
 
     /// <summary>

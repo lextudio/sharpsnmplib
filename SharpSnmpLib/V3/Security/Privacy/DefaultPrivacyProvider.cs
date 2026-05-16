@@ -85,4 +85,5 @@ public class DefaultPrivacyProvider : IPrivacyProvider
     /// Gets or sets known engine IDs (legacy compatibility member).
     /// </summary>
     public ICollection<OctetString>? EngineIds { get; set; }
+    public override string ToString() => GetType().Name;
 }

@@ -44,6 +44,12 @@ namespace Lextm.SharpSnmpLib
             AddressBytes = address.GetAddressBytes();
         }
 
+        /// <summary>Gets the SNMP type code.</summary>
+        public SnmpType TypeCode => SnmpType.IPAddress;
+
+        /// <summary>Returns the raw address bytes.</summary>
+        public byte[] GetRaw() => AddressBytes;
+
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {

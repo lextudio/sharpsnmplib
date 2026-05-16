@@ -143,6 +143,13 @@ public sealed class Discovery
         return await GetResponseAsync(receiver, transport).ConfigureAwait(false);
     }
 
+    /// <summary>Gets response asynchronously with cancellation.</summary>
+    public async Task<ReportMessage> GetResponseAsync(IPEndPoint receiver, CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+        return await GetResponseAsync(receiver).WaitAsync(token).ConfigureAwait(false);
+    }
+
     /// <summary>
     /// Gets response Async using the specified transport.
     /// </summary>

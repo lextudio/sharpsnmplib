@@ -284,5 +284,7 @@ namespace Lextm.SharpSnmpLib.Security
             return outKey;
         }
 
+        /// <summary>Returns a string representation.</summary>
+        public override string ToString() => GetType().Name;
     }
 }

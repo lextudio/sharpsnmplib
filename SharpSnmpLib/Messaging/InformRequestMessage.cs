@@ -55,6 +55,83 @@ public sealed class InformRequestMessage : ISnmpMessage
     }
 
     /// <summary>
+    /// Creates a v3 <see cref="InformRequestMessage"/>.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public InformRequestMessage(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString userName,
+        ObjectIdentifier enterprise,
+        uint time,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        ISnmpMessage report)
+        : this(version, messageId, requestId, userName, OctetString.Empty, enterprise, time, variables, privacy, Messenger.MaxMessageSize, report)
+    {
+    }
+
+    /// <summary>
+    /// Creates a v3 <see cref="InformRequestMessage"/> with maxMessageSize.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public InformRequestMessage(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString userName,
+        ObjectIdentifier enterprise,
+        uint time,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        int maxMessageSize,
+        ISnmpMessage report)
+        : this(version, messageId, requestId, userName, OctetString.Empty, enterprise, time, variables, privacy, maxMessageSize, report)
+    {
+    }
+
+    /// <summary>
+    /// Creates a v3 <see cref="InformRequestMessage"/> with contextName.
+    /// </summary>
+    [System.CLSCompliant(false)]
+    public InformRequestMessage(
+        VersionCode version,
+        int messageId,
+        int requestId,
+        OctetString userName,
+        OctetString contextName,
+        ObjectIdentifier enterprise,
+        uint time,
+        IList<Variable> variables,
+        IPrivacyProvider privacy,
+        int maxMessageSize,
+        ISnmpMessage report)
+    {
+        if (version != VersionCode.V3)
+        {
+            throw new ArgumentException("Only SNMP v3 is supported by this constructor.", nameof(version));
+        }
+
+        Privacy = privacy ?? throw new ArgumentNullException(nameof(privacy));
+        Enterprise = enterprise;
+        TimeStamp = time;
+        _variables = variables ?? throw new ArgumentNullException(nameof(variables));
+        Version = version;
+
+        var pdu = new InformRequestPdu
+        {
+            RequestId = requestId,
+            Enterprise = enterprise,
+            TimeStamp = time,
+            VariableBindings = new VarBindList(variables.ToArray())
+        };
+
+        _message = LegacyRequestBuilder.BuildV3Request(
+            messageId, requestId, userName, contextName, variables, privacy, maxMessageSize, report, () => pdu);
+    }
+
+    /// <summary>
     /// Creates a <see cref="InformRequestMessage"/> from a parsed message.
     /// </summary>
     internal InformRequestMessage(ISnmpMessage message)
@@ -75,6 +152,11 @@ public sealed class InformRequestMessage : ISnmpMessage
             _variables = message.Scope?.VariableBindings?.ToList() ?? new List<Variable>();
         }
     }
+
+    /// <summary>
+    /// Gets the privacy provider (null for v1/v2c).
+    /// </summary>
+    public IPrivacyProvider? Privacy { get; }
 
     /// <summary>
     /// Protocol version.
@@ -104,7 +186,16 @@ public sealed class InformRequestMessage : ISnmpMessage
     public VersionCode ProtocolVersion => _message.ProtocolVersion;
 
     /// <inheritdoc/>
-    public IScope? Scope => _message.Scope;
+    IScope? ISnmpMessage.Scope => _message.Scope;
+
+    /// <summary>Gets the v3 scope (legacy compatibility).</summary>
+    public Scope Scope => (_message.Scope as Scope) ?? new Scope();
+
+    /// <summary>Gets the v3 header (legacy compatibility).</summary>
+    public Header Header => Header.FromMessage(_message);
+
+    /// <summary>Gets the security parameters (legacy compatibility).</summary>
+    public SecurityParameters Parameters => SecurityParameters.FromMessage(_message);
 
     /// <inheritdoc/>
     public void WriteTo(System.Formats.Asn1.AsnWriter writer)

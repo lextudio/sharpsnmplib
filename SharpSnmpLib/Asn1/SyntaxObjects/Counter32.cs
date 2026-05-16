@@ -1,4 +1,4 @@
-﻿using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
 namespace Lextm.SharpSnmpLib
@@ -23,6 +23,13 @@ namespace Lextm.SharpSnmpLib
         }
 
         /// <inheritdoc/>
+        public SnmpType TypeCode => SnmpType.Counter32;
+
+        /// <summary>Returns the value as UInt32.</summary>
+        [System.CLSCompliant(false)]
+        public uint ToUInt32() => Value;
+
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             writer.WriteInteger(
@@ -37,17 +44,6 @@ namespace Lextm.SharpSnmpLib
         {
             value = Value;
         }
-
-        /// <summary>
-        /// Gets the SNMP type code.
-        /// </summary>
-        public new SnmpType TypeCode => SnmpType.Counter32;
-
-        /// <summary>
-        /// Returns value as uint.
-        /// </summary>
-        [System.CLSCompliant(false)]
-        public uint ToUInt32() => Value;
 
         /// <summary>
         /// Performs a conversion to uint.

@@ -185,6 +185,20 @@ namespace Lextm.SharpSnmpLib
             return Convert(Normalize(Oid));
         }
 
+        /// <summary>Gets the SNMP type code.</summary>
+        public SnmpType TypeCode => SnmpType.ObjectIdentifier;
+
+        /// <summary>Compares this OID to another (legacy compatibility method).</summary>
+        public int Compare(ObjectIdentifier other) => CompareTo(other);
+
+        /// <summary>Creates an OID by appending an extra segment (legacy compatibility).</summary>
+        [System.CLSCompliant(false)]
+        public static ObjectIdentifier Create(uint[] numerical, uint extra)
+        {
+            var extended = AppendTo(numerical, extra);
+            return new ObjectIdentifier(extended);
+        }
+
         /// <summary>
         /// Compares whether left is greater than right.
         /// </summary>

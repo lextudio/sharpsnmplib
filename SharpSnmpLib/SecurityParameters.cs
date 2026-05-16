@@ -32,7 +32,7 @@ public sealed class SecurityParameters
     /// <summary>
     /// Gets authentication parameters.
     /// </summary>
-    public OctetString? AuthenticationParameters { get; }
+    public OctetString? AuthenticationParameters { get; set; }
 
     /// <summary>
     /// Gets privacy parameters.
@@ -98,6 +98,27 @@ public sealed class SecurityParameters
             PrivParams = PrivacyParameters?.Octets ?? Memory<byte>.Empty
         };
     }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="SecurityParameters"/> from a single OctetString (legacy compat).
+    /// </summary>
+    public SecurityParameters(OctetString parameters)
+        : this(null, null, null, parameters, null, null)
+    {
+    }
+
+    /// <summary>
+    /// Gets serialized data for legacy compatibility.
+    /// </summary>
+    public ISnmpData GetData(VersionCode version) => OctetString.Empty;
+
+    /// <summary>
+    /// Converts to Sequence for legacy compatibility.
+    /// </summary>
+    public Sequence ToSequence() => new();
+
+    /// <inheritdoc/>
+    public override string ToString() => $"SecurityParameters: user={UserName}";
 
     internal static SecurityParameters FromMessage(ISnmpMessage message)
     {

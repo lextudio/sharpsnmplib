@@ -107,6 +107,21 @@ namespace Lextm.SharpSnmpLib.Messaging
         /// ensuring the operation respects both time constraints.
         /// </para>
         /// </remarks>
+        public ValueTask<IScope> SendPdu(
+            ISnmpTransport transport,
+            ISnmpTarget target,
+            IPEndPoint targetAddress,
+            IScope scope)
+            => SendPdu(transport, target, targetAddress, scope, true, CancellationToken.None);
+
+        public ValueTask<IScope> SendPdu(
+            ISnmpTransport transport,
+            ISnmpTarget target,
+            IPEndPoint targetAddress,
+            IScope scope,
+            bool expectResponse)
+            => SendPdu(transport, target, targetAddress, scope, expectResponse, CancellationToken.None);
+
         public async ValueTask<IScope> SendPdu(
             ISnmpTransport transport,
             ISnmpTarget target,

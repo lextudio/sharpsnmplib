@@ -46,6 +46,12 @@ namespace Lextm.SharpSnmpLib
             }
         }
 
+        /// <summary>Returns a string representation.</summary>
+        public override string ToString()
+        {
+            return $"ResponsePdu: requestId={RequestId}; errorStatus={ErrorStatus}; errorIndex={ErrorIndex}";
+        }
+
         /// <summary>
         /// Reads a value from an ASN.1 reader.
         /// </summary>

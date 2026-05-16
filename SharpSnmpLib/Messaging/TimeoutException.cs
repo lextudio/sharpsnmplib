@@ -30,6 +30,9 @@ public sealed class TimeoutException : SnmpException
     {
     }
 
+    /// <summary>Gets details (legacy compatibility).</summary>
+    protected string Details => Message;
+
     /// <summary>
     /// Gets or sets timed-out target address.
     /// </summary>
@@ -39,6 +42,10 @@ public sealed class TimeoutException : SnmpException
     /// Gets or sets timeout in milliseconds.
     /// </summary>
     public int Timeout { get; set; }
+
+    /// <summary>Creates an OperationException (legacy compat, same as OperationException.Create).</summary>
+    public static OperationException Create(string message, IPAddress agent)
+        => OperationException.Create(message, agent);
 
     /// <summary>
     /// Creates a timeout exception populated with target and timeout values.

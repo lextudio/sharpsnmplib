@@ -14,6 +14,9 @@ namespace Lextm.SharpSnmpLib
         /// <param name="writer">The writer that receives the encoded value.</param>
         public void WriteTo(AsnWriter writer);
 
+        /// <summary>Returns a string representation of this SNMP data value.</summary>
+        public string? ToString() => null;
+
         /// <summary>
         /// Gets SNMP type code (legacy compatibility member).
         /// </summary>

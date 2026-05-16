@@ -27,6 +27,26 @@ namespace Lextm.SharpSnmpLib
             Data = value ?? Null.Instance;
         }
 
+        /// <summary>Initializes a new instance with OID and data.</summary>
+        public Variable(ObjectIdentifier id, ISnmpData data)
+            : this(id.ToString(), data)
+        {
+        }
+
+        /// <summary>Initializes a new instance from a uint[] OID.</summary>
+        [System.CLSCompliant(false)]
+        public Variable(uint[] id)
+            : this(ObjectIdentifier.Convert(id))
+        {
+        }
+
+        /// <summary>Initializes with uint array OID and data.</summary>
+        [CLSCompliant(false)]
+        public Variable(uint[] id, ISnmpData data)
+            : this(ObjectIdentifier.Convert(id), data)
+        {
+        }
+
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {

@@ -28,5 +28,8 @@ namespace Lextm.SharpSnmpLib.Security
                 (passphrase ?? throw new ArgumentNullException(nameof(passphrase))).Octets)
         {
         }
+
+        /// <summary>Returns a string representation.</summary>
+        public override string ToString() => GetType().Name;
     }
 }

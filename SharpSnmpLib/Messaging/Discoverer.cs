@@ -36,10 +36,22 @@ public sealed class AgentFoundEventArgs : EventArgs
     /// <summary>
     /// Initializes a new instance of AgentFoundEventArgs.
     /// </summary>
-    public AgentFoundEventArgs(IPEndPoint agent, AgentVariable? variable)
+    public AgentFoundEventArgs(IPEndPoint agent, AgentVariable? agentVar)
     {
         Agent = agent ?? throw new ArgumentNullException(nameof(agent));
-        Variable = variable;
+        AgentVar = agentVar;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of AgentFoundEventArgs (legacy compatibility).
+    /// </summary>
+    public AgentFoundEventArgs(IPEndPoint agent, Variable variable)
+    {
+        Agent = agent ?? throw new ArgumentNullException(nameof(agent));
+        if (variable != null)
+        {
+            AgentVar = new AgentVariable(variable.Id, variable.Data);
+        }
     }
 
     /// <summary>
@@ -48,9 +60,14 @@ public sealed class AgentFoundEventArgs : EventArgs
     public IPEndPoint Agent { get; }
 
     /// <summary>
-    /// Gets variable.
+    /// Gets the agent variable (new API).
     /// </summary>
-    public AgentVariable? Variable { get; }
+    public AgentVariable? AgentVar { get; }
+
+    /// <summary>
+    /// Gets the variable (legacy compatibility).
+    /// </summary>
+    public Variable? Variable => AgentVar is null ? null : new Variable(AgentVar.Id.ToString(), AgentVar.Data);
 }
 
 /// <summary>
@@ -95,6 +112,34 @@ public sealed class Discoverer
     /// Occurs when an SNMP agent is found.
     /// </summary>
     public event EventHandler<AgentFoundEventArgs>? AgentFound;
+
+    /// <summary>
+    /// Occurs when an exception is raised during discovery.
+    /// </summary>
+    public event EventHandler<ExceptionRaisedEventArgs>? ExceptionRaised;
+
+    /// <summary>
+    /// Discovers agents of the specified version in a specific time interval.
+    /// </summary>
+    public void Discover(VersionCode version, IPEndPoint broadcastAddress, OctetString community, CancellationToken token)
+    {
+        DiscoverAsync(version, broadcastAddress, community, token).GetAwaiter().GetResult();
+    }
+
+    /// <summary>
+    /// Discovers agents of the specified version asynchronously using a cancellation token.
+    /// </summary>
+    public async Task DiscoverAsync(VersionCode version, IPEndPoint broadcastAddress, OctetString community, CancellationToken token)
+    {
+        try
+        {
+            await DiscoverAsync(version, broadcastAddress, community, Timeout.Infinite, OctetString.Empty).WaitAsync(token).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            ExceptionRaised?.Invoke(this, new ExceptionRaisedEventArgs(ex));
+        }
+    }
 
     /// <summary>
     /// Discovers agents of the specified version in a specific time interval.

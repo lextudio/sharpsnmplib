@@ -72,5 +72,7 @@ namespace Lextm.SharpSnmpLib.Security
             // Simply copies the secret to the destination without transformation
             secret.Span.CopyTo(destination);
         }
+        /// <summary>Returns a string representation.</summary>
+        public override string ToString() => GetType().Name;
     }
 }
