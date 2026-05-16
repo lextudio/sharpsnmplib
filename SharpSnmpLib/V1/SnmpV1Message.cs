@@ -26,7 +26,7 @@ namespace Lextm.SharpSnmpLib
         /// <summary>
         /// Cached wire bytes set when the message was parsed from the network; empty when built from scratch.
         /// </summary>
-        internal byte[]? RawBytes { get; set; }
+        public byte[]? RawBytes { get; set; }
 
         /// <inheritdoc/>
         byte[] ISnmpMessage.ToBytes() => RawBytes ?? AsnSerializableExtensions.Encode(this);

@@ -51,6 +51,9 @@ namespace Lextm.SharpSnmpLib
         public byte[] GetRaw() => AddressBytes;
 
         /// <inheritdoc/>
+        ReadOnlySpan<byte> ISnmpData.GetRaw() => AddressBytes;
+
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             writer.WriteOctetString(

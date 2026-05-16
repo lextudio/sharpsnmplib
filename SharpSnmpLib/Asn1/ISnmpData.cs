@@ -18,6 +18,13 @@ namespace Lextm.SharpSnmpLib
         public string? ToString() => null;
 
         /// <summary>
+        /// Returns the raw value bytes without BER tag or length prefix.
+        /// For example, an IP address returns 4 bytes; an OctetString returns its content bytes.
+        /// Returns an empty span for types with no meaningful byte representation (Null, NoSuchInstance, etc.).
+        /// </summary>
+        public ReadOnlySpan<byte> GetRaw() => ReadOnlySpan<byte>.Empty;
+
+        /// <summary>
         /// Gets SNMP type code (legacy compatibility member).
         /// </summary>
         public SnmpType TypeCode => this switch

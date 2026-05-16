@@ -107,6 +107,9 @@ namespace Lextm.SharpSnmpLib
         /// <summary>Returns the raw octets.</summary>
         public byte[] GetRaw() => Octets ?? Array.Empty<byte>();
 
+        /// <inheritdoc/>
+        ReadOnlySpan<byte> ISnmpData.GetRaw() => Octets;
+
         /// <summary>Returns a hex string representation.</summary>
         public string ToHexString()
         {

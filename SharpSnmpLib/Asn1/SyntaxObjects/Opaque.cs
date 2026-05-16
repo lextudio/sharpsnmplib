@@ -16,6 +16,9 @@ namespace Lextm.SharpSnmpLib
         public byte[] GetRaw() => OctetString ?? Array.Empty<byte>();
 
         /// <inheritdoc/>
+        ReadOnlySpan<byte> ISnmpData.GetRaw() => OctetString;
+
+        /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {
             writer.WriteOctetString(OctetString, AsnTypes.Opaque);

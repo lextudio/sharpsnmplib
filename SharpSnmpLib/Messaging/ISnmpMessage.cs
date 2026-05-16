@@ -38,8 +38,15 @@ namespace Lextm.SharpSnmpLib.Messaging
         global::Lextm.SharpSnmpLib.Security.IPrivacyProvider Privacy => global::Lextm.SharpSnmpLib.Security.DefaultPrivacyProvider.DefaultPair;
 
         /// <summary>
-        /// Serializes the message to a byte array (legacy compatibility).
+        /// Returns the original wire bytes when the message was received from the network,
+        /// or null when the message was constructed from scratch.
+        /// Useful for forwarding/proxying without re-serialization.
         /// </summary>
-        byte[] ToBytes() => AsnSerializableExtensions.Encode(this);
+        byte[]? RawBytes => null;
+
+        /// <summary>
+        /// Serializes the message to a byte array. Returns cached wire bytes when available.
+        /// </summary>
+        byte[] ToBytes() => RawBytes ?? AsnSerializableExtensions.Encode(this);
     }
 }
