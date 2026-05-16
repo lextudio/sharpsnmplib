@@ -1,4 +1,3 @@
-using DotNetSnmp.Asn1.SyntaxObjects;
 using Lextm.SharpSnmpLib;
 using Xunit;
 

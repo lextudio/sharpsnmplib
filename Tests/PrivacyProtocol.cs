@@ -1,4 +1,4 @@
-﻿namespace DotNetSnmp.Protocol.V3.Security.Privacy
+﻿namespace Lextm.SharpSnmpLib.Security
 {
     public enum PrivacyProtocol
     {

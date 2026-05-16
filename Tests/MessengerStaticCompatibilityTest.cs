@@ -1,4 +1,4 @@
-using DotNetSnmp.Asn1.SyntaxObjects;
+using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 using Xunit;
 

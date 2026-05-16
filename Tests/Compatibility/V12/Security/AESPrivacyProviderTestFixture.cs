@@ -22,7 +22,7 @@ namespace Lextm.SharpSnmpLib.Compatibility.V12.Security
         {
             var provider = new AESPrivacyProvider(new OctetString("longlongago"),
                 new MD5AuthenticationProvider(new OctetString("verylonglongago")));
-            Assert.Throws<ArgumentNullException>(() => new AESPrivacyProvider(null, null));
+            Assert.Throws<ArgumentNullException>(() => new AESPrivacyProvider((OctetString?)null, (IAuthenticationProvider?)null));
             Assert.Throws<ArgumentNullException>(() => new AESPrivacyProvider(OctetString.Empty, null));
             Assert.Throws<ArgumentNullException>(() => provider.Encrypt(null, null));
             Assert.Throws<ArgumentNullException>(() => provider.Encrypt(OctetString.Empty, null));

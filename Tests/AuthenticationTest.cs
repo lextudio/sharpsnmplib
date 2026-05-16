@@ -1,9 +1,9 @@
-﻿using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
+﻿// removed: DotNetSnmp.Common.Definitions
+// removed: DotNetSnmp.Protocol.V3
+// removed: DotNetSnmp.Protocol.V3.Security
 using DotNetSnmp.Test.Helpers.XUnit.Project.Attributes;
-using DotNetSnmp.Utils;
+using Lextm.SharpSnmpLib.Security;
+using Lextm.SharpSnmpLib;
 using System.Diagnostics.CodeAnalysis;
 using System.Formats.Asn1;
 using Xunit;

@@ -21,7 +21,7 @@ namespace Lextm.SharpSnmpLib.Compatibility.V12.Security
         public void TestException()
         {
             var provider = new DESPrivacyProvider(new OctetString("longlongago"), new MD5AuthenticationProvider(new OctetString("verylonglongago")));
-            Assert.Throws<ArgumentNullException>(() => new DESPrivacyProvider(null, null));
+            Assert.Throws<ArgumentNullException>(() => new DESPrivacyProvider((OctetString?)null, (IAuthenticationProvider?)null));
             Assert.Throws<ArgumentNullException>(() => new DESPrivacyProvider(OctetString.Empty, null));
             Assert.Throws<ArgumentNullException>(() => provider.Encrypt(null, null));
             Assert.Throws<ArgumentNullException>(() => provider.Encrypt(OctetString.Empty, null));

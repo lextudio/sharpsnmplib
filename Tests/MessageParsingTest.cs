@@ -1,15 +1,14 @@
 using System.Buffers;
 using System.Text;
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
-using Lextm.SharpSnmpLib.Messaging;
+// removed: DotNetSnmp.Asn1
+using Lextm.SharpSnmpLib;
+// removed: DotNetSnmp.Common.Definitions
+// removed: DotNetSnmp.Protocol.V1
+// removed: DotNetSnmp.Protocol.V3
+// removed: Lextm.SharpSnmpLib.Security
 using Lextm.SharpSnmpLib.Security;
+// removed: Lextm.SharpSnmpLib.Security.Privacy
+using Lextm.SharpSnmpLib.Messaging;
 using Xunit;
 
 namespace DotNetSnmp.Test
@@ -29,11 +28,11 @@ namespace DotNetSnmp.Test
                      "06 01 02 01  01 03 00 05  00";
 
             // Convert hex string to byte array
-            var messageBytes = Utils.Dump.BytesFromHexString(hexBytes);
+            var messageBytes = Dump.BytesFromHexString(hexBytes);
 
             // Parse the message
             var reader = new System.Formats.Asn1.AsnReader(messageBytes, System.Formats.Asn1.AsnEncodingRules.BER);
-            var message = Protocol.V3.SnmpV3Message.ReadFrom(reader);
+            var message = SnmpV3Message.ReadFrom(reader);
 
             // Verify message basic properties
             Assert.NotNull(message);
@@ -49,7 +48,7 @@ namespace DotNetSnmp.Test
             var secParams = message.SecurityParameters;
             Assert.NotNull(secParams);
 
-            var expectedEngineId = Utils.Dump.BytesFromHexString("80 00 1F 88 80 E9 63 00 00 D6 1F F4 49");
+            var expectedEngineId = Dump.BytesFromHexString("80 00 1F 88 80 E9 63 00 00 D6 1F F4 49");
             Assert.True(expectedEngineId.SequenceEqual(secParams.EngineId.ToArray()));
 
             Assert.Equal(0x15, secParams.EngineBoots);
@@ -58,7 +57,7 @@ namespace DotNetSnmp.Test
             var expectedSecurityName = Encoding.ASCII.GetBytes("lextudio");
             Assert.True(expectedSecurityName.SequenceEqual(secParams.SecurityName.Octets));
 
-            var expectedAuthParams = Utils.Dump.BytesFromHexString("7B 62 65 AE D3 8F E3 7D 58 45 5C 6C");
+            var expectedAuthParams = Dump.BytesFromHexString("7B 62 65 AE D3 8F E3 7D 58 45 5C 6C");
             Assert.True(expectedAuthParams.SequenceEqual(secParams.AuthParams.ToArray()));
 
             Assert.Equal(0, secParams.PrivParams.Length);
@@ -68,7 +67,7 @@ namespace DotNetSnmp.Test
             Assert.NotNull(message.Scope.Pdu);
 
             // Context information
-            var expectedContextEngineId = Utils.Dump.BytesFromHexString("80 00 1F 88 80 E9 63 00 00 D6 1F F4 49");
+            var expectedContextEngineId = Dump.BytesFromHexString("80 00 1F 88 80 E9 63 00 00 D6 1F F4 49");
             var scope = (Scope)message.Scope;
             Assert.True(expectedContextEngineId.SequenceEqual(scope.ContextEngineId.ToArray()));
             Assert.Empty(scope.ContextName.ToArray());
@@ -76,9 +75,9 @@ namespace DotNetSnmp.Test
             // PDU details
             var pdu = message.Scope.Pdu;
             //Assert.Equal(PduType.GetRequest, pdu.PduType);
-            Assert.Equal(0x56FF, pdu.RequestId);
-            Assert.Equal(ErrorCode.NoError, pdu.ErrorStatus);
-            Assert.Equal(0, pdu.ErrorIndex);
+            Assert.Equal(0x56FF, pdu.RequestId.Value);
+            Assert.Equal(ErrorCode.NoError, (ErrorCode)pdu.ErrorStatus.Value);
+            Assert.Equal(0, pdu.ErrorIndex.Value);
 
             // Verify Variable Bindings
             Assert.NotNull(pdu.VariableBindings);
@@ -96,7 +95,7 @@ namespace DotNetSnmp.Test
             Assert.Equal(messageBytes.Length, reEncodedBytes.Length);
             Assert.True(messageBytes.SequenceEqual(reEncodedBytes));
 
-            var sha1 = new DotNetSnmp.Protocol.V3.Security.Authentication.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("password"));
+            var sha1 = new Lextm.SharpSnmpLib.Security.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("password"));
             var authenticated = sha1.AuthenticateIncomingMsg(message);
             Assert.True(authenticated);
         }
@@ -115,11 +114,11 @@ namespace DotNetSnmp.Test
                                  "CF F6 2F AA  FC 78 59 5C  21 1F 09 0F  96";
 
             // Convert hex string to byte array
-            var messageBytes = Utils.Dump.BytesFromHexString(hexBytes);
+            var messageBytes = Dump.BytesFromHexString(hexBytes);
 
             // Parse the message
             var reader = new System.Formats.Asn1.AsnReader(messageBytes, System.Formats.Asn1.AsnEncodingRules.BER);
-            var message = Protocol.V3.SnmpV3Message.ReadFrom(reader);
+            var message = SnmpV3Message.ReadFrom(reader);
 
             // Verify message basic properties
             Assert.NotNull(message);
@@ -135,33 +134,33 @@ namespace DotNetSnmp.Test
             var secParams = message.SecurityParameters;
             Assert.NotNull(secParams);
 
-            var expectedEngineId = Utils.Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC");
-            Assert.True(expectedEngineId.SequenceEqual(secParams.EngineId.ToArray()), $"Unexpected engine ID: {Utils.Dump.BytesToHexString(secParams.EngineId.ToArray())}");
+            var expectedEngineId = Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC");
+            Assert.True(expectedEngineId.SequenceEqual(secParams.EngineId.ToArray()), $"Unexpected engine ID: {Dump.BytesToHexString(secParams.EngineId.ToArray())}");
 
             Assert.Equal(0x0, secParams.EngineBoots);
             Assert.Equal(0x00E6, secParams.EngineTime);
 
             var expectedSecurityName = Encoding.ASCII.GetBytes("usr-sha-aes");
-            Assert.True(expectedSecurityName.SequenceEqual(secParams.SecurityName.Octets), $"Unexpected security name: {Utils.Dump.BytesToHexString(secParams.SecurityName.Octets)}");
+            Assert.True(expectedSecurityName.SequenceEqual(secParams.SecurityName.Octets), $"Unexpected security name: {Dump.BytesToHexString(secParams.SecurityName.Octets)}");
 
-            var expectedAuthParams = Utils.Dump.BytesFromHexString("EA A6 81 2E 66 30 BD 2B 15 7E DE 3D");
-            Assert.True(expectedAuthParams.SequenceEqual(secParams.AuthParams.ToArray()), $"Unexpected auth params: {Utils.Dump.BytesToHexString(secParams.AuthParams.ToArray())}");
+            var expectedAuthParams = Dump.BytesFromHexString("EA A6 81 2E 66 30 BD 2B 15 7E DE 3D");
+            Assert.True(expectedAuthParams.SequenceEqual(secParams.AuthParams.ToArray()), $"Unexpected auth params: {Dump.BytesToHexString(secParams.AuthParams.ToArray())}");
 
-            var expectedPrivParams = Utils.Dump.BytesFromHexString("F2 D7 27 56 34 71 83 21");
-            Assert.True(expectedPrivParams.SequenceEqual(secParams.PrivParams.ToArray()), $"Unexpected priv params: {Utils.Dump.BytesToHexString(secParams.PrivParams.ToArray())}");
+            var expectedPrivParams = Dump.BytesFromHexString("F2 D7 27 56 34 71 83 21");
+            Assert.True(expectedPrivParams.SequenceEqual(secParams.PrivParams.ToArray()), $"Unexpected priv params: {Dump.BytesToHexString(secParams.PrivParams.ToArray())}");
 
             // Verify Scoped PDU
             Assert.Null(message.Scope);
             Assert.True(message.EncryptedScopedPdu.Length > 0, "Scope PDU is not encrypted");
 
-            var sha1 = new DotNetSnmp.Protocol.V3.Security.Authentication.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("authkey1"));
+            var sha1 = new Lextm.SharpSnmpLib.Security.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("authkey1"));
 
             // Decrypt the Scoped PDU using AES privacy and passcode "privkey1"
             var engineId = message.SecurityParameters.EngineId.ToArray();
             var privPassword = "privkey1";
 
             // Create the AES privacy provider
-            var aesPrivacyService = new DotNetSnmp.Protocol.V3.Security.Privacy.AESPrivacyProvider(sha1, privPassword.GetBytesMemoryOrDefault(Encoding.UTF8));
+            var aesPrivacyService = new Lextm.SharpSnmpLib.Security.AESPrivacyProvider(sha1, privPassword.GetBytesMemoryOrDefault(Encoding.UTF8));
 
             // Decrypt the Scoped PDU
             aesPrivacyService.DecryptMessage(message);
@@ -170,16 +169,16 @@ namespace DotNetSnmp.Test
             Assert.NotNull(message.Scope);
 
             // Context information
-            var expectedContextEngineId = Utils.Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC");
+            var expectedContextEngineId = Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC");
             var scope = (Scope)message.Scope;
-            Assert.True(expectedContextEngineId.SequenceEqual(scope.ContextEngineId.ToArray()), $"Unexpected context engine ID: {Utils.Dump.BytesToHexString(scope.ContextEngineId.ToArray())}");
+            Assert.True(expectedContextEngineId.SequenceEqual(scope.ContextEngineId.ToArray()), $"Unexpected context engine ID: {Dump.BytesToHexString(scope.ContextEngineId.ToArray())}");
             Assert.Empty(scope.ContextName.ToArray());
 
             // PDU details
             var pdu = message.Scope.Pdu;
-            Assert.Equal(0x746173F8, pdu.RequestId);
-            Assert.Equal(ErrorCode.NoError, pdu.ErrorStatus);
-            Assert.Equal(0, pdu.ErrorIndex);
+            Assert.Equal(0x746173F8, pdu.RequestId.Value);
+            Assert.Equal(ErrorCode.NoError, (ErrorCode)pdu.ErrorStatus.Value);
+            Assert.Equal(0, pdu.ErrorIndex.Value);
 
             // Verify Variable Bindings
             Assert.NotNull(pdu.VariableBindings);
@@ -208,15 +207,15 @@ namespace DotNetSnmp.Test
             const string hexBytes = "30 81 9A 02 01 03 30 11 02 04 16 39 99 3C 02 03 00 FF E3 04 01 07 02 01 03 04 40 30 3E 04 0E 80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC 02 01 00 02 03 75 6B 5D 04 0C 75 73 72 2D 6D 64 35 2D 33 64 65 73 04 0C 88 3A 31 F2 4D FA 37 1D 40 43 51 EC 04 08 00 00 00 00 3A 90 A4 49 04 40 77 0E B3 60 5E 97 7B 53 3E 21 FD B1 74 6B 73 CF 8A AF C1 14 0B C5 AA EF 2C A3 4F 5E FF 07 BD 37 AF 14 64 91 1B AB 23 E5 C8 52 8E 64 0F FF 67 A3 CB 6D 68 0B 96 67 C5 79 93 AF 02 B2 02 CD B5 CF";
 
             // Convert hex string to byte array
-            var messageBytes = Utils.Dump.BytesFromHexString(hexBytes);
+            var messageBytes = Dump.BytesFromHexString(hexBytes);
 
             // Parse the message
             var reader = new System.Formats.Asn1.AsnReader(messageBytes, System.Formats.Asn1.AsnEncodingRules.BER);
-            var message = Protocol.V3.SnmpV3Message.ReadFrom(reader);
+            var message = SnmpV3Message.ReadFrom(reader);
 
             // Verify message basic properties
             Assert.NotNull(message);
-            Assert.Equal(Common.Definitions.VersionCode.V3, message.ProtocolVersion);
+            Assert.Equal(VersionCode.V3, message.ProtocolVersion);
 
             // Verify Header Data
             Assert.Equal(0x1639993C, message.Header.MsgId);
@@ -228,17 +227,17 @@ namespace DotNetSnmp.Test
             var secParams = message.SecurityParameters;
             Assert.NotNull(secParams);
 
-            var expectedEngineId = Utils.Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC");
-            Assert.True(expectedEngineId.SequenceEqual(secParams.EngineId.ToArray()), $"Unexpected engine ID: {Utils.Dump.BytesToHexString(secParams.EngineId.ToArray())}");
+            var expectedEngineId = Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC");
+            Assert.True(expectedEngineId.SequenceEqual(secParams.EngineId.ToArray()), $"Unexpected engine ID: {Dump.BytesToHexString(secParams.EngineId.ToArray())}");
 
             Assert.Equal(0x00, secParams.EngineBoots);
             Assert.Equal(0x756B5D, secParams.EngineTime);
 
             var expectedSecurityName = Encoding.ASCII.GetBytes("usr-md5-3des");
-            Assert.True(expectedSecurityName.SequenceEqual(secParams.SecurityName.Octets), $"Unexpected security name: {Utils.Dump.BytesToHexString(secParams.SecurityName.Octets)}");
+            Assert.True(expectedSecurityName.SequenceEqual(secParams.SecurityName.Octets), $"Unexpected security name: {Dump.BytesToHexString(secParams.SecurityName.Octets)}");
 
-            var expectedPrivParams = Utils.Dump.BytesFromHexString("00 00 00 00 3A 90 A4 49");
-            Assert.True(expectedPrivParams.SequenceEqual(secParams.PrivParams.ToArray()), $"Unexpected priv params: {Utils.Dump.BytesToHexString(secParams.PrivParams.ToArray())}");
+            var expectedPrivParams = Dump.BytesFromHexString("00 00 00 00 3A 90 A4 49");
+            Assert.True(expectedPrivParams.SequenceEqual(secParams.PrivParams.ToArray()), $"Unexpected priv params: {Dump.BytesToHexString(secParams.PrivParams.ToArray())}");
 
             // Verify Scoped PDU is encrypted
             Assert.Null(message.Scope);
@@ -248,8 +247,8 @@ namespace DotNetSnmp.Test
             var authPassword = new OctetString("authkey1");
             var privPassword = new OctetString("privkey1");
 
-            var auth = new DotNetSnmp.Protocol.V3.Security.Authentication.MD5AuthenticationProvider(authPassword.Octets);
-            var priv = new DotNetSnmp.Protocol.V3.Security.Privacy.TripleDESPrivacyProvider(auth, privPassword.Octets);
+            var auth = new Lextm.SharpSnmpLib.Security.MD5AuthenticationProvider(authPassword.Octets);
+            var priv = new Lextm.SharpSnmpLib.Security.TripleDESPrivacyProvider(auth, privPassword.Octets);
 
             // Decrypt the message
             priv.DecryptMessage(message);
@@ -259,15 +258,15 @@ namespace DotNetSnmp.Test
 
             // Verify the contents of the decrypted Scoped PDU
             var scope = (Scope)message.Scope;
-            Assert.True(Utils.Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC").SequenceEqual(scope.ContextEngineId.ToArray()), $"Unexpected context engine ID: {Utils.Dump.BytesToHexString(scope.ContextEngineId.ToArray())}");
+            Assert.True(Dump.BytesFromHexString("80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC").SequenceEqual(scope.ContextEngineId.ToArray()), $"Unexpected context engine ID: {Dump.BytesToHexString(scope.ContextEngineId.ToArray())}");
             Assert.Empty(scope.ContextName.ToArray());
 
             // Check PDU details
             var pdu = scope.Pdu;
             //Assert.Equal(Protocol.PduType.GetRequest, pdu.PduType);
-            Assert.Equal(-1133661761, pdu.RequestId);
-            Assert.Equal(ErrorCode.NoError, pdu.ErrorStatus);
-            Assert.Equal(0, pdu.ErrorIndex);
+            Assert.Equal(-1133661761, pdu.RequestId.Value);
+            Assert.Equal(ErrorCode.NoError, (ErrorCode)pdu.ErrorStatus.Value);
+            Assert.Equal(0, pdu.ErrorIndex.Value);
 
             // Check variable binding
             Assert.NotNull(pdu.VariableBindings);
@@ -293,7 +292,7 @@ namespace DotNetSnmp.Test
             // We're using a truncated version that's sufficient to trigger the same validation error
 
             // Convert the hex string to bytes
-            var bytes = Utils.Dump.BytesFromHexString(data);
+            var bytes = Dump.BytesFromHexString(data);
 
             // Attempt to parse the message with invalid data
             // This should throw an exception due to the malformed data
@@ -331,12 +330,12 @@ namespace DotNetSnmp.Test
                      "06 01 02 01  01 03 00 05  00";
 
             // Convert the hex string to bytes
-            var bytes = Utils.Dump.BytesFromHexString(hexBytes);
+            var bytes = Dump.BytesFromHexString(hexBytes);
 
             // Create a UserRegistry (if needed)
             var registry = new UserRegistry();
             // Add a user to the registry (if needed)
-            registry.Add(new User(new OctetString("lextudio"), new DotNetSnmp.Protocol.V3.Security.Privacy.DefaultPrivacyProvider(new DotNetSnmp.Protocol.V3.Security.Authentication.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("password")))));
+            registry.Add(new User(new OctetString("lextudio"), new Lextm.SharpSnmpLib.Security.DefaultPrivacyProvider(new Lextm.SharpSnmpLib.Security.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("password")))));
 
             // Parse the messages using the MessageFactory
             var messages = MessageFactory.ParseMessages(bytes, registry);
@@ -375,7 +374,7 @@ namespace DotNetSnmp.Test
                      "02 56 FF 02  01 00 02 01  00 30 0E 30  0C 06 08 2B" +
                      "06 01 02 01  01 03 00 05  00";
 
-            var bytes = Utils.Dump.BytesFromHexString(hexBytes);
+            var bytes = Dump.BytesFromHexString(hexBytes);
             var withPadding = new byte[bytes.Length + 6];
             Array.Copy(bytes, 0, withPadding, 3, bytes.Length);
 
@@ -389,7 +388,7 @@ namespace DotNetSnmp.Test
         public void MessageFactoryParseMessagesNullChecks()
         {
             var registry = CreateRegistry();
-            var bytes = Utils.Dump.BytesFromHexString("30 03 02 01 00");
+            var bytes = Dump.BytesFromHexString("30 03 02 01 00");
 
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages((IEnumerable<char>)null!, registry));
             Assert.Throws<ArgumentNullException>(() => MessageFactory.ParseMessages((byte[])null!, registry));
@@ -400,7 +399,7 @@ namespace DotNetSnmp.Test
         private static UserRegistry CreateRegistry()
         {
             var registry = new UserRegistry();
-            registry.Add(new User(new OctetString("lextudio"), new DotNetSnmp.Protocol.V3.Security.Privacy.DefaultPrivacyProvider(new DotNetSnmp.Protocol.V3.Security.Authentication.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("password")))));
+            registry.Add(new User(new OctetString("lextudio"), new Lextm.SharpSnmpLib.Security.DefaultPrivacyProvider(new Lextm.SharpSnmpLib.Security.SHA1AuthenticationProvider(Encoding.UTF8.GetBytes("password")))));
             return registry;
         }
     }

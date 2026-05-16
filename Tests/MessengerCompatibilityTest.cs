@@ -1,10 +1,9 @@
 using System.Net;
 using System.Text;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
 using Lextm.SharpSnmpLib;
+// removed: DotNetSnmp.Common.Definitions
+using Lextm.SharpSnmpLib.Security;
+// removed: DotNetSnmp.Protocol.V3.Security.Privacy
 using Lextm.SharpSnmpLib.Messaging;
 using Xunit;
 

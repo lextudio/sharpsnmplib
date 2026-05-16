@@ -1,12 +1,11 @@
 using System.Formats.Asn1;
 using System.Net;
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Transport;
+// removed: DotNetSnmp.Asn1.Serialization
 using Lextm.SharpSnmpLib;
+// removed: DotNetSnmp.Common.Definitions
+// removed: DotNetSnmp.Protocol.V1
+// removed: DotNetSnmp.Protocol.V3
+// removed: DotNetSnmp.Transport
 using Lextm.SharpSnmpLib.Messaging;
 using System.Text;
 using Xunit;
@@ -123,14 +122,14 @@ public sealed class DiscoveryCompatibilityTest
                 MsgMaxSize = 1500,
                 MsgSecurityModel = SecurityModel.Usm
             },
-            SecurityParameters = new DotNetSnmp.Protocol.V3.Security.UsmSecurityParameters
+            SecurityParameters = new Lextm.SharpSnmpLib.Security.UsmSecurityParameters
             {
                 SecurityName = OctetString.Empty,
                 EngineId = Memory<byte>.Empty,
                 AuthParams = Memory<byte>.Empty,
                 PrivParams = Memory<byte>.Empty
             },
-            Scope = new DotNetSnmp.Protocol.V3.Scope
+            Scope = new Scope
             {
                 ContextEngineId = ReadOnlyMemory<byte>.Empty,
                 ContextName = string.Empty,

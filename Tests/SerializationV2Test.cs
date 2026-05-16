@@ -1,9 +1,8 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Utils;
+﻿// removed: DotNetSnmp.Asn1.Serialization
+using Lextm.SharpSnmpLib;
+// removed: DotNetSnmp.Common.Definitions
+// removed: DotNetSnmp.Protocol.V1
+// removed: DotNetSnmp.Protocol.V2
 using System.Diagnostics.CodeAnalysis;
 using System.Formats.Asn1;
 using System.Text;

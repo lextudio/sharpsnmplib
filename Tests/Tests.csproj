@@ -26,7 +26,12 @@
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="**\*.resx" />
+    <EmbeddedResource Include="**\*.resx" Exclude="CSharpCore\**\*.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="CSharpCore\**\*.cs" />
+    <EmbeddedResource Remove="CSharpCore\**" />
+    <None Remove="CSharpCore\**" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Remove="Properties\Resources.resx" />

@@ -1,8 +1,8 @@
-﻿using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
-using DotNetSnmp.Utils;
+﻿using Lextm.SharpSnmpLib;
+// removed: DotNetSnmp.Protocol.V1
+// removed: DotNetSnmp.Protocol.V3
+// removed: DotNetSnmp.Protocol.V3.Security.Privacy
+using Lextm.SharpSnmpLib;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.Formats.Asn1;

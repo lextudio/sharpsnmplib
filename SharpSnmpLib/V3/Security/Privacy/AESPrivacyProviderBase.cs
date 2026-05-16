@@ -15,6 +15,11 @@ namespace Lextm.SharpSnmpLib.Security
         /// </summary>
         protected const int MinimalBlockSize = 16;
 
+        /// <summary>
+        /// AES is always supported on .NET 6+.
+        /// </summary>
+        public static bool IsSupported => true;
+
         private readonly int _keyLength;
 
         /// <summary>

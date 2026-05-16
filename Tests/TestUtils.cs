@@ -1,4 +1,4 @@
-﻿using DotNetSnmp.Protocol.V3.Security.Authentication;
+﻿using Lextm.SharpSnmpLib.Security;
 using System.Text;
 
 namespace DotNetSnmp.Test

@@ -1,5 +1,5 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
+﻿// removed: DotNetSnmp.Asn1.Serialization
+using Lextm.SharpSnmpLib;
 using System.Diagnostics.CodeAnalysis;
 using System.Formats.Asn1;
 using System.Text;
@@ -17,7 +17,7 @@ namespace DotNetSnmp.Test
                 AsnEncodingRules.BER);
         }
 
-        private static string ToHexString(IAsnSerializable asns)
+        private static string ToHexString(ISnmpData asns)
         {
             var writer = new AsnWriter(AsnEncodingRules.BER);
             asns.WriteTo(writer);

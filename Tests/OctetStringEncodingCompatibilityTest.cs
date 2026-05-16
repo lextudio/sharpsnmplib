@@ -1,7 +1,7 @@
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V3;
+using Lextm.SharpSnmpLib;
+// removed: DotNetSnmp.Common.Definitions
+// removed: DotNetSnmp.Protocol.V1
+// removed: DotNetSnmp.Protocol.V3
 using System.Text;
 using Xunit;
 
