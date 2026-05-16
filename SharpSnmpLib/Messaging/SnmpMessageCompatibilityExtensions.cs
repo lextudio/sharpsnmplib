@@ -48,18 +48,6 @@ public sealed class LegacyPdu : ISnmpPdu
             return true;
         }
 
-        // Some compatibility builds can surface a different CLR type for bulk PDUs.
-        // Read by property name to preserve v12 semantics in those mixed-type scenarios.
-        var type = pdu.GetType();
-        var nonRepeatersProperty = type.GetProperty("NonRepeaters");
-        var maxRepetitionsProperty = type.GetProperty("MaxRepetitions");
-        if (nonRepeatersProperty?.PropertyType == typeof(int) && maxRepetitionsProperty?.PropertyType == typeof(int))
-        {
-            nonRepeaters = (int)(nonRepeatersProperty.GetValue(pdu) ?? 0);
-            maxRepetitions = (int)(maxRepetitionsProperty.GetValue(pdu) ?? 0);
-            return true;
-        }
-
         return false;
     }
 

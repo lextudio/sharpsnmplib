@@ -26,14 +26,6 @@ public static class SnmpMessageExtension
     /// </summary>
     public static bool IsRunningOnIOS => OperatingSystem.IsIOS();
 
-    /// <summary>
-    /// Tests whether current runtime is Mono.
-    /// </summary>
-    public static bool IsRunningOnMono()
-    {
-        return Type.GetType("Mono.Runtime") != null;
-    }
-
     /// <summary>Gets message PDU type.</summary>
     public static SnmpType TypeCode(this ISnmpMessage message)
     {
