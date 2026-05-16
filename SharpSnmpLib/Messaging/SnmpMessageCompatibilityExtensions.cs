@@ -157,54 +157,11 @@ public static class SnmpMessageCompatibilityExtensions
             return report.ToBytes();
         }
 
+        // Return cached wire bytes when the message was parsed from the network (no re-serialization needed)
+        if (message is SnmpV3Message v3 && v3.RawBytes is { } r3) return r3;
+        if (message is SnmpV2Message v2 && v2.RawBytes is { } r2) return r2;
+        if (message is SnmpV1Message v1 && v1.RawBytes is { } r1) return r1;
+
         return message.Encode();
-    }
-
-    private static ISnmpMessage ParseResponse(ReadOnlyMemory<byte> incoming, ISnmpMessage request)
-    {
-        var versionReader = new AsnReader(incoming, AsnEncodingRules.BER);
-        var root = versionReader.ReadSequence();
-        if (!root.TryReadInt32(out var versionRaw))
-        {
-            throw new SnmpException("Cannot parse response version.");
-        }
-
-        var version = (VersionCode)versionRaw;
-        return version switch
-        {
-            VersionCode.V1 => SnmpV1Message.ReadFrom(new AsnReader(incoming, AsnEncodingRules.BER)),
-            VersionCode.V2 => SnmpV2Message.ReadFrom(new AsnReader(incoming, AsnEncodingRules.BER)),
-            VersionCode.V3 => ParseV3Response(incoming, request),
-            _ => throw new SnmpException($"Unsupported SNMP version in response: {versionRaw}.")
-        };
-    }
-
-    private static ISnmpMessage ParseV3Response(ReadOnlyMemory<byte> incoming, ISnmpMessage request)
-    {
-        var response = SnmpV3Message.ReadFrom(new AsnReader(incoming, AsnEncodingRules.BER));
-
-        if (request is ILegacyV3Request v3Request)
-        {
-            if (response.Header.MsgFlags.HasFlag(MsgFlag.Auth))
-            {
-                var authenticated = v3Request.Privacy.AuthenticationProvider.AuthenticateIncomingMsg(response);
-                if (!authenticated)
-                {
-                    throw new SnmpException("Authentication failed for incoming response.");
-                }
-            }
-
-            if (response.Header.MsgFlags.HasFlag(MsgFlag.Priv))
-            {
-                v3Request.Privacy.DecryptMessage(response);
-            }
-        }
-
-        if (response.Scope?.Pdu is ReportPdu)
-        {
-            return new ReportMessage(response);
-        }
-
-        return response;
     }
 }

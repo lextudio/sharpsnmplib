@@ -34,6 +34,14 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         public IScope? Scope { get; set; }
 
+        /// <summary>
+        /// Cached wire bytes set when the message was parsed from the network; empty when built from scratch.
+        /// </summary>
+        internal byte[]? RawBytes { get; set; }
+
+        /// <inheritdoc/>
+        byte[] ISnmpMessage.ToBytes() => RawBytes ?? AsnSerializableExtensions.Encode(this);
+
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {

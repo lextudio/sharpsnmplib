@@ -152,13 +152,16 @@ public static class MessageFactory
                 switch (version)
                 {
                     case VersionCode.V1:
-                        message = Lextm.SharpSnmpLib.SnmpV1Message.ReadFrom(
+                        var v1Parsed = Lextm.SharpSnmpLib.SnmpV1Message.ReadFrom(
                             new AsnReader(messageData, AsnEncodingRules.BER));
+                        v1Parsed.RawBytes = messageData.ToArray();
+                        message = v1Parsed;
                         break;
 
                     case VersionCode.V2:
                         var v2Message = Lextm.SharpSnmpLib.SnmpV2Message.ReadFrom(
                             new AsnReader(messageData, AsnEncodingRules.BER));
+                        v2Message.RawBytes = messageData.ToArray();
                         message = v2Message.Scope?.Pdu is TrapV2Pdu
                             ? new TrapV2Message(v2Message)
                             : v2Message.Scope?.Pdu is InformRequestPdu
@@ -169,6 +172,7 @@ public static class MessageFactory
                     case VersionCode.V3:
                         var v3Message = Lextm.SharpSnmpLib.SnmpV3Message.ReadFrom(
                             new AsnReader(messageData, AsnEncodingRules.BER));
+                        v3Message.RawBytes = messageData.ToArray();
 
                         // For V3, handle security operations if message has security flags
                         var securityState = ProcessV3Security(v3Message, registry, throwOnV3SecurityError);

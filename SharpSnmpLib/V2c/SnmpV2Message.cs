@@ -24,6 +24,14 @@ namespace Lextm.SharpSnmpLib
         public IScope? Scope { get; init; }
 
         /// <summary>
+        /// Cached wire bytes set when the message was parsed from the network; empty when built from scratch.
+        /// </summary>
+        internal byte[]? RawBytes { get; set; }
+
+        /// <inheritdoc/>
+        byte[] ISnmpMessage.ToBytes() => RawBytes ?? AsnSerializableExtensions.Encode(this);
+
+        /// <summary>
         /// Represents pdu.
         /// </summary>
         public Pdu Pdu => Scope!.Pdu;
