@@ -1,6 +1,6 @@
-﻿using DotNetSnmp.Asn1.SyntaxObjects;
+﻿using Lextm.SharpSnmpLib;
 
-namespace DotNetSnmp.Protocol.V3.Security.Authentication
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Authentication provider interface.

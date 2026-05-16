@@ -1,9 +1,7 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V1
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// SET request PDU.
@@ -21,7 +19,7 @@ namespace DotNetSnmp.Protocol.V1
         public SetRequestPdu()
         {
             ErrorIndex = 0;
-            ErrorStatus = ErrorCode.NoError;
+            ErrorStatus = (int)ErrorCode.NoError;
         }
 
         /// <inheritdoc/>
@@ -30,7 +28,7 @@ namespace DotNetSnmp.Protocol.V1
             using (_ = writer.PushSequence(tag: PduType))
             {
                 writer.WriteInteger(RequestId);
-                writer.WriteInteger((int)ErrorStatus);
+                writer.WriteInteger(ErrorStatus.Value);
                 writer.WriteInteger(ErrorIndex);
                 if (VariableBindings != null)
                 {
@@ -56,7 +54,7 @@ namespace DotNetSnmp.Protocol.V1
             return new SetRequestPdu
             {
                 RequestId = requestId,
-                ErrorStatus = (ErrorCode)errorStatus,
+                ErrorStatus = errorStatus,
                 ErrorIndex = errorIndex,
                 VariableBindings = bindings
             };

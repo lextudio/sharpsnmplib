@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace DotNetSnmp.Transport
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Represents the BasicUdpTransport type.
@@ -68,7 +68,7 @@ namespace DotNetSnmp.Transport
         /// </summary>
         public async ValueTask<ReadOnlyMemory<byte>> ReceiveAsync(
             IPEndPoint targetEndPoint,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken)
         {
             byte[] buffer = GC.AllocateArray<byte>(MaxUdpSize, pinned: true);
 

@@ -1,9 +1,9 @@
-using DotNetSnmp.Common.Helpers;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.Buffers;
 using System.Security.Cryptography;
 
-namespace DotNetSnmp.Protocol.V3.Security.Privacy
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Implementation of Triple DES (3DES) privacy protocol for SNMPv3.
@@ -193,5 +193,16 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
                 decryptedPdu,
                 PaddingMode.Zeros);
         }
+
+        /// <summary>
+        /// Initializes a new instance of TripleDESPrivacyProvider with v12-compatible signature.
+        /// </summary>
+        public TripleDESPrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+            : this(
+                authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)),
+                (passphrase ?? throw new ArgumentNullException(nameof(passphrase))).Octets)
+        {
+        }
+
     }
 }

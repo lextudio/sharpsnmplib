@@ -1,7 +1,6 @@
-﻿using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 
-namespace DotNetSnmp.Transport.Targets
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Defines the contract for ISnmpTarget.

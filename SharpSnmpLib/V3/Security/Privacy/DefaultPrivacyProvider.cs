@@ -1,7 +1,8 @@
-﻿using System.Buffers;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
+using System.Buffers;
+using System.Collections.Generic;
+using Lextm.SharpSnmpLib.Security;
 
-namespace DotNetSnmp.Protocol.V3.Security.Privacy;
+namespace Lextm.SharpSnmpLib.Security;
 
 /// <summary>
 /// Default privacy provider.
@@ -71,4 +72,17 @@ public class DefaultPrivacyProvider : IPrivacyProvider
     {
         return ArrayPool<byte>.Shared.Rent(encodedLength);
     }
+
+    private static readonly IPrivacyProvider _defaultPair =
+        new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance);
+
+    /// <summary>
+    /// Gets the default privacy/auth pair (no privacy, no authentication).
+    /// </summary>
+    public static IPrivacyProvider DefaultPair => _defaultPair;
+
+    /// <summary>
+    /// Gets or sets known engine IDs (legacy compatibility member).
+    /// </summary>
+    public ICollection<OctetString>? EngineIds { get; set; }
 }

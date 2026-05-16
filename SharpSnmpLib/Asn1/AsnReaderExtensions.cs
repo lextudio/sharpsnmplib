@@ -1,6 +1,6 @@
-﻿using System.Formats.Asn1;
+using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Try to consume an OctetString, optionally asserting an expected value

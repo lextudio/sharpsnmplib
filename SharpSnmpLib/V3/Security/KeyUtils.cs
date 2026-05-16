@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace DotNetSnmp.Protocol.V3.Security
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Provides helper methods for KeyUtils.

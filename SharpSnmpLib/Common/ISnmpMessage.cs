@@ -1,12 +1,11 @@
-﻿using DotNetSnmp.Asn1.Serialization;
 using Lextm.SharpSnmpLib;
 
-namespace DotNetSnmp.Common.Definitions
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// SNMP message.
     /// </summary>
-    public interface ISnmpMessage : IAsnSerializable
+    public interface ISnmpMessage : ISnmpData
     {
         /// <summary>
         /// Gets the SNMP protocol version.

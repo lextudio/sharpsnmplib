@@ -1,4 +1,4 @@
-﻿namespace DotNetSnmp.Common.Definitions
+﻿namespace Lextm.SharpSnmpLib
 {
     // Enum representing the security models used in SNMP (Simple Network Management Protocol).
     // Each value corresponds to a specific security model.

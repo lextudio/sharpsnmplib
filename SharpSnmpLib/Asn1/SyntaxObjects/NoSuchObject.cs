@@ -1,12 +1,12 @@
-﻿using DotNetSnmp.Asn1.Serialization;
+﻿using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1.SyntaxObjects
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the NoSuchObject type.
     /// </summary>
-    public readonly record struct NoSuchObject : IAsnSerializable
+    public readonly record struct NoSuchObject : ISnmpData
     {
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)

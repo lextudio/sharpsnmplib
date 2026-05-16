@@ -1,6 +1,7 @@
-﻿using DotNetSnmp.Protocol.V3.Security.Authentication;
+using Lextm.SharpSnmpLib.Security;
+using System.Security.Cryptography;
 
-namespace DotNetSnmp.Protocol.V3.Security.Privacy
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Implementation of AES-128 privacy protocol for SNMPv3.
@@ -17,6 +18,28 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
             ReadOnlyMemory<byte> passcode)
             : base(authenticationService, passcode, KeyLength)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of AESPrivacyProvider with v12-compatible signature.
+        /// </summary>
+        public AESPrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+            : this(
+                authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)),
+                (passphrase ?? throw new ArgumentNullException(nameof(passphrase))).Octets)
+        {
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether AES is supported on current runtime.
+        /// </summary>
+        public static bool IsSupported
+        {
+            get
+            {
+                try { using var _ = Aes.Create(); return true; }
+                catch { return false; }
+            }
         }
     }
 }

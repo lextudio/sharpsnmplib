@@ -1,9 +1,7 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V2
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the GetBulkRequestPdu type.
@@ -24,6 +22,30 @@ namespace DotNetSnmp.Protocol.V2
         /// Represents bulk Msg.
         /// </summary>
         public override Asn1Tag PduType => SnmpAsnTags.BulkMsg;
+
+        /// <summary>
+        /// Initializes a new instance of GetBulkRequestPdu.
+        /// </summary>
+        public GetBulkRequestPdu() { }
+
+        /// <summary>
+        /// Initializes a new instance of GetBulkRequestPdu (legacy compatibility overload).
+        /// </summary>
+        public GetBulkRequestPdu(int requestId, int nonRepeaters, int maxRepetitions, IList<Variable> variables)
+        {
+            RequestId = requestId;
+            NonRepeaters = nonRepeaters;
+            MaxRepetitions = maxRepetitions;
+            if (variables == null) throw new ArgumentNullException(nameof(variables));
+            var bindings = new VarBindList();
+            foreach (var variable in variables) bindings.Add(variable);
+            VariableBindings = bindings;
+        }
+
+        /// <summary>
+        /// Returns a string representation.
+        /// </summary>
+        public override string ToString() => throw new NotImplementedException();
 
         /// <summary>
         /// Reads a value from an ASN.1 reader.

@@ -1,9 +1,8 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.Text.RegularExpressions;
 
-namespace DotNetSnmp.Utils
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the AsnMember type.

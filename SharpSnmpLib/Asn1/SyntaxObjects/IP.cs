@@ -1,14 +1,14 @@
-﻿using DotNetSnmp.Asn1.Serialization;
+﻿using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.Text;
 
-namespace DotNetSnmp.Asn1.SyntaxObjects
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// The IpAddress type represents a 32-bit internet address.  It is
     /// represented as an OCTET STRING of length 4, in network byte-order
     /// </summary>
-    public readonly record struct IP : IAsnSerializable
+    public readonly record struct IP : ISnmpData
     {
         /// <summary>
         /// Gets address Bytes.

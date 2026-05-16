@@ -1,15 +1,14 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V3.Security;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.ComponentModel.DataAnnotations;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V3
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the HeaderData type.
     /// </summary>
-    public class HeaderData : IAsnSerializable
+    public class HeaderData : ISnmpData
     {
         /// <summary>
         /// Gets msg Id.

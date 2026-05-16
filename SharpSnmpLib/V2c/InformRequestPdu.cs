@@ -1,9 +1,7 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V2
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// INFORM request PDU.
@@ -20,6 +18,20 @@ namespace DotNetSnmp.Protocol.V2
         {
             Enterprise = new ObjectIdentifier("0.0");
         }
+
+        /// <summary>
+        /// Initializes a legacy-compatible instance of <see cref="InformRequestPdu"/> with only a requestId.
+        /// </summary>
+        public InformRequestPdu(int requestId)
+        {
+            RequestId = requestId;
+            Enterprise = new ObjectIdentifier("0.0");
+        }
+
+        /// <summary>
+        /// Returns a string representation.
+        /// </summary>
+        public override string ToString() => throw new NotImplementedException();
 
         /// <summary>
         /// Initializes a legacy-compatible instance of <see cref="InformRequestPdu"/>.

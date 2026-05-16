@@ -1,9 +1,7 @@
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 
-namespace DotNetSnmp.Transport.Targets
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Represents the UserTarget type.

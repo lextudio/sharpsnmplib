@@ -1,9 +1,7 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V2
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// TRAP v2 PDU.

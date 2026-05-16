@@ -1,14 +1,14 @@
-﻿using DotNetSnmp.Asn1.Serialization;
+﻿using Lextm.SharpSnmpLib;
 using System.Collections;
 using System.Diagnostics;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1.SyntaxObjects
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the VarBindList type.
     /// </summary>
-    public class VarBindList : IAsnSerializable, IEnumerable<Variable>
+    public class VarBindList : ISnmpData, IEnumerable<Variable>
     {
         private readonly IList<Variable> _variableBindings;
 

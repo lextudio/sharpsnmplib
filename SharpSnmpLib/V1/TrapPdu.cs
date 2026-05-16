@@ -1,10 +1,8 @@
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.Net;
 
-namespace DotNetSnmp.Protocol.V1
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the TrapPdu type.

@@ -3,7 +3,6 @@ namespace Lextm.SharpSnmpLib.Messaging;
 /// <summary>
 /// Backward-compatible entry point for legacy extension APIs.
 /// </summary>
-[Obsolete("This type is for internal use only and may be removed in a future release.")]
 public static class SnmpMessageExtension
 {
     /// <summary>

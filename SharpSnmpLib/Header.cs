@@ -1,8 +1,5 @@
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.Formats.Asn1;
 
 namespace Lextm.SharpSnmpLib;
@@ -10,7 +7,6 @@ namespace Lextm.SharpSnmpLib;
 /// <summary>
 /// Legacy compatibility wrapper for SNMP v3 header data.
 /// </summary>
-[Obsolete("This type is for internal use only and may be removed in a future release.")]
 public sealed class Header
 {
     /// <summary>
@@ -37,6 +33,18 @@ public sealed class Header
         _messageId = header.MsgId;
         _maxSize = header.MsgMaxSize;
         SecurityLevel = ToSecurityLevel(header.MsgFlags);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="Header"/> from legacy SNMP data.
+    /// </summary>
+    public Header(ISnmpData data) => throw new NotImplementedException();
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="Header"/> with a message id only.
+    /// </summary>
+    public Header(int messageId) : this(new Integer32(messageId), new Integer32(MaxMessageSize), 0)
+    {
     }
 
     /// <summary>
@@ -68,6 +76,21 @@ public sealed class Header
     /// Gets maximum message size.
     /// </summary>
     public int MaxSize => _maxSize;
+
+    /// <summary>
+    /// Gets the data for the specified version (legacy compatibility).
+    /// </summary>
+    public ISnmpData GetData(VersionCode version) => throw new NotImplementedException();
+
+    /// <summary>
+    /// Converts to a <see cref="Sequence"/>.
+    /// </summary>
+    public Sequence ToSequence() => throw new NotImplementedException();
+
+    /// <summary>
+    /// Returns a string representation.
+    /// </summary>
+    public override string ToString() => throw new NotImplementedException();
 
     internal HeaderData ToHeaderData()
     {

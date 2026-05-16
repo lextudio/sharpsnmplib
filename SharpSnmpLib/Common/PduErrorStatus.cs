@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DotNetSnmp.Common.Definitions
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Error code for SNMP operations. (0-5 are first defined in SNMP v1, and others are added in v2)

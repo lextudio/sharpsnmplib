@@ -22,15 +22,9 @@ using System.Buffers;
 using System.Formats.Asn1;
 using System.Net;
 using System.Net.Sockets;
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
-using DotNetSnmp.Transport;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 
@@ -67,7 +61,7 @@ public sealed class AgentVariable
     /// <summary>
     /// Initializes a new instance of AgentVariable.
     /// </summary>
-    public AgentVariable(ObjectIdentifier id, IAsnSerializable data)
+    public AgentVariable(ObjectIdentifier id, ISnmpData data)
     {
         Id = id;
         Data = data;
@@ -81,7 +75,7 @@ public sealed class AgentVariable
     /// <summary>
     /// Gets data.
     /// </summary>
-    public IAsnSerializable Data { get; }
+    public ISnmpData Data { get; }
 
     /// <summary>
     /// Returns a string representation of the current value.

@@ -1,9 +1,7 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V1
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// GETNEXT request PDU.
@@ -21,8 +19,26 @@ namespace DotNetSnmp.Protocol.V1
         public GetNextRequestPdu()
         {
             ErrorIndex = 0;
-            ErrorStatus = ErrorCode.NoError;
+            ErrorStatus = (int)ErrorCode.NoError;
         }
+
+        /// <summary>
+        /// Initializes a new instance of GetNextRequestPdu (legacy compatibility overload).
+        /// </summary>
+        public GetNextRequestPdu(int requestId, IList<Variable> variables)
+            : this()
+        {
+            RequestId = requestId;
+            if (variables == null) throw new ArgumentNullException(nameof(variables));
+            var bindings = new VarBindList();
+            foreach (var variable in variables) bindings.Add(variable);
+            VariableBindings = bindings;
+        }
+
+        /// <summary>
+        /// Returns a string representation.
+        /// </summary>
+        public override string ToString() => throw new NotImplementedException();
 
         /// <summary>
         /// Reads a value from an ASN.1 reader.
@@ -41,7 +57,7 @@ namespace DotNetSnmp.Protocol.V1
             return new GetNextRequestPdu
             {
                 RequestId = requestId,
-                ErrorStatus = (ErrorCode)errorStatus,
+                ErrorStatus = errorStatus,
                 ErrorIndex = errorIndex,
                 VariableBindings = bindings
             };
@@ -53,7 +69,7 @@ namespace DotNetSnmp.Protocol.V1
             using (_ = writer.PushSequence(tag: PduType))
             {
                 writer.WriteInteger(RequestId);
-                writer.WriteInteger((int)ErrorStatus);
+                writer.WriteInteger(ErrorStatus.Value);
                 writer.WriteInteger(ErrorIndex);
                 if (VariableBindings != null)
                 {

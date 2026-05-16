@@ -3,7 +3,6 @@ namespace Lextm.SharpSnmpLib.Messaging;
 /// <summary>
 /// Exception raised when message parsing fails.
 /// </summary>
-[Obsolete("This type is for internal use only and may be removed in a future release.")]
 public sealed class MessageFactoryException : SnmpException
 {
     private byte[]? _bytes;

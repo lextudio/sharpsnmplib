@@ -1,8 +1,4 @@
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Protocol.V3;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.IO;
 
@@ -16,7 +12,7 @@ public static class DataFactory
     /// <summary>
     /// Creates ASN.1 data from a full BER-encoded buffer.
     /// </summary>
-    public static IAsnSerializable CreateSnmpData(byte[] buffer)
+    public static ISnmpData CreateSnmpData(byte[] buffer)
     {
         if (buffer == null)
         {
@@ -29,7 +25,7 @@ public static class DataFactory
     /// <summary>
     /// Creates ASN.1 data from a BER-encoded buffer slice.
     /// </summary>
-    public static IAsnSerializable CreateSnmpData(byte[] buffer, int index, int count)
+    public static ISnmpData CreateSnmpData(byte[] buffer, int index, int count)
     {
         if (buffer == null)
         {
@@ -57,7 +53,7 @@ public static class DataFactory
     /// <summary>
     /// Creates ASN.1 data from a stream containing one BER value.
     /// </summary>
-    public static IAsnSerializable CreateSnmpData(Stream stream)
+    public static ISnmpData CreateSnmpData(Stream stream)
     {
         if (stream == null)
         {
@@ -78,7 +74,7 @@ public static class DataFactory
     /// <summary>
     /// Creates ASN.1 data from type + payload stream (legacy overload).
     /// </summary>
-    public static IAsnSerializable CreateSnmpData(int type, Stream stream)
+    public static ISnmpData CreateSnmpData(int type, Stream stream)
     {
         if (stream == null)
         {
@@ -92,12 +88,12 @@ public static class DataFactory
         return Parse(payload);
     }
 
-    private static IAsnSerializable Parse(byte[] payload)
+    private static ISnmpData Parse(byte[] payload)
     {
         return Parse(new ReadOnlyMemory<byte>(payload));
     }
 
-    private static IAsnSerializable Parse(ReadOnlyMemory<byte> payload)
+    private static ISnmpData Parse(ReadOnlyMemory<byte> payload)
     {
         try
         {
@@ -256,7 +252,7 @@ public static class DataFactory
         throw new SnmpException("unsupported data type");
     }
 
-    private sealed class EncodedSequence : IAsnSerializable
+    private sealed class EncodedSequence : ISnmpData
     {
         private readonly ReadOnlyMemory<byte> _encoded;
 

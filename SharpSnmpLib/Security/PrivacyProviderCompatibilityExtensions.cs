@@ -1,11 +1,5 @@
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using Lextm.SharpSnmpLib.Messaging;
 using System.Formats.Asn1;
 using System.Security.Cryptography;
@@ -15,7 +9,6 @@ namespace Lextm.SharpSnmpLib.Security;
 /// <summary>
 /// Legacy extension helpers for privacy providers.
 /// </summary>
-[Obsolete("This type is for internal use only and may be removed in a future release.")]
 public static class PrivacyProviderCompatibilityExtensions
 {
     /// <summary>
@@ -44,7 +37,7 @@ public static class PrivacyProviderCompatibilityExtensions
     /// <summary>
     /// Encrypts scope data using legacy compatibility signature.
     /// </summary>
-    public static IAsnSerializable Encrypt(this IPrivacyProvider privacy, IAsnSerializable data, SecurityParameters parameters)
+    public static ISnmpData Encrypt(this IPrivacyProvider privacy, ISnmpData data, SecurityParameters parameters)
     {
         if (privacy == null)
         {
@@ -113,7 +106,7 @@ public static class PrivacyProviderCompatibilityExtensions
     /// <summary>
     /// Decrypts scope data using legacy compatibility signature.
     /// </summary>
-    public static IAsnSerializable Decrypt(this IPrivacyProvider privacy, IAsnSerializable data, SecurityParameters parameters)
+    public static ISnmpData Decrypt(this IPrivacyProvider privacy, ISnmpData data, SecurityParameters parameters)
     {
         if (privacy == null)
         {
@@ -184,7 +177,7 @@ public static class PrivacyProviderCompatibilityExtensions
         message.EncryptedScopedPdu = encrypted.Octets;
         privacy.DecryptMessage(message);
 
-        return message.Scope as IAsnSerializable
+        return message.Scope as ISnmpData
             ?? throw new ArgumentException("Cannot decrypt the scope data: Unknown.", nameof(data));
     }
 
@@ -336,7 +329,7 @@ public static class PrivacyProviderCompatibilityExtensions
         };
     }
 
-    private static Scope TryReadScope(IAsnSerializable data)
+    private static Scope TryReadScope(ISnmpData data)
     {
         if (data is Scope scope)
         {

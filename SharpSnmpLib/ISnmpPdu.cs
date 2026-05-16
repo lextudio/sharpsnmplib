@@ -1,5 +1,4 @@
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Collections.Generic;
 
 namespace Lextm.SharpSnmpLib;

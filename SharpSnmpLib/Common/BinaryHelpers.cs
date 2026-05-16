@@ -1,6 +1,6 @@
-﻿using System.Buffers.Binary;
+using System.Buffers.Binary;
 
-namespace DotNetSnmp.Common.Helpers
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Provides helpers for writing integer values in network byte order (big-endian).

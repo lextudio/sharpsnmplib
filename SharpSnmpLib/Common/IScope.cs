@@ -1,8 +1,6 @@
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Protocol.V3;
+using Lextm.SharpSnmpLib;
 
-namespace DotNetSnmp.Common.Definitions
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Defines the contract for IScope.
@@ -13,7 +11,7 @@ namespace DotNetSnmp.Common.Definitions
     /// and data being requested or responded to. IScope implementations are serializable to ASN.1
     /// format for network transmission.
     /// </remarks>
-    public interface IScope : IAsnSerializable
+    public interface IScope : ISnmpData
     {
         /// <summary>
         /// Gets request Id.
@@ -25,7 +23,7 @@ namespace DotNetSnmp.Common.Definitions
         /// The request ID is used to match responses with their corresponding requests
         /// when multiple requests are outstanding.
         /// </remarks>
-        int RequestId { get; }
+        Integer32 RequestId { get; }
 
         /// <summary>
         /// Gets variable Bindings.
@@ -78,7 +76,7 @@ namespace DotNetSnmp.Common.Definitions
         /// <summary>
         /// Gets serialized scope data for a target protocol version (legacy compatibility member).
         /// </summary>
-        IAsnSerializable GetData(VersionCode version)
+        ISnmpData GetData(VersionCode version)
         {
             return version == VersionCode.V3 ? this : Pdu;
         }

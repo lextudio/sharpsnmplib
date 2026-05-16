@@ -1,5 +1,5 @@
 using System.Net;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 
 namespace Lextm.SharpSnmpLib;
 

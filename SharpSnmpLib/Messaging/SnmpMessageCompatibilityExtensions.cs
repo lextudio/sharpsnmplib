@@ -1,15 +1,9 @@
 using System.Formats.Asn1;
 using System.Net;
 using System.Net.Sockets;
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
-using DotNetSnmp.Transport;
+using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Security;
+using Lextm.SharpSnmpLib.Messaging;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 

@@ -1,13 +1,12 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V3.Security
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Represents the UsmSecurityParameters type.
     /// </summary>
-    public class UsmSecurityParameters : IAsnSerializable
+    public class UsmSecurityParameters : ISnmpData
     {
         /// <summary>
         /// Gets engine Id.

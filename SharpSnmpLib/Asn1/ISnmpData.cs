@@ -1,13 +1,12 @@
-﻿using DotNetSnmp.Asn1.SyntaxObjects;
 using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1.Serialization
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Defines the contract for values that can serialize themselves as ASN.1.
     /// </summary>
-    public interface IAsnSerializable
+    public interface ISnmpData
     {
         /// <summary>
         /// Writes this value to the supplied ASN.1 writer.

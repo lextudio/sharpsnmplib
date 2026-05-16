@@ -1,11 +1,9 @@
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
 using Lextm.SharpSnmpLib;
 using System.Collections.Generic;
 using System.Formats.Asn1;
 using System.Linq;
 
-namespace DotNetSnmp.Common.Definitions
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// The base class for all SNMP PDU types.
@@ -28,17 +26,17 @@ namespace DotNetSnmp.Common.Definitions
         /// <summary>
         /// Gets request Id.
         /// </summary>
-        public int RequestId { get; set; } = 0;
+        public Integer32 RequestId { get; set; } = Integer32.Zero;
 
         /// <summary>
         /// Gets error Status.
         /// </summary>
-        public ErrorCode ErrorStatus { get; set; } = 0;
+        public Integer32 ErrorStatus { get; set; } = Integer32.Zero;
 
         /// <summary>
         /// Gets error Index.
         /// </summary>
-        public int ErrorIndex { get; set; } = 0;
+        public Integer32 ErrorIndex { get; set; } = Integer32.Zero;
 
         /// <summary>
         /// Gets variable Bindings.
@@ -101,9 +99,9 @@ namespace DotNetSnmp.Common.Definitions
         /// <exception cref="SnmpRequestException"></exception>
         public void EnsureNoError()
         {
-            if (ErrorStatus != ErrorCode.NoError)
+            if (ErrorStatus.Value != (int)ErrorCode.NoError)
             {
-                throw new SnmpRequestException(ErrorStatus, ErrorIndex);
+                throw new SnmpRequestException((ErrorCode)ErrorStatus.Value, ErrorIndex.Value);
             }
         }
 

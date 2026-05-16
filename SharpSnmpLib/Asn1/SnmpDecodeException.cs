@@ -1,4 +1,4 @@
-﻿namespace DotNetSnmp.Asn1.Serialization
+﻿namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// The exception that is thrown when ASN.1 payload data cannot be decoded as valid SNMP data.

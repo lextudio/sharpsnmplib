@@ -1,6 +1,6 @@
-﻿using DotNetSnmp.Asn1.SyntaxObjects;
+﻿using Lextm.SharpSnmpLib;
 
-namespace DotNetSnmp.Transport.Targets
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Represents the CommunityTarget type.
@@ -10,7 +10,7 @@ namespace DotNetSnmp.Transport.Targets
         /// <summary>
         /// Initializes a new instance of CommunityTarget.
         /// </summary>
-        public CommunityTarget(Common.Definitions.VersionCode version, OctetString community)
+        public CommunityTarget(VersionCode version, OctetString community)
             : base(version, community)
         {
         }

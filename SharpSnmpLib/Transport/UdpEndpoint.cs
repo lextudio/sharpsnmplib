@@ -1,15 +1,14 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Common.Helpers;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.Net;
 using System.Text.RegularExpressions;
 
-namespace DotNetSnmp.Transport
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Represents the UdpEndpoint type.
     /// </summary>
-    public class UdpEndpoint : IAsnSerializable
+    public class UdpEndpoint : ISnmpData
     {
         private IPEndPoint Endpoint { get; init; }
 

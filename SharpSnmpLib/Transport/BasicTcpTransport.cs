@@ -21,7 +21,7 @@ using System.Buffers.Binary;
 using System.Net;
 using System.Net.Sockets;
 
-namespace DotNetSnmp.Transport;
+namespace Lextm.SharpSnmpLib.Messaging;
 
 /// <summary>
 /// SNMP-over-TCP client transport implementing RFC 3430 length-prefix framing.

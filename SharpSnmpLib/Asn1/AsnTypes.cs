@@ -1,6 +1,6 @@
 ﻿using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1.Serialization
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Defines ASN.1 tags used by SNMP syntax values, including opaque extension tags.

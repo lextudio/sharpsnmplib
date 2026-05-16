@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DotNetSnmp.Common.Definitions
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Security level.

@@ -1,11 +1,4 @@
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Security;
 using System.Formats.Asn1;
 
@@ -14,7 +7,6 @@ namespace Lextm.SharpSnmpLib.Messaging;
 /// <summary>
 /// Legacy compatibility wrapper for SNMP response messages.
 /// </summary>
-[Obsolete("This type is for internal use only and may be removed in a future release.")]
 public sealed class ResponseMessage : ISnmpMessage
 {
     private readonly ISnmpMessage _message;
@@ -135,12 +127,12 @@ public sealed class ResponseMessage : ISnmpMessage
     /// <summary>
     /// Gets response error status.
     /// </summary>
-    public ErrorCode ErrorStatus => Scope?.Pdu.ErrorStatus ?? ErrorCode.NoError;
+    public ErrorCode ErrorStatus => (ErrorCode)(Scope?.Pdu.ErrorStatus.Value ?? (int)ErrorCode.NoError);
 
     /// <summary>
     /// Gets response error index.
     /// </summary>
-    public int ErrorIndex => Scope?.Pdu.ErrorIndex ?? 0;
+    public int ErrorIndex => Scope?.Pdu.ErrorIndex.Value ?? 0;
 
     /// <summary>
     /// Serializes message to bytes.

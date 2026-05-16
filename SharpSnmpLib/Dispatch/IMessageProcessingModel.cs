@@ -1,8 +1,8 @@
-﻿using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Transport.Targets;
+﻿using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DotNetSnmp.Client
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Defines the contract for IMessageProcessingModel.

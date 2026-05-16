@@ -1,6 +1,6 @@
 ﻿using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1.Serialization
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Defines ASN.1 context-specific tags used by SNMP PDUs and exception syntax values.

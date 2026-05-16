@@ -1,9 +1,10 @@
-﻿using DotNetSnmp.Common.Helpers;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
+using System.Collections.Generic;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.Buffers;
 using System.Security.Cryptography;
 
-namespace DotNetSnmp.Protocol.V3.Security.Privacy
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Privacy provider for DES.
@@ -193,5 +194,95 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
                 }
             }
         }
+
+        /// <summary>
+        /// Initializes a new instance of DESPrivacyProvider with v12-compatible signature.
+        /// </summary>
+        public DESPrivacyProvider(OctetString? passphrase, IAuthenticationProvider authenticationProvider)
+            : this(
+                authenticationProvider ?? throw new ArgumentNullException(nameof(authenticationProvider)),
+                (passphrase ?? throw new ArgumentNullException(nameof(passphrase))).Octets)
+        {
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether DES is supported on current runtime.
+        /// </summary>
+        public static bool IsSupported
+        {
+            get
+            {
+                try { using var _ = DES.Create(); return true; }
+                catch { return false; }
+            }
+        }
+
+        private const int LegacyPrivacyParametersLength = 8;
+        private const int LegacyMinimumKeyLength = 16;
+
+        /// <summary>
+        /// Encrypts scoped PDU payload bytes using legacy DES helper signature.
+        /// </summary>
+        public static byte[] Encrypt(byte[] unencryptedData, byte[] key, byte[] privacyParameters)
+        {
+            if (!IsSupported) throw new PlatformNotSupportedException();
+            if (unencryptedData == null) throw new ArgumentNullException(nameof(unencryptedData));
+            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (privacyParameters == null) throw new ArgumentNullException(nameof(privacyParameters));
+            if (privacyParameters.Length != LegacyPrivacyParametersLength)
+                throw new ArgumentOutOfRangeException(nameof(privacyParameters), "Privacy parameters argument has to be 8 bytes long.");
+            if (key.Length < LegacyMinimumKeyLength)
+                throw new ArgumentException($"Encryption key length has to 16 bytes or more.", nameof(key));
+
+            var iv = GetLegacyIv(key, privacyParameters);
+            var outKey = GetLegacyKey(key);
+            if ((unencryptedData.Length % 8) != 0)
+            {
+                var tmp = new byte[8 * ((unencryptedData.Length / 8) + 1)];
+                Buffer.BlockCopy(unencryptedData, 0, tmp, 0, unencryptedData.Length);
+                unencryptedData = tmp;
+            }
+            using var des = DES.Create();
+            des.Key = outKey;
+            return des.EncryptCbc(unencryptedData, iv, PaddingMode.None);
+        }
+
+        /// <summary>
+        /// Decrypts scoped PDU payload bytes using legacy DES helper signature.
+        /// </summary>
+        public static byte[] Decrypt(byte[] encryptedData, byte[] key, byte[] privacyParameters)
+        {
+            if (!IsSupported) throw new PlatformNotSupportedException();
+            if (encryptedData == null) throw new ArgumentNullException(nameof(encryptedData));
+            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (privacyParameters == null) throw new ArgumentNullException(nameof(privacyParameters));
+            if (encryptedData.Length == 0) throw new ArgumentException("Empty encrypted data.", nameof(encryptedData));
+            if ((encryptedData.Length % 8) != 0) throw new ArgumentException("Encrypted data buffer has to be divisible by 8.", nameof(encryptedData));
+            if (privacyParameters.Length != LegacyPrivacyParametersLength)
+                throw new ArgumentOutOfRangeException(nameof(privacyParameters), "Privacy parameters argument has to be 8 bytes long.");
+            if (key.Length < LegacyMinimumKeyLength)
+                throw new ArgumentOutOfRangeException(nameof(key), "Decryption key has to be at least 16 bytes long.");
+
+            var iv = GetLegacyIv(key, privacyParameters);
+            var outKey = GetLegacyKey(key);
+            using var des = DES.Create();
+            des.Key = outKey;
+            return des.DecryptCbc(encryptedData, iv, PaddingMode.Zeros);
+        }
+
+        private static byte[] GetLegacyIv(IReadOnlyList<byte> key, IReadOnlyList<byte> privacyParameters)
+        {
+            var iv = new byte[LegacyPrivacyParametersLength];
+            for (var i = 0; i < iv.Length; i++) iv[i] = (byte)(key[8 + i] ^ privacyParameters[i]);
+            return iv;
+        }
+
+        private static byte[] GetLegacyKey(IReadOnlyList<byte> privacyPassword)
+        {
+            var outKey = new byte[8];
+            for (var i = 0; i < outKey.Length; i++) outKey[i] = privacyPassword[i];
+            return outKey;
+        }
+
     }
 }

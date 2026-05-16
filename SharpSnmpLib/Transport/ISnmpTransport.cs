@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace DotNetSnmp.Transport
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Defines the contract for ISnmpTransport.

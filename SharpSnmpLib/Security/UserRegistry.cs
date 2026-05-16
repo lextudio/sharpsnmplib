@@ -1,4 +1,4 @@
-﻿// User registry.
+// User registry.
 // Copyright (C) 2008-2010 Malcolm Crowe, Lex Li, and other contributors.
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
@@ -18,9 +18,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System.Globalization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Security;
 

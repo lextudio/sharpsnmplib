@@ -1,13 +1,8 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
 using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.Text;
 
-namespace DotNetSnmp.Protocol.V3
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents an SNMP v3 scoped PDU, which is a block of data containing a ContextEngineId,
@@ -82,7 +77,7 @@ namespace DotNetSnmp.Protocol.V3
         public SnmpType TypeCode => SnmpType.Sequence;
 
         /// <inheritdoc/>
-        public int RequestId => Pdu.RequestId;
+        public Integer32 RequestId => Pdu.RequestId;
 
         /// <inheritdoc/>
         public VarBindList? VariableBindings
@@ -186,7 +181,7 @@ namespace DotNetSnmp.Protocol.V3
         /// <summary>
         /// Gets serialized scope data for the specified protocol version (legacy compatibility member).
         /// </summary>
-        public IAsnSerializable GetData(VersionCode version)
+        public ISnmpData GetData(VersionCode version)
         {
             return version == VersionCode.V3 ? this : Pdu;
         }

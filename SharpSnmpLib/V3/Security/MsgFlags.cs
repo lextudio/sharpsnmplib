@@ -1,4 +1,4 @@
-﻿namespace DotNetSnmp.Protocol.V3.Security
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Defines the message flags for SNMPv3 message processing (RFC 3414).

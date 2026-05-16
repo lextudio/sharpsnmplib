@@ -1,10 +1,5 @@
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.Formats.Asn1;
 
 namespace Lextm.SharpSnmpLib;
@@ -12,7 +7,6 @@ namespace Lextm.SharpSnmpLib;
 /// <summary>
 /// Legacy compatibility wrapper for SNMP security parameters.
 /// </summary>
-[Obsolete("This type is for internal use only and may be removed in a future release.")]
 public sealed class SecurityParameters
 {
     /// <summary>

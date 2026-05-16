@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
-using DotNetSnmp.Asn1;
+using Lextm.SharpSnmpLib;
 
-namespace DotNetSnmp.Protocol.V3.Security.Authentication
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Base abstract class for SNMP v3 authentication providers that implements common functionality.

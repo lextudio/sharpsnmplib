@@ -1,4 +1,4 @@
-﻿namespace DotNetSnmp.Protocol.V3.Security.Authentication
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Provides a default implementation of the <see cref="IAuthenticationProvider"/> interface.

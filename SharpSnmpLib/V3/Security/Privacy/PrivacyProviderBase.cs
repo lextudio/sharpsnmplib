@@ -1,9 +1,8 @@
-﻿using DotNetSnmp.Asn1;
-using DotNetSnmp.Common.Helpers;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.Buffers;
 
-namespace DotNetSnmp.Protocol.V3.Security.Privacy
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Represents the PrivacyProviderBase type.
@@ -27,6 +26,8 @@ namespace DotNetSnmp.Protocol.V3.Security.Privacy
         /// Represents passcode.
         /// </summary>
         protected ReadOnlyMemory<byte> Passcode;
+
+        internal ReadOnlyMemory<byte> Passphrase => Passcode;
 
         /// <summary>
         /// Initializes a new instance of PrivacyProviderBase.

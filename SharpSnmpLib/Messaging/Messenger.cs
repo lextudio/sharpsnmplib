@@ -1,15 +1,8 @@
 using System.Globalization;
 using System.Net;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Client;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
-using DotNetSnmp.Transport;
-using DotNetSnmp.Transport.Targets;
 using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging;
 
@@ -519,7 +512,7 @@ public static partial class Messenger
 
         // WALK should advance only on successful GetNext responses.
         // Any protocol error (TooBig, GenError, NoSuchName, etc.) terminates the walk.
-        if (response.ErrorStatus != ErrorCode.NoError)
+        if (response.ErrorStatus.Value != (int)ErrorCode.NoError)
         {
             return new Tuple<bool, Variable?>(false, null);
         }
@@ -894,7 +887,7 @@ public static partial class Messenger
             pdu
         ) as ResponsePdu;
 
-        if (response!.ErrorStatus != ErrorCode.NoError)
+        if (response!.ErrorStatus.Value != (int)ErrorCode.NoError)
         {
             throw new InvalidOperationException($"Error in response: {response.ErrorStatus}");
         }
@@ -1112,7 +1105,7 @@ public static partial class Messenger
             throw new InvalidOperationException("Expected a response PDU for INFORM request.");
         }
 
-        if (responsePdu.ErrorStatus != ErrorCode.NoError)
+        if (responsePdu.ErrorStatus.Value != (int)ErrorCode.NoError)
         {
             throw new InvalidOperationException($"Error in response: {responsePdu.ErrorStatus}");
         }
@@ -1544,7 +1537,7 @@ public static partial class Messenger
 
         // Process response
         var responsePdu = response!.Pdu as ResponsePdu;
-        if (responsePdu!.ErrorStatus != ErrorCode.NoError)
+        if (responsePdu!.ErrorStatus.Value != (int)ErrorCode.NoError)
         {
             throw new InvalidOperationException($"Error in response: {responsePdu.ErrorStatus}");
         }

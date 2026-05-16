@@ -1,7 +1,4 @@
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Globalization;
 using System.Text;
 
@@ -106,7 +103,7 @@ public static class CompatibilityExtensions
     /// <summary>
     /// Serializes ASN.1 data to BER bytes (legacy helper signature).
     /// </summary>
-    public static byte[] ToBytes(this IAsnSerializable value)
+    public static byte[] ToBytes(this ISnmpData value)
     {
         if (value == null)
         {

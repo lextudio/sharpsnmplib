@@ -18,8 +18,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System.Globalization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Security;
 

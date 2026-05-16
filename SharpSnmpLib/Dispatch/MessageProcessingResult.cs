@@ -1,4 +1,4 @@
-﻿namespace DotNetSnmp.Client
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Defines values for MessageProcessingResult.

@@ -1,6 +1,6 @@
-﻿using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 
-namespace DotNetSnmp.Common
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the SnmpRequestException type.

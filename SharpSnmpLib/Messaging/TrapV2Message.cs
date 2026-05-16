@@ -1,9 +1,6 @@
 using System.Net;
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.Formats.Asn1;
 
 namespace Lextm.SharpSnmpLib.Messaging;
@@ -220,7 +217,7 @@ public sealed class TrapV2Message : ISnmpMessage
 
         if (Version == VersionCode.V2)
         {
-            var message = new DotNetSnmp.Protocol.V2.SnmpV2Message
+            var message = new Lextm.SharpSnmpLib.SnmpV2Message
             {
                 Community = _securityName,
                 Scope = new TrapV2Pdu

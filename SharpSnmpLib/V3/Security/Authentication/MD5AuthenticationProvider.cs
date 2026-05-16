@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace DotNetSnmp.Protocol.V3.Security.Authentication
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Provides authentication for SNMP v3 messages using HMAC-MD5.
@@ -17,6 +17,14 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
         /// <param name="passcode">The password or passphrase to be used for authentication.</param>
         public MD5AuthenticationProvider(ReadOnlyMemory<byte> passcode)
             : base(16, 12, HashAlgorithmName.MD5, passcode, bytes => new HMACMD5(bytes))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of MD5AuthenticationProvider with an OctetString passphrase.
+        /// </summary>
+        public MD5AuthenticationProvider(OctetString passphrase)
+            : this(passphrase.Octets)
         {
         }
     }

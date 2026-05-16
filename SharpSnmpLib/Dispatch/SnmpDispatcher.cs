@@ -1,18 +1,12 @@
-﻿using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Transport;
-using DotNetSnmp.Transport.Targets;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Asn1;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Messaging;
 using System.Net;
 using System.Formats.Asn1;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V2;
-using DotNetSnmp.Asn1.SyntaxObjects;
 using System.Buffers;
 using Microsoft.Extensions.Logging;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib.Security;
 
-namespace DotNetSnmp.Client
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Coordinates SNMP Protocol Data Unit (PDU) transmission and reception across all SNMP versions (v1, v2c, v3).
@@ -118,8 +112,8 @@ namespace DotNetSnmp.Client
             ISnmpTarget target,
             IPEndPoint targetAddress,
             IScope scope,
-            bool expectResponse = true,
-            CancellationToken cancellationToken = default)
+            bool expectResponse,
+            CancellationToken cancellationToken)
         {
             _logger?.LogDebug("Sending PDU to target {TargetAddress} with protocol version {ProtocolVersion}", targetAddress, target.ProtocolVersion);
 

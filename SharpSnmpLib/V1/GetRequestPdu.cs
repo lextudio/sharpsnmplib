@@ -1,10 +1,8 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Collections.Generic;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V1
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// GET request PDU.
@@ -22,7 +20,7 @@ namespace DotNetSnmp.Protocol.V1
         public GetRequestPdu()
         {
             ErrorIndex = 0;
-            ErrorStatus = ErrorCode.NoError;
+            ErrorStatus = (int)ErrorCode.NoError;
         }
 
         /// <summary>
@@ -46,13 +44,18 @@ namespace DotNetSnmp.Protocol.V1
             VariableBindings = bindings;
         }
 
+        /// <summary>
+        /// Returns a string representation.
+        /// </summary>
+        public override string ToString() => throw new NotImplementedException();
+
         /// <inheritdoc/>
         public override void WriteTo(AsnWriter writer)
         {
             using (_ = writer.PushSequence(tag: PduType))
             {
                 writer.WriteInteger(RequestId);
-                writer.WriteInteger((int)ErrorStatus);
+                writer.WriteInteger(ErrorStatus.Value);
                 writer.WriteInteger(ErrorIndex);
                 if (VariableBindings != null)
                 {
@@ -78,7 +81,7 @@ namespace DotNetSnmp.Protocol.V1
             return new GetRequestPdu
             {
                 RequestId = requestId,
-                ErrorStatus = (ErrorCode)errorStatus,
+                ErrorStatus = errorStatus,
                 ErrorIndex = errorIndex,
                 VariableBindings = bindings
             };

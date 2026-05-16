@@ -1,9 +1,9 @@
 using System.Buffers;
 using System.Security.Cryptography;
-using DotNetSnmp.Common.Helpers;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 
-namespace DotNetSnmp.Protocol.V3.Security.Privacy
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Base class for AES-based privacy protocols (AES-128, AES-192, AES-256).

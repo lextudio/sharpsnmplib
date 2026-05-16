@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace DotNetSnmp.Protocol.V3.Security
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Represents the SecureAgentParameters type.

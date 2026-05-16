@@ -1,6 +1,6 @@
 using System.Globalization;
 using System.Text;
-using DotNetSnmp.Utils;
+using Lextm.SharpSnmpLib;
 
 namespace Lextm.SharpSnmpLib;
 
@@ -103,4 +103,10 @@ public static class ByteTool
     {
         return Dump.BytesToHexString(bytes);
     }
+
+    /// <summary>
+    /// Packs an SNMP message (v12 compatibility stub).
+    /// </summary>
+    public static Sequence PackMessage(byte[]? length, VersionCode version, ISegment header, ISegment parameters, ISnmpData data)
+        => throw new NotImplementedException();
 }

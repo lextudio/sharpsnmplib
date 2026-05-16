@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DotNetSnmp.Utils
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Provides helper methods for Dump.

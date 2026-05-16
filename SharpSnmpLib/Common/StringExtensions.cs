@@ -1,6 +1,6 @@
-﻿using System.Text;
+using System.Text;
 
-namespace DotNetSnmp
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Provides helper methods for StringExtensions.

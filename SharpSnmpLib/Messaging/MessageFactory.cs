@@ -1,8 +1,6 @@
 using System.Formats.Asn1;
 using System.Runtime.CompilerServices;
-using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V2;
+using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Security;
 
 namespace Lextm.SharpSnmpLib.Messaging;
@@ -154,12 +152,12 @@ public static class MessageFactory
                 switch (version)
                 {
                     case VersionCode.V1:
-                        message = DotNetSnmp.Protocol.V1.SnmpV1Message.ReadFrom(
+                        message = Lextm.SharpSnmpLib.SnmpV1Message.ReadFrom(
                             new AsnReader(messageData, AsnEncodingRules.BER));
                         break;
 
                     case VersionCode.V2:
-                        var v2Message = DotNetSnmp.Protocol.V2.SnmpV2Message.ReadFrom(
+                        var v2Message = Lextm.SharpSnmpLib.SnmpV2Message.ReadFrom(
                             new AsnReader(messageData, AsnEncodingRules.BER));
                         message = v2Message.Scope?.Pdu is TrapV2Pdu
                             ? new TrapV2Message(v2Message)
@@ -169,7 +167,7 @@ public static class MessageFactory
                         break;
 
                     case VersionCode.V3:
-                        var v3Message = DotNetSnmp.Protocol.V3.SnmpV3Message.ReadFrom(
+                        var v3Message = Lextm.SharpSnmpLib.SnmpV3Message.ReadFrom(
                             new AsnReader(messageData, AsnEncodingRules.BER));
 
                         // For V3, handle security operations if message has security flags
@@ -211,7 +209,7 @@ public static class MessageFactory
     }
 
     private static V3SecurityState ProcessV3Security(
-        DotNetSnmp.Protocol.V3.SnmpV3Message v3Message,
+        Lextm.SharpSnmpLib.SnmpV3Message v3Message,
         UserRegistry registry,
         bool throwOnV3SecurityError)
     {
@@ -246,7 +244,7 @@ public static class MessageFactory
         var auth = privacy.AuthenticationProvider;
 
         // Process authentication if needed
-        if ((msgFlags & DotNetSnmp.Protocol.V3.Security.MsgFlag.Auth) != 0)
+        if ((msgFlags & Lextm.SharpSnmpLib.Security.MsgFlag.Auth) != 0)
         {
             bool authenticated = auth.AuthenticateIncomingMsg(v3Message);
             if (!authenticated)
@@ -262,7 +260,7 @@ public static class MessageFactory
         }
 
         // Process privacy (decryption) if needed
-        if ((msgFlags & DotNetSnmp.Protocol.V3.Security.MsgFlag.Priv) != 0)
+        if ((msgFlags & Lextm.SharpSnmpLib.Security.MsgFlag.Priv) != 0)
         {
             try
             {

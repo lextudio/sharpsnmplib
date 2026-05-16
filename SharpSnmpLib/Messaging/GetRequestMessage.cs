@@ -1,9 +1,5 @@
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Asn1;
-using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V1;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security.Privacy;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 using System.Formats.Asn1;
 
 namespace Lextm.SharpSnmpLib.Messaging;

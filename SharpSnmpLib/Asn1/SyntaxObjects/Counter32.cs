@@ -1,7 +1,7 @@
-﻿using DotNetSnmp.Asn1.Serialization;
+﻿using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1.SyntaxObjects
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// The Counter32 type represents a non-negative integer which
@@ -11,43 +11,54 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
     /// </summary>
     /// <param name="Value"></param>
     [System.CLSCompliant(false)]
-    public readonly record struct Counter32(uint Value) : IAsnSerializable
+    public readonly record struct Counter32(uint Value) : ISnmpData
     {
         /// <summary>
         /// Initializes a new instance from a legacy long value.
         /// </summary>
         [System.CLSCompliant(false)]
-    public Counter32(long value)
+        public Counter32(long value)
             : this(unchecked((uint)value))
-    {
+        {
+        }
+
+        /// <inheritdoc/>
+        public void WriteTo(AsnWriter writer)
+        {
+            writer.WriteInteger(
+                Value,
+                tag: AsnTypes.Counter32);
+        }
+
+        /// <summary>
+        /// Deconstructs the value into its components.
+        /// </summary>
+        public void Deconstruct(out uint value)
+        {
+            value = Value;
+        }
+
+        /// <summary>
+        /// Gets the SNMP type code.
+        /// </summary>
+        public new SnmpType TypeCode => SnmpType.Counter32;
+
+        /// <summary>
+        /// Returns value as uint.
+        /// </summary>
+        [System.CLSCompliant(false)]
+        public uint ToUInt32() => Value;
+
+        /// <summary>
+        /// Performs a conversion to uint.
+        /// </summary>
+        [System.CLSCompliant(false)]
+        public static implicit operator uint(Counter32 x) => x.Value;
+
+        /// <summary>
+        /// Performs a compatibility conversion from long.
+        /// </summary>
+        [System.CLSCompliant(false)]
+        public static implicit operator Counter32(long value) => new(unchecked((uint)value));
     }
-
-    /// <inheritdoc/>
-    public void WriteTo(AsnWriter writer)
-    {
-        writer.WriteInteger(
-            Value,
-            tag: AsnTypes.Counter32);
-    }
-
-    /// <summary>
-    /// Deconstructs the value into its components.
-    /// </summary>
-    public void Deconstruct(out uint value)
-    {
-        value = Value;
-    }
-
-    /// <summary>
-    /// Performs a conversion to uint.
-    /// </summary>
-    [System.CLSCompliant(false)]
-    public static implicit operator uint(Counter32 x) => x.Value;
-
-    /// <summary>
-    /// Performs a compatibility conversion from long.
-    /// </summary>
-    [System.CLSCompliant(false)]
-    public static implicit operator Counter32(long value) => new(unchecked((uint)value));
-}
 }

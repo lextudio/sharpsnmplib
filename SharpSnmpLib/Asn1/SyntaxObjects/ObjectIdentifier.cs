@@ -1,15 +1,15 @@
-﻿using DotNetSnmp.Asn1.Serialization;
+﻿using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 using System.Text;
 using System.Globalization;
 using System.Collections.Generic;
 
-namespace DotNetSnmp.Asn1.SyntaxObjects
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the ObjectIdentifier type.
     /// </summary>
-    public readonly record struct ObjectIdentifier(string Oid) : IAsnSerializable, IComparable<ObjectIdentifier>, IComparable
+    public readonly record struct ObjectIdentifier(string Oid) : ISnmpData, IComparable<ObjectIdentifier>, IComparable
     {
         /// <summary>
         /// Initializes a new instance of ObjectIdentifier.

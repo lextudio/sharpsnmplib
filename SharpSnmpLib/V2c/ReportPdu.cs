@@ -1,9 +1,7 @@
-﻿using DotNetSnmp.Asn1.Serialization;
-using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Common.Definitions;
+using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Protocol.V1
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Report PDU.
@@ -23,7 +21,7 @@ namespace DotNetSnmp.Protocol.V1
         public ReportPdu(int requestId, ErrorCode errorStatus, int errorIndex, IList<Variable> variables)
         {
             RequestId = requestId;
-            ErrorStatus = errorStatus;
+            ErrorStatus = (int)errorStatus;
             ErrorIndex = errorIndex;
             VariableBindings = new VarBindList(variables.ToArray());
         }
@@ -39,7 +37,7 @@ namespace DotNetSnmp.Protocol.V1
             using (_ = writer.PushSequence(tag: SnmpAsnTags.ReportMsg))
             {
                 writer.WriteInteger(RequestId);
-                writer.WriteInteger((int)ErrorStatus);
+                writer.WriteInteger(ErrorStatus.Value);
                 writer.WriteInteger(ErrorIndex);
                 if (VariableBindings != null)
                 {
@@ -65,7 +63,7 @@ namespace DotNetSnmp.Protocol.V1
             return new ReportPdu
             {
                 RequestId = requestId,
-                ErrorStatus = (ErrorCode)errorStatus,
+                ErrorStatus = errorStatus,
                 ErrorIndex = errorIndex,
                 VariableBindings = bindings
             };

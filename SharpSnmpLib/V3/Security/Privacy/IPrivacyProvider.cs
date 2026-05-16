@@ -1,7 +1,7 @@
-﻿using DotNetSnmp.Asn1.SyntaxObjects;
-using DotNetSnmp.Protocol.V3.Security.Authentication;
+﻿using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
 
-namespace DotNetSnmp.Protocol.V3.Security.Privacy
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Privacy provider interface.

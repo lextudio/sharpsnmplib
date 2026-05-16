@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace DotNetSnmp.Protocol.V3.Security.Authentication
+namespace Lextm.SharpSnmpLib.Security
 {
     /// <summary>
     /// Provides authentication for SNMP v3 messages using HMAC-SHA512.
@@ -17,6 +17,14 @@ namespace DotNetSnmp.Protocol.V3.Security.Authentication
         /// <param name="passcode">The password or passphrase to be used for authentication.</param>
         public SHA512AuthenticationProvider(ReadOnlyMemory<byte> passcode)
             : base(64, 48, HashAlgorithmName.SHA512, passcode, bytes => new HMACSHA512(bytes))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of SHA512AuthenticationProvider with an OctetString passphrase.
+        /// </summary>
+        public SHA512AuthenticationProvider(OctetString passphrase)
+            : this(passphrase.Octets)
         {
         }
     }

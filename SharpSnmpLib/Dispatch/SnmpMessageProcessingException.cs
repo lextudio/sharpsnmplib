@@ -1,4 +1,4 @@
-namespace DotNetSnmp.Client
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Exception thrown when SNMP message processing fails.

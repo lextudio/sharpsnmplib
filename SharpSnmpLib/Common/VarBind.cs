@@ -1,12 +1,12 @@
-﻿using DotNetSnmp.Asn1.Serialization;
+﻿using Lextm.SharpSnmpLib;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Asn1.SyntaxObjects
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the Variable type.
     /// </summary>
-    public readonly record struct Variable : IAsnSerializable
+    public readonly record struct Variable : ISnmpData
     {
         /// <summary>
         /// Gets id.
@@ -16,12 +16,12 @@ namespace DotNetSnmp.Asn1.SyntaxObjects
         /// <summary>
         /// Gets data.
         /// </summary>
-        public readonly IAsnSerializable Data { get; }
+        public readonly ISnmpData Data { get; }
 
         /// <summary>
         /// Initializes a new instance of Variable.
         /// </summary>
-        public Variable(string oid, IAsnSerializable? value = null)
+        public Variable(string oid, ISnmpData? value = null)
         {
             Id = new ObjectIdentifier(oid);
             Data = value ?? Null.Instance;

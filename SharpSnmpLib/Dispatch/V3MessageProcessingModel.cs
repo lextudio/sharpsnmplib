@@ -1,11 +1,10 @@
-﻿using DotNetSnmp.Common.Definitions;
-using DotNetSnmp.Protocol.V3;
-using DotNetSnmp.Protocol.V3.Security;
-using DotNetSnmp.Transport.Targets;
+using Lextm.SharpSnmpLib;
+using Lextm.SharpSnmpLib.Security;
+using Lextm.SharpSnmpLib.Messaging;
 using System.Diagnostics.CodeAnalysis;
 using System.Formats.Asn1;
 
-namespace DotNetSnmp.Client
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Represents the V3MessageProcessingModel type.

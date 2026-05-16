@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace DotNetSnmp.Client
+namespace Lextm.SharpSnmpLib.Messaging
 {
     /// <summary>
     /// Exception thrown when an SNMP operation times out.

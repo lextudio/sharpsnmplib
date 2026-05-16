@@ -1,14 +1,14 @@
-﻿using DotNetSnmp.Asn1.Serialization;
+﻿using Lextm.SharpSnmpLib;
 using System;
 using System.Formats.Asn1;
 using System.Text;
 
-namespace DotNetSnmp.Asn1.SyntaxObjects
+namespace Lextm.SharpSnmpLib
 {
     /// <summary>
     /// Represents the OctetString type.
     /// </summary>
-    public readonly record struct OctetString : IAsnSerializable, IEquatable<OctetString>
+    public readonly record struct OctetString : ISnmpData, IEquatable<OctetString>
     {
         /// <summary>
         /// Default text encoding used by string-based OctetString conversions.

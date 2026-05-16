@@ -5,7 +5,6 @@ namespace Lextm.SharpSnmpLib.Messaging;
 /// <summary>
 /// Exception raised when an endpoint is already in use.
 /// </summary>
-[Obsolete("This type is for internal use only and may be removed in a future release.")]
 public sealed class PortInUseException : SnmpException
 {
     /// <summary>
