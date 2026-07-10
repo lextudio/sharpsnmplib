@@ -19,9 +19,6 @@ namespace Lextm.SharpSnmpLib
         /// <summary>Returns the value as Int32.</summary>
         public int ToInt32() => Value;
 
-        /// <summary>Returns the value as an ErrorCode.</summary>
-        public ErrorCode ToErrorCode() => (ErrorCode)Value;
-
         /// <inheritdoc/>
         public void WriteTo(AsnWriter writer)
         {

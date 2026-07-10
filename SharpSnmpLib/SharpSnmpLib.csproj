@@ -42,6 +42,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <IsTrimmable Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND '$(TargetFrameworkVersion)' >= '8.0'">true</IsTrimmable>
+    <IsAotCompatible Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp' AND '$(TargetFrameworkVersion)' >= '8.0'">true</IsAotCompatible>
     <IncludeSymbols>true</IncludeSymbols>
     <DebugType>portable</DebugType>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
