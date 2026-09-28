@@ -47,7 +47,12 @@ namespace Lextm.SharpSnmpLib.Security
                     // Create a ReadOnlyMemory from the array
                     ReadOnlyMemory<byte> shortKeyMemory = shortKeyArray;
                     authenticationService.PasswordToKey(shortKeyMemory, engineId, tempKey);
-                    int bytesToCopyNow = Math.Min(keyLength - length, authenticationService.TruncatedDigestSize);
+
+                    // Per draft-reeder-snmpv3-usm-3desede-00 Appendix B.1, extension uses the
+                    // full password-to-key output, not the truncated auth digest. Using
+                    // TruncatedDigestSize here corrupts the trailing octets (which form the
+                    // pre-IV) when DigestSize > keyLength - length, e.g. 3DES + MD5.
+                    int bytesToCopyNow = Math.Min(keyLength - length, authenticationService.DigestSize);
                     tempKey[..bytesToCopyNow].CopyTo(destination[length..]);
                     length += bytesToCopyNow;
                 }

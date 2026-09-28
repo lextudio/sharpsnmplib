@@ -203,8 +203,13 @@ namespace DotNetSnmp.Test
         [Fact]
         public void FullMessageTest_MD5_TripleDES()
         {
-            // This is a sample SNMPv3 message with TripleDES encryption
-            const string hexBytes = "30 81 9A 02 01 03 30 11 02 04 16 39 99 3C 02 03 00 FF E3 04 01 07 02 01 03 04 40 30 3E 04 0E 80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC 02 01 00 02 03 75 6B 5D 04 0C 75 73 72 2D 6D 64 35 2D 33 64 65 73 04 0C 88 3A 31 F2 4D FA 37 1D 40 43 51 EC 04 08 00 00 00 00 3A 90 A4 49 04 40 77 0E B3 60 5E 97 7B 53 3E 21 FD B1 74 6B 73 CF 8A AF C1 14 0B C5 AA EF 2C A3 4F 5E FF 07 BD 37 AF 14 64 91 1B AB 23 E5 C8 52 8E 64 0F FF 67 A3 CB 6D 68 0B 96 67 C5 79 93 AF 02 B2 02 CD B5 CF";
+            // This is a sample SNMPv3 message with TripleDES encryption.
+            //
+            // The privacy key is extended by chaining the full password-to-key output
+            // (K1 = P2K(passphrase), K2 = P2K(K1), key = K1 || K2), per
+            // draft-reeder-snmpv3-usm-3desede-00 section 2.1 / Appendix B.1. See
+            // ExtendShortKeyTest for the draft's own test vectors.
+            const string hexBytes = "30 81 9A 02 01 03 30 11 02 04 16 39 99 3C 02 03 00 FF E3 04 01 07 02 01 03 04 40 30 3E 04 0E 80 00 4F B8 05 63 6C 6F 75 64 4D AB 22 CC 02 01 00 02 03 75 6B 5D 04 0C 75 73 72 2D 6D 64 35 2D 33 64 65 73 04 0C 6B D2 EE 30 F2 7E 18 94 32 7B 15 F6 04 08 6A E4 98 5E 00 00 00 00 04 40 FC 77 F0 52 5C 00 B8 E7 4B 6B 4B E6 AA 91 AC DD 91 70 13 D3 38 3A 54 58 81 45 11 BD 82 43 5B E0 89 58 53 3A B9 E4 B3 CC 01 E0 CE AC 25 06 6B F6 76 D7 17 33 7B E3 DE 6B 49 D0 85 45 4D 37 5E 7E";
 
             // Convert hex string to byte array
             var messageBytes = Dump.BytesFromHexString(hexBytes);
@@ -236,7 +241,7 @@ namespace DotNetSnmp.Test
             var expectedSecurityName = Encoding.ASCII.GetBytes("usr-md5-3des");
             Assert.True(expectedSecurityName.SequenceEqual(secParams.SecurityName.Octets), $"Unexpected security name: {Dump.BytesToHexString(secParams.SecurityName.Octets)}");
 
-            var expectedPrivParams = Dump.BytesFromHexString("00 00 00 00 3A 90 A4 49");
+            var expectedPrivParams = Dump.BytesFromHexString("6A E4 98 5E 00 00 00 00");
             Assert.True(expectedPrivParams.SequenceEqual(secParams.PrivParams.ToArray()), $"Unexpected priv params: {Dump.BytesToHexString(secParams.PrivParams.ToArray())}");
 
             // Verify Scoped PDU is encrypted
