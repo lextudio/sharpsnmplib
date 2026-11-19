@@ -2,6 +2,46 @@
 
 This file tracks breaking changes between v12 and v13, root causes, affected types, and migration guidance.
 
+## API parity status (v12.5 → v13)
+
+Measured with `api-compare/api-parity` (run `dotnet run -c Release` in that folder; it auto-detects both builds and applies `parity-exclusions.json` at the workspace root). Last run: 2026-11-19, against a v12 Release `net8.0` build of `sharpsnmplib-12.0` and a fresh v13 Debug `net8.0` build of `sharpsnmplib-13.0` (branch `release-13.0`). The tool output is not checked in; rerun it to reproduce or refresh these numbers.
+
+| Metric | Count |
+|---|---|
+| v12 public members | 1202 |
+| Excluded (see below) | 165 |
+| v12 members in scope | 1037 |
+| Present in v13 | 1034 |
+| Missing in v13 | 3 |
+| **Parity score** | **99.7%** |
+
+**Excluded members** are listed by pattern in `parity-exclusions.json`: low-level serialization plumbing that consumers did not call directly (`AppendBytesTo`, `Stream`/`Tuple<int, byte[]>` constructors, `SerializationInfo` constructors, enum `value__`) and pre-.NET 6 encryption/authentication helpers replaced by `SnmpV3Message`- and `Span<byte>`-based operations. They are not counted as breaks, but code calling them will not compile against v13.
+
+**Missing members** — all three are intentional and documented in the sections below:
+
+| v12 API | Source compatible? | Binary compatible? | Section |
+|---|---|---|---|
+| `Integer32.ToErrorCode()` (instance) | Yes — resolves to the extension method | No | [`Integer32.ToErrorCode()`](#code-fix-integer32toerrorcode-instance-method-removed) |
+| `SnmpMessageExtension.IsRunningOnMono()` | No | No | [`IsRunningOnMono()`](#aottrim-snmpmessageextensionisrunningonmono-removed) |
+| `SnmpDataExtension` (static class) | Only for extension-method calls | No | [`SnmpDataExtension`](#api-snmpdataextension-class-removed) |
+
+**Binary compatibility in general**: v13 is not a drop-in binary replacement for v12. Core data types keep their v12 names and `Lextm.SharpSnmpLib` namespace, but several changed from reference types to value types — for example `Integer32`, `OctetString`, and `ObjectIdentifier` were `sealed class` in v12 and are `readonly record struct` in v13. Applications and libraries compiled against v12 must be recompiled against v13; mixing a v12-compiled dependency with the v13 package in one process is not supported. The class→struct change can also affect source that the parity tool does not flag, such as `null` checks or `null` assignments on these types.
+
+## [AOT/Trim] `SnmpMessageExtension.IsRunningOnMono()` removed
+
+- **Root cause**: it was the only reflection in v12 (`Type.GetType("Mono.Runtime")`) and forced `[RequiresUnreferencedCode]` onto the messaging API. v13 removes it to be AOT/trim-safe (see [`[RequiresUnreferencedCode]` annotations removed](#aottrim-requiresunreferencedcode-annotations-removed-in-v13)).
+- **Affected types**: `SnmpMessageExtension`.
+- **Migration guidance**: no replacement in the library. If you still need the check, inline it in your own code (`Type.GetType("Mono.Runtime") != null`), or use `RuntimeInformation.FrameworkDescription` / `OperatingSystem.Is*()` for platform decisions.
+
+## [API] `SnmpDataExtension` class removed
+
+- **Root cause**: v12's `SnmpDataExtension` held a single method, `ToBytes(this ISnmpData)`. In v13 that extension method lives in `CompatibilityExtensions` (same `Lextm.SharpSnmpLib` namespace), so the old class was not carried over.
+- **Affected types**: `SnmpDataExtension`.
+- **Migration guidance**:
+  - `data.ToBytes()` (extension-method syntax) — no change; it now binds to `CompatibilityExtensions.ToBytes`.
+  - `SnmpDataExtension.ToBytes(data)` (explicit static call) — change to `data.ToBytes()` or `CompatibilityExtensions.ToBytes(data)`.
+  - Binaries compiled against v12 must be recompiled.
+
 ## [AOT/Trim] `[RequiresUnreferencedCode]` annotations removed in v13
 
 - **Root cause**: v12 had 38 `[RequiresUnreferencedCode]` annotations on `Messenger`, `SnmpMessageExtension`, and `Discovery` methods. The only actual reflection was `Type.GetType("Mono.Runtime")` in `IsRunningOnMono()`. v13 eliminates all annotations because:
@@ -20,7 +60,7 @@ This file tracks breaking changes between v12 and v13, root causes, affected typ
 
 - **Root cause**: `Integer32` struct had an instance method `ToErrorCode()` that did a plain cast `(ErrorCode)Value` (never throws). This shadowed the `CompatibilityExtensions.ToErrorCode(this Integer32)` extension method which validates the value and throws `InvalidCastException` for unknown error codes. The test `ToErrorCode_UnknownValue_Throws` expected the validation behavior but got the silent cast.
 - **Affected types**: `Integer32` (instance method removed), `CompatibilityExtensions` (extension method now always invoked)
-- **Migration guidance**: Remove the instance method from `Integer32` so callers get the validated extension method. Equivalent to v12 behavior.
+- **Migration guidance**: no source change needed — `value.ToErrorCode()` now binds to `CompatibilityExtensions.ToErrorCode`, which behaves like v12's `Integer32.ToErrorCode()`: both throw `InvalidCastException` for values outside the `ErrorCode` range. (The silent cast described above existed only in earlier v13 previews.) Binaries compiled against v12 must be recompiled, because the instance method no longer exists.
 
 ## [Test] MockTransport and AOT-compatible integration tests
 
