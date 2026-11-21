@@ -1,0 +1,6 @@
+mode: ContinuousDelivery
+
+branches:
+  release:
+    prevent-increment:
+      when-current-commit-tagged: true
