@@ -38,6 +38,12 @@ namespace Lextm.SharpSnmpLib
     public static class DataFactory
     {
         /// <summary>
+        /// Maximum allowed BER nesting depth. Protects against stack-overflow
+        /// denial of service caused by deeply nested SEQUENCE values.
+        /// </summary>
+        public const int MaxBerDepth = 32;
+
+        /// <summary>
         /// Creates an <see cref="ISnmpData"/> instance from buffer.
         /// </summary>
         /// <param name="buffer">Buffer</param>
@@ -58,7 +64,7 @@ namespace Lextm.SharpSnmpLib
         /// <param name="stream">Stream.</param>
         /// <param name="type">Type code.</param>
         /// <returns>An <see cref="ISnmpData"/> instance created from the specified stream and type code.</returns>
-        public static ISnmpData CreateSnmpData(int type, Stream stream)
+        public static ISnmpData CreateSnmpData(int type, Stream stream, int depth = MaxBerDepth)
         {
             if (stream == null)
             {
@@ -82,7 +88,7 @@ namespace Lextm.SharpSnmpLib
                     SnmpType.OctetString => new OctetString(length, stream),
                     SnmpType.IPAddress => new IP(length, stream),
                     SnmpType.TimeTicks => new TimeTicks(length, stream),
-                    SnmpType.Sequence => new Sequence(length, stream),
+                    SnmpType.Sequence => new Sequence(length, stream, depth),
                     SnmpType.TrapV1Pdu => new TrapV1Pdu(length, stream),
                     SnmpType.TrapV2Pdu => new TrapV2Pdu(length, stream),
                     SnmpType.GetRequestPdu => new GetRequestPdu(length, stream),
@@ -132,14 +138,14 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="stream">Stream</param>
         /// <returns>An <see cref="ISnmpData"/> instance created from the specified stream.</returns>
-        public static ISnmpData CreateSnmpData(Stream stream)
+        public static ISnmpData CreateSnmpData(Stream stream, int depth = MaxBerDepth)
         {
             if (stream == null)
             {
                 throw new ArgumentNullException(nameof(stream));
             }
-
-            return CreateSnmpData(stream.ReadByte(), stream);
+            
+            return CreateSnmpData(stream.ReadByte(), stream, depth);
         }
     }
 }

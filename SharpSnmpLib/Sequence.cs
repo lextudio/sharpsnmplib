@@ -96,7 +96,7 @@ namespace Lextm.SharpSnmpLib
         /// </summary>
         /// <param name="length">The length.</param>
         /// <param name="stream">The stream.</param>
-        public Sequence(Tuple<int, byte[]> length, Stream stream)
+        public Sequence(Tuple<int, byte[]> length, Stream stream, int depth = DataFactory.MaxBerDepth)
         {
             if (length == null)
             {
@@ -108,6 +108,11 @@ namespace Lextm.SharpSnmpLib
                 throw new ArgumentNullException(nameof(stream));
             }
 
+            if (depth <= 0)
+            {
+                throw new SnmpException("BER nesting too deep");
+            }
+
             _length = length.Item2;
             if (length.Item1 == 0)
             {
@@ -115,9 +120,146 @@ namespace Lextm.SharpSnmpLib
             }
 
             var original = stream.Position;
-            while (stream.Position < original + length.Item1)
+            var end = original + length.Item1;
+            while (stream.Position < end)
             {
-                _list.Add(DataFactory.CreateSnmpData(stream));
+                var remaining = (int)(end - stream.Position);
+                if (remaining < 2)
+                {
+                    throw new SnmpException("invalid BER length");
+                }
+
+                // Peek at the child header without consuming it, so an oversized
+                // or malformed child is rejected before any recursion happens.
+                if (!TryReadChildHeader(stream, out var headerLength, out var contentLength))
+                {
+                    throw new SnmpException("invalid BER length");
+                }
+
+                var totalChild = headerLength + (int)contentLength;
+                if (contentLength < 0 || totalChild < headerLength || totalChild > remaining)
+                {
+                    throw new SnmpException("invalid BER length");
+                }
+
+                // Restore stream position to the start of the child, then parse.
+                stream.Position -= headerLength;
+                _list.Add(DataFactory.CreateSnmpData(stream, depth - 1));
+
+                if (stream.Position > end)
+                {
+                    throw new SnmpException("invalid BER length");
+                }
+            }
+        }
+
+        private static bool TryReadChildHeader(Stream stream, out int headerLength, out long contentLength)
+        {
+            headerLength = 0;
+            contentLength = 0;
+            var start = stream.Position;
+            try
+            {
+                if (stream.Position >= stream.Length)
+                {
+                    return false;
+                }
+
+                int first = stream.ReadByte();
+                if (first < 0)
+                {
+                    stream.Position = start;
+                    return false;
+                }
+
+                headerLength = 1;
+                // High-tag-number form.
+                if ((first & 0x1F) == 0x1F)
+                {
+                    while (true)
+                    {
+                        if (stream.Position >= stream.Length)
+                        {
+                            stream.Position = start;
+                            return false;
+                        }
+
+                        int b = stream.ReadByte();
+                        headerLength++;
+                        if (b < 0)
+                        {
+                            stream.Position = start;
+                            return false;
+                        }
+
+                        if ((b & 0x80) == 0)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (stream.Position >= stream.Length)
+                {
+                    stream.Position = start;
+                    return false;
+                }
+
+                int firstLength = stream.ReadByte();
+                headerLength++;
+                if (firstLength < 0)
+                {
+                    stream.Position = start;
+                    return false;
+                }
+
+                if ((firstLength & 0x80) == 0)
+                {
+                    contentLength = firstLength;
+                }
+                else
+                {
+                    int count = firstLength & 0x7F;
+                    if (count == 0 || count > 8)
+                    {
+                        stream.Position = start;
+                        return false;
+                    }
+
+                    contentLength = 0;
+                    for (var i = 0; i < count; i++)
+                    {
+                        if (stream.Position >= stream.Length)
+                        {
+                            stream.Position = start;
+                            return false;
+                        }
+
+                        int b = stream.ReadByte();
+                        headerLength++;
+                        if (b < 0)
+                        {
+                            stream.Position = start;
+                            return false;
+                        }
+
+                        contentLength = (contentLength << 8) | b;
+                    }
+                }
+
+                return true;
+            }
+            catch
+            {
+                try
+                {
+                    stream.Position = start;
+                }
+                catch
+                {
+                }
+
+                return false;
             }
         }
 
